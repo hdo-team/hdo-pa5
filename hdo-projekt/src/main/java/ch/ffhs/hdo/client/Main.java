@@ -2,14 +2,14 @@ package ch.ffhs.hdo.client;
 
 import javax.swing.JFrame;
 
-import ch.ffhs.hdo.client.ui.einstellungen.EinstellungController;
+import ch.ffhs.hdo.client.ui.einstellungen.OptionController;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		// Init Controller
-		EinstellungController controller = new EinstellungController();
+		OptionController controller = new OptionController();
 		// Start MainView
 
 		JFrame window = controller.getMainWindow();
