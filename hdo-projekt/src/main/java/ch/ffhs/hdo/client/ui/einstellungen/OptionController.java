@@ -2,12 +2,12 @@ package ch.ffhs.hdo.client.ui.einstellungen;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
 /**
- * 
+ *  Controller für die Options
  * @author Denis Bittante
  */
-public class EinstellungController extends Controller<EinstellungModel, EinstellungView> {
+public class OptionController extends Controller<OptionModel, OptionView> {
 
-	public EinstellungController() {
+	public OptionController() {
 		super();
 
 		

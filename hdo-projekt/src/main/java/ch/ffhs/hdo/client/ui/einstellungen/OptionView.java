@@ -2,9 +2,9 @@ package ch.ffhs.hdo.client.ui.einstellungen;
 
 import ch.ffhs.hdo.client.ui.base.View;
 
-public class EinstellungView extends View<EinstellungModel> {
+public class OptionView extends View<OptionModel> {
 	
-	public EinstellungView() {
+	public OptionView() {
 		// TODO Auto-generated constructor stub
 	}
 
