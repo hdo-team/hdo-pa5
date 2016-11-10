@@ -13,11 +13,11 @@ public class Main {
 
 		// Init Controller
 		OptionController optionController = new OptionController(new OptionModel());
-		//ExportController exportController = new ExportController(new ExportModel());
+		ExportController exportController = new ExportController(new ExportModel());
 		// Start MainView
 
 		optionController.show();
-		//exportController.show();
+		exportController.show();
 
 	
 

@@ -4,44 +4,17 @@ import ch.ffhs.hdo.client.ui.base.Model;
 
 public class ExportModel extends Model {
 
-	private String inboxPath;
-	private boolean autoModus;
-	private int intervall;
-
-	public String getInboxPath() {
-		return inboxPath;
+	private String targetPath;
+	
+	public String getTargetPath() {
+		return targetPath;
 	}
 
-	public void setInboxPath(String inboxPath) {
+	public void setTargetPath(String targetPath) {
 
-		String oldValue = this.inboxPath;
-		this.inboxPath = inboxPath;
-		firePropertyChange("inboxPath", oldValue, inboxPath);
-
-	}
-
-	public boolean isAutoModus() {
-
-		return autoModus;
-	}
-
-	public void setAutoModus(boolean autoModus) {
-
-		boolean oldValue = this.autoModus;
-		this.autoModus = autoModus;
-		firePropertyChange("inboxPath", oldValue, autoModus);
-
-	}
-
-	public int getIntervall() {
-		return intervall;
-	}
-
-	public void setIntervall(int intervall) {
-
-		int oldValue = this.intervall;
-		this.intervall = intervall;
-		firePropertyChange("inboxPath", oldValue, intervall);
+		String oldValue = this.targetPath;
+		this.targetPath = targetPath;
+		firePropertyChange("targetPath", oldValue, targetPath);
 
 	}
 

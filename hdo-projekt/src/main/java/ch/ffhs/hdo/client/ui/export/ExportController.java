@@ -5,9 +5,9 @@ import java.util.ResourceBundle;
 import ch.ffhs.hdo.client.ui.base.Controller;
 
 /**
- * Controller für die Options
+ * Controller für die den Konfigurations-Export
  * 
- * @author Denis Bittante
+ * @author Jonas Segessemann
  */
 public class ExportController extends Controller<ExportModel, ExportView> {
 
