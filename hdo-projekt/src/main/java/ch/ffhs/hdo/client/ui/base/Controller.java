@@ -12,20 +12,19 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 	// https://docs.oracle.com/javase/tutorial/i18n/resbundle/concept.html
 
 	ResourceBundle resourceBundle;
-	JFrame frame;
 	M model;
 	V view;
 
-	public Controller() {
-
-		resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle", Locale.getDefault(),
-				this.getClass().getClassLoader());
-		frame = new JFrame();
+	public Controller(M model) {
+		this.resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
+		this.model = model;
 
 	}
 
+	public abstract void initializeView();
+
 	public ResourceBundle getResourceBundle() {
-		return resourceBundle;
+		return this.resourceBundle;
 
 	}
 
@@ -33,16 +32,17 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 		return model;
 	}
 
-	public JFrame getMainWindow() {
-		frame.setTitle("title");
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.setSize(300, 300);
-		frame.setLocation(100, 100);
+	public void show() {
 
-		return frame;
+		this.view.show();
 	}
 
 	public V getView() {
 		return view;
 	}
+
+	public void setView(V view) {
+		this.view = view;
+	}
+
 }
