@@ -19,9 +19,9 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 
 	private final String I18N = "hdo.export";
 	private final String TITLE_KEY = I18N + ".title";
-	private JTextField targetPathTextField;
-	private JFileChooser targetPathFileChooser;
-	private JButton targetPathChooserButton;
+	private JTextField pathTextField;
+	private JFileChooser pathFileChooser;
+	private JButton pathChooserButton;
 
 	private JButton exportButton;
 	private JButton cancelButton;
@@ -42,12 +42,12 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 
 	private void createComponents() {
 
-		targetPathTextField = new JTextField();
+		pathTextField = new JTextField();
 
-		targetPathChooserButton = new JButton(getMessage(I18N + ".button.TargetPathChooser"));
-		targetPathChooserButton.addActionListener(this);
-		targetPathFileChooser = new JFileChooser();
-		targetPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		pathChooserButton = new JButton(getMessage(I18N + ".button.pathChooser"));
+		pathChooserButton.addActionListener(this);
+		pathFileChooser = new JFileChooser();
+		pathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		
 
 		exportButton = new JButton(getMessage(I18N + ".button.export"));
@@ -60,9 +60,9 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 				.columns("right:pref, 5dlu,[30dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
 
-		builder.addLabel(getMessage(I18N + ".label.TargetPath")).rc(3, 1);
-		builder.add(targetPathTextField).rcw(3, 3, 3);
-		builder.add(targetPathChooserButton).rcw(3, 7, 1);
+		builder.addLabel(getMessage(I18N + ".label.targetPath")).rc(3, 1);
+		builder.add(pathTextField).rcw(3, 3, 3);
+		builder.add(pathChooserButton).rcw(3, 7, 1);
 
 		builder.add(exportButton).rcw(11, 3, 1);
 		builder.add(cancelButton).rcw(11, 5, 1);
@@ -74,16 +74,26 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 
 		setDimension(430, 145);
 	}
-
+		
 	private void configureBindings() {
 
 	}
 
+	public void addExportButtonListener(ActionListener listenForExportButton){
+		this.exportButton.addActionListener(listenForExportButton);
+	}
+	
+	public String getSelectedPath(){
+		return pathTextField.getText();
+	}
+	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == targetPathChooserButton) {
-			int returnVal = targetPathFileChooser.showOpenDialog(null);
+		if (e.getSource() == pathChooserButton) {
+			int returnVal = pathFileChooser.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = targetPathFileChooser.getSelectedFile();
+                File folder = pathFileChooser.getSelectedFile();
+                pathTextField.setText(folder.getAbsolutePath());
+                
             }
 		}
 	}
