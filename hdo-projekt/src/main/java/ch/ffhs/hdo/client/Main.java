@@ -1,27 +1,41 @@
-package ch.ffhs.hdo.client;
+﻿package ch.ffhs.hdo.client;
 
-import javax.swing.JFrame;
-
+import ch.ffhs.hdo.client.ui.hauptfenster.MainController;
+import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.einstellungen.OptionController;
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.export.ExportController;
 import ch.ffhs.hdo.client.ui.export.ExportModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetController;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.client.ui.imports.ImportController;
+import ch.ffhs.hdo.client.ui.imports.ImportModel;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		// Init Controller
+		MainController mainController = new MainController(new MainModel());
 		OptionController optionController = new OptionController(new OptionModel());
 		ExportController exportController = new ExportController(new ExportModel());
 		RegelsetController regelsetController = new RegelsetController(new RegelsetModel());
+		ImportController importController = new ImportController(new ImportModel());
 		
 		// Start MainView
+		mainController.show();
+		
+		// Start OptionView
 		optionController.show();
+		
+		// Start ExportView
 		exportController.show();
-		regelsetController.show();
-	}
 
+		// Start RegelsetView	
+		regelsetController.show();
+		
+		// Start ImportView
+		// Bitte zum Testen die config.properties im 'resources' Ordner wo das resourceBundle auswählen...
+		importController.show();
+	}
 }
