@@ -2,7 +2,6 @@ package ch.ffhs.hdo.client.ui.einstellungen;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -17,8 +16,6 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
-import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
-import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
 
 public class OptionView extends View<OptionModel> {
 
@@ -43,9 +40,11 @@ public class OptionView extends View<OptionModel> {
 	private void initComponents() {
 		createComponents();
 		layoutForm();
-		configureBindings();
 	}
 
+	
+	
+	
 	private void createComponents() {
 
 		inboxPathTextField = new JTextField();
@@ -91,7 +90,8 @@ public class OptionView extends View<OptionModel> {
 		setDimension(400, 400);
 	}
 
-	private void configureBindings() {
+	@Override
+	public void configureBindings() {
 
 	}
 
@@ -111,7 +111,7 @@ public class OptionView extends View<OptionModel> {
 
 		public void actionPerformed(ActionEvent e) {
 
-			getHander().performOperation(CloseViewOperation.class);
+			getHandler().performOperation(CloseViewOperation.class);
 
 		}
 

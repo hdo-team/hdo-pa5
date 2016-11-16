@@ -50,7 +50,11 @@ public abstract class View<M extends Model> {
 
 	public void setModel(M model) {
 		this.model = model;
+		configureBindings();
+
 	}
+
+	public abstract void configureBindings();
 
 	public JFrame getFrame() {
 		return frame;
@@ -87,8 +91,12 @@ public abstract class View<M extends Model> {
 		this.viewHandler = viewHandler;
 	}
 
-	public ViewHandler getHander() {
+	public ViewHandler getHandler() {
 		return viewHandler;
+	}
+
+	public M getModel() {
+		return model;
 	}
 
 }

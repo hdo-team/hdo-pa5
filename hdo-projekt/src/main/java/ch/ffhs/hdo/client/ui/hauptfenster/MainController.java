@@ -1,8 +1,5 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
-
-import java.util.ResourceBundle;
-
 import ch.ffhs.hdo.client.ui.base.Controller;
 
 /**
@@ -11,8 +8,7 @@ import ch.ffhs.hdo.client.ui.base.Controller;
  * @author Jonas Segessemann
  */
 public class MainController extends Controller<MainModel, MainView> {
-	
-	
+
 	public MainController(MainModel model) {
 		super(model);
 
@@ -27,7 +23,8 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
 
+		//getView().getFolderOverview().setModel(getModel().getFolderModel());
+
 	}
-	
-	
+
 }

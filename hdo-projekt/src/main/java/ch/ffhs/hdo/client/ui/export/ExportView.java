@@ -75,7 +75,8 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 		setDimension(430, 145);
 	}
 		
-	private void configureBindings() {
+	@Override
+	public void configureBindings() {
 
 	}
 

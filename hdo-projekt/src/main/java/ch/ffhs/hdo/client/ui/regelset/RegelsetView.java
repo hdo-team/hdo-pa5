@@ -200,7 +200,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		setDimension(800, 600);
 	}
 
-	private void configureBindings() {
+	@Override
+	public void configureBindings() {
 
 	}
 

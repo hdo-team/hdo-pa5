@@ -27,20 +27,20 @@ public class MainView extends View<MainModel> {
 
 	private final String I18N = "hdo.main";
 	private final String TITLE_KEY = I18N + ".title";
-	
+
 	private JMenuBar menuBar;
-	private JMenu file,options;
+	private JMenu file, options;
 	private JMenuItem fileResort, fileImport, fileExport, fileExit, optionsConfig;
-	
+
 	private JPanel folderPane;
 	private JScrollPane folderScrollPane;
-	
+
 	private JPanel rulsetPane;
 	private JScrollPane rulsetScrollPane;
-	
+
 	private JSplitPane layoutsplitpane;
 	Dimension minimumSize;
-	
+
 	public MainView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 		setTitle(getMessage(TITLE_KEY));
@@ -65,27 +65,22 @@ public class MainView extends View<MainModel> {
 		fileExit = new JMenuItem(getMessage(I18N + ".menuitem.exit"), KeyEvent.VK_T);
 		optionsConfig = new JMenuItem(getMessage(I18N + ".menuitem.config"), KeyEvent.VK_T);
 
-		
 		minimumSize = new Dimension(200, 150);
-		
-		//Create Folder Panel
+
+		// Create Folder Panel
 		folderPane = new JPanel();
 		folderScrollPane = new JScrollPane(folderPane);
-		
-		//Create Rulset Panel
+
+		// Create Rulset Panel
 		rulsetPane = new JPanel();
 		rulsetScrollPane = new JScrollPane(rulsetPane);
-	
-		
-		layoutsplitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				folderScrollPane, rulsetScrollPane);
-		
 
-	
+		layoutsplitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, folderScrollPane, rulsetScrollPane);
+
 	}
 
 	private void layoutForm() {
-		//Create Menubar Layout
+		// Create Menubar Layout
 		menuBar.add(file);
 		menuBar.add(options);
 		file.add(fileResort);
@@ -93,8 +88,8 @@ public class MainView extends View<MainModel> {
 		file.add(fileExport);
 		file.add(fileExit);
 		options.add(optionsConfig);
-	
-		//Create Main View Layout
+
+		// Create Main View Layout
 		layoutsplitpane.setOneTouchExpandable(true);
 		layoutsplitpane.setDividerLocation(150);
 		folderScrollPane.setMinimumSize(minimumSize);
@@ -109,14 +104,17 @@ public class MainView extends View<MainModel> {
 
 		getFrame().setJMenuBar(menuBar);
 		getFrame().add(layoutsplitpane, BorderLayout.CENTER);
-		
-		
-		
-		setDimension(900, 900);
-		
-	}
-		
-	private void configureBindings() {
 
+		setDimension(900, 900);
+
+	}
+
+	public void configureBindings() {
+
+	}
+
+	public View<FolderModel> getFolderOverview() {
+
+		return null;
 	}
 }
