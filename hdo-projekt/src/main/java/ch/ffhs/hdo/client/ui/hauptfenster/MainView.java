@@ -25,6 +25,7 @@ import ch.ffhs.hdo.client.ui.base.View;
 
 public class MainView extends View<MainModel> {
 
+	private ResourceBundle resourceBundle;
 	private final String I18N = "hdo.main";
 	private final String TITLE_KEY = I18N + ".title";
 
@@ -33,6 +34,7 @@ public class MainView extends View<MainModel> {
 	private JMenuItem fileResort, fileImport, fileExport, fileExit, optionsConfig;
 
 	private JPanel folderPane;
+	private FolderTreeView folderTreeView;
 	private JScrollPane folderScrollPane;
 
 	private JPanel rulsetPane;
@@ -43,6 +45,7 @@ public class MainView extends View<MainModel> {
 
 	public MainView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
+		this.resourceBundle=resourceBundle;
 		setTitle(getMessage(TITLE_KEY));
 
 		initComponents();
@@ -69,7 +72,8 @@ public class MainView extends View<MainModel> {
 
 		// Create Folder Panel
 		folderPane = new JPanel();
-		folderScrollPane = new JScrollPane(folderPane);
+		folderTreeView = new FolderTreeView(resourceBundle, folderPane);
+		folderScrollPane = new JScrollPane(folderTreeView.getPanel());
 
 		// Create Rulset Panel
 		rulsetPane = new JPanel();
@@ -113,8 +117,10 @@ public class MainView extends View<MainModel> {
 
 	}
 
-	public View<FolderModel> getFolderOverview() {
-
-		return null;
+	public View<FolderModel> getFolderTreeView() {
+		return null; //Hier Kommt die FolderTreeView Instanz
+	}
+	public View<RulsetModel> getRulsetTableView() {
+		return null; //Hier Kommt die RulsetTableView Instanz
 	}
 }

@@ -4,9 +4,9 @@ import java.util.ResourceBundle;
 
 import ch.ffhs.hdo.client.ui.base.View;
 
-public class FolderOverviewView extends View<FolderModel> {
+public class RulsetTableView extends View<RulsetModel> {
 
-	public FolderOverviewView(ResourceBundle resourceBundle) {
+	public RulsetTableView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 
 	
