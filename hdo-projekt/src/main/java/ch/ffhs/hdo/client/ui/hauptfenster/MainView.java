@@ -14,6 +14,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.border.EmptyBorder;
+import javax.swing.tree.TreeModel;
+
 import java.awt.event.*;
 import java.io.File;
 
@@ -64,7 +66,7 @@ public class MainView extends View<MainModel> {
 		optionsConfig = new JMenuItem(getMessage(I18N + ".menuitem.config"), KeyEvent.VK_T);
 
 		
-		minimumSize = new Dimension(100, 50);
+		minimumSize = new Dimension(200, 150);
 		
 		//Create Folder Panel
 		folderPane = new JPanel();
@@ -110,7 +112,7 @@ public class MainView extends View<MainModel> {
 		
 		
 		
-		setDimension(430, 145);
+		setDimension(900, 900);
 		
 	}
 		

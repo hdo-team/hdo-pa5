@@ -12,6 +12,7 @@ import ch.ffhs.hdo.client.ui.base.Controller;
  */
 public class MainController extends Controller<MainModel, MainView> {
 	
+	
 	public MainController(MainModel model) {
 		super(model);
 
@@ -25,6 +26,7 @@ public class MainController extends Controller<MainModel, MainView> {
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
+
 	}
 	
 	
