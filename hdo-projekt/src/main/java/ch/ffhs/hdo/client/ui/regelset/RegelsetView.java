@@ -14,6 +14,9 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 
 /******************************************************
@@ -179,9 +182,23 @@ public class RegelsetView extends View<RegelsetModel> {
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(5, 1, 7);
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(7, 1, 7);
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(7, 4, 3);			
-			paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
-			paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
-	    
+			
+		//	 JFrame frame=new JFrame("date display");
+		    JDatePickerImpl datePickerFrom;
+		    JDatePickerImpl datePickerTo;
+		    UtilDateModel model = new UtilDateModel();
+		    model.setDate(2016, 11, 16);
+		    model.setSelected(true);
+		    JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		    datePickerFrom = new JDatePickerImpl(datePanel, null);
+		    datePickerTo = new JDatePickerImpl(datePanel, null);
+			
+			//paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
+			//paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
+		    paneBuilder.add(datePickerFrom).rcw(9, 1, 2);
+		    paneBuilder.add(datePickerTo).rcw(9, 4, 3);
+		        
+		        
 			paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
 
 			rulePanel[i] = paneBuilder.build();
