@@ -11,7 +11,7 @@ import ch.ffhs.hdo.client.ui.base.Controller;
  * @author Jonas Segessemann
  */
 public class MainController extends Controller<MainModel, MainView> {
-
+	
 	public MainController(MainModel model) {
 		super(model);
 
