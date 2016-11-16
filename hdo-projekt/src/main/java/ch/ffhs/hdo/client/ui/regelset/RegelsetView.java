@@ -18,13 +18,12 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-
 /******************************************************
  * 
  * 
- *    erste QUICK n DIRTY Version zum Ausprobieren   
- * 	   		
- *    wird noch überarbeitet !!!!!!!!!!!!!!!!
+ * erste QUICK n DIRTY Version zum Ausprobieren
+ * 
+ * wird noch überarbeitet !!!!!!!!!!!!!!!!
  * 
  * 
  * 
@@ -34,48 +33,35 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
  *
  */
 
-
-
-
-
-
-
-
-
-
 public class RegelsetView extends View<RegelsetModel> {
 
 	private final String I18N = "hdo.regelset";
 	private final String TITLE_KEY = I18N + ".title";
- 	private final String CONTEXT_COMBOBOXKEY = I18N + ".rule.context";
- 	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".rule.attribute";
+	private final String CONTEXT_COMBOBOXKEY = I18N + ".rule.context";
+	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".rule.attribute";
 	private JTextField regelsetNameTextField;
 	private JTextField dateinamenKonfigurationTextField;
 	private JTextField fromDateTextField[];
 	private JTextField toDateTextField[];
 
 	private JComboBox<String> targetDirectoryComboBox;
-	
+
 	private JComboBox contextComboBox;
 	private JComboBox attributeComboBox[] = new JComboBox[4];
 	private String contextComboBoxList[] = new String[3];
 	private String attributeComboBoxList[] = new String[3];
 
-	
-	
-	
 	private JButton addButton;
 	private JButton deleteButton;
 
 	private JButton saveButton;
 	private JButton cancelButton;
-	
+
 	private JCheckBox statusCheckBox;
 	private JCheckBox statusCheckBox2;
-	
+
 	JPanel rulePanel[] = new JPanel[4];
 	private JTabbedPane tabbedPane;
-
 
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -85,7 +71,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	}
 
-	
 	private void initComponents() {
 		createComponents();
 		layoutForm();
@@ -97,25 +82,21 @@ public class RegelsetView extends View<RegelsetModel> {
 		regelsetNameTextField = new JTextField();
 
 		// TODO: DirectoryListe ab FileSystem Lesen !!
-		String targetDirectoryListe[] = { "C:\\temp",
-										  "C:\\daten\\rechnungen",
-										  "C:\\daten\\fotos",
-										  "C:\\daten\\gugus" };
+		String targetDirectoryListe[] = { "C:\\temp", "C:\\daten\\rechnungen", "C:\\daten\\fotos", "C:\\daten\\gugus" };
 		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
-		
+
 		dateinamenKonfigurationTextField = new JTextField();
 		fromDateTextField = new JTextField[4];
 		toDateTextField = new JTextField[4];
 		statusCheckBox = new JCheckBox(getMessage(I18N + ".checkbox.status"));
 		statusCheckBox2 = new JCheckBox(getMessage(I18N + ".checkbox.status"));
-		
-		tabbedPane =  new JTabbedPane(JTabbedPane.TOP);
 
-		contextComboBoxList[0] = getMessage(CONTEXT_COMBOBOXKEY + ".pdf.property"); 
-		contextComboBoxList[1] = getMessage(CONTEXT_COMBOBOXKEY + ".file.attribute"); 
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+
+		contextComboBoxList[0] = getMessage(CONTEXT_COMBOBOXKEY + ".pdf.property");
+		contextComboBoxList[1] = getMessage(CONTEXT_COMBOBOXKEY + ".file.attribute");
 		contextComboBoxList[2] = getMessage(CONTEXT_COMBOBOXKEY + ".file.content");
 
-		
 		attributeComboBoxList[0] = getMessage(ATTRIBUTE_COMBOBOXKEY + ".date");
 		attributeComboBoxList[1] = getMessage(ATTRIBUTE_COMBOBOXKEY + ".author");
 		attributeComboBoxList[2] = getMessage(ATTRIBUTE_COMBOBOXKEY + ".size");
@@ -123,21 +104,20 @@ public class RegelsetView extends View<RegelsetModel> {
 		attributeComboBox[1] = new JComboBox<String>(attributeComboBoxList);
 		attributeComboBox[2] = new JComboBox<String>(attributeComboBoxList);
 		attributeComboBox[3] = new JComboBox<String>(attributeComboBoxList);
-		
-		
+
 		fromDateTextField[0] = new JTextField();
 		fromDateTextField[1] = new JTextField();
 		fromDateTextField[2] = new JTextField();
 		fromDateTextField[3] = new JTextField();
-		
+
 		toDateTextField[0] = new JTextField();
 		toDateTextField[1] = new JTextField();
 		toDateTextField[2] = new JTextField();
 		toDateTextField[3] = new JTextField();
-		
+
 		addButton = new JButton(getMessage(I18N + ".button.add.icon"));
 		deleteButton = new JButton(getMessage(I18N + ".button.delete.icon"));
-		
+
 		saveButton = new JButton(getMessage("base.save"));
 		cancelButton = new JButton(getMessage("base.cancel"));
 	}
@@ -147,22 +127,21 @@ public class RegelsetView extends View<RegelsetModel> {
 		FormBuilder builder = FormBuilder.create()
 				.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
-				
+
 		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(1, 1, 7);
 		builder.add(regelsetNameTextField).rcw(3, 1, 3);
 
 		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 7);
 		builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
-		
+
 		builder.addLabel(getMessage(I18N + ".label.filenameConfigure")).rcw(9, 1, 7);
 		builder.add(dateinamenKonfigurationTextField).rcw(11, 1, 3);
 
 		builder.addLabel(getMessage(I18N + ".label.status")).rcw(13, 1, 3);
 		builder.add(statusCheckBox).rcw(15, 1, 3);
-		
 
-		//----------------------
-		// mit Builder "innere" verschachtelte  JPane für Regel_<x>
+		// ----------------------
+		// mit Builder "innere" verschachtelte JPane für Regel_<x>
 		//
 		//
 		// MUSS in END-Version aus Model "gezogen" werden
@@ -171,45 +150,44 @@ public class RegelsetView extends View<RegelsetModel> {
 			FormBuilder paneBuilder = FormBuilder.create()
 					.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
 					.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
-		
+
 			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
-			
+
 			contextComboBox = new JComboBox<String>(contextComboBoxList);
 			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
-			
+
 			paneBuilder.add(attributeComboBox[i]).rcw(3, 4, 3);
-			
+
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(5, 1, 7);
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(7, 1, 7);
-			paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(7, 4, 3);			
-			
-		//	 JFrame frame=new JFrame("date display");
-		    JDatePickerImpl datePickerFrom;
-		    JDatePickerImpl datePickerTo;
-		    UtilDateModel model = new UtilDateModel();
-		    model.setDate(2016, 11, 16);
-		    model.setSelected(true);
-		    JDatePanelImpl datePanel = new JDatePanelImpl(model);
-		    datePickerFrom = new JDatePickerImpl(datePanel, null);
-		    datePickerTo = new JDatePickerImpl(datePanel, null);
-			
-			//paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
-			//paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
-		    paneBuilder.add(datePickerFrom).rcw(9, 1, 2);
-		    paneBuilder.add(datePickerTo).rcw(9, 4, 3);
-		        
-		        
+			paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(7, 4, 3);
+
+			// JFrame frame=new JFrame("date display");
+			JDatePickerImpl datePickerFrom;
+			JDatePickerImpl datePickerTo;
+			UtilDateModel model = new UtilDateModel();
+			model.setDate(2016, 11, 16);
+			model.setSelected(true);
+			JDatePanelImpl datePanel = new JDatePanelImpl(model);
+			datePickerFrom = new JDatePickerImpl(datePanel, null);
+			datePickerTo = new JDatePickerImpl(datePanel, null);
+
+			// paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
+			// paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
+			paneBuilder.add(datePickerFrom).rcw(9, 1, 2);
+			paneBuilder.add(datePickerTo).rcw(9, 4, 3);
+
 			paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
 
 			rulePanel[i] = paneBuilder.build();
 			tabbedPane.addTab("Test_" + i, rulePanel[i]);
 		}
-		
-	    builder.addSeparator(null).rcw(23, 1, 7);
-	    builder.add(tabbedPane).rcw(25, 1, 1);
-	    builder.addSeparator(null).rcw(31, 1, 7);
 
-	    builder.add(addButton).rcw(33, 1, 1);
+		builder.addSeparator(null).rcw(23, 1, 7);
+		builder.add(tabbedPane).rcw(25, 1, 1);
+		builder.addSeparator(null).rcw(31, 1, 7);
+
+		builder.add(addButton).rcw(33, 1, 1);
 		builder.add(deleteButton).rcw(33, 3, 1);
 		builder.add(saveButton).rcw(33, 5, 1);
 		builder.add(cancelButton).rcw(33, 7, 1);

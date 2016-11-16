@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
+
 public abstract class View<M extends Model> {
 
 	ResourceBundle resourceBundle;
@@ -14,6 +16,7 @@ public abstract class View<M extends Model> {
 
 	JFrame frame = new JFrame();
 	M model;
+	ViewHandler viewHandler;
 
 	Dimension dimension;
 
@@ -73,6 +76,19 @@ public abstract class View<M extends Model> {
 
 	public String getMessage(String key) {
 		return resourceBundle.getString(key);
+	}
+
+	public void dispose() {
+		frame.setVisible(false);
+		frame.dispose();
+	}
+
+	public void setHandler(ViewHandler viewHandler) {
+		this.viewHandler = viewHandler;
+	}
+
+	public ViewHandler getHander() {
+		return viewHandler;
 	}
 
 }

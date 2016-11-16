@@ -1,8 +1,11 @@
 package ch.ffhs.hdo.client.ui.einstellungen;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -13,6 +16,9 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
+import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
 
 public class OptionView extends View<OptionModel> {
 
@@ -51,6 +57,10 @@ public class OptionView extends View<OptionModel> {
 		autoModusCheckBox = new JCheckBox();
 		saveButton = new JButton(getMessage("base.save"));
 		cancelButton = new JButton(getMessage("base.cancel"));
+
+		cancelButton.addActionListener(new CloseAction());
+		saveButton.addActionListener(new SaveAction());
+
 	}
 
 	private void layoutForm() {
@@ -82,6 +92,28 @@ public class OptionView extends View<OptionModel> {
 	}
 
 	private void configureBindings() {
+
+	}
+
+	
+
+	private class SaveAction extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+
+			// Saving Operation to implemento to save settings into Database.
+
+		}
+
+	}
+
+	private class CloseAction extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+
+			getHander().performOperation(CloseViewOperation.class);
+
+		}
 
 	}
 

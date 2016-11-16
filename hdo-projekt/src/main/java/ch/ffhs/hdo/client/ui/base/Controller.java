@@ -1,10 +1,6 @@
 package ch.ffhs.hdo.client.ui.base;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 public abstract class Controller<M extends Model, V extends View<M>> {
 
@@ -43,6 +39,14 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 
 	public void setView(V view) {
 		this.view = view;
+	}
+
+	public void terminate() {
+
+		getView().dispose();
+		getModel().deleteObservers();
+		
+
 	}
 
 }

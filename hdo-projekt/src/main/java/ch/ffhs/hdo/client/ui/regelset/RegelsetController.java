@@ -1,7 +1,5 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
-import java.util.ResourceBundle;
-
 import ch.ffhs.hdo.client.ui.base.Controller;
 
 /**
