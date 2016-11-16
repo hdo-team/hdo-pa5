@@ -1,26 +1,28 @@
 package ch.ffhs.hdo.client.ui.export;
 
 import java.awt.BorderLayout;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.*;
-import java.io.File;
 
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePath;
 
-public class ExportView extends View<ExportModel> implements ActionListener{
+public class ExportView extends View<ExportModel> {
 
 	private final String I18N = "hdo.export";
 	private final String TITLE_KEY = I18N + ".title";
 	private JTextField pathTextField;
-	private JFileChooser pathFileChooser;
 	private JButton pathChooserButton;
 
 	private JButton exportButton;
@@ -37,17 +39,30 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 	private void initComponents() {
 		createComponents();
 		layoutForm();
-		configureBindings();
+
 	}
 
+	@Override
+	public void configureBindings() {
+		getModel().addObserver(new Observer() {
+
+			public void update(Observable o, Object arg) {
+
+				pathTextField.setText((String) arg);
+
+				System.out.println(o.toString() + " " + arg.toString());
+
+			}
+		});
+
+	}
+	
 	private void createComponents() {
 
 		pathTextField = new JTextField();
 
 		pathChooserButton = new JButton(getMessage(I18N + ".button.pathChooser"));
-		pathChooserButton.addActionListener(this);
-		pathFileChooser = new JFileChooser();
-		pathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		pathChooserButton.addActionListener(new ChooseFilePathAction());
 		
 
 		exportButton = new JButton(getMessage(I18N + ".button.export"));
@@ -75,28 +90,15 @@ public class ExportView extends View<ExportModel> implements ActionListener{
 		setDimension(430, 145);
 	}
 		
-	@Override
-	public void configureBindings() {
 
-	}
+	private class ChooseFilePathAction extends AbstractAction {
 
-	public void addExportButtonListener(ActionListener listenForExportButton){
-		this.exportButton.addActionListener(listenForExportButton);
-	}
-	
-	public String getSelectedPath(){
-		return pathTextField.getText();
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == pathChooserButton) {
-			int returnVal = pathFileChooser.showOpenDialog(null);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File folder = pathFileChooser.getSelectedFile();
-                pathTextField.setText(folder.getAbsolutePath());
-                
-            }
+		public void actionPerformed(ActionEvent e) {
+
+			getHandler().performOperation(ChooseFilePath.class);
+
 		}
+
 	}
 
 }

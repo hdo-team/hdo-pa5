@@ -5,6 +5,12 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
+import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePath;
+import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
+import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
+import ch.ffhs.hdo.client.ui.utils.ReadFile;
+import ch.ffhs.hdo.client.ui.utils.ReadFileExecutable;
 
 /**
  * Controller für die den Konfigurations-Export
@@ -13,30 +19,31 @@ import ch.ffhs.hdo.client.ui.base.Controller;
  */
 public class ExportController extends Controller<ExportModel, ExportView> {
 
+	private ViewHandlerImpl viewHandler;
+	
 	public ExportController(ExportModel model) {
+		
 		super(model);
-
 		setView(new ExportView(getResourceBundle()));
+		
+		viewHandler = new ViewHandlerImpl();
 
+		model.setFilePath(System.getProperty("user.home"));
+
+		initializeViewHandler();
 		initializeView();
-
 	}
 
-	@Override
+	private void initializeViewHandler() {
+		viewHandler.addOperation(ChooseFilePath.class, new FolderChooserExecuter(getModel()));
+
+	}
+	
 	public void initializeView() {
+		getView().setHandler(viewHandler);
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
-		getView().addExportButtonListener(new ExportButtonListener());
 	}
-
-
-	class ExportButtonListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-			//TODO export configuration
-        	System.out.println("Export to: "+getView().getSelectedPath());
-		}
-    }
 	
 	
 }

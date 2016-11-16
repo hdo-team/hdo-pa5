@@ -1,8 +1,8 @@
 package ch.ffhs.hdo.client.ui.export;
 
-import ch.ffhs.hdo.client.ui.base.Model;
+import ch.ffhs.hdo.client.ui.utils.FileModel;
 
-public class ExportModel extends Model {
+public class ExportModel extends FileModel {
 
 
 }
