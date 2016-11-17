@@ -2,29 +2,28 @@ package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.tree.TreeModel;
-
-import java.awt.event.*;
-import java.io.File;
 
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
+<<<<<<< HEAD
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
+=======
+import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
+>>>>>>> origin/master
 
 public class MainView extends View<MainModel> {
 
@@ -71,6 +70,14 @@ public class MainView extends View<MainModel> {
 		fileResort = new JMenuItem(getMessage(I18N + ".menuitem.resort"), KeyEvent.VK_T);
 		fileImport = new JMenuItem(getMessage(I18N + ".menuitem.import"), KeyEvent.VK_T);
 		fileExport = new JMenuItem(getMessage(I18N + ".menuitem.export"), KeyEvent.VK_T);
+		
+		fileExport.addActionListener(new AbstractAction() {
+
+			public void actionPerformed(ActionEvent e) {
+				getHandler().performOperation(ExportViewStartOperation.class);
+			}
+		});
+		
 		fileExit = new JMenuItem(getMessage(I18N + ".menuitem.exit"), KeyEvent.VK_T);
 		optionsConfig = new JMenuItem(getMessage(I18N + ".menuitem.config"), KeyEvent.VK_T);
 
