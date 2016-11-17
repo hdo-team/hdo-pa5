@@ -20,6 +20,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 
 public class MainView extends View<MainModel> {
@@ -91,6 +92,13 @@ public class MainView extends View<MainModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperation(ImportViewStartOperation.class);
+			}
+		});
+		
+		fileResort.addActionListener(new AbstractAction() {
+			
+			public void actionPerformed(ActionEvent e) {
+				getHandler().performOperation(RegelsetViewStartOperation.class);
 			}
 		});
 		

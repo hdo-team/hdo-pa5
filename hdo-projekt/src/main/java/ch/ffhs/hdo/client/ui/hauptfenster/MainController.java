@@ -6,6 +6,8 @@ import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartExecutable;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 
@@ -32,6 +34,7 @@ public class MainController extends Controller<MainModel, MainView> {
 	private void initlizeHandler() {
 
 		this.viewHandler.addOperation(OptionViewStartOperation.class, new OptionViewStartExecutable());
+		this.viewHandler.addOperation(RegelsetViewStartOperation.class, new RegelsetViewStartExecutable());
 		this.viewHandler.addOperation(ExportViewStartOperation.class, new ExportViewStartExecutable());
 		this.viewHandler.addOperation(ImportViewStartOperation.class, new ImportViewStartExecutable());
 	}
