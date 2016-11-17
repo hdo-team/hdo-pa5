@@ -23,22 +23,22 @@ public class Main {
 
 		// Init Controller
 		MainController mainController = new MainController(new MainModel());
-		ExportController exportController = new ExportController(new ExportModel());
-		RegelsetController regelsetController = new RegelsetController(new RegelsetModel());
-		ImportController importController = new ImportController(new ImportModel());
+		//ExportController exportController = new ExportController(new ExportModel());
+		//RegelsetController regelsetController = new RegelsetController(new RegelsetModel());
+		//ImportController importController = new ImportController(new ImportModel());
 
 		// Start MainView
 		mainController.show();
 
 		// Start ExportView
-		exportController.show();
+		//exportController.show();
 
 		// Start RegelsetView
-		regelsetController.show();
+		//regelsetController.show();
 
 		// Start ImportView
 		// Bitte zum Testen die config.properties im 'resources' Ordner wo das
 		// resourceBundle auswählen...
-		importController.show();
+		//importController.show();
 	}
 }
