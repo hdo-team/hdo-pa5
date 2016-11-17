@@ -2,6 +2,15 @@ package ch.ffhs.hdo.client.ui.einstellungen;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.HierarchyBoundsListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.image.DataBufferInt;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -11,11 +20,16 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 
 public class OptionView extends View<OptionModel> {
 
@@ -28,6 +42,7 @@ public class OptionView extends View<OptionModel> {
 	private JCheckBox autoModusCheckBox;
 	private JButton saveButton;
 	private JButton cancelButton;
+	private HashMap<String, Integer> comboBoxListe = new HashMap<String, Integer>();
 
 	public OptionView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -42,17 +57,16 @@ public class OptionView extends View<OptionModel> {
 		layoutForm();
 	}
 
-	
-	
-	
 	private void createComponents() {
 
 		inboxPathTextField = new JTextField();
 
-		String comboBoxListe[] = { getMessage(COMBOBOXKEY + ".60"), getMessage(COMBOBOXKEY + ".30"),
-				getMessage(COMBOBOXKEY + ".15"), getMessage(COMBOBOXKEY + ".5") };
+		comboBoxListe.put(getMessage(COMBOBOXKEY + ".60"), 3600);
+		comboBoxListe.put(getMessage(COMBOBOXKEY + ".30"), 1800);
+		comboBoxListe.put(getMessage(COMBOBOXKEY + ".15"), 900);
+		comboBoxListe.put(getMessage(COMBOBOXKEY + ".5"), 300);
 
-		intervallComboBox = new JComboBox<String>(comboBoxListe);
+		intervallComboBox = new JComboBox<String>(comboBoxListe.keySet().toArray(new String[0]));
 		autoModusCheckBox = new JCheckBox();
 		saveButton = new JButton(getMessage("base.save"));
 		cancelButton = new JButton(getMessage("base.cancel"));
@@ -93,16 +107,51 @@ public class OptionView extends View<OptionModel> {
 	@Override
 	public void configureBindings() {
 
-	}
+		inboxPathTextField.setText(getModel().getInboxPath());
+		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getIntervall() / 60);
+		intervallComboBox.setSelectedItem(getMessage(resourcebundlekey));
+		autoModusCheckBox.setSelected(getModel().isAutoModus());
 
-	
+		inboxPathTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+			public void changedUpdate(DocumentEvent e) {
+				getModel().setInboxPath(inboxPathTextField.getText());
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				getModel().setInboxPath(inboxPathTextField.getText());
+
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				getModel().setInboxPath(inboxPathTextField.getText());
+
+			}
+		});
+
+		intervallComboBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				getModel().setIntervall(comboBoxListe.get(intervallComboBox.getSelectedItem()));
+
+			}
+		});
+
+		autoModusCheckBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				getModel().setAutoModus(autoModusCheckBox.isSelected());
+
+			}
+		});
+	}
 
 	private class SaveAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 
-			// Saving Operation to implemento to save settings into Database.
-
+			// Saves settings into Database.
+			getHandler().performOperation(OptionsSaveOperation.class);
 		}
 
 	}

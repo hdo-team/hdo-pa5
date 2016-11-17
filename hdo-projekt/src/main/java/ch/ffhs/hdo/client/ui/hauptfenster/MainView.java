@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -22,6 +23,7 @@ import java.io.File;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 
 public class MainView extends View<MainModel> {
 
@@ -62,12 +64,22 @@ public class MainView extends View<MainModel> {
 		menuBar = new JMenuBar();
 		file = new JMenu(getMessage(I18N + ".menu.file"));
 		options = new JMenu(getMessage(I18N + ".menu.options"));
+
+		
+
 		fileResort = new JMenuItem(getMessage(I18N + ".menuitem.resort"), KeyEvent.VK_T);
 		fileImport = new JMenuItem(getMessage(I18N + ".menuitem.import"), KeyEvent.VK_T);
 		fileExport = new JMenuItem(getMessage(I18N + ".menuitem.export"), KeyEvent.VK_T);
 		fileExit = new JMenuItem(getMessage(I18N + ".menuitem.exit"), KeyEvent.VK_T);
 		optionsConfig = new JMenuItem(getMessage(I18N + ".menuitem.config"), KeyEvent.VK_T);
 
+		optionsConfig.addActionListener(new AbstractAction() {
+
+			public void actionPerformed(ActionEvent e) {
+				getHandler().performOperation(OptionViewStartOperation.class);
+			}
+		});
+		
 		minimumSize = new Dimension(200, 150);
 
 		// Create Folder Panel

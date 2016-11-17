@@ -4,6 +4,8 @@ import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
+import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
+import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperationExecutable;
 
 /**
  * Controller für die Options
@@ -19,9 +21,9 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 		setView(new OptionView(getResourceBundle()));
 		viewHandler = new ViewHandlerImpl();
-		
+
 		setupViewHandler();
-		
+
 		initializeView();
 
 	}
@@ -35,6 +37,8 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	private void setupViewHandler() {
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
+		viewHandler.addOperation(OptionsSaveOperation.class, new OptionsSaveOperationExecutable(getModel()));
+
 	}
 
 }

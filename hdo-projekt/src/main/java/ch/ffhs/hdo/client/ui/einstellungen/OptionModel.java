@@ -5,8 +5,8 @@ import ch.ffhs.hdo.client.ui.base.Model;
 public class OptionModel extends Model {
 
 	private String inboxPath;
-	private boolean autoModus;
-	private int intervall;
+	private boolean autoModus = false;
+	private int intervall = -1;
 
 	public String getInboxPath() {
 		return inboxPath;
@@ -29,7 +29,7 @@ public class OptionModel extends Model {
 
 		boolean oldValue = this.autoModus;
 		this.autoModus = autoModus;
-		firePropertyChange("inboxPath", oldValue, autoModus);
+		firePropertyChange("autoModus", oldValue, autoModus);
 
 	}
 
@@ -41,7 +41,7 @@ public class OptionModel extends Model {
 
 		int oldValue = this.intervall;
 		this.intervall = intervall;
-		firePropertyChange("inboxPath", oldValue, intervall);
+		firePropertyChange("intervall", oldValue, intervall);
 
 	}
 
