@@ -16,7 +16,7 @@ import java.awt.event.*;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
-import ch.ffhs.hdo.client.ui.utils.ChooseFilePath;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 
 public class ExportView extends View<ExportModel> {
 
@@ -95,7 +95,7 @@ public class ExportView extends View<ExportModel> {
 
 		public void actionPerformed(ActionEvent e) {
 
-			getHandler().performOperation(ChooseFilePath.class);
+			getHandler().performOperation(ChooseFilePathViewOperation.class);
 
 		}
 

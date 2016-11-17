@@ -16,8 +16,8 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
-import ch.ffhs.hdo.client.ui.utils.ChooseFilePath;
-import ch.ffhs.hdo.client.ui.utils.ReadFile;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
+import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 
 /**
  * 
@@ -95,8 +95,8 @@ public class ImportView extends View<ImportModel> {
 
 		public void actionPerformed(ActionEvent e) {
 
-			getHandler().performOperation(ChooseFilePath.class);
-			getHandler().performOperation(ReadFile.class);
+			getHandler().performOperation(ChooseFilePathViewOperation.class);
+			getHandler().performOperation(ReadFileViewOperation.class);
 
 		}
 
@@ -106,7 +106,7 @@ public class ImportView extends View<ImportModel> {
 
 		public void actionPerformed(ActionEvent e) {
 
-			getHandler().performOperation(ReadFile.class);
+			getHandler().performOperation(ReadFileViewOperation.class);
 
 		}
 

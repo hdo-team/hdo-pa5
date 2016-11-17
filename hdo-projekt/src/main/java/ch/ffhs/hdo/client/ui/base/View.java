@@ -5,6 +5,8 @@ import java.awt.LayoutManager;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.WindowConstants;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
@@ -21,6 +23,20 @@ public abstract class View<M extends Model> {
 	Dimension dimension;
 
 	public View(ResourceBundle resourceBundle) {
+
+		try {
+
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look
+			// and feel.
+		}
+
 		this.resourceBundle = resourceBundle;
 		setDimension(300, 300);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

@@ -3,14 +3,9 @@ package ch.ffhs.hdo.client.ui.einstellungen;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyBoundsListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.image.DataBufferInt;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -20,10 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import com.jgoodies.forms.builder.FormBuilder;
 
@@ -42,6 +33,7 @@ public class OptionView extends View<OptionModel> {
 	private JCheckBox autoModusCheckBox;
 	private JButton saveButton;
 	private JButton cancelButton;
+	private JButton fileChooseButton;
 	private HashMap<String, Integer> comboBoxListe = new HashMap<String, Integer>();
 
 	public OptionView(ResourceBundle resourceBundle) {
@@ -60,7 +52,10 @@ public class OptionView extends View<OptionModel> {
 	private void createComponents() {
 
 		inboxPathTextField = new JTextField();
+		inboxPathTextField.setEditable(false);
+		fileChooseButton = new JButton(getMessage("base.cancel"));
 
+		
 		comboBoxListe.put(getMessage(COMBOBOXKEY + ".60"), 3600);
 		comboBoxListe.put(getMessage(COMBOBOXKEY + ".30"), 1800);
 		comboBoxListe.put(getMessage(COMBOBOXKEY + ".15"), 900);
@@ -85,6 +80,7 @@ public class OptionView extends View<OptionModel> {
 		builder.addSeparator(getMessage(I18N + ".separator.inboxPath")).rcw(1, 1, 7);
 		builder.addLabel(getMessage(I18N + ".label.inboxPath")).rc(3, 1);
 		builder.add(inboxPathTextField).rcw(3, 3, 3);
+		builder.add(fileChooseButton).rcw(3, 7, 1);
 
 		builder.addSeparator(getMessage(I18N + ".label.scanner")).rcw(5, 1, 7);
 		builder.addLabel(getMessage(I18N + ".label.automodus")).rc(7, 1);
@@ -112,19 +108,12 @@ public class OptionView extends View<OptionModel> {
 		intervallComboBox.setSelectedItem(getMessage(resourcebundlekey));
 		autoModusCheckBox.setSelected(getModel().isAutoModus());
 
-		inboxPathTextField.getDocument().addDocumentListener(new DocumentListener() {
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 
-			public void changedUpdate(DocumentEvent e) {
-				getModel().setInboxPath(inboxPathTextField.getText());
-			}
-
-			public void insertUpdate(DocumentEvent e) {
-				getModel().setInboxPath(inboxPathTextField.getText());
-
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-				getModel().setInboxPath(inboxPathTextField.getText());
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "inboxPath") {
+					inboxPathTextField.setText(getModel().getInboxPath());
+				}
 
 			}
 		});
@@ -152,6 +141,8 @@ public class OptionView extends View<OptionModel> {
 
 			// Saves settings into Database.
 			getHandler().performOperation(OptionsSaveOperation.class);
+			getHandler().performOperation(CloseViewOperation.class);
+
 		}
 
 	}

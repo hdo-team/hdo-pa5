@@ -1,17 +1,15 @@
 package ch.ffhs.hdo.client.ui.imports;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import ch.ffhs.hdo.client.ui.base.Controller;
 /**
  * 
  * @author Adrian Perez Rodriguez
  */
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
-import ch.ffhs.hdo.client.ui.utils.ChooseFilePath;
+import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
-import ch.ffhs.hdo.client.ui.utils.ReadFile;
+import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ReadFileExecutable;
 
 public class ImportController extends Controller<ImportModel, ImportView> {
@@ -32,8 +30,9 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 	}
 
 	private void initializeViewHandler() {
-		viewHandler.addOperation(ChooseFilePath.class, new FileChooserExecuter(getModel()));
-		viewHandler.addOperation(ReadFile.class, new ReadFileExecutable(getModel()));
+		viewHandler.addOperation(ChooseFilePathViewOperation.class, new FileChooserExecuter(getModel()));
+		viewHandler.addOperation(ReadFileViewOperation.class, new ReadFileExecutable(getModel()));
+		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FileChooserExecuter(getModel()));
 
 	}
 
@@ -43,5 +42,4 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 		getView().setModel(getModel());
 	}
 
-	
 }

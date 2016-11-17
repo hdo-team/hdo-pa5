@@ -1,13 +1,12 @@
 package ch.ffhs.hdo.client.ui.utils;
 
 import java.io.File;
-import java.io.InputStream;
 
 import javax.swing.JFileChooser;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 
-public class FileChooserExecuter implements Executable {
+public class FileChooserExecuter implements Executable<Boolean> {
 
 	FileModel model;
 
@@ -19,11 +18,14 @@ public class FileChooserExecuter implements Executable {
 		return model;
 	}
 
-	public void execute(Object arg) {
-
-		InputStream input = null;
+	public void execute(Boolean directoriesOnly) {
 
 		JFileChooser fileChooser = new JFileChooser();
+
+		if (directoriesOnly) {
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		}
+
 		fileChooser.setCurrentDirectory(new File(getModel().getFilePath()));
 		int result = fileChooser.showOpenDialog(null);
 

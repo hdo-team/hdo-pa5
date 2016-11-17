@@ -6,10 +6,10 @@ import java.util.ResourceBundle;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
-import ch.ffhs.hdo.client.ui.utils.ChooseFilePath;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
 import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
-import ch.ffhs.hdo.client.ui.utils.ReadFile;
+import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ReadFileExecutable;
 
 /**
@@ -35,7 +35,7 @@ public class ExportController extends Controller<ExportModel, ExportView> {
 	}
 
 	private void initializeViewHandler() {
-		viewHandler.addOperation(ChooseFilePath.class, new FolderChooserExecuter(getModel()));
+		viewHandler.addOperation(ChooseFilePathViewOperation.class, new FolderChooserExecuter(getModel()));
 
 	}
 	
