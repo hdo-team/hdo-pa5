@@ -1,8 +1,9 @@
 package ch.ffhs.hdo.client.ui.einstellungen;
 
 import ch.ffhs.hdo.client.ui.base.Model;
+import ch.ffhs.hdo.client.ui.utils.IFileModel;
 
-public class OptionModel extends Model {
+public class OptionModel extends Model implements IFileModel {
 
 	private String inboxPath;
 	private boolean autoModus = false;
@@ -43,6 +44,14 @@ public class OptionModel extends Model {
 		this.intervall = intervall;
 		firePropertyChange("intervall", oldValue, intervall);
 
+	}
+
+	public String getFilePath() {
+		return getInboxPath();
+	}
+
+	public void setFilePath(String newValue) {
+		setInboxPath(newValue);
 	}
 
 }

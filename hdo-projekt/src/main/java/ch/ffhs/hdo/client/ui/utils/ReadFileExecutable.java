@@ -7,15 +7,15 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 
 public class ReadFileExecutable implements Executable {
 
-	FileModel model;
+	IFileModel model;
 
-	public ReadFileExecutable(FileModel model) {
+	public ReadFileExecutable(IFileModel model) {
 
 		this.model = model;
 
 	}
 
-	public FileModel getModel() {
+	public IFileModel getModel() {
 		return model;
 	}
 

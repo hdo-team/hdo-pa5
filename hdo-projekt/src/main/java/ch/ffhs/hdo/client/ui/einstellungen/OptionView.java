@@ -21,6 +21,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
+import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 
 public class OptionView extends View<OptionModel> {
 
@@ -53,9 +54,8 @@ public class OptionView extends View<OptionModel> {
 
 		inboxPathTextField = new JTextField();
 		inboxPathTextField.setEditable(false);
-		fileChooseButton = new JButton(getMessage("base.cancel"));
+		fileChooseButton = new JButton(getMessage("base.filechooser"));
 
-		
 		comboBoxListe.put(getMessage(COMBOBOXKEY + ".60"), 3600);
 		comboBoxListe.put(getMessage(COMBOBOXKEY + ".30"), 1800);
 		comboBoxListe.put(getMessage(COMBOBOXKEY + ".15"), 900);
@@ -68,7 +68,7 @@ public class OptionView extends View<OptionModel> {
 
 		cancelButton.addActionListener(new CloseAction());
 		saveButton.addActionListener(new SaveAction());
-
+		fileChooseButton.addActionListener(new OpenDirectoryChooser());
 	}
 
 	private void layoutForm() {
@@ -152,6 +152,16 @@ public class OptionView extends View<OptionModel> {
 		public void actionPerformed(ActionEvent e) {
 
 			getHandler().performOperation(CloseViewOperation.class);
+
+		}
+
+	}
+
+	private class OpenDirectoryChooser extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+
+			getHandler().performOperationWithArgs(ChooseDirectoryPathViewOperation.class, true);
 
 		}
 

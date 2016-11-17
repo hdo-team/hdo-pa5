@@ -8,13 +8,13 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 
 public class FileChooserExecuter implements Executable<Boolean> {
 
-	FileModel model;
+	IFileModel model;
 
-	public FileChooserExecuter(FileModel model) {
+	public FileChooserExecuter(IFileModel model) {
 		this.model = model;
 	}
 
-	public FileModel getModel() {
+	public IFileModel getModel() {
 		return model;
 	}
 
