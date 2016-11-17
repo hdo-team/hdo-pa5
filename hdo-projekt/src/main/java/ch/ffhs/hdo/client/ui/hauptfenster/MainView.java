@@ -24,6 +24,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
 public class MainView extends View<MainModel> {
 
@@ -77,6 +78,13 @@ public class MainView extends View<MainModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperation(OptionViewStartOperation.class);
+			}
+		});
+		
+		fileResort.addActionListener(new AbstractAction() {
+			
+			public void actionPerformed(ActionEvent e) {
+				getHandler().performOperation(RegelsetViewStartOperation.class);
 			}
 		});
 		

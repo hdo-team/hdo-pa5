@@ -1,20 +1,20 @@
 package ch.ffhs.hdo.client.ui.regelset.executable;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
-import ch.ffhs.hdo.client.ui.einstellungen.OptionController;
-import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
+import ch.ffhs.hdo.client.ui.regelset.RegelsetController;
+import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 
 public class RegelsetViewStartExecutable implements Executable<Object> {
 
 	public void execute(Object args) {
 
-		OptionFacade facade = new OptionFacade();
-		OptionModel model = facade.getModel();
+		OptionFacade facade = new OptionFacade();	// TODO
+		RegelsetModel model = new RegelsetModel();  //facade.getModel();		// TODO
 
-		OptionController optionController = new OptionController(model);
+		RegelsetController regelsetController = new RegelsetController(model);
 
-		optionController.show();
+		regelsetController.show();
 	}
 
 }
