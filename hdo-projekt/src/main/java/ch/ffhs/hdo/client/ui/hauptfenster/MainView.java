@@ -83,7 +83,6 @@ public class MainView extends View<MainModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperation(OptionViewStartOperation.class);
-				getHandler().performOperation(ImportViewStartOperation.class);
 			}
 		});
 		
