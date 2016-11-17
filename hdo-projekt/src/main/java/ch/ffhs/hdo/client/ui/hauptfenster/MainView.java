@@ -24,6 +24,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
+import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
 
 public class MainView extends View<MainModel> {
 
@@ -77,6 +78,15 @@ public class MainView extends View<MainModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperation(OptionViewStartOperation.class);
+				getHandler().performOperation(ImportViewStartOperation.class);
+			}
+		});
+		
+		// Listener für den Importeintrag im Menü
+		fileImport.addActionListener(new AbstractAction() {
+
+			public void actionPerformed(ActionEvent e) {
+				getHandler().performOperation(ImportViewStartOperation.class);
 			}
 		});
 		
