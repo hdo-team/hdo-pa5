@@ -2,11 +2,15 @@ package ch.ffhs.hdo.infrastructure.option;
 
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.persistence.dao.OptionDao;
 import ch.ffhs.hdo.persistence.dto.OptionDto;
 
 public class OptionFacade {
+	private static Logger LOGGER = LogManager.getLogger(OptionFacade.class);
 
 	public OptionModel getModel() {
 
@@ -20,7 +24,7 @@ public class OptionFacade {
 			return model;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("SQL Fehler beim laden aller Optionen", e);
 		}
 		return new OptionModel();
 
@@ -36,7 +40,8 @@ public class OptionFacade {
 			// Optionen werden geupdated nicht neu eingefügt, darum false
 			dao.save(dto, false);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("SQL Fehler beim laden aller Optionen", e);
+
 		}
 
 	}
