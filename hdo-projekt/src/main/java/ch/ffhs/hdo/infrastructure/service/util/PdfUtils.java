@@ -71,7 +71,7 @@ public class PdfUtils {
 
 			return metaData;
 		} catch (Exception e) {
-			// TODO: handle exception
+			LOGGER.error("Fehler beim lesen von PDF Eigenschaften", e);
 		}
 		return null;
 
