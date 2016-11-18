@@ -10,7 +10,7 @@ public class OptionDto extends HashMap<String, String> {
 	private static final long serialVersionUID = -1434028776535025109L;
 
 	public enum OptionValues {
-		AUTOMODUS("auto_modus"), INBOXPATH("inbox_path"), INTERVALL("intervall");
+		AUTOMODUS("auto_modus"), INBOXPATH("inbox_path"), INTERVALL("intervall"), LAST_SORTRUN("lastsortRun");
 
 		private String keyName;
 

@@ -33,7 +33,8 @@ public class OptionFacade {
 		OptionDto dto = OptionConverter.convert(model);
 
 		try {
-			dao.save(dto);
+			// Optionen werden geupdated nicht neu eingefügt, darum false
+			dao.save(dto, false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
