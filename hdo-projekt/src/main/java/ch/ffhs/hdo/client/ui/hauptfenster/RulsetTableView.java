@@ -33,7 +33,7 @@ public class RulsetTableView extends View<RulsetModel> {
 	}
 
 	private void layoutForm() {
-		jPanel.setBackground(Color.BLACK);
+
 	}
 	
 	@Override
