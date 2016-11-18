@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+	<Appenders>
+		<Console name="STDOUT">
+			<PatternLayout pattern="%m%n" />
+		</Console>
+		
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<Routing name="Routing">
+			<Routes pattern="$${sd:type}">
+				<Route>
+					<RollingFile name="Rolling-${sd:type}" fileName="${sys:user.home}\hdo\log\files-movement.log"
+						filePattern="${sys:user.home}\hdo\log\files-movement.$${date:yyyy-MM}-%i.log">
+						<PatternLayout>
+							<pattern>%d{ISO8601} [%t] %p %c{3} - %m%n</pattern>
+						</PatternLayout>
+						<SizeBasedTriggeringPolicy size="40 MB" />
+					</RollingFile>
+				</Route>
+				<Route ref="STDOUT" key="Audit" />
+			</Routes>
+		</Routing>
+		<Routing name="Routing-Error">
+			<Routes pattern="$${sd:type}">
+				<Route>
+					<RollingFile name="Rolling-${sd:type}" fileName="${sys:user.home}\hdo\log\error.log"
+						filePattern="${sys:user.home}\hdo\log\error.$${date:yyyy-MM}-%i.log">
+						<PatternLayout>
+							<pattern>%d{ISO8601} [%t] %p %c{3} - %m%n</pattern>
+						</PatternLayout>
+						<SizeBasedTriggeringPolicy size="40 MB" />
+					</RollingFile>
+				</Route>
+				<Route ref="STDOUT" key="Audit" />
+			</Routes>
+		</Routing>
+
+	</Appenders>
+	<Loggers>
+		<Logger name="ch.ffhs.hdo.infrastructure.service.util.FileHandling"
+			level="DEBUG" additivity="false">
+			<AppenderRef ref="Routing" />
+		</Logger>
+		<Root level="ERROR">
+			<AppenderRef ref="Routing-Error" />
+		</Root>
+	</Loggers>
+</Configuration>

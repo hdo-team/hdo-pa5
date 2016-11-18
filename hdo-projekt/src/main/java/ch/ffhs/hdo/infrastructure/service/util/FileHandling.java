@@ -33,28 +33,37 @@ public class FileHandling {
 			}
 			if (!moveto.canWrite()) {
 				LOGGER.error("Can Not Write in Directory: " + moveto.getAbsolutePath().toString());
+				throw new SecurityException("File kann nicht geschrieben werden weil das Verzeichnis gesperrt ist.");
 			}
 
 			File afile = new File(filePath);
 
 			File dest = new File(newLocation + afile.getName());
 			if (dest.exists()) {
-				LOGGER.error("File " + dest.getAbsolutePath() + " Already Exists in Directory: "
+				LOGGER.warn("File " + dest.getAbsolutePath() + " Already Exists in Directory: "
 						+ moveto.getAbsolutePath().toString());
 
-				LOGGER.debug("Try Rename File" + dest.getAbsolutePath() + " Already Exists in Directory: "
-						+ moveto.getAbsolutePath().toString());
+				int i = 1;
+				File destnew = dest;
+				while (destnew.exists()) {
 
+					i++;
+					String[] name = dest.getName().split("\\.(?=[^\\.]+$)");
+					destnew = new File(destnew.getParent() + File.separator + name[0] + "(" + i + ")." + name[1]);
+
+					LOGGER.debug("Try Rename File " + dest.getAbsolutePath() + " to  " + destnew.getName());
+				}
+				dest = destnew;
 			}
 
 			if (afile.renameTo(dest)) {
-				LOGGER.debug("File :" + afile.getName() + "moved from [" + filePath + "] to [" + newLocation + "]");
+				LOGGER.debug("File: " + afile.getName() + " moved from [" + filePath + "] to [" + newLocation + "]");
 			} else {
 				System.out.println("File [" + filePath + "]is failed to move to [" + newLocation + "]!");
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("Ein Fehler ist beim Verschieben aufgetreten", e);
+			LOGGER.error("Ein Fehler ist beim Verschieben aufgetreten !", e);
 		}
 
 	}
