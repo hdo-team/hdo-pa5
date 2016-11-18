@@ -1,5 +1,6 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
+import java.awt.Color;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
@@ -12,7 +13,6 @@ public class FolderTreeView extends View<FolderModel> {
 
 	public FolderTreeView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
-		
 		initComponents();
 	}
 	

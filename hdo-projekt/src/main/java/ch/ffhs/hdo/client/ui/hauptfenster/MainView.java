@@ -19,9 +19,9 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
+import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
-import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 
 public class MainView extends View<MainModel> {
 
@@ -33,11 +33,9 @@ public class MainView extends View<MainModel> {
 	private JMenu file, options;
 	private JMenuItem fileResort, fileImport, fileExport, fileExit, optionsConfig;
 
-	private JPanel folderPane;
 	private FolderTreeView folderTreeView;
 	private JScrollPane folderScrollPane;
 
-	private JPanel rulsetPane;
 	private RulsetTableView rulsetTableView;
 	private JScrollPane rulsetScrollPane;
 

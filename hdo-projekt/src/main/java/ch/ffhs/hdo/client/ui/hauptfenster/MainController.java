@@ -45,8 +45,6 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setModel(getModel());
 		getView().setHandler(viewHandler);
 
-		// getView().getFolderOverview().setModel(getModel().getFolderModel());
-
 	}
 
 }
