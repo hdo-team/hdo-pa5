@@ -13,10 +13,22 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+/**
+ * Utility um PDF Eigenschaften zu lesen.
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class PdfUtils {
 
 	static Logger LOGGER = LogManager.getLogger(PdfUtils.class);
 
+	/**
+	 * Liefert den Inhalte eines Pdfs als Unicode zurück.
+	 * 
+	 * @param file
+	 * @return Inhalt als Unicode
+	 */
 	public static String readPDF(File file) {
 
 		PDFTextStripper pdfStripper = null;
@@ -38,12 +50,20 @@ public class PdfUtils {
 		return null;
 
 	}
-
+	/**
+	 * Eigenschaften eines PDFs
+	 */
 	public static enum PdfMetaData {
 
 		PAGECOUNT, TITLE, AUTHOR, SUBJECT, KEYWORDS, CREATOR, PRODUCER, CREATION_DATE, MODIFICATION_DATE;
 	}
 
+	/**
+	 * Liefert die Metadaten eines PDFs zurück.
+	 * 
+	 * @param file 
+	 * @return MashMap mit Key die {@link PdfMetaData} mit deren Objekten 
+	 */
 	public static HashMap<PdfMetaData, Object> getDokumentInformation(File file) {
 
 		PDDocument pdDoc = null;
