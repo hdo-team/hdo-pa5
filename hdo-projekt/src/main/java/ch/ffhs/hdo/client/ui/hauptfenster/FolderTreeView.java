@@ -10,9 +10,8 @@ public class FolderTreeView extends View<FolderModel> {
 	
 	private JPanel jPanel;
 
-	public FolderTreeView(ResourceBundle resourceBundle, JPanel jPanel) {
+	public FolderTreeView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
-		this.jPanel=jPanel;
 		
 		initComponents();
 	}
@@ -24,7 +23,7 @@ public class FolderTreeView extends View<FolderModel> {
 	}
 
 	private void createComponents() {
-		
+		jPanel = new JPanel();
 		
 	}
 
