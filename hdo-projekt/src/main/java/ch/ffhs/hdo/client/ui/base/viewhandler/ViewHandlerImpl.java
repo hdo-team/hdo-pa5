@@ -3,12 +3,14 @@ package ch.ffhs.hdo.client.ui.base.viewhandler;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.ffhs.hdo.client.ui.base.ParamChecker;
-import ch.ffhs.hdo.infrastructure.util.Log;
 
 public class ViewHandlerImpl implements ViewHandler {
 
-	private static final Log LOGGER = Log.getInstance(ViewHandlerImpl.class);
+	static Logger LOGGER = LogManager.getLogger(ViewHandlerImpl.class);
 
 	private final Map<Class<? extends ViewOperation>, Executable[]> opMap;
 
@@ -36,10 +38,10 @@ public class ViewHandlerImpl implements ViewHandler {
 
 	private void executeOperation(Class<? extends ViewOperation> operation, Object arg) {
 		try {
-			LOGGER.debug("start Execution", null);
+			LOGGER.debug("start Execution");
 			performOperation(operation, arg);
 		} finally {
-			LOGGER.debug("end Execution", null);
+			LOGGER.debug("end Execution");
 		}
 	}
 

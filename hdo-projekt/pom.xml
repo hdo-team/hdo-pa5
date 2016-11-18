@@ -67,11 +67,11 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.5</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.seaglasslookandfeel/seaglasslookandfeel -->
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
-			<groupId>com.seaglasslookandfeel</groupId>
-			<artifactId>seaglasslookandfeel</artifactId>
-			<version>0.2.1</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.7</version>
 		</dependency>
 	</dependencies>
 
