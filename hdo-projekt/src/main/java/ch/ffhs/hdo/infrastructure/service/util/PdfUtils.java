@@ -50,6 +50,7 @@ public class PdfUtils {
 		return null;
 
 	}
+
 	/**
 	 * Eigenschaften eines PDFs
 	 */
@@ -61,8 +62,8 @@ public class PdfUtils {
 	/**
 	 * Liefert die Metadaten eines PDFs zurück.
 	 * 
-	 * @param file 
-	 * @return MashMap mit Key die {@link PdfMetaData} mit deren Objekten 
+	 * @param file
+	 * @return MashMap mit Key die {@link PdfMetaData} mit deren Objekten
 	 */
 	public static HashMap<PdfMetaData, Object> getDokumentInformation(File file) {
 

@@ -41,7 +41,6 @@ public class PdfUtilsTest {
 				.before(new GregorianCalendar()));
 		Assert.assertTrue(((GregorianCalendar) dokumentInformation.get(PdfMetaData.MODIFICATION_DATE))
 				.before(new GregorianCalendar()));
-		;
 
 	}
 

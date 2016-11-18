@@ -2,12 +2,21 @@ package ch.ffhs.hdo.infrastructure.service.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.attribute.FileTime;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 
+import org.apache.logging.log4j.core.util.FileUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import ch.ffhs.hdo.infrastructure.service.util.FileHandling.FileMetaData;
+import ch.ffhs.hdo.infrastructure.service.util.PdfUtils.PdfMetaData;
 
 public class FileHandlingTest {
 
@@ -59,6 +68,23 @@ public class FileHandlingTest {
 			i++;
 		}
 		Assert.assertEquals(amout, i);
+
+	}
+
+	@Test
+	public void testFileMetadaten() {
+
+		URL url = Thread.currentThread().getContextClassLoader().getResource("TestLesenDokument.pdf");
+		File file = new File(url.getPath());
+
+		HashMap<FileMetaData, Object> fileMetadaten = FileHandling.getFileMetaData(file);
+
+		Assert.assertEquals(new Long(420100), (Long) fileMetadaten.get(FileMetaData.SIZE));
+		Assert.assertTrue(((FileTime) fileMetadaten.get(FileMetaData.CREATION_TIME)).toMillis() < new Date().getTime());
+		Assert.assertTrue(
+				((FileTime) fileMetadaten.get(FileMetaData.LAST_ACCESS_TIME)).toMillis() < new Date().getTime());
+		Assert.assertTrue(
+				((FileTime) fileMetadaten.get(FileMetaData.LAST_MODIFICATION_TIME)).toMillis() < new Date().getTime());
 
 	}
 

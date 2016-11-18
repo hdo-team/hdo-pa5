@@ -1,9 +1,15 @@
 package ch.ffhs.hdo.infrastructure.service.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ch.ffhs.hdo.infrastructure.service.util.PdfUtils.PdfMetaData;
 
 /**
  * Utility um Dateien zu bearbeiten.
@@ -12,7 +18,7 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class FileHandling {
-	static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 
 	/**
 	 * Verschiebt eine Datei von filePath nach new Location
@@ -87,5 +93,39 @@ public class FileHandling {
 		file.delete();
 	}
 
-	
+	/**
+	 * Eigenschaften eines Files
+	 */
+	public static enum FileMetaData {
+
+		CREATION_TIME, LAST_ACCESS_TIME, LAST_MODIFICATION_TIME, SIZE;
+	}
+
+	/**
+	 * Liefert die Metadaten einer Datei zurück.
+	 * 
+	 * @param file
+	 *            das zu analysierende File
+	 * @return MashMap mit Key die {@link FileMetaData} mit deren Objekten
+	 */
+	public static HashMap<FileMetaData, Object> getFileMetaData(File file) {
+
+		BasicFileAttributes attr;
+		try {
+			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+
+			HashMap<FileMetaData, Object> metadata = new HashMap<FileHandling.FileMetaData, Object>();
+
+			metadata.put(FileMetaData.CREATION_TIME, attr.creationTime());
+			metadata.put(FileMetaData.LAST_ACCESS_TIME, attr.lastAccessTime());
+			metadata.put(FileMetaData.LAST_MODIFICATION_TIME, attr.lastModifiedTime());
+			metadata.put(FileMetaData.SIZE, attr.size());
+
+			return metadata;
+		} catch (IOException e) {
+			LOGGER.error("Metadaten einer Datei konnten nicht geleasen werden ", e);
+		}
+		return null;
+	}
+
 }
