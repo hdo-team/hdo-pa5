@@ -12,9 +12,9 @@ public class OptionDao extends JdbcHelper {
 
 	private final String SELECTALL = "SELECT CONFIG.KEY, CONFIG.VALUE FROM CONFIG";
 
-	private final String INSERT = "INSERT INTO CONFIG (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES (?,?,SYSDATE ,SYSDATE )";
+	private final String INSERT = "INSERT INTO CONFIG (KEY, VALUE,SYSTIMESTAMP,SYSTIMESTAMP) VALUES (?,?,CURTIME () ,CURTIME () )";
 
-	private final String UPDATE = "UPDATE CONFIG SET VALUE = ? , CHANGEDATE = SYSDATE WHERE KEY = ? ";
+	private final String UPDATE = "UPDATE CONFIG SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
 
 	
 	public OptionDto findAllOptions() throws SQLException {
