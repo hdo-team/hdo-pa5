@@ -1,10 +1,6 @@
 package ch.ffhs.hdo.client.ui.imports;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
-/**
- * 
- * @author Adrian Perez Rodriguez
- */
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;

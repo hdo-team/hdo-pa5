@@ -7,7 +7,7 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperationExecutable;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
-import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
+import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
 /**
  * Controller für die Options
@@ -40,7 +40,7 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 	private void setupViewHandler() {
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		viewHandler.addOperation(OptionsSaveOperation.class, new OptionsSaveOperationExecutable(getModel()));
-		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FileChooserExecuter(getModel()));
+		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FolderChooserExecuter(getModel()));
 
 	}
 
