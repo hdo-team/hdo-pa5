@@ -16,14 +16,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
+import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class OptionView extends View<OptionModel> {
+	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 
 	private final String I18N = "hdo.option";
 	private final String TITLE_KEY = I18N + ".title";
@@ -104,8 +109,16 @@ public class OptionView extends View<OptionModel> {
 	public void configureBindings() {
 
 		inboxPathTextField.setText(getModel().getInboxPath());
+
 		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getIntervall() / 60);
-		intervallComboBox.setSelectedItem(getMessage(resourcebundlekey));
+
+		try {
+
+			intervallComboBox.setSelectedItem(getMessage(resourcebundlekey));
+		} catch (Exception e) {
+			LOGGER.debug("Key existiert nicht Standard wir angezeigt");
+		}
+
 		autoModusCheckBox.setSelected(getModel().isAutoModus());
 
 		getModel().addPropertyChangeListener(new PropertyChangeListener() {
