@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import ch.ffhs.hdo.infrastructure.service.util.PdfUtils.PdfMetaData;
 
 /**
  * Utility um Dateien zu bearbeiten.
@@ -126,6 +130,25 @@ public class FileHandling {
 			LOGGER.error("Metadaten einer Datei konnten nicht geleasen werden ", e);
 		}
 		return null;
+	}
+
+	public static Collection<File> getFileList(String inboxPath, boolean rekursiv) {
+		File folder = new File(inboxPath);
+
+		Collection<File> files;
+		if (rekursiv) {
+
+			files = FileUtils.listFiles(folder, new RegexFileFilter("^(.*?)"), DirectoryFileFilter.DIRECTORY);
+
+		} else {
+
+			File[] listFiles = folder.listFiles();
+			files = new ArrayList<File>(Arrays.asList(listFiles));
+
+		}
+
+		return files;
+
 	}
 
 }

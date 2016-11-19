@@ -26,7 +26,11 @@ public class FileChooserExecuter implements Executable<Boolean> {
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		}
 
-		fileChooser.setCurrentDirectory(new File(getModel().getFilePath()));
+		if (getModel().getFilePath() != null) {
+			fileChooser.setCurrentDirectory(new File(getModel().getFilePath()));
+		} else {
+			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		}
 		int result = fileChooser.showOpenDialog(null);
 
 		if (result == JFileChooser.APPROVE_OPTION) {

@@ -1,17 +1,22 @@
 package ch.ffhs.hdo.infrastructure.service;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
+import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
+import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import ch.ffhs.hdo.persistence.dao.OptionDao;
-import ch.ffhs.hdo.persistence.dto.OptionDto;
-import ch.ffhs.hdo.persistence.dto.OptionDto.OptionValues;
 
 public class SortService extends SwingWorker<String, Integer> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
@@ -41,6 +46,23 @@ public class SortService extends SwingWorker<String, Integer> {
 
 			int intervall = model.getIntervall();
 			LOGGER.debug("Intervall geladen: " + intervall);
+
+			String inboxPath = model.getInboxPath();
+			Collection<File> fileList = FileHandling.getFileList(inboxPath, false);
+
+			ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
+
+			for (File file : fileList) {
+				
+				//Die Files die behandelt werden sind nur PDFs
+				if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF","Pdf" })) {
+					documentModels.add(new DocumentModel(file));
+				}
+
+
+			}
+
+			// Sortiervorgang protokollieren.
 
 			optionDao.protocollSortServiceRun(true);
 
