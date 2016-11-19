@@ -9,9 +9,15 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
+import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ReadFileExecutable;
 
+/**
+ * Controller für den Konfigurations-Import
+ * 
+ * @author Adrian Perez Rodirguez
+ */
 public class ImportController extends Controller<ImportModel, ImportView> {
 
 	private ViewHandlerImpl viewHandler;
@@ -32,8 +38,6 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 	private void initializeViewHandler() {
 		viewHandler.addOperation(ChooseFilePathViewOperation.class, new FileChooserExecuter(getModel()));
 		viewHandler.addOperation(ReadFileViewOperation.class, new ReadFileExecutable(getModel()));
-		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FileChooserExecuter(getModel()));
-
 	}
 
 	public void initializeView() {

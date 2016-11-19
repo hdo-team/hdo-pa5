@@ -6,7 +6,7 @@ import javax.swing.JFileChooser;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 
-public class FileChooserExecuter implements Executable<Boolean> {
+public class FileChooserExecuter implements Executable {
 
 	IFileModel model;
 
@@ -18,27 +18,23 @@ public class FileChooserExecuter implements Executable<Boolean> {
 		return model;
 	}
 
-	public void execute(Boolean directoriesOnly) {
+	public void execute(Object arg) {
 
 		JFileChooser fileChooser = new JFileChooser();
-
-		if (directoriesOnly) {
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		}
-
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
 		if (getModel().getFilePath() != null) {
 			fileChooser.setCurrentDirectory(new File(getModel().getFilePath()));
 		} else {
 			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		}
+
 		int result = fileChooser.showOpenDialog(null);
 
 		if (result == JFileChooser.APPROVE_OPTION) {
-			File selectedFile = fileChooser.getSelectedFile();
-			model.setFilePath(selectedFile.getAbsolutePath()); // FRAGE
+			File selectedFolder = fileChooser.getSelectedFile();
+			model.setFilePath(selectedFolder.getAbsolutePath());
 
 		}
-
 	}
-
 }

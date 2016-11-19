@@ -2,7 +2,6 @@ package ch.ffhs.hdo.client.ui.imports;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -96,8 +95,7 @@ public class ImportView extends View<ImportModel> {
 		public void actionPerformed(ActionEvent e) {
 
 			getHandler().performOperation(ChooseFilePathViewOperation.class);
-			getHandler().performOperation(ReadFileViewOperation.class);
-
+			
 		}
 
 	}
