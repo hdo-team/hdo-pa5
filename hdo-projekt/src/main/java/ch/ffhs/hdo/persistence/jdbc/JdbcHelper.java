@@ -1,5 +1,6 @@
 package ch.ffhs.hdo.persistence.jdbc;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +20,8 @@ public class JdbcHelper {
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
 
-			conn = DriverManager.getConnection("jdbc:hsqldb:file:" + inbox_path, // filenames
+			conn = DriverManager.getConnection(
+					"jdbc:hsqldb:file:" + inbox_path + File.separator + ".db" + File.separator + "hdo_db", // filenames
 					"sa", // username
 					""); // password
 		} catch (SQLException e) {
