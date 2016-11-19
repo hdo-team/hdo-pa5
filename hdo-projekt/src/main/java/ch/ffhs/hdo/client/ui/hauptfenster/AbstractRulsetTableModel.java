@@ -1,9 +1,10 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+
+import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
 public class AbstractRulsetTableModel extends AbstractTableModel {
 
@@ -14,9 +15,9 @@ public class AbstractRulsetTableModel extends AbstractTableModel {
 	private final int COLUMN_IDX_3 = 2;
 	
 	
-	private List<String[]> rulsets;
+	private List<RegelsetModel> rulsets;
 	
-	public AbstractRulsetTableModel(List<String[]> rulsets) {
+	public AbstractRulsetTableModel(List<RegelsetModel> rulsets) {
 		this.rulsets = rulsets;
 	}
 	
@@ -29,7 +30,7 @@ public class AbstractRulsetTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		String[] rulset = rulsets.get(rowIndex);
+		//String[] rulset = rulsets.get(rowIndex);
 		//TODO get Values back
 		return null;
 	}

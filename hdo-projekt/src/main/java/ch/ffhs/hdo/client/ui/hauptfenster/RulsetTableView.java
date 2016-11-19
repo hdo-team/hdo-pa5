@@ -1,12 +1,14 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
 public class RulsetTableView extends View<RulsetModel> {
 	
@@ -28,12 +30,15 @@ public class RulsetTableView extends View<RulsetModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		tableModel = new AbstractRulsetTableModel(null);
+		List regelsets= new List();
+		//regelsets.add
+		//tableModel = new AbstractRulsetTableModel();
 		rulsetTable = new JTable(tableModel);
 	}
 
 	private void layoutForm() {
-
+		jPanel.setLayout(new BorderLayout());
+		jPanel.add(rulsetTable, BorderLayout.CENTER);
 	}
 	
 	@Override
