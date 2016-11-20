@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.swing.DropMode;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -17,6 +18,7 @@ public class RulsetTableView extends View<RulsetModel> {
 	private AbstractRulsetTableModel tableModel;
 	private JTable rulsetTable;
 	private final String I18N = "hdo.main";
+	private ArrayList regelsets;
 
 	public RulsetTableView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -32,9 +34,9 @@ public class RulsetTableView extends View<RulsetModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
+		regelsets= new ArrayList();
 		
 		//*****TEMP****
-		ArrayList regelsets= new ArrayList();
 		RegelsetModel rs;
 		for(int i=0; i<20; i++) {
 		rs=new RegelsetModel();
@@ -50,6 +52,7 @@ public class RulsetTableView extends View<RulsetModel> {
 
 	private void layoutForm() {
 		rulsetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		rulsetTable.setDragEnabled(true);
 		jPanel.setLayout(new BorderLayout());
 		jPanel.add(rulsetTable.getTableHeader(), BorderLayout.NORTH);
 		jPanel.add(rulsetTable, BorderLayout.CENTER);
@@ -57,8 +60,7 @@ public class RulsetTableView extends View<RulsetModel> {
 	
 	@Override
 	public void configureBindings() {
-		// TODO Auto-generated method stub
-
+		//regelsets=this.getModel().getRulsetList();
 	}
 	
 	public JPanel getPanel() {

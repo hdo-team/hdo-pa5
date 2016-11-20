@@ -44,7 +44,9 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
 		getView().setHandler(viewHandler);
-
+		
+		getView().getRulsetTableView().setModel(getModel().getRulsetModel());
+		getView().getRulsetTableView().setHandler(viewHandler);
 	}
 
 }
