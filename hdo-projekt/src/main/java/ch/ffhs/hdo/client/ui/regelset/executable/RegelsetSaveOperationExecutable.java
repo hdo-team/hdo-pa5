@@ -1,9 +1,9 @@
 package ch.ffhs.hdo.client.ui.regelset.executable;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
-import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
-import ch.ffhs.hdo.infrastructure.option.OptionFacade;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
+import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
 public class RegelsetSaveOperationExecutable implements Executable {
 
@@ -16,9 +16,13 @@ public class RegelsetSaveOperationExecutable implements Executable {
 
 	public void execute(Object arg) {
 
-		OptionFacade facade = new OptionFacade();
-	//		facade.save(model);		// TODO
+		ApplicationSettings.getInstance().saveRulesetName(model.getRulesetName());
+		ApplicationSettings.getInstance().saveTargetDirectoryPath(model.getTargetDirectory());
+		ApplicationSettings.getInstance().saveFilenameKonfiguration(model.getFilenameKonfiguration());
+		ApplicationSettings.getInstance().saveRulesetActiv(model.isRuleActiv());
+
+		RegelsetFacade facade = new RegelsetFacade();
+		facade.save(model);
 
 	}
-
 }

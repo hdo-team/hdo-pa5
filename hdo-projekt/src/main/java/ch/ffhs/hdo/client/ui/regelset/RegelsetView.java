@@ -1,8 +1,13 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -14,6 +19,10 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
+import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -119,6 +128,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		deleteButton = new JButton(getMessage(I18N + ".button.delete.icon"));
 
 		saveButton = new JButton(getMessage("base.save"));
+		saveButton.addActionListener(new SaveRulesetAction());
+
 		cancelButton = new JButton(getMessage("base.cancel"));
 	}
 
@@ -202,6 +213,19 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	@Override
 	public void configureBindings() {
+	
+	}
+	
+	// Aktion zum Speichern der Regelsets
+	// von Adrian Perez Rodriguez
+	private class SaveRulesetAction extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+
+			getHandler().performOperation(RegelsetSaveOperation.class);
+			getHandler().performOperation(CloseViewOperation.class);
+			
+		}
 
 	}
 

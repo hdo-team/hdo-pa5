@@ -74,4 +74,69 @@ public class ApplicationSettings {
 			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
 		}
 	}
+	
+	public void saveRulesetName(String ruleset) {
+		try {
+
+			config.setProperty(INBOXPATH, ruleset);
+			config.save();
+
+			if (ruleset != null && new File(ruleset).exists()) {
+				new InitDatabase();
+			}
+
+			
+		} catch (ConfigurationException e) {
+			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+		}
+	}
+	
+	public void saveTargetDirectoryPath(String targetDirectoryPath) {
+		try {
+
+			config.setProperty(INBOXPATH, targetDirectoryPath);
+			config.save();
+
+			if (targetDirectoryPath != null && new File(targetDirectoryPath).exists()) {
+				new InitDatabase();
+			}
+
+			
+		} catch (ConfigurationException e) {
+			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+		}
+	}
+	
+	public void saveFilenameKonfiguration(String filename) {
+		try {
+
+			config.setProperty(INBOXPATH, filename);
+			config.save();
+
+			if (filename != null && new File(filename).exists()) {
+				new InitDatabase();
+			}
+
+			
+		} catch (ConfigurationException e) {
+			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+		}
+	}
+	
+	public void saveRulesetActiv(Boolean rulesetactiv) {
+		try {
+			
+			String status = rulesetactiv.toString();
+			config.setProperty(INBOXPATH, status);
+			config.save();
+
+			if (status != null && new File(status).exists()) {
+				new InitDatabase();
+			}
+
+		
+		} catch (ConfigurationException e) {
+			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+		}
+	}
 }

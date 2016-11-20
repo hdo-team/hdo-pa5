@@ -20,7 +20,6 @@ public class ImportModel extends Model implements IFileModel {
 		String oldValue = filePath;
 		this.filePath = newValue;
 		firePropertyChange("filePath", oldValue, filePath);
-
 	}
 
 }
