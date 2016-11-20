@@ -1,13 +1,49 @@
 package ch.ffhs.hdo.infrastructure;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
+import ch.ffhs.hdo.persistence.jdbc.InitDatabase;
+
 public class ApplicationSettings {
 
-	String inbox_path;
+	private static final File APP_CONFIG = new File(
+			System.getProperty("user.home") + File.separator + "hdo" + File.separator + "hdo.settings");
+
+
+	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static final String INBOXPATH = "inboxPath";
 
 	private static ApplicationSettings instance = null;
 
+	private static PropertiesConfiguration config = null;
+
 	protected ApplicationSettings() {
-		// Exists only to defeat instantiation.
+
+		try {
+
+			if (!APP_CONFIG.exists()) {
+				APP_CONFIG.createNewFile();
+				config = new PropertiesConfiguration(APP_CONFIG);
+
+			} else {
+				config = new PropertiesConfiguration(APP_CONFIG);
+			}
+
+		} catch (IOException e) {
+			LOGGER.error("File konnte nicht erstellt werden", e);
+		} catch (ConfigurationException e) {
+
+			LOGGER.error("Configurationsfehler beim laden der Daten", e);
+		}
+
+
 	}
 
 	public static ApplicationSettings getInstance() {
@@ -17,12 +53,25 @@ public class ApplicationSettings {
 		return instance;
 	}
 
-	public void setInbox_path(String inbox_path) {
-		this.inbox_path = inbox_path;
-	}
 
 	public String getInbox_path() {
-		return inbox_path;
+		return config.getString(INBOXPATH);
 	}
 
+
+	public void saveInboxPath(String inboxPath) {
+		try {
+
+			config.setProperty(INBOXPATH, inboxPath);
+			config.save();
+
+			if (inboxPath != null && new File(inboxPath).exists()) {
+				new InitDatabase();
+			}
+
+			
+		} catch (ConfigurationException e) {
+			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+		}
+	}
 }
