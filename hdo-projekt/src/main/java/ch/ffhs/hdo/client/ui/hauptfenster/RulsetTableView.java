@@ -1,7 +1,7 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import java.awt.BorderLayout;
-import java.awt.List;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
@@ -15,6 +15,9 @@ public class RulsetTableView extends View<RulsetModel> {
 	private JPanel jPanel;
 	private AbstractRulsetTableModel tableModel;
 	private JTable rulsetTable;
+	//*****TEMP****
+	private RegelsetModel rs;
+	//*************
 
 	public RulsetTableView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -30,9 +33,16 @@ public class RulsetTableView extends View<RulsetModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		List regelsets= new List();
-		//regelsets.add
-		//tableModel = new AbstractRulsetTableModel();
+		
+		//*****TEMP****
+		ArrayList regelsets= new ArrayList();
+		rs=new RegelsetModel();
+		rs.setRulesetName("Regelset 1");
+		rs.setTargetDirectory("C:/");
+		regelsets.add(rs);
+		//*************
+		
+		tableModel = new AbstractRulsetTableModel(regelsets);
 		rulsetTable = new JTable(tableModel);
 	}
 

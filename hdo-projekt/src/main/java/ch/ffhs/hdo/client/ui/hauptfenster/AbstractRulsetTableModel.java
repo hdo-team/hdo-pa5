@@ -1,5 +1,6 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -15,9 +16,9 @@ public class AbstractRulsetTableModel extends AbstractTableModel {
 	private final int COLUMN_IDX_3 = 2;
 	
 	
-	private List<RegelsetModel> rulsets;
+	private ArrayList<RegelsetModel> rulsets;
 	
-	public AbstractRulsetTableModel(List<RegelsetModel> rulsets) {
+	public AbstractRulsetTableModel(ArrayList<RegelsetModel> rulsets) {
 		this.rulsets = rulsets;
 	}
 	
@@ -32,6 +33,20 @@ public class AbstractRulsetTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		//String[] rulset = rulsets.get(rowIndex);
 		//TODO get Values back
+		final RegelsetModel rulset = rulsets.get(rowIndex);
+		if(columnIndex == COLUMN_IDX_1) {
+			return rulset.getRulesetName();
+		}
+		
+		if(columnIndex == COLUMN_IDX_2) {
+			return rulset.getTargetDirectory();
+		}
+		
+		if(columnIndex == COLUMN_IDX_3) {
+			return rulset.isRuleActiv();
+		}
+		
+		
 		return null;
 	}
 
