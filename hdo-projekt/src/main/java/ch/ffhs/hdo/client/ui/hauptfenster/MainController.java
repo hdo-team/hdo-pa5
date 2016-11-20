@@ -1,6 +1,8 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
+import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartExecutable;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
@@ -37,6 +39,8 @@ public class MainController extends Controller<MainModel, MainView> {
 		this.viewHandler.addOperation(RegelsetViewStartOperation.class, new RegelsetViewStartExecutable());
 		this.viewHandler.addOperation(ExportViewStartOperation.class, new ExportViewStartExecutable());
 		this.viewHandler.addOperation(ImportViewStartOperation.class, new ImportViewStartExecutable());
+		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
+
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
 		getView().setHandler(viewHandler);
-		
+
 		getView().getRulsetTableView().setModel(getModel().getRulsetModel());
 		getView().getRulsetTableView().setHandler(viewHandler);
 	}

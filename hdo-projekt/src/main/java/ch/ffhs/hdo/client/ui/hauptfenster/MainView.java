@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
@@ -44,7 +45,7 @@ public class MainView extends View<MainModel> {
 
 	public MainView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
-		this.resourceBundle=resourceBundle;
+		this.resourceBundle = resourceBundle;
 		setTitle(getMessage(TITLE_KEY));
 
 		initComponents();
@@ -62,20 +63,25 @@ public class MainView extends View<MainModel> {
 		file = new JMenu(getMessage(I18N + ".menu.file"));
 		options = new JMenu(getMessage(I18N + ".menu.options"));
 
-		
-
 		fileResort = new JMenuItem(getMessage(I18N + ".menuitem.resort"), KeyEvent.VK_T);
 		fileImport = new JMenuItem(getMessage(I18N + ".menuitem.import"), KeyEvent.VK_T);
 		fileExport = new JMenuItem(getMessage(I18N + ".menuitem.export"), KeyEvent.VK_T);
-		
+
 		fileExport.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperation(ExportViewStartOperation.class);
 			}
 		});
-		
+
 		fileExit = new JMenuItem(getMessage(I18N + ".menuitem.exit"), KeyEvent.VK_T);
+		fileExit.addActionListener(new AbstractAction() {
+
+			public void actionPerformed(ActionEvent e) {
+				getHandler().performOperation(CloseViewOperation.class);
+			}
+		});
+
 		optionsConfig = new JMenuItem(getMessage(I18N + ".menuitem.config"), KeyEvent.VK_T);
 
 		optionsConfig.addActionListener(new AbstractAction() {
@@ -84,7 +90,7 @@ public class MainView extends View<MainModel> {
 				getHandler().performOperation(OptionViewStartOperation.class);
 			}
 		});
-		
+
 		// Listener für den Importeintrag im Menü
 		fileImport.addActionListener(new AbstractAction() {
 
@@ -92,14 +98,14 @@ public class MainView extends View<MainModel> {
 				getHandler().performOperation(ImportViewStartOperation.class);
 			}
 		});
-		
+
 		fileResort.addActionListener(new AbstractAction() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperation(RegelsetViewStartOperation.class);
 			}
 		});
-		
+
 		minimumSize = new Dimension(200, 150);
 
 		// Create Folder Panel
@@ -151,6 +157,7 @@ public class MainView extends View<MainModel> {
 	public View<FolderModel> getFolderTreeView() {
 		return folderTreeView;
 	}
+
 	public View<RulsetModel> getRulsetTableView() {
 		return rulsetTableView;
 	}
