@@ -12,7 +12,7 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 	V view;
 
 	public Controller(M model) {
-		this.resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
+		this.resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle_de_CH");
 		this.model = model;
 
 	}
