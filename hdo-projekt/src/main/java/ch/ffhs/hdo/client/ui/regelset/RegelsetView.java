@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -16,6 +17,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
@@ -23,6 +27,7 @@ import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
+import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -43,9 +48,12 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
  */
 
 public class RegelsetView extends View<RegelsetModel> {
+	
+	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 
 	private final String I18N = "hdo.regelset";
 	private final String TITLE_KEY = I18N + ".title";
+	private final String COMBOBOXKEY = I18N + ".target.directory";
 	private final String CONTEXT_COMBOBOXKEY = I18N + ".rule.context";
 	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".rule.attribute";
 	private JTextField regelsetNameTextField;
@@ -54,6 +62,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	private JTextField toDateTextField[];
 
 	private JComboBox<String> targetDirectoryComboBox;
+	private HashMap<String, String> targetDirectoryListe = new HashMap<String, String>();
 
 	private JComboBox contextComboBox;
 	private JComboBox attributeComboBox[] = new JComboBox[4];
@@ -67,7 +76,6 @@ public class RegelsetView extends View<RegelsetModel> {
 	private JButton cancelButton;
 
 	private JCheckBox statusCheckBox;
-	private JCheckBox statusCheckBox2;
 
 	JPanel rulePanel[] = new JPanel[4];
 	private JTabbedPane tabbedPane;
@@ -83,7 +91,6 @@ public class RegelsetView extends View<RegelsetModel> {
 	private void initComponents() {
 		createComponents();
 		layoutForm();
-		configureBindings();
 	}
 
 	private void createComponents() {
@@ -91,14 +98,19 @@ public class RegelsetView extends View<RegelsetModel> {
 		regelsetNameTextField = new JTextField();
 
 		// TODO: DirectoryListe ab FileSystem Lesen !!
-		String targetDirectoryListe[] = { "C:\\temp", "C:\\daten\\rechnungen", "C:\\daten\\fotos", "C:\\daten\\gugus" };
-		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
-
+		targetDirectoryListe.put(getMessage(COMBOBOXKEY + ".1"), "C:\\Test1");
+		targetDirectoryListe.put(getMessage(COMBOBOXKEY + ".2"), "C:\\Test2");
+		targetDirectoryListe.put(getMessage(COMBOBOXKEY + ".3"), "C:\\Test3");
+		targetDirectoryListe.put(getMessage(COMBOBOXKEY + ".4"), "C:\\Test4");
+		
+		//String targetDirectoryListe[] = { "C:\\temp", "C:\\daten\\rechnungen", "C:\\daten\\fotos", "C:\\daten\\gugus" };
+		//targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
+		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe.keySet().toArray(new String[0]));
+		
 		dateinamenKonfigurationTextField = new JTextField();
 		fromDateTextField = new JTextField[4];
 		toDateTextField = new JTextField[4];
 		statusCheckBox = new JCheckBox(getMessage(I18N + ".checkbox.status"));
-		statusCheckBox2 = new JCheckBox(getMessage(I18N + ".checkbox.status"));
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
@@ -213,7 +225,66 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	@Override
 	public void configureBindings() {
-	
+		
+		regelsetNameTextField.setText(getModel().getRulesetName());
+		
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "rulesetName") {
+					regelsetNameTextField.setText(getModel().getRulesetName());
+				}
+
+			}
+		});
+		
+		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getTargetDirectory());
+
+		try {
+
+			targetDirectoryComboBox.setSelectedItem(getMessage(resourcebundlekey));
+		} catch (Exception e) {
+			LOGGER.debug("Key existiert nicht Standard wir angezeigt");
+		}
+		
+		
+		dateinamenKonfigurationTextField.setText(getModel().getFilenameKonfiguration());
+		
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "filenameKonfiguration") {
+					dateinamenKonfigurationTextField.setText(getModel().getRulesetName());
+				}
+
+			}
+		});
+
+		statusCheckBox.setSelected(getModel().isRuleActiv());
+		
+		statusCheckBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				getModel().setRuleActiv(statusCheckBox.isSelected());
+
+			}
+		});
+
+		targetDirectoryComboBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				getModel().setTargetDirectory(targetDirectoryListe.get(targetDirectoryComboBox.getSelectedItem()));
+
+			}
+		});
+
+		statusCheckBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				getModel().setRuleActiv(statusCheckBox.isSelected());
+
+			}
+		});
 	}
 	
 	// Aktion zum Speichern der Regelsets

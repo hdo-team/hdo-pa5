@@ -32,6 +32,7 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
+		getView().setHandler(viewHandler);
 	}
 
 	private void setupViewHandler() {
