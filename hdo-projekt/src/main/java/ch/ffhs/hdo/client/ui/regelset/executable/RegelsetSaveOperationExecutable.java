@@ -10,13 +10,16 @@ public class RegelsetSaveOperationExecutable implements Executable {
 	private RegelsetModel model;
 
 	public RegelsetSaveOperationExecutable(RegelsetModel model) {
+		
 		this.model = model;
 
 	}
 
 	public void execute(Object arg) {
-
+				
 		ApplicationSettings.getInstance().saveRulesetName(model.getRulesetName());
+		System.out.println("Der Rulesetname ist: " + model.getRulesetName());
+		
 		ApplicationSettings.getInstance().saveTargetDirectoryPath(model.getTargetDirectory());
 		ApplicationSettings.getInstance().saveFilenameKonfiguration(model.getFilenameKonfiguration());
 		

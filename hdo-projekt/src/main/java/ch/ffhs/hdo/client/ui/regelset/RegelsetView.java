@@ -292,7 +292,11 @@ public class RegelsetView extends View<RegelsetModel> {
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
-
+			
+			// Gehört das hier hinein?
+			getModel().setRulesetName(regelsetNameTextField.getText());
+			getModel().setFilenameKonfiguration(dateinamenKonfigurationTextField.getText());
+		
 			getHandler().performOperation(RegelsetSaveOperation.class);
 			getHandler().performOperation(CloseViewOperation.class);
 			
