@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -24,10 +23,8 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
-import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
-import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
@@ -36,7 +33,6 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 /******************************************************
  * 
  * 
- * erste QUICK n DIRTY Version zum Ausprobieren
  * 
  * wird noch überarbeitet !!!!!!!!!!!!!!!!
  * 
@@ -54,7 +50,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private final String I18N = "hdo.regelset";
 	private final String TITLE_KEY = I18N + ".title";
-	private final String COMBOBOXKEY = I18N + ".target.directory";
 	private final String CONTEXT_COMBOBOXKEY = I18N + ".rule.context";
 	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".rule.attribute";
 	private JTextField regelsetNameTextField;
@@ -63,13 +58,9 @@ public class RegelsetView extends View<RegelsetModel> {
 	private JTextField toDateTextField[];
 
 
-	private JTextField targetPathTextField;
+	private JTextField targetDirectoryTextField;
 	
 	private JButton fileChooseButton;
-
-
-	private JComboBox<String> targetDirectoryComboBox;
-	private HashMap<String, String> targetDirectoryListe = new HashMap<String, String>();
 
 
 	private JComboBox contextComboBox;
@@ -105,16 +96,9 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		regelsetNameTextField = new JTextField();
 
-		// TODO: DirectoryListe ab FileSystem Lesen !!
-		String targetDirectoryListe[] = { "C:\\temp", "C:\\daten\\rechnungen", "C:\\daten\\fotos", "C:\\daten\\gugus" };
-		//targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
-
-		targetPathTextField = new JTextField();
-		targetPathTextField.setEditable(false);
+		targetDirectoryTextField = new JTextField();
+		targetDirectoryTextField.setEditable(false);
 		fileChooseButton = new JButton(getMessage("base.filechooser"));
-		
-		//String targetDirectoryListe[] = { "C:\\temp", "C:\\daten\\rechnungen", "C:\\daten\\fotos", "C:\\daten\\gugus" };
-		//targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
 		
 		dateinamenKonfigurationTextField = new JTextField();
 		fromDateTextField = new JTextField[4];
@@ -149,11 +133,12 @@ public class RegelsetView extends View<RegelsetModel> {
 		deleteButton = new JButton(getMessage(I18N + ".button.delete.icon"));
 
 		saveButton = new JButton(getMessage("base.save"));
-		saveButton.addActionListener(new SaveRulesetAction());
-
 		cancelButton = new JButton(getMessage("base.cancel"));
-		fileChooseButton.addActionListener(new OpenDirectoryChooser());
 		
+		
+		saveButton.addActionListener(new SaveRulesetAction());
+		cancelButton.addActionListener(new CloseAction());
+		fileChooseButton.addActionListener(new OpenDirectoryChooser());
 	}
 
 	private void layoutForm() {
@@ -165,16 +150,11 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(1, 1, 7);
 		builder.add(regelsetNameTextField).rcw(3, 1, 3);
-
-//		builder.add(inboxPathTextField).rcw(3, 3, 3);//
-	//	builder.add(fileChooseButton).rcw(3, 7, 1);
 		
-		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 1);
-		builder.add(targetPathTextField).rcw(7, 3, 3);
-		builder.add(fileChooseButton).rcw(7, 7, 1);
+		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 7);
+		builder.add(targetDirectoryTextField).rcw(7, 1, 3);
+		builder.add(fileChooseButton).rcw(7, 5, 1);
 		
-		//builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
-
 		builder.addLabel(getMessage(I18N + ".label.filenameConfigure")).rcw(9, 1, 7);
 		builder.add(dateinamenKonfigurationTextField).rcw(11, 1, 3);
 
@@ -243,50 +223,27 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	@Override
 	public void configureBindings() {
-		
+	
 		regelsetNameTextField.setText(getModel().getRulesetName());
+		dateinamenKonfigurationTextField.setText(getModel().getFilenameKonfiguration());
+		
+
+		statusCheckBox.setSelected(getModel().isRuleActiv());
+		
 		
 		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == "rulesetName") {
-					regelsetNameTextField.setText(getModel().getRulesetName());
-				}
-
-			}
-		});
-		
-		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getTargetDirectory());
-
-		try {
-
-			targetDirectoryComboBox.setSelectedItem(getMessage(resourcebundlekey));
-		} catch (Exception e) {
-			LOGGER.debug("Key existiert nicht Standard wir angezeigt");
-		}
-		
-		
-		dateinamenKonfigurationTextField.setText(getModel().getFilenameKonfiguration());
-		
-		getModel().addPropertyChangeListener(new PropertyChangeListener() {
-
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName() == "filenameKonfiguration") {
+					regelsetNameTextField.setText(getModel().getTargetDirectory());
+				} else if (evt.getPropertyName() == "targetDirectory") {
+					targetDirectoryTextField.setText(getModel().getTargetDirectory());
+				} else if (evt.getPropertyName() == "filenameKonfiguration") {
 					dateinamenKonfigurationTextField.setText(getModel().getRulesetName());
 				}
-
 			}
 		});
-
-		statusCheckBox.setSelected(getModel().isRuleActiv());
 		
-		statusCheckBox.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				getModel().setRuleActiv(statusCheckBox.isSelected());
-
-			}
-		});
 
 		statusCheckBox.addActionListener(new ActionListener() {
 
@@ -295,21 +252,21 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			}
 		});
+		
+		
+		
 	}
 	
-	// Aktion zum Speichern der Regelsets
-	// von Adrian Perez Rodriguez
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 			
-			// Gehört das hier hinein?
+			// TODO: Gehört das hier hinein?
 			getModel().setRulesetName(regelsetNameTextField.getText());
 			getModel().setFilenameKonfiguration(dateinamenKonfigurationTextField.getText());
 		
 			getHandler().performOperation(RegelsetSaveOperation.class);
 			getHandler().performOperation(CloseViewOperation.class);
-			
 		}
 	}
 	
@@ -318,7 +275,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		public void actionPerformed(ActionEvent e) {
 
 			getHandler().performOperation(CloseViewOperation.class);
-
 		}
 	}
 
@@ -327,7 +283,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		public void actionPerformed(ActionEvent e) {
 
 			getHandler().performOperationWithArgs(ChooseDirectoryPathViewOperation.class, true);
-
 		}
 	}		
 }
