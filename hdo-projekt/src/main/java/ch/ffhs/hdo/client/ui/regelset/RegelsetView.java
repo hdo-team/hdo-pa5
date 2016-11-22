@@ -288,14 +288,6 @@ public class RegelsetView extends View<RegelsetModel> {
 			}
 		});
 
-		targetDirectoryComboBox.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				getModel().setTargetDirectory(targetDirectoryListe.get(targetDirectoryComboBox.getSelectedItem()));
-
-			}
-		});
-
 		statusCheckBox.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
