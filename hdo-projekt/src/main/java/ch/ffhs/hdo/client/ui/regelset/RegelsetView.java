@@ -22,6 +22,7 @@ import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
+import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
@@ -53,8 +54,10 @@ public class RegelsetView extends View<RegelsetModel> {
 	private JTextField fromDateTextField[];
 	private JTextField toDateTextField[];
 
-	private JComboBox<String> targetDirectoryComboBox;
-
+	private JTextField targetPathTextField;
+	
+	private JButton fileChooseButton;
+	
 	private JComboBox contextComboBox;
 	private JComboBox attributeComboBox[] = new JComboBox[4];
 	private String contextComboBoxList[] = new String[3];
@@ -92,8 +95,12 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		// TODO: DirectoryListe ab FileSystem Lesen !!
 		String targetDirectoryListe[] = { "C:\\temp", "C:\\daten\\rechnungen", "C:\\daten\\fotos", "C:\\daten\\gugus" };
-		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
+		//targetDirectoryComboBox = new JComboBox<String>(targetDirectoryListe);
 
+		targetPathTextField = new JTextField();
+		targetPathTextField.setEditable(false);
+		fileChooseButton = new JButton(getMessage("base.filechooser"));
+		
 		dateinamenKonfigurationTextField = new JTextField();
 		fromDateTextField = new JTextField[4];
 		toDateTextField = new JTextField[4];
@@ -131,6 +138,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		saveButton.addActionListener(new SaveRulesetAction());
 
 		cancelButton = new JButton(getMessage("base.cancel"));
+		fileChooseButton.addActionListener(new OpenDirectoryChooser());
+		
 	}
 
 	private void layoutForm() {
@@ -138,12 +147,19 @@ public class RegelsetView extends View<RegelsetModel> {
 		FormBuilder builder = FormBuilder.create()
 				.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
+				
 
 		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(1, 1, 7);
 		builder.add(regelsetNameTextField).rcw(3, 1, 3);
 
-		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 7);
-		builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
+//		builder.add(inboxPathTextField).rcw(3, 3, 3);//
+	//	builder.add(fileChooseButton).rcw(3, 7, 1);
+		
+		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 1);
+		builder.add(targetPathTextField).rcw(7, 3, 3);
+		builder.add(fileChooseButton).rcw(7, 7, 1);
+		
+		//builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
 
 		builder.addLabel(getMessage(I18N + ".label.filenameConfigure")).rcw(9, 1, 7);
 		builder.add(dateinamenKonfigurationTextField).rcw(11, 1, 3);
@@ -226,7 +242,23 @@ public class RegelsetView extends View<RegelsetModel> {
 			getHandler().performOperation(CloseViewOperation.class);
 			
 		}
+	}
+	
+	private class CloseAction extends AbstractAction {
 
+		public void actionPerformed(ActionEvent e) {
+
+			getHandler().performOperation(CloseViewOperation.class);
+
+		}
 	}
 
+	private class OpenDirectoryChooser extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+
+			getHandler().performOperationWithArgs(ChooseDirectoryPathViewOperation.class, true);
+
+		}
+	}		
 }

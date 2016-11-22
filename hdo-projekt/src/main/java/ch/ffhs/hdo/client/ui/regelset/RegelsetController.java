@@ -6,6 +6,8 @@ import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
+import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
+import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
 /**
  * Controller für die Regelset
@@ -32,10 +34,12 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
+		getView().setHandler(viewHandler);
 	}
 
 	private void setupViewHandler() {
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		viewHandler.addOperation(RegelsetSaveOperation.class, new RegelsetSaveOperationExecutable(getModel()));
+		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FolderChooserExecuter(getModel()));
 	}
 }

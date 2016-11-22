@@ -3,8 +3,9 @@ package ch.ffhs.hdo.client.ui.regelset;
 import java.util.List;
 
 import ch.ffhs.hdo.client.ui.base.Model;
+import ch.ffhs.hdo.client.ui.utils.IFileModel;
 
-public class RegelsetModel extends Model {
+public class RegelsetModel extends Model implements IFileModel {
 
 	private String rulesetName;
 	private String targetDirectory;   // TODO: oder "index" auf Liste; UND Liste
@@ -127,5 +128,13 @@ public class RegelsetModel extends Model {
 		String oldValue = this.rulePropertyTo;
 		this.rulePropertyTo = rulePropertyTo;
 		firePropertyChange("rulePropertyTo", oldValue, rulePropertyTo);
+	}
+
+	public String getFilePath() {
+		return getTargetDirectory();
+	}
+
+	public void setFilePath(String newValue) {
+		setTargetDirectory(newValue);
 	}
 }
