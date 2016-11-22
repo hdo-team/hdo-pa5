@@ -44,6 +44,14 @@ public class RegelsetModel extends Model implements IFileModel {
 		firePropertyChange("targetDirectory", oldValue, targetDirectory);
 	}
 	
+	public String getFilePath() {
+		return getTargetDirectory();
+	}
+
+	public void setFilePath(String newValue) {
+		setTargetDirectory(newValue);
+	}
+	
 	public String getFilenameKonfiguration() {
 		
 		return filenameKonfiguration;

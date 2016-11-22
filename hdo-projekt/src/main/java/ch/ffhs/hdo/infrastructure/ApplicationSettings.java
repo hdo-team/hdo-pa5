@@ -19,6 +19,10 @@ public class ApplicationSettings {
 
 	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 	private static final String INBOXPATH = "inboxPath";
+	private static final String RULESET_NAME = "rulesetName";
+	private static final String TARGETDIR_PATH = "targetDirectory";
+	private static final String FILENAME = "filenameKonfiguration";
+	private static final String RULESET_STATUS = "ruleActiv";
 
 	private static ApplicationSettings instance = null;
 
@@ -75,51 +79,51 @@ public class ApplicationSettings {
 		}
 	}
 	
-	public void saveRulesetName(String ruleset) {
+	public void saveRulesetName(String rulesetName) {
 		try {
 
-			config.setProperty(INBOXPATH, ruleset);
+			config.setProperty(RULESET_NAME, rulesetName);
 			config.save();
 
-			if (ruleset != null && new File(ruleset).exists()) {
+			if (rulesetName != null && new File(rulesetName).exists()) {
 				new InitDatabase();
 			}
 
 			
 		} catch (ConfigurationException e) {
-			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+			LOGGER.error("Fehler beim Speichern des Ruleset-Namen", e);
 		}
 	}
 	
-	public void saveTargetDirectoryPath(String targetDirectoryPath) {
+	public void saveTargetDirectoryPath(String targetDirectory) {
 		try {
 
-			config.setProperty(INBOXPATH, targetDirectoryPath);
+			config.setProperty(TARGETDIR_PATH, targetDirectory);
 			config.save();
 
-			if (targetDirectoryPath != null && new File(targetDirectoryPath).exists()) {
+			if (targetDirectory != null && new File(targetDirectory).exists()) {
 				new InitDatabase();
 			}
 
 			
 		} catch (ConfigurationException e) {
-			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+			LOGGER.error("Fehler beim Speichern des Zielverzeichnisses", e);
 		}
 	}
 	
-	public void saveFilenameKonfiguration(String filename) {
+	public void saveFilenameKonfiguration(String filenameKonfiguration) {
 		try {
 
-			config.setProperty(INBOXPATH, filename);
+			config.setProperty(FILENAME, filenameKonfiguration);
 			config.save();
 
-			if (filename != null && new File(filename).exists()) {
+			if (filenameKonfiguration != null && new File(filenameKonfiguration).exists()) {
 				new InitDatabase();
 			}
 
 			
 		} catch (ConfigurationException e) {
-			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+			LOGGER.error("Fehler beim Speichern des Filenamen", e);
 		}
 	}
 	
@@ -127,7 +131,8 @@ public class ApplicationSettings {
 		try {
 			
 			String status = rulesetactiv.toString();
-			config.setProperty(INBOXPATH, status);
+			
+			config.setProperty(RULESET_STATUS, status);
 			config.save();
 
 			if (status != null && new File(status).exists()) {
@@ -136,7 +141,7 @@ public class ApplicationSettings {
 
 		
 		} catch (ConfigurationException e) {
-			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
+			LOGGER.error("Fehler beim Speichern des Ruleset Status", e);
 		}
 	}
 }
