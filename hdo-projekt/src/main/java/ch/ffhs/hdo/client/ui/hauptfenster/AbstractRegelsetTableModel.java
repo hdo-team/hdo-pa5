@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
-public class AbstractRulsetTableModel extends AbstractTableModel {
+public class AbstractRegelsetTableModel extends AbstractTableModel {
 
 	
 	private String[] columnNames;
@@ -20,7 +20,7 @@ public class AbstractRulsetTableModel extends AbstractTableModel {
 	
 	private ArrayList<RegelsetModel> rulsets;
 	
-	public AbstractRulsetTableModel(ArrayList<RegelsetModel> rulsets, String[] columnNames) {
+	public AbstractRegelsetTableModel(ArrayList<RegelsetModel> rulsets, String[] columnNames) {
 		this.columnNames = columnNames;
 		this.rulsets = rulsets;
 	}

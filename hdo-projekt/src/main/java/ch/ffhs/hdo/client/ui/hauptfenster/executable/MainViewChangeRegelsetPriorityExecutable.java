@@ -5,7 +5,7 @@ import ch.ffhs.hdo.client.ui.hauptfenster.MainController;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
-public class MainModelGetRegelsetsExecutable implements Executable<Object> {
+public class MainViewChangeRegelsetPriorityExecutable implements Executable<Object> {
 
 	public void execute(Object args) {
 

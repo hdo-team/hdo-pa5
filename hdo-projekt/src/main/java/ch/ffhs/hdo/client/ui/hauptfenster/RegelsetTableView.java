@@ -12,15 +12,15 @@ import javax.swing.ListSelectionModel;
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
-public class RulsetTableView extends View<RulsetModel> {
+public class RegelsetTableView extends View<RegelsetsModel> {
 	
 	private JPanel jPanel;
-	private AbstractRulsetTableModel tableModel;
+	private AbstractRegelsetTableModel tableModel;
 	private JTable rulsetTable;
 	private final String I18N = "hdo.main";
 	private ArrayList regelsets;
 
-	public RulsetTableView(ResourceBundle resourceBundle) {
+	public RegelsetTableView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 		
 		initComponents();
@@ -46,7 +46,7 @@ public class RulsetTableView extends View<RulsetModel> {
 		}
 		//*************
 		
-		tableModel = new AbstractRulsetTableModel(regelsets, new String[]{getMessage(I18N + ".rulsetTableHeader.name"),getMessage(I18N + ".rulsetTableHeader.directory"),getMessage(I18N + ".rulsetTableHeader.active")});
+		tableModel = new AbstractRegelsetTableModel(regelsets, new String[]{getMessage(I18N + ".rulsetTableHeader.name"),getMessage(I18N + ".rulsetTableHeader.directory"),getMessage(I18N + ".rulsetTableHeader.active")});
 		rulsetTable = new JTable(tableModel);
 	}
 

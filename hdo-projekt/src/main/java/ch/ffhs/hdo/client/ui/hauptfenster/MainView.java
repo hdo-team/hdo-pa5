@@ -37,7 +37,7 @@ public class MainView extends View<MainModel> {
 	private FolderTreeView folderTreeView;
 	private JScrollPane folderScrollPane;
 
-	private RulsetTableView rulsetTableView;
+	private RegelsetTableView rulsetTableView;
 	private JScrollPane rulsetScrollPane;
 
 	private JSplitPane layoutsplitpane;
@@ -113,7 +113,7 @@ public class MainView extends View<MainModel> {
 		folderScrollPane = new JScrollPane(folderTreeView.getPanel());
 
 		// Create Rulset Panel
-		rulsetTableView = new RulsetTableView(resourceBundle);
+		rulsetTableView = new RegelsetTableView(resourceBundle);
 		rulsetScrollPane = new JScrollPane(rulsetTableView.getPanel());
 
 		layoutsplitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, folderScrollPane, rulsetScrollPane);
@@ -158,7 +158,7 @@ public class MainView extends View<MainModel> {
 		return folderTreeView;
 	}
 
-	public View<RulsetModel> getRulsetTableView() {
+	public View<RegelsetsModel> getRulsetTableView() {
 		return rulsetTableView;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
-public class RulsetModel extends Model {
+public class RegelsetsModel extends Model {
 
 	private ArrayList<RegelsetModel> rulsetList;
 	
