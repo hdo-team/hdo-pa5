@@ -33,15 +33,9 @@ public class RegelsetFacade {
 		RegelsetDao dao = new RegelsetDao();
 
 		//RegelsetDto dto = RegelsetConverter.convert(model);
-
-		/**
-		try {
-			// Regelseten werden geupdated nicht neu eingefügt, darum false
-			dao.save(dto, false);
-		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
-
-		}*/
-
+//ADRIAN 
+		
+		
+		
 	}
 }
