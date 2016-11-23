@@ -1,0 +1,19 @@
+package ch.ffhs.hdo.client.ui.hauptfenster.executable;
+
+import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
+import ch.ffhs.hdo.client.ui.hauptfenster.MainController;
+import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
+
+public class MainModelGetRegelsetsExecutable implements Executable<Object> {
+
+	public void execute(Object args) {
+
+		//RegelsetListFacade facade = new RegelsetListFacade();
+		MainModel model = new MainModel();
+
+		MainController exportController = new MainController(model);
+
+		exportController.show();
+	}
+
+}
