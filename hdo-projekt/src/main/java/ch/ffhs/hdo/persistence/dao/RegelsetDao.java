@@ -24,7 +24,13 @@ public class RegelsetDao extends JdbcHelper {
 		ResultSet executeQuery = selectAllConfig.executeQuery();
 
 		while (executeQuery.next()) {
-			dto.put(executeQuery.getString("key"), executeQuery.getString("value"));
+			/**
+			 *	Warten auf DB-Schema von Denis
+			 * 
+			 * 
+			dto.put(executeQuery.getString("id"), executeQuery.getString("rulesetName"), executeQuery.getString("targetDirectory")
+					, executeQuery.getString("newFilename"), executeQuery.getString("isActiv"), executeQuery.getString("priority"));
+			*/
 		}
 
 		terminate();
@@ -43,11 +49,11 @@ public class RegelsetDao extends JdbcHelper {
 			insertConfig = conn.prepareStatement(UPDATE);
 		}
 
-		for (String key : keySet) {
-			String value = dto.get(key);
+		for (String id : keySet) {
+			String value = dto.get(id);
 
 			insertConfig.setString(1, value);
-			insertConfig.setString(2, key);
+			insertConfig.setString(2, id);
 
 			insertConfig.executeUpdate();
 		}
