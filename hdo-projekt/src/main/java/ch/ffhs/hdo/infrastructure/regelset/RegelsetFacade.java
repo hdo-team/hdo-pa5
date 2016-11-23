@@ -17,12 +17,12 @@ public class RegelsetFacade {
 		RegelsetDto findAllRegelsets;
 		try {
 			findAllRegelsets = dao.findAllRegelsets();
-			/**
+			
 			RegelsetModel model = RegelsetConverter.convert(findAllRegelsets);
-			return model;*/
+			return model;
 
 		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim laden aller Regelseten", e);
+			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
 		}
 		return new RegelsetModel();
 
@@ -32,10 +32,15 @@ public class RegelsetFacade {
 
 		RegelsetDao dao = new RegelsetDao();
 
-		//RegelsetDto dto = RegelsetConverter.convert(model);
-//ADRIAN 
+		RegelsetDto dto = RegelsetConverter.convert(model);
 		
-		
+		try {
+			// Regelsets werden geupdated nicht neu eingefügt, darum false. Ist dies hier auch der Fall?
+			dao.save(dto, false);
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
+
+		}
 		
 	}
 }
