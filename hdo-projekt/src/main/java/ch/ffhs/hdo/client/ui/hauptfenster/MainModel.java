@@ -5,7 +5,8 @@ import ch.ffhs.hdo.client.ui.base.Model;
 public class MainModel extends Model {
 
 	FolderModel folderModel;
-	RegelsetsModel rulsetModel;
+	RegelsetTableModel regelsetModel;
+	
 	
 	public void setFolderModel(FolderModel folderModel) {
 		this.folderModel = folderModel;
@@ -15,11 +16,11 @@ public class MainModel extends Model {
 		return folderModel;
 	}
 	
-	public void setRulsetModel(RegelsetsModel rulsetModel) {
-		this.rulsetModel = rulsetModel;
+	public RegelsetTableModel getRegelsetModel() {
+		return regelsetModel;
 	}
 	
-	public RegelsetsModel getRulsetModel() {
-		return rulsetModel;
+	public void setRegelsetModel(RegelsetTableModel regelsetTableModel) {
+		this.regelsetModel=regelsetTableModel;
 	}
 }

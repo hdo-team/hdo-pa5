@@ -37,8 +37,8 @@ public class MainView extends View<MainModel> {
 	private FolderTreeView folderTreeView;
 	private JScrollPane folderScrollPane;
 
-	private RegelsetTableView rulsetTableView;
-	private JScrollPane rulsetScrollPane;
+	private RegelsetTableView regelsetTableView;
+	private JScrollPane regelsetScrollPane;
 
 	private JSplitPane layoutsplitpane;
 	Dimension minimumSize;
@@ -47,7 +47,7 @@ public class MainView extends View<MainModel> {
 		super(resourceBundle);
 		this.resourceBundle = resourceBundle;
 		setTitle(getMessage(TITLE_KEY));
-
+		//System.out.println(getModel().getRegelsetModel()); //WIIIIIEEESOOOO GEEEHHHT DAAAS NIIIICHHHT!!!!!
 		initComponents();
 
 	}
@@ -113,10 +113,14 @@ public class MainView extends View<MainModel> {
 		folderScrollPane = new JScrollPane(folderTreeView.getPanel());
 
 		// Create Rulset Panel
-		rulsetTableView = new RegelsetTableView(resourceBundle);
-		rulsetScrollPane = new JScrollPane(rulsetTableView.getPanel());
+		
+		regelsetTableView = new RegelsetTableView(resourceBundle);
+		
 
-		layoutsplitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, folderScrollPane, rulsetScrollPane);
+		
+		regelsetScrollPane = new JScrollPane(regelsetTableView.getPanel());
+
+		layoutsplitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, folderScrollPane, regelsetScrollPane);
 
 	}
 
@@ -134,7 +138,7 @@ public class MainView extends View<MainModel> {
 		layoutsplitpane.setOneTouchExpandable(true);
 		layoutsplitpane.setDividerLocation(150);
 		folderScrollPane.setMinimumSize(minimumSize);
-		rulsetScrollPane.setMinimumSize(minimumSize);
+		regelsetScrollPane.setMinimumSize(minimumSize);
 
 		FormBuilder builder = FormBuilder.create()
 				.columns("right:pref, 5dlu,[30dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
@@ -158,7 +162,7 @@ public class MainView extends View<MainModel> {
 		return folderTreeView;
 	}
 
-	public View<RegelsetsModel> getRulsetTableView() {
-		return rulsetTableView;
+	public View<RegelsetTableModel> getRegelsetTableView() {
+		return regelsetTableView;
 	}
 }

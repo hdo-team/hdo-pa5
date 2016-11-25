@@ -6,12 +6,13 @@ import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartExecutable;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
-import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
-import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
-import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
-import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
+import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
+import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
+import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
 /**
  * Controller für das Hauptfenster
@@ -22,9 +23,10 @@ public class MainController extends Controller<MainModel, MainView> {
 
 	private ViewHandlerImpl viewHandler;
 
-	public MainController(MainModel model) {
-		super(model);
-
+	public MainController(MainModel model, RegelsetTableModel regelsetModel) {
+		super(model);		
+		model.setRegelsetModel(regelsetModel);
+		
 		this.viewHandler = new ViewHandlerImpl();
 
 		setView(new MainView(getResourceBundle()));
@@ -49,8 +51,9 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setModel(getModel());
 		getView().setHandler(viewHandler);
 
-		getView().getRulsetTableView().setModel(getModel().getRulsetModel());
-		getView().getRulsetTableView().setHandler(viewHandler);
+		
+		getView().getRegelsetTableView().setModel(getModel().getRegelsetModel());
+		getView().getRegelsetTableView().setHandler(viewHandler);
 	}
 
 }

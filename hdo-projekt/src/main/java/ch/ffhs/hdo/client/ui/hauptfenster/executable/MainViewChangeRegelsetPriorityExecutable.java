@@ -10,11 +10,11 @@ public class MainViewChangeRegelsetPriorityExecutable implements Executable<Obje
 	public void execute(Object args) {
 
 		RegelsetFacade facade = new RegelsetFacade();
-		MainModel model = new MainModel();
+		//MainModel model = new MainModel();
 
-		MainController exportController = new MainController(model);
+		//MainController exportController = new MainController(model);
 
-		exportController.show();
+		//exportController.show();
 	}
 
 }
