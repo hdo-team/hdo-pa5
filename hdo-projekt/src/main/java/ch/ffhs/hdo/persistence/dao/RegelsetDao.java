@@ -10,27 +10,31 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public class RegelsetDao extends JdbcHelper {
 	
-	private final String SELECTALL = "tba";
+	private final String SELECTALL = "SELECT RULESET.KEY, RULESET.VALUE FROM RULESET";
 	
-	private final String INSERT = "tba";
+	private final String INSERT = "INSERT INTO RULESET (KEY, VALUE, VALUE, VALUE, VALUE, VALUE,SYSTIMESTAMP,SYSTIMESTAMP) VALUES (?,?,?,?,?,?,CURTIME () ,CURTIME () )";
 	
-	private final String UPDATE = "tba";
+	private final String UPDATE = "UPDATE RULESET SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
 	
 	public RegelsetDto findAllRegelsets() throws SQLException {
 		
 		RegelsetDto dto = new RegelsetDto();
-		PreparedStatement selectAllConfig = conn.prepareStatement(SELECTALL);
+		PreparedStatement selectAllRegelsets = conn.prepareStatement(SELECTALL);
 
-		ResultSet executeQuery = selectAllConfig.executeQuery();
+		ResultSet executeQuery = selectAllRegelsets.executeQuery();
 
 		while (executeQuery.next()) {
 			/**
 			 *	Warten auf DB-Schema von Denis
 			 * 
-			 * 
-			dto.put(executeQuery.getString("id"), executeQuery.getString("rulesetName"), executeQuery.getString("targetDirectory")
-					, executeQuery.getString("newFilename"), executeQuery.getString("isActiv"), executeQuery.getString("priority"));
-			*/
+			 */
+			dto.put(executeQuery.getString("ruleset_id"), executeQuery.getString("value"));
+			dto.put(executeQuery.getString("ruleset_name"), executeQuery.getString("value"));
+			dto.put(executeQuery.getString("file_name"), executeQuery.getString("value"));
+			dto.put(executeQuery.getString("targetdir_path"), executeQuery.getString("value"));
+			dto.put(executeQuery.getString("is_activ"), executeQuery.getString("value"));
+			dto.put(executeQuery.getString("priority"), executeQuery.getString("value"));
+			
 		}
 
 		terminate();
@@ -41,25 +45,24 @@ public class RegelsetDao extends JdbcHelper {
 	public void save(RegelsetDto dto, boolean newEntry) throws SQLException {
 
 		Set<String> keySet = dto.keySet();
-		PreparedStatement insertConfig = null;
+		PreparedStatement insertRegelset = null;
 		if (newEntry) {
-			insertConfig = conn.prepareStatement(INSERT);
+			insertRegelset = conn.prepareStatement(INSERT);
 
 		} else {
-			insertConfig = conn.prepareStatement(UPDATE);
+			insertRegelset = conn.prepareStatement(UPDATE);
 		}
 
-		for (String id : keySet) {
-			String value = dto.get(id);
+		for (String rulesetId : keySet) {
+			String id = dto.get(rulesetId);
 
-			insertConfig.setString(1, value);
-			insertConfig.setString(2, id);
+			insertRegelset.setString(1, id);
+			insertRegelset.setString(2, rulesetId);
 
-			insertConfig.executeUpdate();
+			insertRegelset.executeUpdate();
 		}
 
 		terminate();
-		
 	}
 
 }
