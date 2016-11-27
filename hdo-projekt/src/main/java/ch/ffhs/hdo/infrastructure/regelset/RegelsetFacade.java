@@ -89,6 +89,8 @@ public class RegelsetFacade {
 		rule1.setContextAttribute(RegelModel.ContextAttributeEnum.SIZE);
 		rule1.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_BETWEEN);
 		HashMap<CompareTypeEnum, String> compareValueMap1 = new HashMap<CompareTypeEnum, String>();
+		compareValueMap1.put(RegelModel.CompareTypeEnum.COMPARE_GREATER_EQUAL, "23.03.2016");
+		compareValueMap1.put(RegelModel.CompareTypeEnum.COMPARE_LESS_EQUAL, "18.10.2016");
 		rule1.setCompareValueMap(compareValueMap1);
 		RegelModel rule2 = new RegelModel();
 		rule2.setContextType(RegelModel.ContextTypeEnum.CONTEXT_PDF);
