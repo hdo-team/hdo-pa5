@@ -7,11 +7,20 @@ import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
 public class RegelsetViewStartExecutable implements Executable<Object> {
 
+
 	public void execute(Object args) {
 
-		RegelsetFacade facade = new RegelsetFacade();
-		RegelsetModel model = facade.getModel();
-
+		RegelsetModel model = null;
+		
+		if (args != null) {
+				// Hauptuebesicht gibt Regelset-Model mit (Regelset anpassen)
+				model = (RegelsetModel)args;
+		} else {
+			// Hauptübersicht gibt kein Model mit (neues Regelset erstellen)
+			RegelsetFacade facade = new RegelsetFacade();
+			model = facade.getModel();
+		}
+		
 		RegelsetController regelsetController = new RegelsetController(model);
 
 		regelsetController.show();

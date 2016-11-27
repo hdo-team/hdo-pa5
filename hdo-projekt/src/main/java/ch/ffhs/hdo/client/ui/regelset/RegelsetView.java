@@ -187,6 +187,7 @@ public class RegelsetView extends View<RegelsetModel> {
 			JDatePickerImpl datePickerFrom;
 			JDatePickerImpl datePickerTo;
 			UtilDateModel model = new UtilDateModel();
+
 			model.setDate(2016, 11, 16);
 			model.setSelected(true);
 			JDatePanelImpl datePanel = new JDatePanelImpl(model);

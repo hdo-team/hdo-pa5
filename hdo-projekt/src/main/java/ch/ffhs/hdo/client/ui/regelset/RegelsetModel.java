@@ -8,8 +8,8 @@ public class RegelsetModel extends Model {
 
 	private List<String>     directories;		// Liste mit möglichen Ziel-Verzeichnissen 
 	private String           filenameKonfiguration;
-	private String			 rulesetId;
-	private String           priority;			// TODO: ?? evtl. nur in DB?? oder nötig für Jonas?
+	private Integer			 rulesetId;
+	private Integer          priority;			// TODO: ?? evtl. nur in DB?? oder nötig für Jonas?
 	private boolean          ruleActiv;
 	private List<RegelModel> ruleList;		// alle Regeln pro Regelset werden AND-verknuepft
 	private String           rulesetName;
@@ -39,11 +39,11 @@ public class RegelsetModel extends Model {
 		return filenameKonfiguration;
 	}
 
-	public String getId() {
+	public Integer getRulesetId() {
 		return rulesetId;
 	}
 
-	public String getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 
@@ -78,14 +78,14 @@ public class RegelsetModel extends Model {
 		firePropertyChange("filenameKonfiguration", oldValue, filenameKonfiguration);
 	}
 
-	public void setId(String string) {
-		String oldValue = this.rulesetId;
-		this.rulesetId = string;
-		firePropertyChange("id", oldValue, string);
+	public void setRulesetId(Integer id) {
+		Integer oldValue = this.rulesetId;
+		this.rulesetId = id;
+		firePropertyChange("rulesetId", oldValue, id);
 	}
 
-	public void setPriority(String priority) {
-		String oldValue = this.priority;
+	public void setPriority(Integer priority) {
+		Integer oldValue = this.priority;
 		this.priority = priority;
 		firePropertyChange("priority", oldValue, priority);
 	}

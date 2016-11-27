@@ -21,9 +21,13 @@ public class RegelsetConverter {
 
 		/**
 		* 		Warten auf RegelsetValues von Denis
+		* 
+		* 
+		* 		TODO: Daniel: ich habe TEMPorär und provisorisch die RulesetId/Priority von String nach Integer umgwandelt (ich denke Denis passt RegelsetDto noch an...
+		*	                  (damit es auch compilierbar ist mit rulsetid/priroty als Integer) 
 		*
 		*/
-		regelsetModel.setId(regelsetDto.get(RULESETID));
+		regelsetModel.setRulesetId(Integer.valueOf(regelsetDto.get(RULESETID)));
 
 		regelsetModel.setRulesetName(regelsetDto.get(RULESETNAME));
 		
@@ -34,10 +38,8 @@ public class RegelsetConverter {
 		String stringStatus = regelsetDto.get(RULESETSTATUS);
 		boolean booleanStatus = Boolean.valueOf(stringStatus);
 		regelsetModel.setRuleActiv(booleanStatus);
-		
-		String intPriority = regelsetDto.get(PRIORITY);
-		String priority = String.valueOf(intPriority);
-		regelsetModel.setPriority(priority);
+
+		regelsetModel.setPriority(Integer.valueOf(regelsetDto.get(PRIORITY)));
 
 		return regelsetModel;
 	}
@@ -55,15 +57,18 @@ public class RegelsetConverter {
 
 		/**
 		* 		Warten auf RegelsetValues von Denis
+		* 
+		* 		TODO: Daniel: ich habe TEMPorär und provisorisch die RulesetId/Priority von Integer nach String umgwandelt (ich denke Denis passt RegelsetDto noch an...
+		*	                  (damit es auch compilierbar ist mit rulsetid/priroty als Integer) 
 		*/
-	
-		dto.put(RULESETID, regelsetModelOriginal.getId());
+		
+		dto.put(RULESETID, regelsetModelOriginal.getRulesetId().toString());
 		dto.put(RULESETNAME, regelsetModelOriginal.getRulesetName());
 		//dto.put(TARGETDIR, String.valueOf(getTargetDirectory());
 		dto.put(TARGETDIR, regelsetModelOriginal.getTargetDirectory());
 		dto.put(FILENAME, regelsetModelOriginal.getFilenameKonfiguration());
 		dto.put(RULESETSTATUS, regelsetModelOriginal.isRuleActiv());
-		dto.put(PRIORITY, regelsetModelOriginal.getPriority());
+		dto.put(PRIORITY, regelsetModelOriginal.getPriority().toString());
 		
 		return dto;
 	}
