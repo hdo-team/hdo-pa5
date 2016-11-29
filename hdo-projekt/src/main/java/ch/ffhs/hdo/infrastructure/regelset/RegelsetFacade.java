@@ -66,7 +66,7 @@ public class RegelsetFacade {
 
 		//*****TEMP****
 		RegelsetModel rs;
-		for(int i=0; i<20; i++) {
+		for(int i=0; i<30; i++) {
 		rs=new RegelsetModel();
 		rs.setRulesetName("Regelset "+ i);
 		rs.setTargetDirectory("C:\\Target-Directory" + i);

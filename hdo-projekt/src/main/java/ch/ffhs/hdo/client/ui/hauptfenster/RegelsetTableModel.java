@@ -26,6 +26,10 @@ public class RegelsetTableModel extends Model {
 		return abstractModel;
 	}
 	
+	public ArrayList<RegelsetModel> getRulsetList() {
+		return rulsets;
+	}
+	
 	public void addTableModelListener(TableModelListener l) {
 		// TODO Auto-generated method stub
 		
