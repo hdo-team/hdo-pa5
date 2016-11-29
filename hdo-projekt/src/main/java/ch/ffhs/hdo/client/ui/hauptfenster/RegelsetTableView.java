@@ -32,8 +32,8 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		getModel().setColumnNames(new String[]{getMessage(I18N + ".rulsetTableHeader.name"),getMessage(I18N + ".rulsetTableHeader.directory"),getMessage(I18N + ".rulsetTableHeader.active")});
-		rulsetTable = new JTable(getModel());
+		getModel().createAbstractTableModel(new String[]{getMessage(I18N + ".rulsetTableHeader.name"),getMessage(I18N + ".rulsetTableHeader.directory"),getMessage(I18N + ".rulsetTableHeader.active")});
+		rulsetTable = new JTable(getModel().getAbstractModel());
 	}
 
 	private void layoutForm() {

@@ -106,12 +106,12 @@ public class MainView extends View<MainModel> {
 				//	  End-Version: null wenn neues Regelset erstellt werden soll
 				//    				effektives Model (muss ja nicht Index 0) sein!
 				//
-				if (getModel().getRegelsetModel().getRulsetList() != null) {
+				/*if (getModel().getRegelsetModel().getRulsetList() != null) {
 					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, getModel().getRegelsetModel().getRulsetList().get(0));
 				} else {
 					// Kein Model => keine Argument)
 					getHandler().performOperation(RegelsetViewStartOperation.class);
-				}
+				}*/
 			}
 		});
 
