@@ -29,7 +29,7 @@ public class MainController extends Controller<MainModel, MainView> {
 		
 		this.viewHandler = new ViewHandlerImpl();
 
-		setView(new MainView(getResourceBundle()));
+		setView(new MainView(getResourceBundle(),model));
 
 		initializeView();
 		initlizeHandler();

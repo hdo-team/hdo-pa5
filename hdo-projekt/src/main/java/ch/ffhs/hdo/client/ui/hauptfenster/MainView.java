@@ -43,11 +43,11 @@ public class MainView extends View<MainModel> {
 	private JSplitPane layoutsplitpane;
 	Dimension minimumSize;
 
-	public MainView(ResourceBundle resourceBundle) {
+	public MainView(ResourceBundle resourceBundle, MainModel model) {
 		super(resourceBundle);
+		this.setModel(model);
 		this.resourceBundle = resourceBundle;
 		setTitle(getMessage(TITLE_KEY));
-		//System.out.println(getModel().getRegelsetModel()); //WIIIIIEEESOOOO GEEEHHHT DAAAS NIIIICHHHT!!!!!
 		initComponents();
 
 	}
@@ -123,7 +123,7 @@ public class MainView extends View<MainModel> {
 
 		// Create Rulset Panel
 		
-		regelsetTableView = new RegelsetTableView(resourceBundle);
+		regelsetTableView = new RegelsetTableView(resourceBundle, getModel().regelsetModel);
 		
 
 		

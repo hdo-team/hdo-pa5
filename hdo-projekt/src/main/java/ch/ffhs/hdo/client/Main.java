@@ -21,6 +21,7 @@ public class Main {
 		
 		//init StartExecutableMainView
 		
+		
 		RegelsetTableModel regelsetsTable = new RegelsetTableModel(new RegelsetFacade().getAllRegelsets());
 		
 		

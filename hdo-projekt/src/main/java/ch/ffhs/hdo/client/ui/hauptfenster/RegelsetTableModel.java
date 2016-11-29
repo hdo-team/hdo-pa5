@@ -21,7 +21,6 @@ public class RegelsetTableModel extends Model implements TableModel {
 	private ArrayList<RegelsetModel> rulsets;
 	
 	public RegelsetTableModel(ArrayList<RegelsetModel> rulsets) {
-		this.columnNames = columnNames;
 		this.rulsets = rulsets;
 	}
 	
@@ -34,11 +33,13 @@ public class RegelsetTableModel extends Model implements TableModel {
 	}
 	
 	public int getRowCount() {
-		return rulsets.size();
+		return 0;
+		//return rulsets.size();
 	}
 	
 	public int getColumnCount() {
-		return columnNames.length;
+		return 0;
+		//return columnNames.length;
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {

@@ -17,9 +17,10 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 	private JTable rulsetTable;
 	private final String I18N = "hdo.main";
 
-	public RegelsetTableView(ResourceBundle resourceBundle) {
+	public RegelsetTableView(ResourceBundle resourceBundle, RegelsetTableModel model) {
 		super(resourceBundle);
-		//initComponents();
+		this.setModel(model);
+		initComponents();
 		
 	}
 	
