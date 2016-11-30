@@ -7,6 +7,7 @@ import java.nio.file.attribute.FileTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.logging.log4j.core.util.FileUtils;
 import org.junit.After;
@@ -14,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runners.model.TestTimedOutException;
 
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling.FileMetaData;
 import ch.ffhs.hdo.infrastructure.service.util.PdfUtils.PdfMetaData;
@@ -86,6 +88,20 @@ public class FileHandlingTest {
 		Assert.assertTrue(
 				((FileTime) fileMetadaten.get(FileMetaData.LAST_MODIFICATION_TIME)).toMillis() < new Date().getTime());
 
+	}
+
+	@Test
+	public void testRekursivFolders() {
+
+		final String rootDir = "C:\\temp\\";
+		final List<String> underRootFolders = FileHandling.getAllFolders(rootDir);
+		File f = new File(rootDir + File.separator + "TestDirectory"+File.separator);
+		f.mkdir();
+		for (String string : underRootFolders) {
+
+			Assert.assertTrue(new File (string).isDirectory());
+			System.out.println(string);
+		}
 	}
 
 }

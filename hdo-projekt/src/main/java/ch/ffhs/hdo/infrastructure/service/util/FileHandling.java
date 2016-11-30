@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -148,6 +153,24 @@ public class FileHandling {
 		}
 
 		return files;
+
+	}
+
+	public static List<String> getAllFolders(String rootDir) {
+
+		final Collection<File> listFilesAndDirs = FileUtils.listFilesAndDirs(new File(rootDir),
+				new NotFileFilter(TrueFileFilter.INSTANCE), DirectoryFileFilter.DIRECTORY);
+		ArrayList<String> folders = new ArrayList<String>();
+
+		for (File folder : listFilesAndDirs) {
+
+			if (!folder.getName().startsWith(".")) {
+				folders.add(folder.getAbsolutePath());
+
+			}
+
+		}
+		return folders;
 
 	}
 
