@@ -11,7 +11,7 @@ public class RegelsetModel extends Model {
 	private Integer			 rulesetId;
 	private Integer          priority;			// TODO: ?? evtl. nur in DB?? oder nötig für Jonas?
 	private boolean          ruleActiv;
-	private List<RegelModel> ruleList;		// alle Regeln pro Regelset werden AND-verknuepft
+	private List<RegelModel> ruleModelList;		// alle Regeln pro Regelset werden AND-verknuepft
 	private String           rulesetName;
 	private String           targetDirectory;
 	
@@ -47,8 +47,8 @@ public class RegelsetModel extends Model {
 		return priority;
 	}
 
-	public List<RegelModel> getRuleList() {
-		return ruleList;
+	public List<RegelModel> getRuleModelList() {
+		return ruleModelList;
 	}
 
 	public String getRulesetName() {
@@ -96,9 +96,9 @@ public class RegelsetModel extends Model {
 		firePropertyChange("ruleActiv", oldValue, ruleActiv);
 	}
 
-	public void setRuleList(List<RegelModel> ruleList) {
-		List<RegelModel> oldValue = this.ruleList;
-		this.ruleList = ruleList;
+	public void setRuleModelList(List<RegelModel> ruleList) {
+		List<RegelModel> oldValue = this.ruleModelList;
+		this.ruleModelList = ruleList;
 		firePropertyChange("ruleList", oldValue, ruleList);
 	}
 

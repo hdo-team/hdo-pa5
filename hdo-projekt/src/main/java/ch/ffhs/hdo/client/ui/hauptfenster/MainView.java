@@ -159,7 +159,7 @@ public class MainView extends View<MainModel> {
 		getFrame().setJMenuBar(menuBar);
 		getFrame().add(layoutsplitpane, BorderLayout.CENTER);
 
-		setDimension(900, 900);
+		setDimension(900, 700);
 
 	}
 

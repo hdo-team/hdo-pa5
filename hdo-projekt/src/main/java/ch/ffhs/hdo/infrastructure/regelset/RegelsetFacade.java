@@ -99,9 +99,9 @@ public class RegelsetFacade {
 		HashMap<CompareTypeEnum, String> compareValueMap2 = new HashMap<CompareTypeEnum, String>();
 		compareValueMap2.put(RegelModel.CompareTypeEnum.COMPARE_EQUAL, "Schreiberling");
 		rule2.setCompareValueMap(compareValueMap2);
-		rs.setRuleList(new ArrayList<RegelModel>());
-		rs.getRuleList().add(rule1);
-		rs.getRuleList().add(rule2);
+		rs.setRuleModelList(new ArrayList<RegelModel>());
+		rs.getRuleModelList().add(rule1);
+		rs.getRuleModelList().add(rule2);
 		
 		regelsets.add(rs);
 		}
