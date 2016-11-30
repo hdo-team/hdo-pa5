@@ -5,7 +5,7 @@ import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
-import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperationExecutable;
+import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveExecutable;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
@@ -39,7 +39,7 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	private void setupViewHandler() {
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
-		viewHandler.addOperation(OptionsSaveOperation.class, new OptionsSaveOperationExecutable(getModel()));
+		viewHandler.addOperation(OptionsSaveOperation.class, new OptionsSaveExecutable(getModel()));
 		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FolderChooserExecuter(getModel()));
 
 	}
