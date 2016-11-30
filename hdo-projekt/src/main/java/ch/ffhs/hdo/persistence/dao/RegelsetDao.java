@@ -65,4 +65,25 @@ public class RegelsetDao extends JdbcHelper {
 		terminate();
 	}
 
+	public void changePrioDown(int id) {
+
+		
+		// UPDATE regelset SET priority (Select min(priority)+1 from Regelset where priority < ? ) where id = ? ;
+		
+
+	}
+
+	public void changePrioUp(int id) {
+
+		// UPDATE regelset SET priority (Select max(priority)-1 from Regelset where priority > ? ) where id = ? ;
+		
+		
+	}
+
+	public void deleteRegelset(int id) {
+		// DELETE Rule where regelsetId = ? 
+		// DELETE Ruleset where id = ? 
+		
+	}
+
 }
