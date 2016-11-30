@@ -16,6 +16,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
 public class RegelsetTableView extends View<RegelsetTableModel> {
@@ -64,22 +65,24 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				//getHandler().performOperationWithArgs(RegelsetPrioOperation.class, true); //TODO Prio Change Action
+				// getHandler().performOperationWithArgs(RegelsetPrioOperation.class,
+				// true); //TODO Prio Change Action
 			}
-		});	
-		
+		});
+
 		prioDownButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				//getHandler().performOperationWithArgs(RegelsetPrioOperation.class, true); //TODO Prio Change Action
+				// getHandler().performOperationWithArgs(RegelsetPrioOperation.class,
+				// true); //TODO Prio Change Action
 			}
-		});	
-		
+		});
+
 		newButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, new RegelsetModel());
 			}
 		});
-		
+
 		editButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				if (regelsetTable.getSelectedRow() > -1) {
@@ -88,16 +91,17 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 				}
 			}
 		});
-		
+
 		deleteButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				//getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, true); //TODO Delete Action
+				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, regelsetTable.getSelectedRow());
 			}
 		});
-		
+
 		stateButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				//getHandler().performOperationWithArgs(RunOperation.class, true); //TODO start/stop sort
+				// getHandler().performOperationWithArgs(RunOperation.class,
+				// true); //TODO start/stop sort
 			}
 		});
 
@@ -138,4 +142,10 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		return jPanel;
 	}
 
+	public int getSelectedRow() {
+		if (regelsetTable.getSelectedRow() > -1) {
+			return regelsetTable.getSelectedRow();
+		}
+		return -1;
+	}
 }
