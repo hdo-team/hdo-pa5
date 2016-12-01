@@ -1,7 +1,5 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
-import java.util.HashMap;
-
 import ch.ffhs.hdo.client.ui.base.Model;
 
 public class RegelModel extends Model {

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;

@@ -10,7 +10,6 @@ import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
-import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;

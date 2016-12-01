@@ -1,6 +1,5 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
-import java.awt.Color;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;

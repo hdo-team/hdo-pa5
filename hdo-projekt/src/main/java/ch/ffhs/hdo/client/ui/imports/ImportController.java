@@ -2,12 +2,10 @@ package ch.ffhs.hdo.client.ui.imports;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
-import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
-import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
-import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ReadFileExecutable;
+import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 
 /**
  * Controller für den Konfigurations-Import
