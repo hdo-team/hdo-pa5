@@ -14,13 +14,10 @@ public class RegelModel extends Model {
 	 */
 
 	public static enum ComparisonTypeEnum {
-		COMPARISON_BETWEEN, COMPARISON_EQUAL, COMPARISON_LIST;
+		 COMPARISON_BETWEEN, COMPARISON_EQUAL, COMPARISON_LIST; /// BIGGER_THAN_, SMALLER_THAN,
 	}	
 	
-	public static enum CompareTypeEnum {
-		COMPARE_EQUAL, COMPARE_GREATER_EQUAL, COMPARE_LESS_EQUAL;
-	}	
-	
+
 	public static enum ContextAttributeEnum {
 		AUTHOR, CREATION_DATE, SIZE;
 	}
@@ -34,7 +31,7 @@ public class RegelModel extends Model {
 	}
 	
 	
-	private HashMap<CompareTypeEnum, String> compareValueMap;
+	private String							 compareValue;
 	private ComparisonTypeEnum               comparisonType;
 	private ContextAttributeEnum             contextAttribute;
 	private ContextTypeEnum                  contextType;
@@ -47,8 +44,8 @@ public class RegelModel extends Model {
 	//     (gibt ja kein dynanisches nachladen von DB)
 		
 	
-	public HashMap<CompareTypeEnum, String> getCompareValueMap() {
-		return compareValueMap;
+	public String getCompareValue() {
+		return compareValue;
 	}
 
 	public ComparisonTypeEnum getComparisonType() {
@@ -71,9 +68,9 @@ public class RegelModel extends Model {
 		return ruleName;
 	}
 
-	public void setCompareValueMap(HashMap<CompareTypeEnum, String> compareValueMap) {
-		HashMap<CompareTypeEnum, String> oldValue = compareValueMap;
-		this.compareValueMap = compareValueMap;
+	public void setCompareValue(String compareValueMap) {
+		 String oldValue = compareValueMap;
+		this.compareValue = compareValueMap;
 		firePropertyChange("compareValueMap", oldValue, compareValueMap);
 	}
 
