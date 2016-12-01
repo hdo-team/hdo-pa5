@@ -51,9 +51,9 @@ public class FileHandling {
 				throw new SecurityException("File kann nicht geschrieben werden weil das Verzeichnis gesperrt ist.");
 			}
 
-			File afile = new File(filePath);
+			File file = new File(filePath);
 
-			File dest = new File(newLocation + afile.getName());
+			File dest = new File(newLocation + file.getName());
 			if (dest.exists()) {
 				LOGGER.warn("File " + dest.getAbsolutePath() + " Already Exists in Directory: "
 						+ moveto.getAbsolutePath().toString());
@@ -71,10 +71,10 @@ public class FileHandling {
 				dest = destnew;
 			}
 
-			if (afile.renameTo(dest)) {
-				LOGGER.debug("File: " + afile.getName() + " moved from [" + filePath + "] to [" + newLocation + "]");
+			if (file.renameTo(dest)) {
+				LOGGER.debug("File: " + file.getName() + " moved from [" + filePath + "] to [" + newLocation + "]");
 			} else {
-				System.out.println("File [" + filePath + "]is failed to move to [" + newLocation + "]!");
+				LOGGER.error("File [" + filePath + "]is failed to move to [" + newLocation + "]!");
 			}
 
 		} catch (Exception e) {
@@ -82,13 +82,20 @@ public class FileHandling {
 		}
 
 	}
-
+/**
+ * 
+ * Verzeichnis löschen
+ * 
+ * @param folder zu löschende Verzeichnis
+ */
 	public static void deleteFolder(File folder) {
 		File[] files = folder.listFiles();
 		if (files != null) { // some JVMs return null for empty dirs
 			for (File f : files) {
 				if (f.isDirectory()) {
 					deleteFolder(f);
+					LOGGER.debug("File: " + f.getName() + " deleted");
+
 				} else {
 					f.delete();
 				}
@@ -96,7 +103,11 @@ public class FileHandling {
 		}
 		folder.delete();
 	}
-
+/**
+ * File löschen
+ * 
+ * @param file zu löschende File
+ */
 	public static void deleteFile(File file) {
 		LOGGER.debug("File :" + file.getAbsolutePath() + "was deleted");
 		file.delete();
@@ -119,24 +130,31 @@ public class FileHandling {
 	 */
 	public static HashMap<FileMetaData, Object> getFileMetaData(File file) {
 
-		BasicFileAttributes attr;
+		HashMap<FileMetaData, Object> metadata = new HashMap<FileHandling.FileMetaData, Object>();
 		try {
+			BasicFileAttributes attr;
 			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
 
-			HashMap<FileMetaData, Object> metadata = new HashMap<FileHandling.FileMetaData, Object>();
 
 			metadata.put(FileMetaData.CREATION_TIME, attr.creationTime());
 			metadata.put(FileMetaData.LAST_ACCESS_TIME, attr.lastAccessTime());
 			metadata.put(FileMetaData.LAST_MODIFICATION_TIME, attr.lastModifiedTime());
 			metadata.put(FileMetaData.SIZE, attr.size());
 
-			return metadata;
 		} catch (IOException e) {
 			LOGGER.error("Metadaten einer Datei konnten nicht geleasen werden ", e);
 		}
-		return null;
+		return metadata;
 	}
 
+	/**
+	 * 
+	 * Gibt eine Collection von Files zurück die gefuden wurden
+	 * 
+	 * @param inboxPath das zu durchsuchende Verzeichnis
+	 * @param rekursive true um Rekursiv in allen Unterverzeichnis zu suchen
+	 * @return Collection von allen gefundenn Files 
+	 */
 	public static Collection<File> getFileList(String inboxPath, boolean rekursiv) {
 		File folder = new File(inboxPath);
 
@@ -156,6 +174,11 @@ public class FileHandling {
 
 	}
 
+	/**
+	 * Gibt alle Vezeichnisse aus einem Verzeichnis zurück
+	 * @param rootDir das zu durchsuchende Verzeichnis
+	 * @return Liste von Pfaden die gefunden wurden
+	 */
 	public static List<String> getAllFolders(String rootDir) {
 
 		final Collection<File> listFilesAndDirs = FileUtils.listFilesAndDirs(new File(rootDir),
