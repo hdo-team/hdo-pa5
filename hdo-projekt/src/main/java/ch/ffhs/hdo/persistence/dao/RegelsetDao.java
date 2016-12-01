@@ -87,15 +87,24 @@ public class RegelsetDao extends JdbcHelper {
 
 	public void deleteRegelset(int regelset_id) throws SQLException {
 
-		final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
-		deleteRule.setInt(1, regelset_id);
-		deleteRule.executeUpdate();
+		try {
+			conn.setAutoCommit(false);
 
-		final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
-		deleteRuleset.setInt(1, regelset_id);
-		deleteRuleset.executeUpdate();
+			final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
+			deleteRule.setInt(1, regelset_id);
+			deleteRule.executeUpdate();
 
-		terminate();
+			final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
+			deleteRuleset.setInt(1, regelset_id);
+			deleteRuleset.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
+			terminate();
+
+		} catch (SQLException e) {
+			conn.rollback();
+
+		}
 
 	}
 
