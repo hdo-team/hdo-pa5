@@ -19,7 +19,7 @@ public class DocumentModel {
 
 		this.file = file;
 		fileMetadata = FileHandling.getFileMetaData(file);
-		pdfMetadata = PdfUtils.getDokumentInformation(file);
+		pdfMetadata = PdfUtils.getDocumentInformation(file);
 		this.content = PdfUtils.readPDF(file);
 
 	}
