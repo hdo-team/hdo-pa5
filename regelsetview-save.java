@@ -11,13 +11,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +24,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
+import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
@@ -36,7 +34,7 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
  * 
  * 
  * 
- * wird noch Ã¼berarbeitet !!!!!!!!!!!!!!!!
+ * wird noch überarbeitet !!!!!!!!!!!!!!!!
  * 
  * 
  * 
@@ -54,16 +52,15 @@ public class RegelsetView extends View<RegelsetModel> {
 	private final String TITLE_KEY = I18N + ".title";
 	private final String CONTEXT_COMBOBOXKEY = I18N + ".rule.context";
 	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".rule.attribute";
-	private final String COMPARISON_MODE_COMBOBOXKEY = I18N + ".rule.comparisonmode";
 	private JTextField regelsetNameTextField;
 	private JTextField dateinamenKonfigurationTextField;
 	private JTextField fromDateTextField[];
 	private JTextField toDateTextField[];
-	private JTextField equalTextField[];
 
 
 	private JTextField targetDirectoryTextField;
 	
+	private JButton fileChooseButton;
 
     private JComboBox targetDirectoryComboBox;
     
@@ -71,12 +68,10 @@ public class RegelsetView extends View<RegelsetModel> {
     //  sind in Class RulePanel
 	private JComboBox contextComboBox;
 	private JComboBox attributeComboBox;
-	private JComboBox comparisonModeBox;
 
-	// => gehÃ¶rt ins Model!
+	
 	private String contextComboBoxList[]  = new String[3];
 	private String attributeComboBoxList[] = new String[3];
-	private String comparisonModeList[]	= new String[5];
 	private String targetDirectoryList[];
 
 	private JButton addButton;
@@ -112,8 +107,8 @@ public class RegelsetView extends View<RegelsetModel> {
 	
 	private String[] getDirectories(String inboxDirectory, boolean recursiv) {
 		//
-		// TODO: nur temporÃ¤r
-		// 			SpÃ¤ter werden die Directories direkt aus der Infra-Schicht geholt
+		// TODO: nur temporär
+		// 			Später werden die Directories direkt aus der Infra-Schicht geholt
 		//
 		//
 		
@@ -135,6 +130,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		targetDirectoryTextField = new JTextField();
 		targetDirectoryTextField.setEditable(false);
+		fileChooseButton = new JButton(getMessage("base.filechooser"));
 		
 		dateinamenKonfigurationTextField = new JTextField();
 		fromDateTextField = new JTextField[4];
@@ -150,13 +146,12 @@ public class RegelsetView extends View<RegelsetModel> {
 		attributeComboBoxList[0] = getMessage(ATTRIBUTE_COMBOBOXKEY + ".date");
 		attributeComboBoxList[1] = getMessage(ATTRIBUTE_COMBOBOXKEY + ".author");
 		attributeComboBoxList[2] = getMessage(ATTRIBUTE_COMBOBOXKEY + ".size");
-
-		comparisonModeList[0] = getMessage(COMPARISON_MODE_COMBOBOXKEY + ".equal");
-		comparisonModeList[0] = getMessage(COMPARISON_MODE_COMBOBOXKEY + ".notEqual");
-		comparisonModeList[0] = getMessage(COMPARISON_MODE_COMBOBOXKEY + ".greaterEqual");
-		comparisonModeList[0] = getMessage(COMPARISON_MODE_COMBOBOXKEY + ".lessEqual");
-		comparisonModeList[0] = getMessage(COMPARISON_MODE_COMBOBOXKEY + ".regex");
-		
+	/*
+		attributeComboBox[0] = new JComboBox<String>(attributeComboBoxList);
+		attributeComboBox[1] = new JComboBox<String>(attributeComboBoxList);
+		attributeComboBox[2] = new JComboBox<String>(attributeComboBoxList);
+		attributeComboBox[3] = new JComboBox<String>(attributeComboBoxList);
+*/
 		fromDateTextField[0] = new JTextField();
 		fromDateTextField[1] = new JTextField();
 		fromDateTextField[2] = new JTextField();
@@ -176,47 +171,165 @@ public class RegelsetView extends View<RegelsetModel> {
 		
 		saveButton.addActionListener(new SaveRulesetAction());
 		cancelButton.addActionListener(new CloseAction());
-		addButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				tabbedPane.add("frisch geADDed", new RulePanel());
-			}
-		});
-		
-		deleteButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				
-				int confirmed = JOptionPane.showConfirmDialog(null, 
-									getMessage(I18N + ".dialog.rule.delete.confirm") + " TODO <entf>  " + tabbedPane.getSelectedIndex() + " - " + tabbedPane.getComponentCount(), 
-									getMessage(I18N + ".dialog.rule.delete.title"),
-									JOptionPane.YES_NO_OPTION);
-
-				if (confirmed == JOptionPane.YES_OPTION) {
-					      tabbedPane.remove(tabbedPane.getSelectedIndex());
-				}
-			}
-		});
-		
+		fileChooseButton.addActionListener(new OpenDirectoryChooser());
 	}
 
+	
+	/*
+	 *  Besteht jeweils nur aus einem Panel, das wiederum aus mehreren Panels besteht
+	 */
+	JPanel makePanel(PanelTypeEnum panelType) {
+		JPanel panel = null;
 		
+		FormBuilder panelBuilder = FormBuilder.create()
+				.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
+				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
+		
+		if (panelType == PanelTypeEnum.PANEL_CONTEXT)  {
+			
+			
+			panel = panelBuilder.build();
+		} else if (panelType == PanelTypeEnum.PANEL_CONTEXT_ATTRIBUTE) {
+			
+			
+			panel = panelBuilder.build();
+		} else if (panelType == PanelTypeEnum.PANEL_COMPARISON) {
+			
+			
+			panel = panelBuilder.build();	
+		} else {
+			//logger.ERROR("TODO: unmögliche Exception");
+			System.out.println("ERROR - TODO: unmögliche Exception");
+			//TODO: throw ???
+		}
+		
+		
+		return panel;
+		// nur Context-DropDown
+	}
+	
+
+	
+	
+	JPanel makeRulePanel() {
+		
+		// ein Rule Panel wird dynamisch...
+		//
+		// je nach Conext-DropDown ist noch ein zusätzliches ContentAttr-DropDown nötig
+		//
+		// Comparison Teil ("von-bis" oder nur equal-Textbox ist abh. von den 2 Combos...
+		//
+		// in der Rule sind alle Elems drin; aber nicht alle sichtbar
+		//	das nötige wird dynamisch sichtbar gemacht / verschoben
+		//  
+		// wichtig ist das z.B. von/bis-Values erhalten bleiben bei Spielerei auf Equal..
+		// 
+		
+		
+		
+		FormBuilder paneBuilder = FormBuilder.create()
+				.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
+				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p, , p , $lg, p , $lg, p");
+
+		paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
+
+		// Panel besteht aus 3 Teilen
+	//	JPanel contextPanel = makePanel(CONTEXT);
+		//JPanel contextAttribtePanel = makePanel(CONTEXT_ATTIBUTE);
+		//JPanel comparisonPanel = makePanel(COMPARISON);
+		
+		
+		contextComboBox = new JComboBox<String>(contextComboBoxList);
+		attributeComboBox = new JComboBox<String>(attributeComboBoxList);
+	//	paneBuilder.add(contextPanel).rcw(3, 1, 1);
+
+		// TODO: es wird immer die gleich ComoBox genommen => anpassen
+		paneBuilder.add(attributeComboBox).rcw(3, 4, 3);
+
+		paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(5, 1, 7);
+		paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(7, 1, 7);
+		paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(7, 4, 3);
+
+		// JFrame frame=new JFrame("date display");
+		JDatePickerImpl datePickerFrom;
+		JDatePickerImpl datePickerTo;
+		UtilDateModel model = new UtilDateModel();
+
+		model.setDate(2016, 11, 16);
+		model.setSelected(true);
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		datePickerFrom = new JDatePickerImpl(datePanel, null);
+		datePickerTo = new JDatePickerImpl(datePanel, null);
+
+		// paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
+		// paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
+		paneBuilder.add(datePickerFrom).rcw(9, 1, 2);
+		paneBuilder.add(datePickerTo).rcw(9, 4, 3);
+
+		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
+		
+		return paneBuilder.build();
+	}
+	
+	
+	JPanel makePdfRulePanel() {
+		FormBuilder paneBuilder = FormBuilder.create()
+				.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
+				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
+
+		paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
+
+		contextComboBox = new JComboBox<String>(contextComboBoxList);
+		paneBuilder.add(contextComboBox).rcw(3, 1, 1);
+
+		// TODO: es wird immer die gleich ComoBox genommen => anpassen
+		paneBuilder.add(attributeComboBox).rcw(3, 4, 3);
+
+		paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(5, 1, 7);
+		paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(7, 1, 7);
+		paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(7, 4, 3);
+
+		// JFrame frame=new JFrame("date display");
+		JDatePickerImpl datePickerFrom;
+		JDatePickerImpl datePickerTo;
+		UtilDateModel model = new UtilDateModel();
+
+		model.setDate(2016, 11, 16);
+		model.setSelected(true);
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		datePickerFrom = new JDatePickerImpl(datePanel, null);
+		datePickerTo = new JDatePickerImpl(datePanel, null);
+
+		// paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
+		// paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
+		paneBuilder.add(datePickerFrom).rcw(9, 1, 2);
+		paneBuilder.add(datePickerTo).rcw(9, 4, 3);
+
+		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
+		
+		return paneBuilder.build();
+	}
+	
+	
+
+	
+	
 	private void layoutForm() {
 
 		FormBuilder builder = FormBuilder.create()
-				.columns("right:pref, 5dlu, [20dlu , pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
+				.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
 				
 
 		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(1, 1, 7);
 		builder.add(regelsetNameTextField).rcw(3, 1, 3);
 		
-		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 7);
-		// targetDirectoryList = 
-		FileHandling.getFileList("c:\\daten???????????", true).toArray();
-		
+		//builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(5, 1, 7);
+		//builder.add(targetDirectoryTextField).rcw(7, 1, 3);
+		//builder.add(fileChooseButton).rcw(7, 5, 1);
+		targetDirectoryList = getDirectories("c:\\daten???????????", true);
 		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryList);
-		builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
+		builder.add(targetDirectoryComboBox).rcw(7, 1, 1);
 		
 		builder.addLabel(getMessage(I18N + ".label.filenameConfigure")).rcw(9, 1, 7);
 		builder.add(dateinamenKonfigurationTextField).rcw(11, 1, 3);
@@ -225,19 +338,56 @@ public class RegelsetView extends View<RegelsetModel> {
 		builder.add(statusCheckBox).rcw(15, 1, 3);
 
 		// ----------------------
-		// mit Builder "innere" verschachtelte JPane fÃ¼r Regel_<x>
+		// mit Builder "innere" verschachtelte JPane für Regel_<x>
 		//
 		//
 		// MUSS in END-Version aus Model "gezogen" werden
 		//
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 4; i++) {
 			/*
 			 *  Besteht jeweils nur aus einem Panel, das wiederum aus mehreren Panels besteht
 			 */
+			/***
 
+			FormBuilder paneBuilder = FormBuilder.create()
+					.columns("right:pref, 5dlu,[20dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
+					.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
+
+			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
+
+			contextComboBox = new JComboBox<String>(contextComboBoxList);
+			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
+
+			paneBuilder.add(attributeComboBox[i]).rcw(3, 4, 3);
+
+			paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(5, 1, 7);
+			paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(7, 1, 7);
+			paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(7, 4, 3);
+
+			// JFrame frame=new JFrame("date display");
+			JDatePickerImpl datePickerFrom;
+			JDatePickerImpl datePickerTo;
+			UtilDateModel model = new UtilDateModel();
+
+			model.setDate(2016, 11, 16);
+			model.setSelected(true);
+			JDatePanelImpl datePanel = new JDatePanelImpl(model);
+			datePickerFrom = new JDatePickerImpl(datePanel, null);
+			datePickerTo = new JDatePickerImpl(datePanel, null);
+
+			// paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
+			// paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
+			paneBuilder.add(datePickerFrom).rcw(9, 1, 2);
+			paneBuilder.add(datePickerTo).rcw(9, 4, 3);
+
+			paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
+
+			rulePanel[i] = paneBuilder.build();
+			tabbedPane.addTab("Test_" + i, rulePanel[i]);
+			
+			**/
 			
 			tabbedPane.addTab("Test_" + i, new RulePanel());
-			
 			
 			
 		}
@@ -256,7 +406,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		getFrame().add(build, BorderLayout.CENTER);
 
-		
 		setDimension(800, 600);
 	}
 
@@ -293,8 +442,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		
 		targetDirectoryComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO: bei jeder Action? eher unschÃ¶n?
-				// 		sollte doch nur bei Ã„NDERUND des selektierten Items
+				// TODO: bei jeder Action? eher unschön?
+				// 		sollte doch nur bei ÄNDERUND des selektierten Items
 				String selectedDirectory = (String)targetDirectoryComboBox.getSelectedItem();
 				System.out.println("TargetCombo" + selectedDirectory);
 				getModel().setTargetDirectory(selectedDirectory);
@@ -302,13 +451,16 @@ public class RegelsetView extends View<RegelsetModel> {
 			}
 		});
 		
-		regelsetNameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(regelsetNameTextField));
-		
 	}
 	
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
+			
+			// TODO: Gehört das hier hinein?
+			getModel().setRulesetName(regelsetNameTextField.getText());
+			getModel().setFilenameKonfiguration(dateinamenKonfigurationTextField.getText());
+		
 			getHandler().performOperation(RegelsetSaveOperation.class);
 			getHandler().performOperation(CloseViewOperation.class);
 		}
@@ -317,51 +469,19 @@ public class RegelsetView extends View<RegelsetModel> {
 	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
+
 			getHandler().performOperation(CloseViewOperation.class);
 		}
 	}
 
-    private class RegelsetDocumentListener implements DocumentListener {
+	private class OpenDirectoryChooser extends AbstractAction {
 
-    	JTextField myTextField = null;
-    	public RegelsetDocumentListener(JTextField myTextField) {   // + MODEL$$$
-    		this.myTextField = myTextField;
-    	}
+		public void actionPerformed(ActionEvent e) {
 
-    	public void insertUpdate(DocumentEvent e) {
-			processEvent(e);
-			
+			getHandler().performOperationWithArgs(ChooseDirectoryPathViewOperation.class, true);
 		}
+	}
 
-		public void removeUpdate(DocumentEvent e) {
-			processEvent(e);
-			
-		}
-
-		public void changedUpdate(DocumentEvent e) {
-			processEvent(e);
-		}
-    	
-		private void processEvent(DocumentEvent e) {
-			System.out.println("Event e:" + e);
-			System.out.println("Start: " + e.getDocument().getStartPosition());
-			
-			System.out.println("textfield: " + myTextField.getText());
-
-			if (myTextField == regelsetNameTextField) {
-				System.out.println("regelsetNameTextField: " + myTextField.getText());;
-				getModel().setRulesetName(myTextField.getText());
-
-				
-			} else if (myTextField == dateinamenKonfigurationTextField) {
-				System.out.println("dateinamenKonfigurationTextField: " + myTextField.getText());;
-				getModel().setFilenameKonfiguration(myTextField.getText());
-			} else {
-				System.out.println("?????????????????: " + myTextField.getText());;
-			}
-			
-		}
-    }
 	
 	private class RulePanel extends JPanel {
 		
@@ -380,13 +500,13 @@ public class RegelsetView extends View<RegelsetModel> {
 		// (tun sie sonst aber vielleicht auch)
 		
 		RulePanel() {
-			super();			// wir haben das "haupt-Rule- Panel" => jetzt mÃ¼ssen noch 3 sub-Panels..
+			super();			// wir haben das "haupt-Rule- Panel" => jetzt müssen noch 3 sub-Panels..
 		
 			FormBuilder paneBuilder = FormBuilder.create()
 					.columns("right:pref, 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
 					.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
 
-			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
+			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule") + "XXXXXXX").rcw(1, 1, 7);
 
 			contextComboBox = new JComboBox<String>(contextComboBoxList);
 			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
@@ -424,5 +544,8 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			this.add(paneBuilder.build());
 		}
+		
+		
+		
 	}
 }

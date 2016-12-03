@@ -4,7 +4,7 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
-public class RegelsetSaveOperationExecutable implements Executable {
+public class RegelsetSaveOperationExecutable implements Executable<RegelsetModel> {
 
 	private RegelsetModel model;
 
@@ -14,10 +14,8 @@ public class RegelsetSaveOperationExecutable implements Executable {
 
 	}
 
-	public void execute(Object arg) {
-
+	public void execute(RegelsetModel arg) {
 		RegelsetFacade facade = new RegelsetFacade();
-		facade.save(model);
-
+		facade.save(model);		
 	}
 }
