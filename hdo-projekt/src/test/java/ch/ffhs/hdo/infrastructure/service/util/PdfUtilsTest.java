@@ -29,7 +29,7 @@ public class PdfUtilsTest {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("TestLesenDokument.pdf");
 		File file = new File(url.getPath());
 
-		HashMap<PdfMetaData, Object> dokumentInformation = PdfUtils.getDokumentInformation(file);
+		HashMap<PdfMetaData, Object> dokumentInformation = PdfUtils.getDocumentInformation(file);
 
 		Assert.assertEquals(new Integer(2), (Integer) dokumentInformation.get(PdfMetaData.PAGECOUNT));
 		Assert.assertEquals("Microsoft® Word 2016", (String) dokumentInformation.get(PdfMetaData.CREATOR));

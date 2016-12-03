@@ -10,7 +10,8 @@ import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
-import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
@@ -42,8 +43,9 @@ public class MainController extends Controller<MainModel, MainView> {
 		this.viewHandler.addOperation(ExportViewStartOperation.class, new ExportViewStartExecutable());
 		this.viewHandler.addOperation(ImportViewStartOperation.class, new ImportViewStartExecutable());
 		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
+		this.viewHandler.addOperation(RegelsetDeleteOperation.class, new RegelsetDeleteOperationExecutable());
 
-	}
+ 	}
 
 	@Override
 	public void initializeView() {

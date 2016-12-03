@@ -2,7 +2,6 @@ package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import java.util.ArrayList;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;

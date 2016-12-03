@@ -3,87 +3,108 @@ package ch.ffhs.hdo.persistence.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public class RegelsetDao extends JdbcHelper {
-	
-	private final String SELECTALL = "SELECT RULESET.KEY, RULESET.VALUE FROM RULESET";
-	
+
+	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET";
+	private final String SELECTRULESET = SELECTRULESETS + " WHERE id = ?";
+	private final String SELECTRULES = "SELECT RULESET.* FROM RULESET";
+	private final String SELECTRULE = SELECTRULES + " WHERE id = ?";
+	private final String SELECTRULEBYRULESET = SELECTRULES + " WHERE rulesetId = ?";
+
 	private final String INSERT = "INSERT INTO RULESET (KEY, VALUE, VALUE, VALUE, VALUE, VALUE,SYSTIMESTAMP,SYSTIMESTAMP) VALUES (?,?,?,?,?,?,CURTIME () ,CURTIME () )";
-	
+
 	private final String UPDATE = "UPDATE RULESET SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
-	
-	public RegelsetDto findAllRegelsets() throws SQLException {
-		
+
+	private final String DELETE_RULE = "DELETE RULE where regelsetId = ?";
+	private final String DELETE_RULESET = "DELETE RULESET where id = ?";
+
+	public List<RegelsetDto> findAllRegelsets() throws SQLException {
+
 		RegelsetDto dto = new RegelsetDto();
-		PreparedStatement selectAllRegelsets = conn.prepareStatement(SELECTALL);
+		PreparedStatement selectAllRegelsets = conn.prepareStatement(SELECTRULESETS);
 
 		ResultSet executeQuery = selectAllRegelsets.executeQuery();
 
+		List<RegelsetDto> regelsetlist = new ArrayList<RegelsetDto>();
 		while (executeQuery.next()) {
-			/**
-			 *	Warten auf DB-Schema von Denis
-			 * 
-			 */
-			dto.put(executeQuery.getString("ruleset_id"), executeQuery.getString("value"));
-			dto.put(executeQuery.getString("ruleset_name"), executeQuery.getString("value"));
-			dto.put(executeQuery.getString("file_name"), executeQuery.getString("value"));
-			dto.put(executeQuery.getString("targetdir_path"), executeQuery.getString("value"));
-			dto.put(executeQuery.getString("is_activ"), executeQuery.getString("value"));
-			dto.put(executeQuery.getString("priority"), executeQuery.getString("value"));
-			
-		}
 
+			dto.setId(executeQuery.getInt("id"));
+			dto.setActive(executeQuery.getBoolean("active"));
+			dto.setNewFilename(executeQuery.getString("newFilename"));
+			dto.setTargetDirectory(executeQuery.getString("targetDirectory"));
+			dto.setChangedate(executeQuery.getDate("changedate"));
+			dto.setCreationDate(executeQuery.getDate("creationDate"));
+			dto.setFilenameCounter(executeQuery.getLong("filenameCounter"));
+			dto.setPrority(executeQuery.getInt("priority"));
+			dto.setRulesetName(executeQuery.getString("rulesetName"));
+
+			regelsetlist.add(dto);
+
+		}
 		terminate();
 
-		return dto;
+		return regelsetlist;
 	}
 
 	public void save(RegelsetDto dto, boolean newEntry) throws SQLException {
-
-		Set<String> keySet = dto.keySet();
+		// TODO: DB: to implement
 		PreparedStatement insertRegelset = null;
 		if (newEntry) {
 			insertRegelset = conn.prepareStatement(INSERT);
 
 		} else {
-			insertRegelset = conn.prepareStatement(UPDATE);
-		}
 
-		for (String rulesetId : keySet) {
-			String id = dto.get(rulesetId);
+			deleteRegelset(dto.getId());
 
-			insertRegelset.setString(1, id);
-			insertRegelset.setString(2, rulesetId);
-
-			insertRegelset.executeUpdate();
+			// insertRegelset = conn.prepareStatement(DELETE);
 		}
 
 		terminate();
 	}
 
 	public void changePrioDown(int id) {
+		// TODO: DB: to implement
 
-		
-		// UPDATE regelset SET priority (Select min(priority)+1 from Regelset where priority < ? ) where id = ? ;
-		
+		// UPDATE regelset SET priority (Select min(priority)+1 from Regelset
+		// where priority < ? ) where id = ? ;
 
 	}
 
 	public void changePrioUp(int id) {
+		// TODO: DB: to implement
 
-		// UPDATE regelset SET priority (Select max(priority)-1 from Regelset where priority > ? ) where id = ? ;
-		
-		
+		// UPDATE regelset SET priority (Select max(priority)-1 from Regelset
+		// where priority > ? ) where id = ? ;
+
 	}
 
-	public void deleteRegelset(int id) {
-		// DELETE Rule where regelsetId = ? 
-		// DELETE Ruleset where id = ? 
-		
+	public void deleteRegelset(int regelset_id) throws SQLException {
+
+		try {
+			conn.setAutoCommit(false);
+
+			final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
+			deleteRule.setInt(1, regelset_id);
+			deleteRule.executeUpdate();
+
+			final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
+			deleteRuleset.setInt(1, regelset_id);
+			deleteRuleset.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
+			terminate();
+
+		} catch (SQLException e) {
+			conn.rollback();
+
+		}
+
 	}
 
 }

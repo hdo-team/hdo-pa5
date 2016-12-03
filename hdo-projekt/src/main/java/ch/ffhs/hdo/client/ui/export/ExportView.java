@@ -1,6 +1,7 @@
 package ch.ffhs.hdo.client.ui.export;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -9,9 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JFileChooser;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.*;
 
 import com.jgoodies.forms.builder.FormBuilder;
 

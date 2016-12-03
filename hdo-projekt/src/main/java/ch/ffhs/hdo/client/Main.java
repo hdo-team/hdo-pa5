@@ -1,14 +1,11 @@
 package ch.ffhs.hdo.client;
 
-import java.util.ArrayList;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.hauptfenster.MainController;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
-import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 

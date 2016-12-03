@@ -6,8 +6,6 @@ import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
-import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
-import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
 /**
  * Controller für die Regelset

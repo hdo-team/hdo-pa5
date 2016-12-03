@@ -65,7 +65,7 @@ public class PdfUtils {
 	 * @param file
 	 * @return MashMap mit Key die {@link PdfMetaData} mit deren Objekten
 	 */
-	public static HashMap<PdfMetaData, Object> getDokumentInformation(File file) {
+	public static HashMap<PdfMetaData, Object> getDocumentInformation(File file) {
 
 		PDDocument pdDoc = null;
 		COSDocument cosDoc = null;

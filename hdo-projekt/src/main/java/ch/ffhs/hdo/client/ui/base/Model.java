@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Observable;
 
-import javax.swing.event.SwingPropertyChangeSupport;
-
 public abstract class Model extends Observable {
 
 	private final PropertyChangeSupport listeners;

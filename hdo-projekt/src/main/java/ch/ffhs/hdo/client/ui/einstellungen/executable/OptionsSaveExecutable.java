@@ -5,11 +5,11 @@ import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 
-public class OptionsSaveOperationExecutable implements Executable {
+public class OptionsSaveExecutable implements Executable {
 
 	private OptionModel model;
 
-	public OptionsSaveOperationExecutable(OptionModel model) {
+	public OptionsSaveExecutable(OptionModel model) {
 		this.model = model;
 
 	}
