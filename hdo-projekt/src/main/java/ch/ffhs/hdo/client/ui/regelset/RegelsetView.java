@@ -200,7 +200,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		targetDirectoryList = getDirectories(ApplicationSettings.getInstance().getInbox_path(), true);
 		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryList);
-		builder.add(targetDirectoryComboBox).rcw(7, 1, 1);
+		builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
 
 
 		builder.addLabel(getMessage(I18N + ".label.filenameConfigure")).rcw(9, 1, 7);
@@ -250,7 +250,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		statusCheckBox.setSelected(getModel().isRuleActiv());
 		//targetDirectoryList = getDirectories("c:\\daten\\inbox????", true);
 		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
-
+/*
 		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -263,7 +263,7 @@ public class RegelsetView extends View<RegelsetModel> {
 				}
 			}
 		});
-
+*/
 		statusCheckBox.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -284,6 +284,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		});
 
 		regelsetNameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(regelsetNameTextField));
+		dateinamenKonfigurationTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(dateinamenKonfigurationTextField));
 
 	}
 
