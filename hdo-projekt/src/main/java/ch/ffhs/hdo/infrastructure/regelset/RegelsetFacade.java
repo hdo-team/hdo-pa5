@@ -97,7 +97,7 @@ public class RegelsetFacade {
 			RegelModel rule1 = new RegelModel();
 			rule1.setContextType(RegelModel.ContextTypeEnum.CONTEXT_PDF);
 			rule1.setContextAttribute(RegelModel.ContextAttributeEnum.SIZE);
-			rule1.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_BETWEEN);
+			rule1.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL);
 			rule1.setCompareValue("18.10.2016");
 
 			RegelModel rule2 = new RegelModel();
