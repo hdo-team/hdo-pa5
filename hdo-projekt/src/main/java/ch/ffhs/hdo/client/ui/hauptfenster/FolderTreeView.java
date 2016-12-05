@@ -59,8 +59,12 @@ public class FolderTreeView extends View<FolderModel> {
 		}
 		Vector ol = new Vector();
 		String[] tmp = dir.list();
-		for (int i = 0; i < tmp.length; i++)
-			ol.addElement(tmp[i]);
+		try {
+			for (int i = 0; i < tmp.length; i++)
+				ol.addElement(tmp[i]);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		Collections.sort(ol, String.CASE_INSENSITIVE_ORDER);
 		File f;
 		Vector files = new Vector();
