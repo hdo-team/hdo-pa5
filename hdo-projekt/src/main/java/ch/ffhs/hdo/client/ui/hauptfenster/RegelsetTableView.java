@@ -21,6 +21,7 @@ import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
+import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 
 public class RegelsetTableView extends View<RegelsetTableModel> {
 
@@ -115,8 +116,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		stateButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// getHandler().performOperationWithArgs(RunOperation.class,
-				// true); //TODO start/stop sort
+				getHandler().performOperationWithArgs(ServiceStartOperation.class, getModel());
 			}
 		});
 
