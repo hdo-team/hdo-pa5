@@ -97,6 +97,10 @@ public abstract class View<M extends Model> {
 	public String getMessage(String key) {
 		return resourceBundle.getString(key);
 	}
+	
+	public String getMessage(String key, String replacement) {
+		return (resourceBundle.getString(key)).replaceAll("%s", replacement);
+	}
 
 	public void dispose() {
 		frame.setVisible(false);

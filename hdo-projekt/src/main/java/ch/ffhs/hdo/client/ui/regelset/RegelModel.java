@@ -12,16 +12,25 @@ public class RegelModel extends Model {
 	 */
 
 	public static enum ComparisonTypeEnum {
-		 COMPARISON_BETWEEN, COMPARISON_EQUAL, COMPARISON_LIST; /// BIGGER_THAN_, SMALLER_THAN,
+		 COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX, COMPARISON_LIST;
 	}	
 	
+	// TODO: umbenennen auf Context - PDF- ...
+	//public static enum ContextAttributeEnum {
+		//;		// TODO: Content für PDF separat?
+	//}
+
 
 	public static enum ContextAttributeEnum {
-		AUTHOR, CREATION_DATE, SIZE;
+		PDF_TITLE, PDF_AUTHOR, PDF_CREATION_DATE, PDF_CONTENT, PDF_SIZE,
+		FILE_NAME, FILE_EXTENSION, FILE_SIZE, FILE_CREATION_DATE, FILE_OWNER;		/// ????	FILE_ -Prefix entferene?
+														// dynamischre lsg suche?
 	}
 
+	
+	
 	public static enum ContextTypeEnum {
-		CONTEXT_CONTENT, CONTEXT_FILE, CONTEXT_PDF;	
+		CONTEXT_PDF, CONTEXT_FILE, CONTEXT_CONTENT;	
 		 // Content-Pdf, Content-File, 2*Content
 		// eine Enum über alles ODER eine Enum pro ContextType ??
 				 // extension-Typ, doc, pdf, txt, ...
@@ -32,6 +41,8 @@ public class RegelModel extends Model {
 	private String							 compareValue;
 	private ComparisonTypeEnum               comparisonType;
 	private ContextAttributeEnum             contextAttribute;
+																// TODO: eigenes Pdf-Attr
+																//	unschön, da später word, xls,...
 	private ContextTypeEnum                  contextType;
 	private Integer                          id;
 	private String                           ruleName;

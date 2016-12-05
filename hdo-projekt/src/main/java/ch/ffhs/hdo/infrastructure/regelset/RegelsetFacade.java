@@ -96,13 +96,13 @@ public class RegelsetFacade {
 			rs.setDirectories(directoryList);
 			RegelModel rule1 = new RegelModel();
 			rule1.setContextType(RegelModel.ContextTypeEnum.CONTEXT_PDF);
-			rule1.setContextAttribute(RegelModel.ContextAttributeEnum.SIZE);
+			rule1.setContextAttribute(RegelModel.ContextAttributeEnum.PDF_SIZE);
 			rule1.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL);
 			rule1.setCompareValue("18.10.2016");
 
 			RegelModel rule2 = new RegelModel();
 			rule2.setContextType(RegelModel.ContextTypeEnum.CONTEXT_PDF);
-			rule2.setContextAttribute(RegelModel.ContextAttributeEnum.AUTHOR);
+			rule2.setContextAttribute(RegelModel.ContextAttributeEnum.PDF_AUTHOR);
 			rule2.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
 			rule2.setCompareValue("Schreiberling");
 			rs.setRuleModelList(new ArrayList<RegelModel>());
