@@ -12,8 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
-import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
-import ch.ffhs.hdo.client.ui.hauptfenster.MainModel.ServiceStatus;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
@@ -21,9 +21,9 @@ import ch.ffhs.hdo.persistence.dao.OptionDao;
 
 public class SortService extends SwingWorker<String, Integer> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
-	private MainModel mainModel;
+	private RegelsetTableModel mainModel;
 
-	public SortService(MainModel model) {
+	public SortService(RegelsetTableModel model) {
 		this.mainModel = model;
 	}
 
@@ -44,7 +44,6 @@ public class SortService extends SwingWorker<String, Integer> {
 		OptionDao optionDao = new OptionDao();
 		mainModel.setServiceStatus(ServiceStatus.START);
 		try {
-
 			OptionFacade facade = new OptionFacade();
 			OptionModel model = facade.getModel();
 
@@ -57,6 +56,7 @@ public class SortService extends SwingWorker<String, Integer> {
 			ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
 
 			for (File file : fileList) {
+
 				mainModel.setServiceStatus(ServiceStatus.PROCESSING);
 
 				// Die Files die behandelt werden sind nur PDFs

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -65,7 +67,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		newButton = new JButton(getMessage(I18N + ".button.newRegelset"));
 		editButton = new JButton(getMessage(I18N + ".button.editRegelset"));
 		deleteButton = new JButton(getMessage(I18N + ".button.deleteRegelset"));
-		stateButton = new JButton(getMessage(I18N + ".button.stateStop"));
+		stateButton = new JButton(getMessage(I18N + ".button.state.STOP"));
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,6 +152,16 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 	@Override
 	public void configureBindings() {
+
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "serviceStatus") {
+					stateButton.setText(getMessage("hdo.main.button.state."+evt.getNewValue().toString()));
+				}
+
+			}
+		});
 
 	}
 
