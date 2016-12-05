@@ -68,13 +68,19 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(RegelsetSwapOperation.class, getModel().getRulsetList().get(regelsetTable.getSelectedRow()));			}
+				if (regelsetTable.getSelectedRow() > -1) {
+					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
+							new int[] { regelsetTable.getSelectedRow(), 1 });
+				}
+			}
 		});
 
 		prioDownButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// getHandler().performOperationWithArgs(RegelsetPrioOperation.class,
-				// true); //TODO Prio Change Action
+				if (regelsetTable.getSelectedRow() > -1) {
+					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
+							new int[] { regelsetTable.getSelectedRow(), 2 });
+				}
 			}
 		});
 
@@ -93,13 +99,12 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 			}
 		});
 		regelsetTable.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent e) {
-		        if (e.getClickCount()==2&&regelsetTable.getSelectedRow() > -1)
-		        {
-		        	getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
-					getModel().getRulsetList().get(regelsetTable.getSelectedRow()));
-		        }
-		    }
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && regelsetTable.getSelectedRow() > -1) {
+					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
+							getModel().getRulsetList().get(regelsetTable.getSelectedRow()));
+				}
+			}
 		});
 
 		deleteButton.addActionListener(new AbstractAction() {
