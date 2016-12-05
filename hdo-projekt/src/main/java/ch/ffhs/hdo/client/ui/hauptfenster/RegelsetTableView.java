@@ -2,6 +2,8 @@ package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -90,6 +92,15 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							getModel().getRulsetList().get(regelsetTable.getSelectedRow()));
 				}
 			}
+		});
+		regelsetTable.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount()==2&&regelsetTable.getSelectedRow() > -1)
+		        {
+		        	getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
+					getModel().getRulsetList().get(regelsetTable.getSelectedRow()));
+		        }
+		    }
 		});
 
 		deleteButton.addActionListener(new AbstractAction() {
