@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
@@ -13,10 +12,11 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 public class RegelsetDao extends JdbcHelper {
 
 	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET";
-	private final String SELECTRULESET = SELECTRULESETS + " WHERE id = ?";
-	private final String SELECTRULES = "SELECT RULESET.* FROM RULESET";
-	private final String SELECTRULE = SELECTRULES + " WHERE id = ?";
-	private final String SELECTRULEBYRULESET = SELECTRULES + " WHERE rulesetId = ?";
+	// private final String SELECTRULESET = SELECTRULESETS + " WHERE id = ?";
+	// private final String SELECTRULES = "SELECT RULESET.* FROM RULESET";
+	// private final String SELECTRULE = SELECTRULES + " WHERE id = ?";
+	// private final String SELECTRULEBYRULESET = SELECTRULES + " WHERE
+	// rulesetId = ?";
 
 	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 
@@ -48,7 +48,6 @@ public class RegelsetDao extends JdbcHelper {
 			regelsetlist.add(dto);
 
 		}
-		terminate();
 
 		return regelsetlist;
 	}
@@ -56,30 +55,33 @@ public class RegelsetDao extends JdbcHelper {
 	public void save(RegelsetDto dto, boolean newEntry) throws SQLException {
 		// TODO: DB: to implement
 		PreparedStatement insertRegelset = null;
-	
 
 		if (newEntry) {
 			insertRegelset = conn.prepareStatement(INSERT);
-			
+
 		} else {
-			
+
 			// deleteRegelset(dto.getId());
 			// insertRegelset = conn.prepareStatement(DELETE_RULESET);
-			
+
 		}
-		
+
 		insertRegelset.setString(1, dto.getRulesetName());
 		insertRegelset.setString(2, dto.getTargetDirectory());
 		insertRegelset.setString(3, dto.getNewFilename());
-		//insertRegelset.setLong(4, dto.getFilenameCounter()); // Bitte hinzufügen
-		//insertRegelset.setInt(5, dto.getPrority()); // Bitte hinzufügen
+		// insertRegelset.setLong(4, dto.getFilenameCounter()); // Bitte
+		// hinzufügen
+		// insertRegelset.setInt(5, dto.getPrority()); // Bitte hinzufügen
 		insertRegelset.setInt(4, 0); // Bitte nach Anpassung entfernen
 		insertRegelset.setInt(5, 0); // Bitte nach Anpassung entfernen
 		insertRegelset.setBoolean(6, dto.isActive());
-		
+
 		insertRegelset.executeUpdate();
-		
-		terminate();
+		final ResultSet generatedKeys = insertRegelset.getGeneratedKeys();
+		while (generatedKeys.next()) {
+			System.out.println(generatedKeys.getInt("id"));
+		}
+
 	}
 
 	public void changePrioDown(int id) {
@@ -112,10 +114,10 @@ public class RegelsetDao extends JdbcHelper {
 			deleteRuleset.executeUpdate();
 			conn.commit();
 			conn.setAutoCommit(true);
-			terminate();
 
 		} catch (SQLException e) {
 			conn.rollback();
+			throw new SQLException(e);
 
 		}
 

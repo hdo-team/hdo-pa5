@@ -28,7 +28,6 @@ public class OptionDao extends JdbcHelper {
 			dto.put(executeQuery.getString("key"), executeQuery.getString("value"));
 		}
 
-		terminate();
 
 		return dto;
 
@@ -54,7 +53,6 @@ public class OptionDao extends JdbcHelper {
 			insertConfig.executeUpdate();
 		}
 
-		terminate();
 	}
 
 	public void protocollSortServiceRun(boolean succcessfull) throws SQLException {

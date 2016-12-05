@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.persistence.dao.RegelDao;
 import ch.ffhs.hdo.persistence.dao.RegelsetDao;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
@@ -51,19 +52,25 @@ public class RegelsetFacade {
 	}
 
 	public ArrayList<RegelsetModel> getAllRegelsets() {
-		RegelsetDao dao = new RegelsetDao();
+		RegelsetDao daoRegelset = new RegelsetDao();
+		RegelDao daoRegel = new RegelDao();
 		ArrayList<RegelsetModel> regelsets = new ArrayList();
 		List<RegelsetDto> findAllRegelsets;
 
 		try {
-			findAllRegelsets = dao.findAllRegelsets();
-			// regelsets.setRulsetList(RegelsetConverter.convert(findAllRegelsets));
+			findAllRegelsets = daoRegelset.findAllRegelsets();
+
+			for (RegelsetDto regelsetDto : findAllRegelsets) {
+				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
+
+				regelsets.add(RegelsetConverter.convert(regelsetDto));
+			}
 
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
 		}
 
-		temp(regelsets);
+		// temp(regelsets);
 
 		return regelsets;
 
