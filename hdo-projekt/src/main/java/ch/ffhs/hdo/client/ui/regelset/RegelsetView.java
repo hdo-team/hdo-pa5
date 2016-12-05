@@ -632,6 +632,7 @@ System.out.println("component cast: " +component.getName());
 						ruleModel.setContextAttribute(RegelModel.ContextAttributeEnum.values()[attributeComboBox.getSelectedIndex()]);
 					} else if (comboBox == comparisonModeComboBox) {
 						System.out.println("comparisonModeComboBox: " + RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
+						ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
 					}
 				
 					
