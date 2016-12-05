@@ -26,6 +26,7 @@ public class RegelConverter {
 
 		final RegelDto regelDto = new RegelDto();
 		
+		regelDto.setId(model.getId());
 		regelDto.setCompareType(model.getComparisonType().toString());
 		regelDto.setCompareValue(model.getCompareValue());
 		regelDto.setCompareType(model.getComparisonType().toString());

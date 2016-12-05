@@ -17,6 +17,16 @@ public class RegelsetFacade {
 
 	public RegelsetModel getModel() {
 
+		RegelsetModel regelsetModel = new RegelsetModel();
+		regelsetModel.setRuleModelList(new ArrayList<RegelModel>());
+
+		return regelsetModel;
+		
+		/****
+		// TODO: abklären ob OK
+		//    -> von neues Regelset erstellen => "leeres" Ruleset-Model zurückgeben. 
+		
+		
 		RegelsetDao dao = new RegelsetDao();
 
 		RegelsetDto findAllRegelsets;
@@ -30,7 +40,7 @@ public class RegelsetFacade {
 			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
 		}
 		return new RegelsetModel();
-
+***/
 	}
 
 	public void save(RegelsetModel model) {
@@ -52,66 +62,22 @@ public class RegelsetFacade {
 
 	public ArrayList<RegelsetModel> getAllRegelsets() {
 		RegelsetDao dao = new RegelsetDao();
-		ArrayList<RegelsetModel> regelsets = new ArrayList();
+		ArrayList<RegelsetModel> regelsets = new ArrayList<RegelsetModel>();
 		List<RegelsetDto> findAllRegelsets;
 
 		try {
 			findAllRegelsets = dao.findAllRegelsets();
-			// regelsets.setRulsetList(RegelsetConverter.convert(findAllRegelsets));
-
+			//regelsets.setRulsetList(RegelsetConverter.convert(findAllRegelsets));		TODO: convertMethode für <ALL> erstellen ?
+			//																				  (==> dann loop nicht mehr mötig)
+			for (RegelsetDto regelset : findAllRegelsets) {
+				regelsets.add(RegelsetConverter.convert(regelset));
+			}
+		
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
 		}
-
-		temp(regelsets);
-
 		return regelsets;
 
-	}
-
-	private void temp(ArrayList<RegelsetModel> regelsets) {
-		// *****TEMP****
-		RegelsetModel rs;
-		for (int i = 0; i < 30; i++) {
-			rs = new RegelsetModel();
-			rs.setRulesetName("Regelset " + i);
-			rs.setTargetDirectory("C:\\Target-Directory" + i);
-			if (i % 2 == 0)
-				rs.setFilenameKonfiguration("Rechnungen_\\dddd_-" + i + ".pdf");
-			else
-				rs.setFilenameKonfiguration("[Foto|Bild]-" + i + ".jpg");
-			rs.setPriority(i);
-			List<String> directoryList = new ArrayList<String>(); // Directory-Liste
-																	// wird
-																	// später
-																	// NICHT aus
-																	// DB geholt
-			directoryList.add("C:\\Daten\\Rechnung");
-			directoryList.add("C:\\Daten\\Foto");
-			directoryList.add("C:\\Daten\\Divers");
-			for (int j = 3; j < 12; j++) {
-				directoryList.add("C:\\Daten\\gugus-" + j);
-			}
-			directoryList.add("C:\\Daten\\Rechnungen");
-			rs.setDirectories(directoryList);
-			RegelModel rule1 = new RegelModel();
-			rule1.setContextType(RegelModel.ContextTypeEnum.CONTEXT_PDF);
-			rule1.setContextAttribute(RegelModel.ContextAttributeEnum.PDF_SIZE);
-			rule1.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL);
-			rule1.setCompareValue("18.10.2016");
-
-			RegelModel rule2 = new RegelModel();
-			rule2.setContextType(RegelModel.ContextTypeEnum.CONTEXT_PDF);
-			rule2.setContextAttribute(RegelModel.ContextAttributeEnum.PDF_AUTHOR);
-			rule2.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
-			rule2.setCompareValue("Schreiberling");
-			rs.setRuleModelList(new ArrayList<RegelModel>());
-			rs.getRuleModelList().add(rule1);
-			rs.getRuleModelList().add(rule2);
-
-			regelsets.add(rs);
-		}
-		// *************
 	}
 
 	public enum PriorityAction {

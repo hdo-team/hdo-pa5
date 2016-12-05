@@ -19,9 +19,11 @@ public class RegelsetConverter {
 		regelsetModel.setRulesetId(regelsetDto.getId());
 		regelsetModel.setRulesetName(regelsetDto.getRulesetName());
 		regelsetModel.setTargetDirectory(regelsetDto.getTargetDirectory());
-		regelsetModel.setFilenameKonfiguration(regelsetDto.getNewFilename());
-		regelsetModel.setRuleActiv(regelsetDto.isActive());
+		regelsetModel.setNewFilename(regelsetDto.getNewFilename());
+		regelsetModel.setFilenameCounter(regelsetDto.getFilenameCounter());
 		regelsetModel.setPriority(Integer.valueOf(regelsetDto.getPrority()));
+		regelsetModel.setRuleActiv(regelsetDto.isActive());
+		
 
 		final ArrayList<RegelModel> regelModelList = new ArrayList<RegelModel>();
 
@@ -45,7 +47,8 @@ public class RegelsetConverter {
 		dto.setId(model.getRulesetId());
 		dto.setRulesetName(model.getRulesetName());
 		dto.setTargetDirectory(model.getTargetDirectory());
-		dto.setNewFilename(model.getFilenameKonfiguration());
+		dto.setNewFilename(model.getNewFilename());
+		dto.setFilenameCounter(model.getFilenameCounter());
 		dto.setPrority(model.getPriority());
 		dto.setActive(model.isRuleActiv());
 

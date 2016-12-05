@@ -2,6 +2,11 @@ package ch.ffhs.hdo.persistence.jdbc;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ffhs.hdo.client.ui.regelset.RegelModel;
+import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
 public class InitDatabase extends JdbcHelper {
 
@@ -18,15 +23,35 @@ public class InitDatabase extends JdbcHelper {
 			
 			update("CREATE TABLE ruleset ( id INTEGER IDENTITY, targetDirectory VARCHAR(2500), rulesetName VARCHAR(500), newFilename VARCHAR(500), filenameCounter BIGINT, priority INTEGER, active BOOLEAN DEFAULT FALSE NOT NULL, creationDate TIMESTAMP, changedate TIMESTAMP  )");
 			update("CREATE TABLE rule ( id INTEGER IDENTITY, rulesetId INTEGER, contextType VARCHAR(250),contextAttribute VARCHAR(250),  compareType VARCHAR(250), compareValue VARCHAR(250), creationDate TIMESTAMP, changedate TIMESTAMP  )");
-			update("INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate) VALUES ('test', 'test', 'test', 1, 1, true, CURTIME (),CURTIME ())");
+			//update("INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate) VALUES ('test', 'test', 'test', 1, 1, true, CURTIME (),CURTIME ())");
+			
+			
+			
+			//****** TEMP			
+			//					TODO: in definitiver Version entfernen!
 
-//			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('ruleset_id','',CURTIME (),CURTIME ())");
-//			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('ruleset_name','',CURTIME (),CURTIME ())");
-//			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('file_name','',CURTIME (),CURTIME ())");
-//			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('targetdir_path','',CURTIME (),CURTIME ())");
-//			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('is_activ','',CURTIME (),CURTIME ())");
-//			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('priority','',CURTIME (),CURTIME ())");
-
+			for (int i = 0; i < 10; i++) {
+				String newFilename;
+				if (i % 2 == 0)
+					newFilename = null;
+				else
+					newFilename ="[Foto|Bild]-" + i + ".jpg";
+	
+				System.out.println("ruleset: " + "INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate)" +
+						" VALUES ('" + "Regelset " + i +"', '" +  "Rechnungen_\\dddd_-" + i + ".pdf" + "', '" + newFilename 
+						+ "', " + 990 + i + ", " + i + ", " + (i%2==0) + ", CURTIME (),CURTIME ())"); 
+				update("INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate)" +
+						" VALUES ('" + "Regelset " + i +"', '" +  "Rechnungen_\\dddd_-" + i + ".pdf" + "', '" + newFilename 
+						+ "', " + 990 + i + ", " + i + ", " + (i%2==0) + ", CURTIME (),CURTIME ())"     );
+System.out.println("INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)" +
+					" VALUES (" + i + ", 'CONTEXT_PDF' ,'PDF_SIZE', 'COMPARISON_GREATER_EQUAL', '20161018', CURTIME (),CURTIME ())"  );
+				update("INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)" +
+					" VALUES (" + i + ", 'CONTEXT_PDF' ,'PDF_SIZE', 'COMPARISON_GREATER_EQUAL', '20161018', CURTIME (),CURTIME ())"   );
+System.out.println("INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)" +
+		" VALUES (" + i + ", 'CONTEXT_PDF' ,'PDF_AUTHOR', 'COMPARISON_EQUAL', 'Schreiberling', CURTIME (),CURTIME ())");
+				update("INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)" +
+						" VALUES (" + i + ", 'CONTEXT_PDF' ,'PDF_AUTHOR', 'COMPARISON_EQUAL', 'Schreiberling', CURTIME (),CURTIME ())"   );
+			}			
 		} catch (SQLException ex2) {
 
 			// ignore
