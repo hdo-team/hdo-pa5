@@ -15,7 +15,7 @@ public class RegelsetDao extends JdbcHelper {
 	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET";
 
 	private final String SELECTRULESET = SELECTRULESETS + " WHERE id = ?";
-	private final String SELECTRULES = "SELECT RULESET.* FROM RULESET";
+	private final String SELECTRULES = "SELECT RULE.* FROM RULE";
 	private final String SELECTRULE = SELECTRULES + " WHERE id = ?";
 	private final String SELECTRULEBYRULESET = SELECTRULES + " WHERE rulesetId = ?";
 
