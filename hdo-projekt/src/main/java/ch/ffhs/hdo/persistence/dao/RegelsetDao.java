@@ -26,8 +26,8 @@ public class RegelsetDao extends JdbcHelper {
 
 	private final String UPDATE = "UPDATE RULESET SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
 
-	private final String DELETE_RULE = "DELETE RULE where rulesetId = ?";
-	private final String DELETE_RULESET = "DELETE RULESET where id = ?";
+	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
+	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
 
 	public List<RegelsetDto> findAllRegelsets() throws SQLException {
 

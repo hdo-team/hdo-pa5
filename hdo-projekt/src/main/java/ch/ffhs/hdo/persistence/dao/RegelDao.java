@@ -30,7 +30,7 @@ public class RegelDao extends JdbcHelper {
 		while (executeQuery.next()) {
 
 			final RegelDto regel = new RegelDto();
-			regel.setChangedate(executeQuery.getDate("changedate"));
+			regel.setChangeDate(executeQuery.getDate("changedate"));
 			regel.setCompareType(executeQuery.getString("comparetype"));
 			regel.setCompareValue(executeQuery.getString("comparevalue"));
 			regel.setContextAttribute(executeQuery.getString("contextattribute"));

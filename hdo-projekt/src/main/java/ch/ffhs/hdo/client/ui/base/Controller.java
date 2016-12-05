@@ -1,6 +1,9 @@
 package ch.ffhs.hdo.client.ui.base;
 
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public abstract class Controller<M extends Model, V extends View<M>> {
 
@@ -45,8 +48,14 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 
 		getView().dispose();
 		getModel().deleteObservers();
-		
 
+		final JdbcHelper jdbcHelper = new JdbcHelper();
+		try {
+			jdbcHelper.terminate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 }

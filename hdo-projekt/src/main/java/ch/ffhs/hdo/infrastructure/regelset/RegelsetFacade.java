@@ -60,6 +60,17 @@ public class RegelsetFacade {
 
 	}
 
+	public void deleteRegelset(Integer id) {
+
+		RegelsetDao dao = new RegelsetDao();
+		try {
+			dao.deleteRegelset(id);
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler Regelset samt Regeln konnten nicht gelöscht werden");
+		}
+
+	}
+
 	public ArrayList<RegelsetModel> getAllRegelsets() {
 
 		RegelsetDao dao = new RegelsetDao();
