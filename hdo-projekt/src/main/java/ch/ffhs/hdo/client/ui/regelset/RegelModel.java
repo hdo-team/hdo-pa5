@@ -5,6 +5,12 @@ import ch.ffhs.hdo.client.ui.base.Model;
 public class RegelModel extends Model {
 
 	
+	//TODO: ruleset-ID brauchts nicht. => nur auf DB
+			
+			
+	
+	
+	
 	/**
 	 * Model für die Regeln 
 	 * 

@@ -6,8 +6,9 @@ import ch.ffhs.hdo.client.ui.base.Model;
 
 public class RegelsetModel extends Model {
 
-	private List<String>     directories;		// Liste mit möglichen Ziel-Verzeichnissen 
-	private String           filenameKonfiguration;
+	private List<String>     directories;		// Liste mit möglichen Ziel-Verzeichnissen
+	private Long             filenameCounter;
+	private String           newFilename;
 	private Integer			 rulesetId;
 	private Integer          priority;			// TODO: ?? evtl. nur in DB?? oder nötig für Jonas?
 	private boolean          ruleActiv;
@@ -34,9 +35,12 @@ public class RegelsetModel extends Model {
 	public List<String> getDirectories() {
 		return directories;
 	}
+	public Long getFilenameCounter() {
+		return filenameCounter;
+	}
 
-	public String getFilenameKonfiguration() {
-		return filenameKonfiguration;
+	public String getNewFilename() {
+		return newFilename;
 	}
 
 	public Integer getRulesetId() {
@@ -66,16 +70,23 @@ public class RegelsetModel extends Model {
 		return ruleActiv;
 	}
 
+
+	public void setFilenameCounter(Long filenameCounter) {
+		Long oldValue = this.filenameCounter;
+		this.filenameCounter = filenameCounter;
+		firePropertyChange("filecounter", oldValue, filenameCounter);
+	}
+	
 	public void setDirectories(List<String> directories) {
 		List<String> oldValue = this.directories;
 		this.directories = directories;
 		firePropertyChange("directories", oldValue, directories);
 	}
 
-	public void setFilenameKonfiguration(String filenameKonfiguration) {
-		String oldValue = this.filenameKonfiguration;
-		this.filenameKonfiguration = filenameKonfiguration;
-		firePropertyChange("filenameKonfiguration", oldValue, filenameKonfiguration);
+	public void setNewFilename(String newFilename) {
+		String oldValue = this.newFilename;
+		this.newFilename = newFilename;
+		firePropertyChange("newFilename", oldValue, newFilename);
 	}
 
 	public void setRulesetId(Integer id) {

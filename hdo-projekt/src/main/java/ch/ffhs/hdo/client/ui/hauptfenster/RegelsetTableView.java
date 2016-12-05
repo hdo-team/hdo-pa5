@@ -80,7 +80,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		newButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, new RegelsetModel());
+				// TODO:  ohne Argument ??  "leeres Model wird später von Facade geholt" ...
+				getHandler().performOperation(RegelsetViewStartOperation.class);
+				// getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, new RegelsetModel());
 			}
 		});
 

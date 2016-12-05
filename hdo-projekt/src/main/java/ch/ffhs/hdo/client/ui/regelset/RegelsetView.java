@@ -68,7 +68,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".combobox";
 	private final String COMPARISON_MODE_COMBOBOXKEY = I18N + ".combobox";
 	private JTextField regelsetNameTextField;
-	private JTextField dateinamenKonfigurationTextField;
+	private JTextField newFilenameTextField;
 	private JTextField fromDateTextField[];
 	private JTextField toDateTextField[];
 	private JTextField equalTextField[];
@@ -227,7 +227,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		targetDirectoryTextField = new JTextField();
 		targetDirectoryTextField.setEditable(false);
 
-		dateinamenKonfigurationTextField = new JTextField();
+		newFilenameTextField = new JTextField();
 		fromDateTextField = new JTextField[4];
 		toDateTextField = new JTextField[4];
 		statusCheckBox = new JCheckBox(getMessage(I18N + ".checkbox.status"));
@@ -266,9 +266,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		deleteButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-System.out.println("component: " + tabbedPane.getSelectedComponent());
-RulePanel component = (RulePanel)tabbedPane.getSelectedComponent();
-System.out.println("component cast: " +component.getName());
+
 				int confirmed = JOptionPane.showConfirmDialog(null,
 						getMessage(I18N + ".dialog.rule.delete.confirm", tabbedPane.getSelectedComponent().getName() + "XXX"),
 						getMessage(I18N + ".dialog.rule.delete.title"), JOptionPane.YES_NO_OPTION);
@@ -298,8 +296,8 @@ System.out.println("component cast: " +component.getName());
 		builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
 
 
-		builder.addLabel(getMessage(I18N + ".label.filenameConfigure")).rcw(9, 1, 7);
-		builder.add(dateinamenKonfigurationTextField).rcw(11, 1, 3);
+		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(9, 1, 7);
+		builder.add(newFilenameTextField).rcw(11, 1, 3);
 
 		builder.addLabel(getMessage(I18N + ".label.status")).rcw(13, 1, 3);
 		builder.add(statusCheckBox).rcw(15, 1, 3);
@@ -329,7 +327,7 @@ System.out.println("component cast: " +component.getName());
 	public void configureBindings() {
 
 		regelsetNameTextField.setText(getModel().getRulesetName());
-		dateinamenKonfigurationTextField.setText(getModel().getFilenameKonfiguration());
+		newFilenameTextField.setText(getModel().getNewFilename());
 		statusCheckBox.setSelected(getModel().isRuleActiv());
 		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
 
@@ -360,7 +358,7 @@ System.out.println("component cast: " +component.getName());
 		});
 
 		regelsetNameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(regelsetNameTextField));
-		dateinamenKonfigurationTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(dateinamenKonfigurationTextField));
+		newFilenameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(newFilenameTextField));
 
 		
 		
@@ -370,14 +368,15 @@ System.out.println("component cast: " +component.getName());
 		//
 		// MUSS in END-Version aus Model "gezogen" werden
 		//
-		for (int i = 0; i < getModel().getRuleModelList().size(); i++) {
+		//for (int i = 0; i < getModel().getRuleModelList().size(); i++) {
+		System.out.println("rulemodelLIST; " + getModel().getRuleModelList());
+		for (RegelModel ruleModel : getModel().getRuleModelList()) {
 			/*
 			 * Besteht jeweils nur aus einem Panel, das wiederum aus mehreren
 			 * Panels besteht
 			 */
-			System.out.println("VOR addTab - Model" + getModel());
-			//System.out.println("VOR addTab - List" + getModel().getRuleModelList()); 
-			tabbedPane.addTab(getModel().getRuleModelList().get(i).getContextType().toString(), new RulePanel(getModel().getRuleModelList().get(i))); //getModel()));
+
+			tabbedPane.addTab(ruleModel.getContextType().toString(), new RulePanel(ruleModel)); 
 
 		}
 
@@ -432,9 +431,9 @@ System.out.println("component cast: " +component.getName());
 				System.out.println("regelsetNameTextField: " + myTextField.getText());
 				getModel().setRulesetName(myTextField.getText());
 
-			} else if (myTextField == dateinamenKonfigurationTextField) {
+			} else if (myTextField == newFilenameTextField) {
 				System.out.println("dateinamenKonfigurationTextField: " + myTextField.getText());
-				getModel().setFilenameKonfiguration(myTextField.getText());
+				getModel().setNewFilename(myTextField.getText());
 			} else {
 				System.out.println("?????????????????: " + myTextField.getText());
 			}
