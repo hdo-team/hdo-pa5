@@ -32,7 +32,7 @@ public class JdbcHelper {
 
 	}
 
-	protected void terminate() throws SQLException {
+	public void terminate() throws SQLException {
 
 		Statement st = conn.createStatement();
 
