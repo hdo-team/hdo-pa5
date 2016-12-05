@@ -6,6 +6,7 @@ public class MainModel extends Model {
 
 	FolderModel folderModel;
 	RegelsetTableModel regelsetModel;
+	boolean sortServiceStatus;
 	
 	
 	public void setFolderModel(FolderModel folderModel) {
@@ -22,5 +23,13 @@ public class MainModel extends Model {
 	
 	public void setRegelsetModel(RegelsetTableModel regelsetTableModel) {
 		this.regelsetModel=regelsetTableModel;
+	}
+	
+	public void setSortServiceStatus(boolean activ) {
+		this.sortServiceStatus=activ;
+	}
+	
+	public boolean getSortServiceStatus() {
+		return sortServiceStatus;
 	}
 }

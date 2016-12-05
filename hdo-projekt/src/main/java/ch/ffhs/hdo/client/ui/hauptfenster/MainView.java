@@ -145,16 +145,12 @@ public class MainView extends View<MainModel> {
 
 		// Create Main View Layout
 		layoutsplitpane.setOneTouchExpandable(true);
-		layoutsplitpane.setDividerLocation(150);
+		layoutsplitpane.setDividerLocation(210);
 		folderScrollPane.setMinimumSize(minimumSize);
 		regelsetScrollPane.setMinimumSize(minimumSize);
+		
+		
 
-		FormBuilder builder = FormBuilder.create()
-				.columns("right:pref, 5dlu,[30dlu, pref],5dlu,[20dlu, pref],5dlu, [20dlu, pref]")
-				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
-
-		builder.padding(new EmptyBorder(5, 5, 5, 5));
-		JPanel build = builder.build();
 
 		getFrame().setJMenuBar(menuBar);
 		getFrame().add(layoutsplitpane, BorderLayout.CENTER);
