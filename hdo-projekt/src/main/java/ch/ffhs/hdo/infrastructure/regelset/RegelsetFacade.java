@@ -42,7 +42,7 @@ public class RegelsetFacade {
 		try {
 			// Regelsets werden geupdated nicht neu eingefügt, darum false. Ist
 			// dies hier auch der Fall?
-			dao.save(dto, false);
+			dao.save(dto, model.getRulesetId() == null);
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
 

@@ -16,10 +16,10 @@ public class InitDatabase extends JdbcHelper {
 			update("INSERT INTO CONFIG (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('inbox_path','',CURTIME (),CURTIME ())");
 			
 			
-			update("CREATE TABLE ruleset ( id INTEGER IDENTITY, targetDirectory VARCHAR(2500), rulesetName VARCHAR(500), newFilename VARCHAR(500), filenameCounter BIGINT, prority INTEGER, active BOOLEAN DEFAULT FALSE NOT NULL, creationDate TIMESTAMP, changedate TIMESTAMP  )");
+			update("CREATE TABLE ruleset ( id INTEGER IDENTITY, targetDirectory VARCHAR(2500), rulesetName VARCHAR(500), newFilename VARCHAR(500), filenameCounter BIGINT, priority INTEGER, active BOOLEAN DEFAULT FALSE NOT NULL, creationDate TIMESTAMP, changedate TIMESTAMP  )");
 			update("CREATE TABLE rule ( id INTEGER IDENTITY, rulesetId INTEGER, contextType VARCHAR(250),contextAttribute VARCHAR(250),  compareType VARCHAR(250), compareValue VARCHAR(250), creationDate TIMESTAMP, changedate TIMESTAMP  )");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate) VALUES ('test', 'test', 'test', 1, 1, true, CURTIME (),CURTIME ())");
 
-			
 //			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('ruleset_id','',CURTIME (),CURTIME ())");
 //			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('ruleset_name','',CURTIME (),CURTIME ())");
 //			update("INSERT INTO RULESET (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('file_name','',CURTIME (),CURTIME ())");
