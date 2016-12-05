@@ -4,22 +4,24 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.infrastructure.service.SortService;
 
-public class ServiceStartOperationExecutable implements Executable<MainModel> {
+public class ServiceStartOperationExecutable implements Executable {
 
-	private SortService sortService = new SortService();
+	private SortService sortService;
+	private MainModel model;
 
-	public void execute(MainModel arg) {
-		if (arg.getSortServiceStatus()) {
+	public ServiceStartOperationExecutable(MainModel model) {
+		this.sortService = new SortService(model);
+		this.model=model;
+		
+	}
+	public void execute() {
 			sortService.execute();
-			arg.setSortServiceStatus(true);
-			arg.hasChanged();
-		}
-		if (!arg.getSortServiceStatus()) {
-			sortService.cancel(true);
-			arg.setSortServiceStatus(false);
-			arg.hasChanged();
-		}
+			model.setSortServiceStatus(true);
 
+	}
+	public void execute(Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

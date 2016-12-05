@@ -4,11 +4,26 @@ import ch.ffhs.hdo.client.ui.base.Model;
 
 public class MainModel extends Model {
 
-	FolderModel folderModel;
-	RegelsetTableModel regelsetModel;
-	boolean sortServiceStatus;
+	public enum ServiceStatus {
+		START, PROCESSING, DONE, STOP;
+	}
 	
+	private FolderModel folderModel;
+	private RegelsetTableModel regelsetModel;
+	private ServiceStatus serviceStatus;
 	
+
+	public ServiceStatus getServiceStatus() {
+		return serviceStatus;
+	}
+
+	public void setServiceStatus(ServiceStatus serviceStatus) {
+		ServiceStatus oldValue = this.serviceStatus;
+		this.serviceStatus = serviceStatus;
+		
+		firePropertyChange("serviceStatus", oldValue, serviceStatus);
+	}
+
 	public void setFolderModel(FolderModel folderModel) {
 		this.folderModel = folderModel;
 	}
@@ -25,11 +40,4 @@ public class MainModel extends Model {
 		this.regelsetModel=regelsetTableModel;
 	}
 	
-	public void setSortServiceStatus(boolean activ) {
-		this.sortServiceStatus=activ;
-	}
-	
-	public boolean getSortServiceStatus() {
-		return sortServiceStatus;
-	}
 }

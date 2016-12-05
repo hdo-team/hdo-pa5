@@ -14,6 +14,8 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
+import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
+import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperationExecutable;
 
 /**
  * Controller für das Hauptfenster
@@ -44,6 +46,7 @@ public class MainController extends Controller<MainModel, MainView> {
 		this.viewHandler.addOperation(ImportViewStartOperation.class, new ImportViewStartExecutable());
 		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		this.viewHandler.addOperation(RegelsetDeleteOperation.class, new RegelsetDeleteOperationExecutable());
+		this.viewHandler.addOperation(ServiceStartOperation.class, new ServiceStartOperationExecutable(getModel()));
 
  	}
 
