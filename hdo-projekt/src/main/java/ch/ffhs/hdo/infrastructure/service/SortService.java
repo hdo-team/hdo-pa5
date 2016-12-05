@@ -12,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
@@ -19,9 +21,10 @@ import ch.ffhs.hdo.persistence.dao.OptionDao;
 
 public class SortService extends SwingWorker<String, Integer> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
+	private RegelsetTableModel mainModel;
 
-	public SortService() {
-		// TODO Auto-generated constructor stub
+	public SortService(RegelsetTableModel model) {
+		this.mainModel = model;
 	}
 
 	@Override
@@ -33,13 +36,14 @@ public class SortService extends SwingWorker<String, Integer> {
 	@Override
 	protected void done() {
 		super.done();
+		mainModel.setServiceStatus(ServiceStatus.DONE);
 	}
 
 	@Override
 	protected String doInBackground() throws Exception {
 		OptionDao optionDao = new OptionDao();
+		mainModel.setServiceStatus(ServiceStatus.START);
 		try {
-
 			OptionFacade facade = new OptionFacade();
 			OptionModel model = facade.getModel();
 
@@ -52,12 +56,16 @@ public class SortService extends SwingWorker<String, Integer> {
 			ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
 
 			for (File file : fileList) {
-				
-				//Die Files die behandelt werden sind nur PDFs
-				if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF","Pdf" })) {
+
+				mainModel.setServiceStatus(ServiceStatus.PROCESSING);
+
+				// Die Files die behandelt werden sind nur PDFs
+				if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
 					documentModels.add(new DocumentModel(file));
 				}
-
+				if (mainModel.getServiceStatus().equals(ServiceStatus.STOP)) {
+					break;
+				}
 
 			}
 

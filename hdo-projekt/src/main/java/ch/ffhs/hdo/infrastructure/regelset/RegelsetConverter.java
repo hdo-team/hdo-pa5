@@ -29,7 +29,8 @@ public class RegelsetConverter {
 
 		RegelConverter converter = new RegelConverter();
 
-		for (RegelDto regeldto : regelsetDto.getRegeln()) {
+		final List<RegelDto> regeln = regelsetDto.getRegeln();
+		for (RegelDto regeldto : regeln) {
 
 			final RegelModel regelmodel = converter.convert(regeldto);
 			regelModelList.add(regelmodel);
@@ -58,7 +59,7 @@ public class RegelsetConverter {
 		RegelConverter converter = new RegelConverter();
 		for (RegelModel regelModel : ruleModelList) {
 
-			final RegelDto convert = converter.convert(regelModel);
+			final RegelDto convert = converter.convert(regelModel, regelModel.getId());
 			regeln.add(convert);
 
 		}

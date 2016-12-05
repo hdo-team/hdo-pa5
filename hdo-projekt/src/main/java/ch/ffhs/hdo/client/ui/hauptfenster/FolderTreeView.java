@@ -33,7 +33,7 @@ public class FolderTreeView extends View<FolderModel> {
 		jPanel = new JPanel();
 		inboxFolder = new File("C:\\Users\\jonas\\hdo");
 		tree = new JTree(addNodes(null, inboxFolder));
-		 jPanel.add(tree);
+		jPanel.add(tree);
 	}
 
 	private void layoutForm() {
@@ -59,8 +59,12 @@ public class FolderTreeView extends View<FolderModel> {
 		}
 		Vector ol = new Vector();
 		String[] tmp = dir.list();
-		for (int i = 0; i < tmp.length; i++)
-			ol.addElement(tmp[i]);
+		try {
+			for (int i = 0; i < tmp.length; i++)
+				ol.addElement(tmp[i]);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		Collections.sort(ol, String.CASE_INSENSITIVE_ORDER);
 		File f;
 		Vector files = new Vector();
@@ -78,8 +82,7 @@ public class FolderTreeView extends View<FolderModel> {
 				files.addElement(thisObject);
 		}
 		// Pass two: for files.
-		for (int fnum = 0; fnum < files.size(); fnum++)
-			curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
+
 		return curDir;
 	}
 }

@@ -123,7 +123,7 @@ public class MainView extends View<MainModel> {
 
 		// Create Rulset Panel
 		
-		regelsetTableView = new RegelsetTableView(resourceBundle, getModel().regelsetModel);
+		regelsetTableView = new RegelsetTableView(resourceBundle, getModel().getRegelsetModel());
 		
 
 		

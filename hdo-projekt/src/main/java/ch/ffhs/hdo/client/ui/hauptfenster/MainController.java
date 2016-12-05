@@ -14,6 +14,8 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
+import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
+import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperationExecutable;
 
 /**
  * Controller für das Hauptfenster
@@ -25,12 +27,12 @@ public class MainController extends Controller<MainModel, MainView> {
 	private ViewHandlerImpl viewHandler;
 
 	public MainController(MainModel model, RegelsetTableModel regelsetModel) {
-		super(model);		
+		super(model);
 		model.setRegelsetModel(regelsetModel);
-		
+
 		this.viewHandler = new ViewHandlerImpl();
 
-		setView(new MainView(getResourceBundle(),model));
+		setView(new MainView(getResourceBundle(), model));
 
 		initializeView();
 		initlizeHandler();
@@ -44,8 +46,10 @@ public class MainController extends Controller<MainModel, MainView> {
 		this.viewHandler.addOperation(ImportViewStartOperation.class, new ImportViewStartExecutable());
 		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		this.viewHandler.addOperation(RegelsetDeleteOperation.class, new RegelsetDeleteOperationExecutable());
+		this.viewHandler.addOperation(ServiceStartOperation.class,
+				new ServiceStartOperationExecutable(getModel().getRegelsetModel()));
 
- 	}
+	}
 
 	@Override
 	public void initializeView() {
@@ -53,7 +57,6 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setModel(getModel());
 		getView().setHandler(viewHandler);
 
-		
 		getView().getRegelsetTableView().setModel(getModel().getRegelsetModel());
 		getView().getRegelsetTableView().setHandler(viewHandler);
 	}

@@ -40,7 +40,7 @@ public class RegelsetFacade {
 			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
 		}
 		return new RegelsetModel();
-***/
+		 ***/
 	}
 
 	public void save(RegelsetModel model) {
@@ -61,6 +61,7 @@ public class RegelsetFacade {
 	}
 
 	public ArrayList<RegelsetModel> getAllRegelsets() {
+
 		RegelsetDao dao = new RegelsetDao();
 		ArrayList<RegelsetModel> regelsets = new ArrayList<RegelsetModel>();
 		List<RegelsetDto> findAllRegelsets;

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -21,6 +23,7 @@ import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
+import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 
 public class RegelsetTableView extends View<RegelsetTableModel> {
 
@@ -64,17 +67,23 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		newButton = new JButton(getMessage(I18N + ".button.newRegelset"));
 		editButton = new JButton(getMessage(I18N + ".button.editRegelset"));
 		deleteButton = new JButton(getMessage(I18N + ".button.deleteRegelset"));
-		stateButton = new JButton(getMessage(I18N + ".button.stateStop"));
+		stateButton = new JButton(getMessage(I18N + ".button.state.STOP"));
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(RegelsetSwapOperation.class, getModel().getRulsetList().get(regelsetTable.getSelectedRow()));			}
+				if (regelsetTable.getSelectedRow() > -1) {
+					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
+							new int[] { regelsetTable.getSelectedRow(), 1 });
+				}
+			}
 		});
 
 		prioDownButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// getHandler().performOperationWithArgs(RegelsetPrioOperation.class,
-				// true); //TODO Prio Change Action
+				if (regelsetTable.getSelectedRow() > -1) {
+					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
+							new int[] { regelsetTable.getSelectedRow(), 2 });
+				}
 			}
 		});
 
@@ -95,13 +104,12 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 			}
 		});
 		regelsetTable.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent e) {
-		        if (e.getClickCount()==2&&regelsetTable.getSelectedRow() > -1)
-		        {
-		        	getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
-					getModel().getRulsetList().get(regelsetTable.getSelectedRow()));
-		        }
-		    }
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && regelsetTable.getSelectedRow() > -1) {
+					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
+							getModel().getRulsetList().get(regelsetTable.getSelectedRow()));
+				}
+			}
 		});
 
 		deleteButton.addActionListener(new AbstractAction() {
@@ -112,8 +120,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		stateButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// getHandler().performOperationWithArgs(RunOperation.class,
-				// true); //TODO start/stop sort
+				getHandler().performOperationWithArgs(ServiceStartOperation.class, getModel());
 			}
 		});
 
@@ -147,6 +154,16 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 	@Override
 	public void configureBindings() {
+
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "serviceStatus") {
+					stateButton.setText(getMessage("hdo.main.button.state."+evt.getNewValue().toString()));
+				}
+
+			}
+		});
 
 	}
 
