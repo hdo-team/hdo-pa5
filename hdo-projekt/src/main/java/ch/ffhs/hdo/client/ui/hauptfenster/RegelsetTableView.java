@@ -19,6 +19,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
 public class RegelsetTableView extends View<RegelsetTableModel> {
@@ -67,9 +68,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// getHandler().performOperationWithArgs(RegelsetPrioOperation.class,
-				// true); //TODO Prio Change Action
-			}
+				getHandler().performOperationWithArgs(RegelsetSwapOperation.class, getModel().getRulsetList().get(regelsetTable.getSelectedRow()));			}
 		});
 
 		prioDownButton.addActionListener(new AbstractAction() {
