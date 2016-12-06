@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
@@ -28,73 +29,100 @@ public class RegelsetDao extends JdbcHelper {
 
 	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 
-	private final String UPDATE = "UPDATE RULESET SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
+	private final String SELECTRULEBYRULESET = "SELECT * FROM RULE WHERE rulesetId = ?";
 
-	private final String DELETE_RULE = "DELETE FROM RULE where regelsetId = ?";
+	private final String INSERT_RULESET = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
+	private final String INSERT_RULE = "INSERT INTO RULE (rulesetId, contextType, contextAttribute, compareType, compareValue, creationDate, changedate) VALUES (?,?,?,?,?, CURTIME () ,CURTIME () )";
+
+	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
 
 	public List<RegelsetDto> findAllRegelsets() throws SQLException {
 
 		PreparedStatement selectAllRegelsets = conn.prepareStatement(SELECTRULESETS);
+		PreparedStatement selectAllRegeln = conn.prepareStatement(SELECTRULEBYRULESET);
 
-		ResultSet executeQuery = selectAllRegelsets.executeQuery();
+		ResultSet executeQueryRegelset = selectAllRegelsets.executeQuery();
 
 		List<RegelsetDto> regelsetlist = new ArrayList<RegelsetDto>();
-		while (executeQuery.next()) {
 
-			RegelsetDto dto = new RegelsetDto();
-			dto.setId(executeQuery.getInt("id"));
-			dto.setActive(executeQuery.getBoolean("active"));
-			dto.setNewFilename(executeQuery.getString("newFilename"));
-			dto.setTargetDirectory(executeQuery.getString("targetDirectory"));
-			dto.setChangedate(executeQuery.getDate("changedate"));
-			dto.setCreationDate(executeQuery.getDate("creationDate"));
-			dto.setFilenameCounter(executeQuery.getLong("filenameCounter"));
-			dto.setPrority(executeQuery.getInt("priority"));
-			dto.setRulesetName(executeQuery.getString("rulesetName"));
+		while (executeQueryRegelset.next()) {
 
-			regelsetlist.add(dto);
+			RegelsetDto regelsetDto = new RegelsetDto();
+			regelsetDto.setId(executeQueryRegelset.getInt("id"));
+			regelsetDto.setActive(executeQueryRegelset.getBoolean("active"));
+			regelsetDto.setNewFilename(executeQueryRegelset.getString("newFilename"));
+			regelsetDto.setTargetDirectory(executeQueryRegelset.getString("targetDirectory"));
+			regelsetDto.setChangedate(executeQueryRegelset.getDate("changedate"));
+			regelsetDto.setCreationDate(executeQueryRegelset.getDate("creationDate"));
+			regelsetDto.setFilenameCounter(executeQueryRegelset.getLong("filenameCounter"));
+			regelsetDto.setPrority(executeQueryRegelset.getInt("priority"));
+			regelsetDto.setRulesetName(executeQueryRegelset.getString("rulesetName"));
+			regelsetDto.setRegeln(new ArrayList<RegelDto>());
+
+			// pro Regelset alle Regeln lesen
+			selectAllRegeln.setInt(1, regelsetDto.getId());
+			ResultSet executeQueryRegel = selectAllRegeln.executeQuery();
+
+			while (executeQueryRegel.next()) {
+				RegelDto regelDto = new RegelDto();
+				regelDto.setId(executeQueryRegel.getInt("id"));
+				regelDto.setRulesetId(executeQueryRegel.getInt("rulesetId"));
+				regelDto.setContextType(executeQueryRegel.getString("contextType"));
+				regelDto.setContextAttribute(executeQueryRegel.getString("contextAttribute"));
+				regelDto.setCompareType(executeQueryRegel.getString("compareType"));
+				regelDto.setCompareValue(executeQueryRegel.getString("compareValue"));
+				regelDto.setCreationDate(executeQueryRegel.getDate("creationDate"));
+				regelDto.setChangeDate(executeQueryRegel.getDate("changeDate"));
+
+				regelsetDto.getRegeln().add(regelDto);
+			}
+			regelsetlist.add(regelsetDto);
 
 		}
 
 		return regelsetlist;
 	}
 
-	public void save(RegelsetDto dto, boolean newEntry) throws SQLException {
-		// TODO: DB: to implement
+	public void save(RegelsetDto regelsetDto, boolean newEntry) throws SQLException {
 		PreparedStatement insertRegelset = null;
 
-		if (newEntry) {
-			insertRegelset = conn.prepareStatement(INSERT);
+		PreparedStatement insertRegel = null;
 
+		if (regelsetDto.getId() != null) {
+			update(regelsetDto);
 		} else {
+			insertRegelset = conn.prepareStatement(INSERT_RULESET);
+			insertRegelset.setString(1, regelsetDto.getTargetDirectory());
+			insertRegelset.setString(2, regelsetDto.getRulesetName());
+			insertRegelset.setString(3, regelsetDto.getNewFilename());
+			insertRegelset.setLong(4, regelsetDto.getFilenameCounter());
+			insertRegelset.setInt(5, regelsetDto.getPrority());
+			insertRegelset.setBoolean(6, regelsetDto.isActive());
 
-			// deleteRegelset(dto.getId());
-			// insertRegelset = conn.prepareStatement(DELETE_RULESET);
+			insertRegelset.executeUpdate();
 
+			for (RegelDto regelDto : regelsetDto.getRegeln()) {
+				insertRegel = conn.prepareStatement(INSERT_RULE);
+				insertRegel.setInt(1, regelsetDto.getId());
+				insertRegel.setString(2, regelDto.getContextType());
+				insertRegel.setString(3, regelDto.getContextAttribute());
+				insertRegel.setString(4, regelDto.getCompareType());
+				insertRegel.setString(5, regelDto.getCompareValue());
+			}
 		}
 
-		insertRegelset.setString(1, dto.getRulesetName());
-		insertRegelset.setString(2, dto.getTargetDirectory());
-		insertRegelset.setString(3, dto.getNewFilename());
-		// insertRegelset.setLong(4, dto.getFilenameCounter()); // Bitte
-		// hinzufügen
-		// insertRegelset.setInt(5, dto.getPrority()); // Bitte hinzufügen
-		insertRegelset.setInt(4, 0); // Bitte nach Anpassung entfernen
-		insertRegelset.setInt(5, 0); // Bitte nach Anpassung entfernen
-		insertRegelset.setBoolean(6, dto.isActive());
+		terminate();
+	}
 
-		insertRegelset.executeUpdate();
-		final ResultSet generatedKeys = insertRegelset.getGeneratedKeys();
-		while (generatedKeys.next()) {
-			System.out.println(generatedKeys.getInt("id"));
-		}
-
+	private void update(RegelsetDto regelsetDto) {
+		// TODO To Implement
+		
 	}
 
 	public void changePrioDown(int id) throws SQLException {
 
-		final PreparedStatement ruleset = conn.prepareStatement(SWAP_DOWN );
+		final PreparedStatement ruleset = conn.prepareStatement(SWAP_DOWN);
 		ruleset.setInt(1, id);
 		ruleset.setInt(2, id);
 		ruleset.setInt(3, id);
@@ -114,17 +142,17 @@ public class RegelsetDao extends JdbcHelper {
 
 	}
 
-	public void deleteRegelset(int regelset_id) throws SQLException {
+	public void deleteRegelset(int regelsetId) throws SQLException {
 
 		try {
 			conn.setAutoCommit(false);
 
 			final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
-			deleteRule.setInt(1, regelset_id);
+			deleteRule.setInt(1, regelsetId);
 			deleteRule.executeUpdate();
 
 			final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
-			deleteRuleset.setInt(1, regelset_id);
+			deleteRuleset.setInt(1, regelsetId);
 			deleteRuleset.executeUpdate();
 			conn.commit();
 			conn.setAutoCommit(true);

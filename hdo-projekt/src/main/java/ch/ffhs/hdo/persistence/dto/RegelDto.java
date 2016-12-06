@@ -11,7 +11,7 @@ public class RegelDto {
 	private String compareType;
 	private String compareValue;
 	private Date creationDate;
-	private Date changedate;
+	private Date changeDate;
 
 	public Integer getId() {
 		return id;
@@ -69,12 +69,12 @@ public class RegelDto {
 		this.creationDate = creationDate;
 	}
 
-	public Date getChangedate() {
-		return changedate;
+	public Date getChangeDate() {
+		return changeDate;
 	}
 
-	public void setChangedate(Date changedate) {
-		this.changedate = changedate;
+	public void setChangeDate(Date changeDate) {
+		this.changeDate = changeDate;
 	}
 
 }

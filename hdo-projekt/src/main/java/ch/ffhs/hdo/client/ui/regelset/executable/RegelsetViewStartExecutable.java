@@ -11,7 +11,7 @@ public class RegelsetViewStartExecutable implements Executable<Object> {
 	public void execute(Object args) {
 
 		RegelsetModel model = null;
-		
+System.out.println("Args: " + args);
 		if (args != null) {
 				// Hauptuebesicht gibt Regelset-Model mit (Regelset anpassen)
 				model = (RegelsetModel)args;

@@ -25,13 +25,14 @@ public class RegelConverter {
 	public RegelDto convert(RegelModel model, Integer id) {
 
 		final RegelDto regelDto = new RegelDto();
-
+		
+		regelDto.setId(model.getId());
 		regelDto.setCompareType(model.getComparisonType().toString());
 		regelDto.setCompareValue(model.getCompareValue());
 		regelDto.setCompareType(model.getComparisonType().toString());
 		regelDto.setContextAttribute(model.getContextAttribute().toString());
 		regelDto.setRulesetId(id);
-		regelDto.setId(model.getId());
+
 		return regelDto;
 
 	}
