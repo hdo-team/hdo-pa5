@@ -129,7 +129,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		List<String> contextItems = new ArrayList<String>();
 		for (ContextTypeEnum contextItem : RegelModel.ContextTypeEnum.values()) {
 			contextItems.add(getMessage(CONTEXT_COMBOBOXKEY + "." + contextItem.name().toLowerCase()));
-			System.out.println("item: " + getMessage(CONTEXT_COMBOBOXKEY + "." + contextItem.name().toLowerCase()));
 		}
 		contextList = contextItems.toArray(new String[0]);
 
@@ -161,7 +160,6 @@ public class RegelsetView extends View<RegelsetModel> {
 			for (ContextAttributeEnum contextItem : RegelModel.ContextAttributeEnum.values()) {
 				if (contextItem.name().startsWith("PDF_")) {
 					attributeItems.add(getMessage(CONTEXT_COMBOBOXKEY + ".attribute.pdf." + contextItem.name().toLowerCase()));
-					System.out.println("item: " + getMessage(CONTEXT_COMBOBOXKEY + ".attribute.pdf." + contextItem.name().toLowerCase()));
 				}
 			}
 		} else if(contextEnum.equals(contextEnum.CONTEXT_FILE)) {
@@ -169,7 +167,6 @@ public class RegelsetView extends View<RegelsetModel> {
 			for (ContextAttributeEnum contextItem : RegelModel.ContextAttributeEnum.values()) {
 				if (contextItem.name().startsWith("FILE_")) {
 					attributeItems.add(getMessage(CONTEXT_COMBOBOXKEY + ".attribute.file." + contextItem.name().toLowerCase()));
-					System.out.println("item: " + getMessage(CONTEXT_COMBOBOXKEY + ".attribute.file." + contextItem.name().toLowerCase()));
 				}
 			}
 		} else if (contextEnum.equals(contextEnum.CONTEXT_CONTENT)) {
@@ -333,10 +330,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		
 		List<RegelModel>regelModel = getModel().getRuleModelList();
-		System.out.println("regelModel: " + regelModel);
-		if (regelModel != null) {
-			System.out.println("regelModel-len: " + regelModel.size());
-		}
 		
 		statusCheckBox.addActionListener(new ActionListener() {
 
@@ -351,7 +344,6 @@ public class RegelsetView extends View<RegelsetModel> {
 				// TODO: bei jeder Action? eher unschön?
 				// sollte doch nur bei ÄNDERUND des selektierten Items
 				String selectedDirectory = (String) targetDirectoryComboBox.getSelectedItem();
-				System.out.println("TargetCombo" + selectedDirectory);
 				getModel().setTargetDirectory(selectedDirectory);
 
 			}
@@ -369,7 +361,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		// MUSS in END-Version aus Model "gezogen" werden
 		//
 		//for (int i = 0; i < getModel().getRuleModelList().size(); i++) {
-		System.out.println("rulemodelLIST; " + getModel().getRuleModelList());
 		for (RegelModel ruleModel : getModel().getRuleModelList()) {
 			/*
 			 * Besteht jeweils nur aus einem Panel, das wiederum aus mehreren
@@ -422,17 +413,11 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 
 		private void processEvent(DocumentEvent e) {
-			System.out.println("Event e:" + e);
-			System.out.println("Start: " + e.getDocument().getStartPosition());
-
-			System.out.println("textfield: " + myTextField.getText());
 
 			if (myTextField == regelsetNameTextField) {
-				System.out.println("regelsetNameTextField: " + myTextField.getText());
 				getModel().setRulesetName(myTextField.getText());
 
 			} else if (myTextField == newFilenameTextField) {
-				System.out.println("dateinamenKonfigurationTextField: " + myTextField.getText());
 				getModel().setNewFilename(myTextField.getText());
 			} else {
 				System.out.println("?????????????????: " + myTextField.getText());
@@ -481,14 +466,17 @@ public class RegelsetView extends View<RegelsetModel> {
 			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
 
 			contextComboBox = new JComboBox<String>(getContextList());
+//			contextComboBox.setSelectedIndex(ruleModel.getContextType().ordinal() - 1);
 			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
 
 			//attributeComboBox = new JComboBox<String>(getAttributList(ruleModel.getContextType()));
 			attributeComboBox = new JComboBox();
 			attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
+	//		attributeComboBox.setSelectedIndex(ruleModel.getContextAttribute().ordinal() - 1);
 			paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 			
 			comparisonModeComboBox = new JComboBox<String>(getComparisonModeList(ruleModel.getContextAttribute()));
+	//		comparisonModeComboBox.setSelectedIndex(ruleModel.getComparisonType().ordinal() - 1 );
 			paneBuilder.add(comparisonModeComboBox).rcw(3, 10, 4);
 
 
@@ -639,11 +627,7 @@ public class RegelsetView extends View<RegelsetModel> {
 //					System.out.println("leider nicht");
 				}
 				
-				System.out.println("Context e: " + e);
 				String selectedContext = (String) contextComboBox.getSelectedItem();
-				System.out.println("ContextCombo: " + selectedContext);
-				System.out.println("ContextCombo Index: " + contextComboBox.getSelectedIndex());
-				System.out.println("ContextCombo Objects.len: " + contextComboBox.getSelectedObjects().length);
 			//	getModel().setTargetDirectory(selectedDirectory);
 
 				// => Attriute Combobox neu aufbauen
@@ -653,7 +637,6 @@ public class RegelsetView extends View<RegelsetModel> {
 				
 				
 				ContextTypeEnum selectedEnum = ContextTypeEnum.valueOf(ContextTypeEnum.values()[contextComboBox.getSelectedIndex()].name() );
-				System.out.println("selected Enum: " + selectedEnum);
 				//attributeComboBox.getModel()..set.get.get =  new JComboBox<String>(getAttributList(selectedEnum));
 				//attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
 				attributeComboBox.setModel(getAttributeModel(selectedEnum));

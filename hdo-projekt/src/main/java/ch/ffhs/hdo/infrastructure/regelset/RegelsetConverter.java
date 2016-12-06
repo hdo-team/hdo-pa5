@@ -32,7 +32,7 @@ public class RegelsetConverter {
 		final List<RegelDto> regeln = regelsetDto.getRegeln();
 		for (RegelDto regeldto : regeln) {
 
-			final RegelModel regelmodel = converter.convert(regeldto);
+			final RegelModel regelmodel = converter.convert(regeldto,  regelsetModel.getRulesetId());
 			regelModelList.add(regelmodel);
 		}
 		regelsetModel.setRuleModelList(regelModelList);
