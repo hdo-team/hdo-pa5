@@ -1,5 +1,1 @@
 hdo-projekt/dependency-reduced-pom.xml
-hdo-projekt/src/main/java/ch/ffhs/hdo/infrastructure/regelset/RegelConverter.java
-hdo-projekt/src/main/java/ch/ffhs/hdo/persistence/jdbc/InitDatabase.java
-hdo-projekt/src/main/java/ch/ffhs/hdo/infrastructure/regelset/RegelsetFacade.java
-hdo-projekt/src/main/java/ch/ffhs/hdo/persistence/dao/RegelsetDao.java
