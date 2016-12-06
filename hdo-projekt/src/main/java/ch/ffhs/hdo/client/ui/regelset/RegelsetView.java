@@ -7,6 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,20 +70,14 @@ public class RegelsetView extends View<RegelsetModel> {
 	private final String COMPARISON_MODE_COMBOBOXKEY = I18N + ".combobox";
 	private JTextField regelsetNameTextField;
 	private JTextField newFilenameTextField;
-	private JTextField fromDateTextField[];
-	private JTextField toDateTextField[];
-	private JTextField equalTextField[];
+	
 
 	private JTextField targetDirectoryTextField;
 
 	private JComboBox targetDirectoryComboBox;
 
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
-
-	
-	
-	//private String attributeComboBoxList[] = new String[3];
-	//private String comparisonModeList[]	= new String[5];
 
 	private String targetDirectoryList[];
 
@@ -94,12 +89,8 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private JCheckBox statusCheckBox;
 
-	//JPanel rulePanel[] = new JPanel[4];
 	private JTabbedPane tabbedPane;
 
-	private static enum PanelTypeEnum {
-		PANEL_CONTEXT, PANEL_CONTEXT_ATTRIBUTE, PANEL_COMPARISON;
-	}
 
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -121,12 +112,15 @@ public class RegelsetView extends View<RegelsetModel> {
 		return allFolders.toArray(new String[0]);
 	}
 	
-	private String[] getContextList() { //RegelModel ruleModel) {
+	private String[] getContextList(boolean firstShow) { //RegelModel ruleModel) {
 		String []contextList; // = new String[];
 		
 		// TODO: ?? elegantere Methode um aus Resourcen ALLE Contexte auszulesen ??
 
 		List<String> contextItems = new ArrayList<String>();
+		if (firstShow) {
+			contextItems.add("");
+		}
 		for (ContextTypeEnum contextItem : RegelModel.ContextTypeEnum.values()) {
 			contextItems.add(getMessage(CONTEXT_COMBOBOXKEY + "." + contextItem.name().toLowerCase()));
 		}
@@ -194,23 +188,23 @@ public class RegelsetView extends View<RegelsetModel> {
 			return new String[]{};
 		}
 		
-		//public static enum ComparisonTypeEnum {
-			// COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX, COMPARISON_LIST;
-		//}
+
 		// allgemeine Vergleichs-Operationen 
 		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL.toString().toLowerCase()));
 		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
-		
+System.out.println("attribute-ENum" + attributeEnum);		
 		// abhängige Vergleichs-Operationen
 		if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
 				attributeEnum.equals(attributeEnum.PDF_CREATION_DATE)) {
+			System.out.println("im CreationDAte");
 			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
 			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
 			
-		} else if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
-				attributeEnum.equals(attributeEnum.PDF_CREATION_DATE)) {
-		    
-		}		
+		}//
+		//else if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
+		//		attributeEnum.equals(attributeEnum.PDF_CREATION_DATE)) {
+		  //  
+		//}		
 		
 		comparionModeList = comparisonModeItems.toArray(new String[0]);
 
@@ -225,21 +219,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		targetDirectoryTextField.setEditable(false);
 
 		newFilenameTextField = new JTextField();
-		fromDateTextField = new JTextField[4];
-		toDateTextField = new JTextField[4];
 		statusCheckBox = new JCheckBox(getMessage(I18N + ".checkbox.status"));
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-
-		fromDateTextField[0] = new JTextField();
-		fromDateTextField[1] = new JTextField();
-		fromDateTextField[2] = new JTextField();
-		fromDateTextField[3] = new JTextField();
-
-		toDateTextField[0] = new JTextField();
-		toDateTextField[1] = new JTextField();
-		toDateTextField[2] = new JTextField();
-		toDateTextField[3] = new JTextField();
 
 		addButton = new JButton(getMessage(I18N + ".button.add.icon"));
 		deleteButton = new JButton(getMessage(I18N + ".button.delete.icon"));
@@ -354,21 +336,15 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		
 		
-		// ----------------------
-		// mit Builder "innere" verschachtelte JPane für Regel_<x>
-		//
-		//
-		// MUSS in END-Version aus Model "gezogen" werden
-		//
-		//for (int i = 0; i < getModel().getRuleModelList().size(); i++) {
+
 		for (RegelModel ruleModel : getModel().getRuleModelList()) {
-			/*
-			 * Besteht jeweils nur aus einem Panel, das wiederum aus mehreren
-			 * Panels besteht
-			 */
-
-			tabbedPane.addTab(ruleModel.getContextType().toString(), new RulePanel(ruleModel)); 
-
+			String name;
+			if (ruleModel.getContextType() != null) {
+				name = ruleModel.getContextType().toString();
+			} else {
+				name = "TODO: Titel generisch generieren...";  //.. gemäss Combo-Auswahl
+			}
+			tabbedPane.addTab(name, new RulePanel(ruleModel)); 
 		}
 
 		
@@ -430,11 +406,18 @@ public class RegelsetView extends View<RegelsetModel> {
 		private JComboBox contextComboBox;
 		private JComboBox attributeComboBox;
 		private JComboBox comparisonModeComboBox;
-
+		private JTextField compareTextField; 
+		
 		
 		DefaultComboBoxModel pdfAttributeModel = new DefaultComboBoxModel(getAttributList(RegelModel.ContextTypeEnum.CONTEXT_PDF));
 		DefaultComboBoxModel fileAttributeModel = new DefaultComboBoxModel(getAttributList(RegelModel.ContextTypeEnum.CONTEXT_FILE));
 		DefaultComboBoxModel contentAttributeModel = new DefaultComboBoxModel(getAttributList(RegelModel.ContextTypeEnum.CONTEXT_CONTENT));
+		
+		/*
+		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> pdfAttributeModel = new DefaultComboBoxModel(RegelModel.ContextAttributeEnum.values(RegelModel.ContextTypeEnum.CONTEXT_PDF));
+		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> fileAttributeModel = new DefaultComboBoxModel(RegelModel.ContextAttributeEnum.values(RegelModel.ContextTypeEnum.CONTEXT_FILE));
+		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> contentAttributeModel = new DefaultComboBoxModel(RegelModel.ContextAttributeEnum.values(RegelModel.ContextTypeEnum.CONTEXT_CONTENT));
+		*/
 		
 		DefaultComboBoxModel getAttributeModel(RegelModel.ContextTypeEnum contextEnum) {
 			DefaultComboBoxModel attributeModel = null;
@@ -446,159 +429,87 @@ public class RegelsetView extends View<RegelsetModel> {
 			} else if (contextEnum.equals(contextEnum.CONTEXT_CONTENT)) {
 				attributeModel = contentAttributeModel;
 			}
-
+			
 			
 			return attributeModel;
 		}
 		
-	    	    
+		DefaultComboBoxModel getComparisonModeModel(RegelModel.ContextAttributeEnum attributeEnum) {
+			 
+			//Es wird immer ein neues Model gemacht... TODO: besser das Model NUR anpasssen?
+			DefaultComboBoxModel attributeModel = new DefaultComboBoxModel(getComparisonModeList(attributeEnum));
+				
+			return attributeModel;
+		}
+
 				
 		RegelModel ruleModel = null;
 
-		RulePanel(RegelModel ruleModel) {
+		RulePanel(final RegelModel ruleModel) {
 			super(); 
 			this.ruleModel = ruleModel;
 
 			FormBuilder paneBuilder = FormBuilder.create()
 					.columns("right:pref, 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
-					.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p , $lg, p");
+					.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p, $lg, p, $lg, p");
 
 			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
 
-			contextComboBox = new JComboBox<String>(getContextList());
+			contextComboBox = new JComboBox<String>(getContextList(ruleModel.getContextType() == null));
+
 //			contextComboBox.setSelectedIndex(ruleModel.getContextType().ordinal() - 1);
 			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
 
-			//attributeComboBox = new JComboBox<String>(getAttributList(ruleModel.getContextType()));
-			attributeComboBox = new JComboBox();
-			attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
+			attributeComboBox = new JComboBox<String>(getAttributList(ruleModel.getContextType()));
+			//attributeComboBox = new JComboBox<RegelModel.ContextAttributeEnum>();
+			//attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
+			//>attributeComboBox.setModel(ruleModel.getContextType());
+	//		attributeComboBox..setModel(RegelModel.ComparisonTypeEnum.values());
 	//		attributeComboBox.setSelectedIndex(ruleModel.getContextAttribute().ordinal() - 1);
 			paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 			
 			comparisonModeComboBox = new JComboBox<String>(getComparisonModeList(ruleModel.getContextAttribute()));
 	//		comparisonModeComboBox.setSelectedIndex(ruleModel.getComparisonType().ordinal() - 1 );
-			paneBuilder.add(comparisonModeComboBox).rcw(3, 10, 4);
+			paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
 
 
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(7, 1, 7);
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(9, 1, 7);
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.to")).rcw(9, 4, 2);
 
-			// JFrame frame=new JFrame("date display");
-			JDatePickerImpl datePickerFrom;
-			JDatePickerImpl datePickerTo;
-			UtilDateModel modelDateFrom = new UtilDateModel();
-			UtilDateModel modelDateTo = new UtilDateModel();
+			JDatePickerImpl datePicker;
+			UtilDateModel modelDate = new UtilDateModel();
+			Date compareDate = null;
+			try {
+				compareDate = simpleDateFormat.parse(ruleModel.getCompareValue());
+			} catch (ParseException e1) {
+				// TODO: throw new IllegalArgumentException("invalid date: " + compareDate);
+			}
+			modelDate.setValue(compareDate); 
+			JDatePanelImpl datePanel = new JDatePanelImpl(modelDate);
+			datePicker = new JDatePickerImpl(datePanel, null);
+			paneBuilder.add(datePicker).rcw(11, 4, 6);
 
-			modelDateFrom.setValue(new Date()); //.setDate(2016, 01, 01);
-			modelDateFrom.setSelected(true);
-			JDatePanelImpl dateFromPanel = new JDatePanelImpl(modelDateFrom);
-			datePickerFrom = new JDatePickerImpl(dateFromPanel, null);
-
-			modelDateTo.setDate(2016, 07, 25);
-			modelDateTo.setSelected(true);
-			JDatePanelImpl dateToPanel = new JDatePanelImpl(modelDateTo);
-			datePickerFrom = new JDatePickerImpl(dateFromPanel, null);
-			datePickerTo = new JDatePickerImpl(dateToPanel, null);
-
-			// paneBuilder.add(fromDateTextField[i]).rcw(9, 1, 2);
-			// paneBuilder.add(toDateTextField[i]).rcw(9, 4, 3);
-			paneBuilder.add(datePickerFrom).rcw(11, 1, 2);
-			paneBuilder.add(datePickerTo).rcw(11, 4, 6);
-
+			
+			compareTextField = new JTextField();
+			paneBuilder.add(compareTextField).rcw(15, 1, 9);
+			
 			paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
-			datePickerTo.addActionListener(new ActionListener() {
+			datePicker.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("picker-Action: " + e.getSource());
 					
 					JDatePanelImpl impl = (JDatePanelImpl)e.getSource();
-					System.out.println("impl- " + impl.getModel().getValue().toString());
-					//DateModel m;
-					Date date = (Date) impl.getModel().getValue();
-					System.out.println("DAtE------------: " + date);
-					
-					
-					System.out.println("date-day: " + impl.getModel().getDay());
-					System.out.println("date-mon: " + impl.getModel().getMonth());
-					System.out.println("date-day: " + impl.getModel().getYear());
-
-				
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMd");
-					System.out.println("formatter " + formatter.toLocalizedPattern());
-					System.out.println("formatter " + formatter.toPattern());
-					Date d1 = null;
-					try {
-						d1 = formatter.parse("20150218");
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					System.out.println("d1: " + d1);
-				
+					Date date = (Date)impl.getModel().getValue();
+					ruleModel.setCompareValue(simpleDateFormat.format(date));
 				}});
 			
 			ActionListener al = new comboBoxActionListener();
 			contextComboBox.addActionListener(al);
 			attributeComboBox.addActionListener(al);
 			comparisonModeComboBox.addActionListener(al);
-/*			
-			contextComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					// TODO: bei jeder Action? eher unschön?
-					// sollte doch nur bei ÄNDERUND des selektierten Items
-					
-					
-					if (e.getSource() == contextComboBox ){
-						System.out.println("YES!");
-					} else {
-						System.out.println("leider nicht");
-					}
-					
-					System.out.println("Context e: " + e);
-					String selectedContext = (String) contextComboBox.getSelectedItem();
-					System.out.println("ContextCombo: " + selectedContext);
-					System.out.println("ContextCombo Index: " + contextComboBox.getSelectedIndex());
-					System.out.println("ContextCombo Objects.len: " + contextComboBox.getSelectedObjects().length);
-				//	getModel().setTargetDirectory(selectedDirectory);
-
-					// => Attriute Combobox neu aufbauen
-					
-					// grad ne neue machen? oder besser alte umCONFIGen
-					//contextComboBox = new JComboBox<String>(getContextList());
-					
-					
-					ContextTypeEnum selectedEnum = ContextTypeEnum.valueOf(ContextTypeEnum.values()[contextComboBox.getSelectedIndex()].name() );
-					System.out.println("selected Enum: " + selectedEnum);
-					//attributeComboBox.getModel()..set.get.get =  new JComboBox<String>(getAttributList(selectedEnum));
-					//attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
-					attributeComboBox.setModel(getAttributeModel(selectedEnum));
-					// Model informieren diese Feuert => view neu aubauen
-					//ruleModel.setContextAttribute(ContextAttributeEnum.PDF_SIZE.name());
-					//
-
-					comparisonModeComboBox.setVisible(false);
-				}
-			});
-			
-			attributeComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					// TODO: bei jeder Action? eher unschön?
-					// sollte doch nur bei ÄNDERUND des selektierten Items
-					System.out.println("attributeComboBox e: " + e);
-					String selectedAttribute = (String) attributeComboBox.getSelectedItem();
-					System.out.println("attributeComboBox: " + selectedAttribute);
-					System.out.println("attributeComboBox Index: " + attributeComboBox.getSelectedIndex());
-					System.out.println("attributeComboBox Object: " + attributeComboBox.getSelectedObjects().length);
-				//	getModel().setTargetDirectory(selectedDirectory);
-
-				}
-			});
-*/			
 			
 			this.add(paneBuilder.build());
-			//this.repaint();
 		}
 		
 		class comboBoxActionListener implements ActionListener {
@@ -612,40 +523,28 @@ public class RegelsetView extends View<RegelsetModel> {
 					int selectedIndex = comboBox.getSelectedIndex();
 					
 					if (comboBox == contextComboBox ){
-						System.out.println("contextComboBox: " + RegelModel.ContextAttributeEnum.values()[contextComboBox.getSelectedIndex()]);
+						if (contextComboBox.getItemAt(0).equals("")) {
+							contextComboBox.removeItemAt(0); 
+						}
+						
+						
+						System.out.println("contextComboBox: " + RegelModel.ContextTypeEnum.values()[contextComboBox.getSelectedIndex()]);
 						ruleModel.setContextType(RegelModel.ContextTypeEnum.values()[contextComboBox.getSelectedIndex()]);
+						// abhängiges AttributeContext neu aufbauen
+						attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
+System.out.println("attributeComboBox.getModel().getSize(): " + attributeComboBox.getModel().getSize());
+						attributeComboBox.setVisible(attributeComboBox.getModel().getSize() != 0);
 					} else if (comboBox == attributeComboBox ) {
 						System.out.println("attributeComboBox: " + RegelModel.ContextAttributeEnum.values()[attributeComboBox.getSelectedIndex()]);
+						System.out.println("attributeComboBox-M: " + attributeComboBox.getModel().getElementAt(attributeComboBox.getSelectedIndex()));
 						ruleModel.setContextAttribute(RegelModel.ContextAttributeEnum.values()[attributeComboBox.getSelectedIndex()]);
+						// abhängiges AttributeContext neu aufbauen
+						comparisonModeComboBox.setModel(getComparisonModeModel(ruleModel.getContextAttribute()));
 					} else if (comboBox == comparisonModeComboBox) {
 						System.out.println("comparisonModeComboBox: " + RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
 						ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
 					}
-				
-					
-
-//					System.out.println("leider nicht");
 				}
-				
-				String selectedContext = (String) contextComboBox.getSelectedItem();
-			//	getModel().setTargetDirectory(selectedDirectory);
-
-				// => Attriute Combobox neu aufbauen
-				
-				// grad ne neue machen? oder besser alte umCONFIGen
-				//contextComboBox = new JComboBox<String>(getContextList());
-				
-				
-				ContextTypeEnum selectedEnum = ContextTypeEnum.valueOf(ContextTypeEnum.values()[contextComboBox.getSelectedIndex()].name() );
-				//attributeComboBox.getModel()..set.get.get =  new JComboBox<String>(getAttributList(selectedEnum));
-				//attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
-				attributeComboBox.setModel(getAttributeModel(selectedEnum));
-				// Model informieren diese Feuert => view neu aubauen
-				//ruleModel.setContextAttribute(ContextAttributeEnum.PDF_SIZE.name());
-				//
-
-				comparisonModeComboBox.setVisible(false);
-				
 			}
 			
 		}
