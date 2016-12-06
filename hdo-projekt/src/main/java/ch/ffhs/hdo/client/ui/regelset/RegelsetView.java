@@ -469,6 +469,10 @@ System.out.println("attribute-ENum" + attributeEnum);
 			paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 			
 			comparisonModeComboBox = new JComboBox<String>(getComparisonModeList(ruleModel.getContextAttribute()));
+			
+			// default-wERt ins Model sonst NP-Ex	
+			ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
+			
 	//		comparisonModeComboBox.setSelectedIndex(ruleModel.getComparisonType().ordinal() - 1 );
 			paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
 
@@ -479,11 +483,16 @@ System.out.println("attribute-ENum" + attributeEnum);
 
 			JDatePickerImpl datePicker;
 			UtilDateModel modelDate = new UtilDateModel();
-			Date compareDate = null;
+			// TODO:  Date compareDate = null;
+			//
+System.out.println("vor compdate: " + ruleModel.getContextAttribute());
+			Date compareDate =null;//TDOO:  default <heute> Nok   //TDOO:  default <heute> Nok
 			try {
 				compareDate = simpleDateFormat.parse(ruleModel.getCompareValue());
-			} catch (ParseException e1) {
+			} catch (ParseException  e1) {
 				// TODO: throw new IllegalArgumentException("invalid date: " + compareDate);
+			} catch (NullPointerException  npEx) {
+					// TODO: wieder Entfernen, und abfragen auf DATE
 			}
 			modelDate.setValue(compareDate); 
 			JDatePanelImpl datePanel = new JDatePanelImpl(modelDate);
@@ -540,6 +549,9 @@ System.out.println("attributeComboBox.getModel().getSize(): " + attributeComboBo
 						ruleModel.setContextAttribute(RegelModel.ContextAttributeEnum.values()[attributeComboBox.getSelectedIndex()]);
 						// abhängiges AttributeContext neu aufbauen
 						comparisonModeComboBox.setModel(getComparisonModeModel(ruleModel.getContextAttribute()));
+						// default-wERt ins Model sonst NP-Ex
+						ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
+						
 					} else if (comboBox == comparisonModeComboBox) {
 						System.out.println("comparisonModeComboBox: " + RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
 						ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);

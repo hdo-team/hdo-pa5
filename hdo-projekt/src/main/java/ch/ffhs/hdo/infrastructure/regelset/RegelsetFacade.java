@@ -20,6 +20,9 @@ public class RegelsetFacade {
 	public RegelsetModel getModel() {
 
 		RegelsetModel regelsetModel = new RegelsetModel();
+		regelsetModel.setFilenameCounter(0L);		// TODO: oder Default-Werte besser in View setzen
+		regelsetModel.setPriority(0);
+		regelsetModel.setRuleActiv(true);;
 		regelsetModel.setRuleModelList(new ArrayList<RegelModel>());
 		regelsetModel.getRuleModelList().add(new RegelModel());
 		return regelsetModel;
@@ -55,7 +58,7 @@ public class RegelsetFacade {
 		List<RegelDto> regelDtoList = new ArrayList<RegelDto>();
 
 		try {
-			regelsetDao.save(regelsetDto, model.getRulesetId() == null);
+			regelsetDao.save(regelsetDto, model.getRulesetName() == null);
 			for (RegelModel regelModel : model.getRuleModelList()) {
 				regelDto = RegelConverter.convert(regelModel, regelModel.getId());
 				regelDtoList.add(regelDto);
