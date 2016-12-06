@@ -9,7 +9,9 @@ import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.persistence.dao.RegelDao;
 import ch.ffhs.hdo.persistence.dao.RegelsetDao;
+import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
 public class RegelsetFacade {
@@ -19,7 +21,7 @@ public class RegelsetFacade {
 
 		RegelsetModel regelsetModel = new RegelsetModel();
 		regelsetModel.setRuleModelList(new ArrayList<RegelModel>());
-
+		regelsetModel.getRuleModelList().add(new RegelModel());
 		return regelsetModel;
 		
 		/****
@@ -45,16 +47,23 @@ public class RegelsetFacade {
 
 	public void save(RegelsetModel model) {
 
-		RegelsetDao dao = new RegelsetDao();
-
-		RegelsetDto dto = RegelsetConverter.convert(model);
+		RegelsetDao regelsetDao = new RegelsetDao();
+		RegelsetDto regelsetDto = RegelsetConverter.convert(model);
+		
+		RegelDao regelDao = new RegelDao();
+		RegelDto regelDto = null;
+		List<RegelDto> regelDtoList = new ArrayList<RegelDto>();
 
 		try {
-			// Regelsets werden geupdated nicht neu eingefügt, darum false. Ist
-			// dies hier auch der Fall?
-			dao.save(dto, model.getRulesetId() == null);
+			regelsetDao.save(regelsetDto, model.getRulesetId() == null);
+			for (RegelModel regelModel : model.getRuleModelList()) {
+				regelDto = RegelConverter.convert(regelModel, regelModel.getId());
+				regelDtoList.add(regelDto);
+			}
+			regelDao.save(regelDtoList);
+			
 		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
+			LOGGER.error("SQL Fehler beim Saven aller Regelsets", e);
 
 		}
 
@@ -73,20 +82,22 @@ public class RegelsetFacade {
 
 	public ArrayList<RegelsetModel> getAllRegelsets() {
 
-		RegelsetDao dao = new RegelsetDao();
+		RegelsetDao daoRegelset = new RegelsetDao();
+		RegelDao daoRegel = new RegelDao();
 		ArrayList<RegelsetModel> regelsets = new ArrayList<RegelsetModel>();
 		List<RegelsetDto> findAllRegelsets;
 
 		try {
-			findAllRegelsets = dao.findAllRegelsets();
-			//regelsets.setRulsetList(RegelsetConverter.convert(findAllRegelsets));		TODO: convertMethode für <ALL> erstellen ?
-			//																				  (==> dann loop nicht mehr mötig)
-			for (RegelsetDto regelset : findAllRegelsets) {
-				regelsets.add(RegelsetConverter.convert(regelset));
+			findAllRegelsets = daoRegelset.findAllRegelsets();
+
+			for (RegelsetDto regelsetDto : findAllRegelsets) {
+				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
+
+				regelsets.add(RegelsetConverter.convert(regelsetDto));
 			}
 		
 		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
+			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
 		}
 		return regelsets;
 

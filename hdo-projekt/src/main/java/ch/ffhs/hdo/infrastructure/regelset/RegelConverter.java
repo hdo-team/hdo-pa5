@@ -8,11 +8,10 @@ import ch.ffhs.hdo.persistence.dto.RegelDto;
 
 public class RegelConverter {
 
-	public RegelModel convert(RegelDto dto, Integer id) {
+	public static RegelModel convert(RegelDto dto, Integer id) {
 
 		RegelModel model = new RegelModel();
 
-		// model.setId(dto.getId());   // TODO: id kommt von Regelset via Param
 		model.setId(id);					
 		model.setContextType(ContextTypeEnum.valueOf(dto.getContextType()));
 		model.setContextAttribute(ContextAttributeEnum.valueOf(dto.getContextAttribute()));
@@ -23,17 +22,17 @@ public class RegelConverter {
 
 	}
 
-	public RegelDto convert(RegelModel model, Integer id) {
+	public static RegelDto convert(RegelModel model, Integer id) {
 
 		final RegelDto regelDto = new RegelDto();
 		
-		regelDto.setId(model.getId());
 		regelDto.setCompareType(model.getComparisonType().toString());
 		regelDto.setCompareValue(model.getCompareValue());
 		regelDto.setCompareType(model.getComparisonType().toString());
 		regelDto.setContextAttribute(model.getContextAttribute().toString());
 		regelDto.setRulesetId(id);
-
+		regelDto.setId(model.getId());
+		
 		return regelDto;
 
 	}
