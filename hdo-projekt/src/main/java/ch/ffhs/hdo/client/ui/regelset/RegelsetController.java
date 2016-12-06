@@ -6,6 +6,8 @@ import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
+import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperationExecutable;
 
 /**
  * Controller für die Regelset
@@ -15,7 +17,7 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable
 public class RegelsetController extends Controller<RegelsetModel, RegelsetView> {
 
 	private final ViewHandlerImpl viewHandler;
-	
+
 	public RegelsetController(RegelsetModel model) {
 		super(model);
 
@@ -23,7 +25,7 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 		viewHandler = new ViewHandlerImpl();
 
 		setupViewHandler();
-		
+
 		initializeView();
 
 	}
@@ -36,7 +38,7 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 	}
 
 	private void setupViewHandler() {
-		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
-		viewHandler.addOperation(RegelsetSaveOperation.class, new RegelsetSaveOperationExecutable(getModel()));
+		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
+		this.viewHandler.addOperation(RegelsetSaveOperation.class, new RegelsetSaveOperationExecutable(getModel()));
 	}
 }

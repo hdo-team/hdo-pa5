@@ -11,12 +11,20 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public class RegelsetDao extends JdbcHelper {
 
-	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET";
+	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET ORDER BY priority ASC";
 	// private final String SELECTRULESET = SELECTRULESETS + " WHERE id = ?";
 	// private final String SELECTRULES = "SELECT RULESET.* FROM RULESET";
 	// private final String SELECTRULE = SELECTRULES + " WHERE id = ?";
 	// private final String SELECTRULEBYRULESET = SELECTRULES + " WHERE
 	// rulesetId = ?";
+
+	private final String FIND_BIGGER_PRIO = "(Select id from Ruleset where priority = (SELECT min(priority) from RULESET where priority > (SELECT priority  FROM RULESET where id = ?)))";
+	private final String SWAP_DOWN = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, "
+			+ FIND_BIGGER_PRIO + ") ) - priority WHERE id IN (?, " + FIND_BIGGER_PRIO + ")";
+
+	private final String FIND_SMALLER_PRIO = "(Select id from Ruleset where priority = (SELECT max(priority) from RULESET where priority < (SELECT priority  FROM RULESET where id = ?)))";
+	private final String SWAP_UP = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, "
+			+ FIND_SMALLER_PRIO + ") ) - priority WHERE id IN (?, " + FIND_SMALLER_PRIO + ")";
 
 	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 
@@ -27,7 +35,6 @@ public class RegelsetDao extends JdbcHelper {
 
 	public List<RegelsetDto> findAllRegelsets() throws SQLException {
 
-		RegelsetDto dto = new RegelsetDto();
 		PreparedStatement selectAllRegelsets = conn.prepareStatement(SELECTRULESETS);
 
 		ResultSet executeQuery = selectAllRegelsets.executeQuery();
@@ -35,6 +42,7 @@ public class RegelsetDao extends JdbcHelper {
 		List<RegelsetDto> regelsetlist = new ArrayList<RegelsetDto>();
 		while (executeQuery.next()) {
 
+			RegelsetDto dto = new RegelsetDto();
 			dto.setId(executeQuery.getInt("id"));
 			dto.setActive(executeQuery.getBoolean("active"));
 			dto.setNewFilename(executeQuery.getString("newFilename"));
@@ -84,19 +92,25 @@ public class RegelsetDao extends JdbcHelper {
 
 	}
 
-	public void changePrioDown(int id) {
-		// TODO: DB: to implement
+	public void changePrioDown(int id) throws SQLException {
 
-		// UPDATE regelset SET priority (Select min(priority)+1 from Regelset
-		// where priority < ? ) where id = ? ;
+		final PreparedStatement ruleset = conn.prepareStatement(SWAP_DOWN );
+		ruleset.setInt(1, id);
+		ruleset.setInt(2, id);
+		ruleset.setInt(3, id);
+		ruleset.setInt(4, id);
+		final int executeUpdate = ruleset.executeUpdate();
 
 	}
 
-	public void changePrioUp(int id) {
-		// TODO: DB: to implement
+	public void changePrioUp(int id) throws SQLException {
 
-		// UPDATE regelset SET priority (Select max(priority)-1 from Regelset
-		// where priority > ? ) where id = ? ;
+		final PreparedStatement ruleset = conn.prepareStatement(SWAP_UP);
+		ruleset.setInt(1, id);
+		ruleset.setInt(2, id);
+		ruleset.setInt(3, id);
+		ruleset.setInt(4, id);
+		ruleset.executeUpdate();
 
 	}
 

@@ -137,21 +137,24 @@ public class RegelsetFacade {
 
 	}
 
-	public void swapPriority(int id, PriorityAction action) {
+	public void swapPriority(int id, PriorityAction action)  {
 
 		RegelsetDao dao = new RegelsetDao();
 
+		try {
 		switch (action) {
 		case DOWN:
 
-			dao.changePrioDown(id);
+				dao.changePrioDown(id);
 			break;
 		case UP:
 			dao.changePrioUp(id);
 
 			break;
 		default:
-
+			
+		}
+		} catch (SQLException e) {
 			throw new IllegalArgumentException();
 		}
 	}
