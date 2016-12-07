@@ -118,7 +118,7 @@ public class MainView extends View<MainModel> {
 		minimumSize = new Dimension(200, 150);
 
 		// Create Folder Panel
-		folderTreeView = new FolderTreeView(resourceBundle);
+		folderTreeView = new FolderTreeView(resourceBundle, getModel().getFolderModel());
 		folderScrollPane = new JScrollPane(folderTreeView.getPanel());
 
 		// Create Rulset Panel

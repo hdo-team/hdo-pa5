@@ -18,8 +18,9 @@ public class FolderTreeView extends View<FolderModel> {
 	private File inboxFolder;
 	private JTree tree;
 
-	public FolderTreeView(ResourceBundle resourceBundle) {
+	public FolderTreeView(ResourceBundle resourceBundle, FolderModel folderModel) {
 		super(resourceBundle);
+		this.setModel(folderModel);
 		initComponents();
 	}
 
@@ -31,7 +32,7 @@ public class FolderTreeView extends View<FolderModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		inboxFolder = new File("C:\\Users\\jonas\\hdo");
+		inboxFolder = new File(getModel().getInboxPath());
 		tree = new JTree(addNodes(null, inboxFolder));
 		jPanel.add(tree);
 	}
