@@ -1,19 +1,16 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.imageio.IIOException;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -34,6 +31,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.regelset.RegelModel.ComparisonTypeEnum;
 import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextAttributeEnum;
 import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextTypeEnum;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
@@ -112,108 +110,94 @@ public class RegelsetView extends View<RegelsetModel> {
 		return allFolders.toArray(new String[0]);
 	}
 	
-	private String[] getContextList(boolean firstShow) { //RegelModel ruleModel) {
-		String []contextList; // = new String[];
-		
-		// TODO: ?? elegantere Methode um aus Resourcen ALLE Contexte auszulesen ??
+	private ContextTypeEnum[] getContextList(boolean firstShow) { //RegelModel ruleModel) {
+		List<ContextTypeEnum> contextList = new ArrayList<ContextTypeEnum>();
 
-		List<String> contextItems = new ArrayList<String>();
 		if (firstShow) {
-			contextItems.add("");
+			contextList.add(ContextTypeEnum.EMPTY);
 		}
-		for (ContextTypeEnum contextItem : RegelModel.ContextTypeEnum.values()) {
-			contextItems.add(getMessage(CONTEXT_COMBOBOXKEY + "." + contextItem.name().toLowerCase()));
-		}
-		contextList = contextItems.toArray(new String[0]);
 
-		return contextList;
+		for (ContextTypeEnum contextItem : RegelModel.ContextTypeEnum.values()) {
+			if ( ! contextItem.equals(ContextTypeEnum.EMPTY)) {
+				contextList.add(contextItem);
+			}
+		}
+		
+		return contextList.toArray(new ContextTypeEnum[0]);
 	}
 
 	
 	
-	private String[] getAttributList(RegelModel.ContextTypeEnum contextEnum) { //RegelModel ruleModel) {
-		String []attributeList; // = new String[];
 		
+
+	private ContextAttributeEnum[] getAttributList(RegelModel.ContextTypeEnum contextEnum) { //RegelModel ruleModel) {
+		//ContextTypeEnum []attributeList; // = new String[];
+		List<ContextAttributeEnum> attributeList = new ArrayList<ContextAttributeEnum>();
 		
 		//
 		// TODO holprig
 		//
-		if (contextEnum == null) {
-			return new String[]{};
+		if (contextEnum == ContextTypeEnum.EMPTY) {
+			//return attributeList.toArray(new ContextAttributeEnum[0]);				// darf eigentlich nicht null sein	///Leer   ODER mit EMPTY-item ?
+			attributeList.add(ContextAttributeEnum.EMPTY);
 		}
-		
-		// TODO: ?? elegantere Methode um aus Resourcen ALLE Contexte auszulesen ??
-		List<String> attributeItems = new ArrayList<String>();
-		
 		
 		//
 		// Resourcen + ENUM => attribute <PFD|FILE> pdf_title
 		// => elegante Methode suchen, dass weniger Duplicates in namen
 		//
-		if (contextEnum.equals(contextEnum.CONTEXT_PDF)) {
+		if (contextEnum.equals(ContextTypeEnum.CONTEXT_PDF)) {
 			for (ContextAttributeEnum contextItem : RegelModel.ContextAttributeEnum.values()) {
 				if (contextItem.name().startsWith("PDF_")) {
-					attributeItems.add(getMessage(CONTEXT_COMBOBOXKEY + ".attribute.pdf." + contextItem.name().toLowerCase()));
+					attributeList.add(contextItem);
 				}
 			}
-		} else if(contextEnum.equals(contextEnum.CONTEXT_FILE)) {
-			
+		} else if(contextEnum.equals(ContextTypeEnum.CONTEXT_FILE)) {
 			for (ContextAttributeEnum contextItem : RegelModel.ContextAttributeEnum.values()) {
 				if (contextItem.name().startsWith("FILE_")) {
-					attributeItems.add(getMessage(CONTEXT_COMBOBOXKEY + ".attribute.file." + contextItem.name().toLowerCase()));
+					attributeList.add(contextItem);
 				}
 			}
-		} else if (contextEnum.equals(contextEnum.CONTEXT_CONTENT)) {
+		} else if (contextEnum.equals(ContextTypeEnum.CONTEXT_CONTENT)) {
 			// keine zweite ComboBox nötig
-		} else {
-			// eigenlicht nicht möglich (TODO)
-			// aber egal
-			// 
-			// => zweite Combobox bleibt leer
-			
 		}
-		attributeList = attributeItems.toArray(new String[0]);
-
-		return attributeList;
+		
+		return attributeList.toArray(new ContextAttributeEnum[]{});
 	}
+
 	
-	private String[] getComparisonModeList(RegelModel.ContextAttributeEnum attributeEnum) {
-		String[] comparionModeList; 
-		List<String> comparisonModeItems = new ArrayList<String>();
+	private ComparisonTypeEnum[] getComparisonModeList(ContextAttributeEnum attributeEnum) {
+		List<ComparisonTypeEnum> comparisonList = new ArrayList<ComparisonTypeEnum>();
 		
 		//
 		// TODO holprig
 		//
 		if (attributeEnum == null) {
-			return new String[]{};
+			comparisonList.add(ComparisonTypeEnum.EMPTY);
 		}
 		
 
-		// allgemeine Vergleichs-Operationen 
-		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL.toString().toLowerCase()));
-		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
-		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_LESS_EQUAL.toString().toLowerCase()));
-		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL.toString().toLowerCase()));
-		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_REGEX.toString().toLowerCase()));
-System.out.println("attribute-ENum" + attributeEnum);		
-		// abhängige Vergleichs-Operationen
-		if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
-				attributeEnum.equals(attributeEnum.PDF_CREATION_DATE)) {
-			System.out.println("im CreationDAte");
-			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
-			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
-			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_LESS_EQUAL.toString().toLowerCase()));
-			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL.toString().toLowerCase()));
-			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_REGEX.toString().toLowerCase()));
-		}//
-		//else if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
-		//		attributeEnum.equals(attributeEnum.PDF_CREATION_DATE)) {
-		  //  
-		//}		
-		
-		comparionModeList = comparisonModeItems.toArray(new String[0]);
+		// allgemeine Vergleichs-Operationen
+		comparisonList.add(ComparisonTypeEnum.COMPARISON_EQUAL);
+		comparisonList.add(ComparisonTypeEnum.COMPARISON_UNEQUAL);
+		if (!attributeEnum.equals(ContextAttributeEnum.EMPTY) &&
+			!attributeEnum.equals(ContextAttributeEnum.FILE_EXTENSION) &&
+			!attributeEnum.equals(ContextAttributeEnum.FILE_NAME) &&
+			!attributeEnum.equals(ContextAttributeEnum.FILE_OWNER) &&
+			!attributeEnum.equals(ContextAttributeEnum.PDF_AUTHOR) &&
+			!attributeEnum.equals(ContextAttributeEnum.PDF_CONTENT) &&
+			!attributeEnum.equals(ContextAttributeEnum.PDF_TITLE)) {
+			comparisonList.add(ComparisonTypeEnum.COMPARISON_LESS_EQUAL);
+			comparisonList.add(ComparisonTypeEnum.COMPARISON_GREATER_EQUAL);
+		} else if(!attributeEnum.equals(ContextAttributeEnum.FILE_CREATION_DATE) &&
+				  !attributeEnum.equals(ContextAttributeEnum.PDF_CREATION_DATE)) {
+			comparisonList.add(ComparisonTypeEnum.COMPARISON_REGEX);
+		}
+		comparisonList.add(ComparisonTypeEnum.COMPARISON_REGEX);
+		// TODO:  ??? Bedürfnis/Anforderung??
+		//comparisonList.add(ComparisonTypeEnum.COMPARISON_LIST);			
 
-		return comparionModeList;
+		return comparisonList.toArray(new ComparisonTypeEnum[0]);
 	}
 
 	private void createComponents() {
@@ -408,33 +392,32 @@ System.out.println("attribute-ENum" + attributeEnum);
 	}
 
 	private class RulePanel extends JPanel  {
-		private JComboBox contextComboBox;
-		private JComboBox attributeComboBox;
-		private JComboBox comparisonModeComboBox;
+		private JComboBox<ContextTypeEnum> contextComboBox;
+		private JComboBox<ContextAttributeEnum> attributeComboBox;
+		private JComboBox<ComparisonTypeEnum> comparisonModeComboBox;
 		private JTextField compareTextField; 
 		
 		
-		DefaultComboBoxModel pdfAttributeModel = new DefaultComboBoxModel(getAttributList(RegelModel.ContextTypeEnum.CONTEXT_PDF));
-		DefaultComboBoxModel fileAttributeModel = new DefaultComboBoxModel(getAttributList(RegelModel.ContextTypeEnum.CONTEXT_FILE));
-		DefaultComboBoxModel contentAttributeModel = new DefaultComboBoxModel(getAttributList(RegelModel.ContextTypeEnum.CONTEXT_CONTENT));
+		DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(getAttributList(ContextTypeEnum.CONTEXT_PDF));
+		DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(getAttributList(ContextTypeEnum.CONTEXT_FILE));
+		DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(getAttributList(ContextTypeEnum.CONTEXT_CONTENT));
 		
-		/*
-		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> pdfAttributeModel = new DefaultComboBoxModel(RegelModel.ContextAttributeEnum.values(RegelModel.ContextTypeEnum.CONTEXT_PDF));
-		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> fileAttributeModel = new DefaultComboBoxModel(RegelModel.ContextAttributeEnum.values(RegelModel.ContextTypeEnum.CONTEXT_FILE));
-		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> contentAttributeModel = new DefaultComboBoxModel(RegelModel.ContextAttributeEnum.values(RegelModel.ContextTypeEnum.CONTEXT_CONTENT));
-		*/
-		
-		DefaultComboBoxModel getAttributeModel(RegelModel.ContextTypeEnum contextEnum) {
-			DefaultComboBoxModel attributeModel = null;
+		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
+			DefaultComboBoxModel<RegelModel.ContextAttributeEnum> attributeModel = null;
 			
-			if (contextEnum.equals(contextEnum.CONTEXT_PDF)) {
+			if (regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_PDF)) {
 				attributeModel = pdfAttributeModel;
-			} else if(contextEnum.equals(contextEnum.CONTEXT_FILE)) {
+			} else if(regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_FILE)) {
 				attributeModel = fileAttributeModel;
-			} else if (contextEnum.equals(contextEnum.CONTEXT_CONTENT)) {
+			} else if (regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_CONTENT)) {
 				attributeModel = contentAttributeModel;
+			}//  else if (regelModel.getContextType().equals(ContextTypeEnum.EMPTY)) {
+				//attributeModel = contentAttributeModel;		// TODO: sollte eigentlich nicht sein
+			//}//
+			if (regelModel.getContextAttribute() == null) {
+				
 			}
-			
+			//attributeModel.setSelectedItem(anObject);
 			
 			return attributeModel;
 		}
@@ -460,20 +443,20 @@ System.out.println("attribute-ENum" + attributeEnum);
 
 			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
 
-			contextComboBox = new JComboBox<String>(getContextList(ruleModel.getContextType() == null));
-			contextComboBox.setSelectedIndex(ruleModel.getContextType() == null ? 0 : ruleModel.getContextType().ordinal());
+			contextComboBox = new JComboBox<ContextTypeEnum>(getContextList(ruleModel.getContextType() == null));
+			//contextComboBox.setSelectedIndex(ruleModel.getContextType() == null ? 0 : ruleModel.getContextType().ordinal() - 1);
 			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
 
-			attributeComboBox = new JComboBox<String>(getAttributList(ruleModel.getContextType()));
-			attributeComboBox.setSelectedIndex(ruleModel.getContextAttribute() == null ? 0 : ruleModel.getContextAttribute().ordinal());
+			attributeComboBox = new JComboBox<ContextAttributeEnum>(getAttributList(ruleModel.getContextType()));
+			//attributeComboBox.setSelectedIndex(ruleModel.getContextAttribute() == null ? 0 : ruleModel.getContextAttribute().ordinal() - 1);
 			paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 			
-			comparisonModeComboBox = new JComboBox<String>(getComparisonModeList(ruleModel.getContextAttribute()));
-			comparisonModeComboBox.setSelectedIndex(ruleModel.getContextAttribute() == null ? 0 : ruleModel.getContextAttribute().ordinal());
+			comparisonModeComboBox = new JComboBox<ComparisonTypeEnum>(getComparisonModeList(ruleModel.getContextAttribute()));
+			//comparisonModeComboBox.setSelectedIndex(ruleModel.getContextAttribute() == null ? 0 : ruleModel.getContextAttribute().ordinal() - 1);
 			// default-wERt ins Model sonst NP-Ex	
 			ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
 			paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
-
+			
 
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.dynamic")).rcw(7, 1, 7);
 			paneBuilder.addLabel(getMessage(I18N + ".label.rule.from")).rcw(9, 1, 7);
@@ -483,7 +466,6 @@ System.out.println("attribute-ENum" + attributeEnum);
 			UtilDateModel modelDate = new UtilDateModel();
 			// TODO:  Date compareDate = null;
 			//
-System.out.println("vor compdate: " + ruleModel.getContextAttribute());
 			Date compareDate =null;//TDOO:  default <heute> Nok   //TDOO:  default <heute> Nok
 			try {
 				compareDate = simpleDateFormat.parse(ruleModel.getCompareValue());
@@ -530,34 +512,31 @@ System.out.println("vor compdate: " + ruleModel.getContextAttribute());
 					int selectedIndex = comboBox.getSelectedIndex();
 					
 					if (comboBox == contextComboBox ){
-						if (contextComboBox.getItemAt(0).equals("")) {
+						if (contextComboBox.getModel().getElementAt(0).equals("")) { //ContextTypeEnum.EMPTY)) {
 							contextComboBox.removeItemAt(0); 
 						}
-System.out.println("combo selIndex: " + contextComboBox.getSelectedIndex());				
-contextComboBox.setSelectedIndex(1);
-System.out.println("combo selIndex NEW: " + contextComboBox.getSelectedIndex());
-						System.out.println("contextComboBox: " + RegelModel.ContextTypeEnum.values()[contextComboBox.getSelectedIndex()]);
-						ruleModel.setContextType(RegelModel.ContextTypeEnum.values()[contextComboBox.getSelectedIndex()]);
+						System.out.println("contextComboBox: " + contextComboBox.getModel().getSelectedItem());
+						ruleModel.setContextType((ContextTypeEnum)contextComboBox.getSelectedItem());
 						// abhängiges AttributeContext neu aufbauen
-						attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
-System.out.println("attributeComboBox.getModel().getSize(): " + attributeComboBox.getModel().getSize());
+						attributeComboBox.setModel(getAttributeModel(ruleModel)); //.getContextType()));
+
 						attributeComboBox.setVisible(attributeComboBox.getModel().getSize() != 0);
 					} else if (comboBox == attributeComboBox ) {
-						System.out.println("attributeComboBox: " + RegelModel.ContextAttributeEnum.values()[attributeComboBox.getSelectedIndex()]);
-						System.out.println("attributeComboBox-M: " + attributeComboBox.getModel().getElementAt(attributeComboBox.getSelectedIndex()));
-						ruleModel.setContextAttribute(RegelModel.ContextAttributeEnum.values()[attributeComboBox.getSelectedIndex()]);
+						System.out.println("attributeComboBox: " + ((ContextAttributeEnum)attributeComboBox.getModel().getSelectedItem()).name());
+						ruleModel.setContextAttribute((ContextAttributeEnum)attributeComboBox.getModel().getSelectedItem());
+						
 						// abhängiges AttributeContext neu aufbauen
 						comparisonModeComboBox.setModel(getComparisonModeModel(ruleModel.getContextAttribute()));
+						
 						// default-wERt ins Model sonst NP-Ex
 						ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
 						
 					} else if (comboBox == comparisonModeComboBox) {
-						System.out.println("comparisonModeComboBox: " + RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
-						ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.values()[comparisonModeComboBox.getSelectedIndex()]);
+						System.out.println("comparisonModeComboBox: " + comparisonModeComboBox.getModel().getSelectedItem());
+						ruleModel.setComparisonType((ComparisonTypeEnum)comparisonModeComboBox.getModel().getSelectedItem());
 					}
 				}
 			}
-			
 		}
 	}
 

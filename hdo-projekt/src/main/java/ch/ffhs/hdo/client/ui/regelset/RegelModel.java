@@ -10,7 +10,12 @@ public class RegelModel extends Model {
 	
 	//TODO: ruleset-ID brauchts nicht. => nur auf DB
 			
-			
+	// TODO: ist kopiert aus View    (sollte nicht kopiert werden)
+	static private final String I18N = "hdo.regelset";
+	static private final String TITLE_KEY = I18N + ".title";
+	static private final String CONTEXT_COMBOBOXKEY = I18N + ".combobox";
+	static private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".combobox";
+	static private final String COMPARISON_MODE_COMBOBOXKEY = I18N + ".combobox";
 	
 	
 	
@@ -22,11 +27,12 @@ public class RegelModel extends Model {
 
 	
 	public static enum ComparisonTypeEnum {
-		COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX, COMPARISON_LIST;
+		EMPTY, COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX, COMPARISON_LIST;
 	}	
 
 
 	public static enum ContextAttributeEnum {
+		EMPTY,
 		PDF_TITLE, PDF_AUTHOR, PDF_CREATION_DATE, PDF_CONTENT, PDF_SIZE,
 		FILE_NAME, FILE_EXTENSION, FILE_SIZE, FILE_CREATION_DATE, FILE_OWNER;	
 		
@@ -39,31 +45,37 @@ public class RegelModel extends Model {
 					attributeEnumsList.add(attribute); 
 				} else if (context.equals(ContextTypeEnum.CONTEXT_FILE) && attribute.toString().startsWith("FILE_")) {
 					attributeEnumsList.add(attribute);
-				} else if (context.equals(ContextTypeEnum.CONTEXT_CONTENT) && attribute.toString().startsWith("CONTENT")) {
+				} else if (context.equals(ContextTypeEnum.CONTEXT_CONTENT) && attribute.toString().startsWith("CONTENT_")) {
 					attributeEnumsList.add(attribute);
 				}
 			}
 			
 			return attributeEnumsList.toArray(new ContextAttributeEnum[0]);
 		}
+		
+		@Override
+		public String toString() {
+			return ">>" + name() + "<<";
+			
+		}
 	}
 
 	
 	
 	public static enum ContextTypeEnum {
-		CONTEXT_PDF, CONTEXT_FILE, CONTEXT_CONTENT;	
+		EMPTY, CONTEXT_PDF, CONTEXT_FILE, CONTEXT_CONTENT;	
 		 // TODO: Content für PDF und FILE getrennt handeln?
 	}
 	
 	
-	private String							 compareValue;
-	private ComparisonTypeEnum               comparisonType;
-	private ContextAttributeEnum             contextAttribute;
+	private String					compareValue;
+	private ComparisonTypeEnum      comparisonType = ComparisonTypeEnum.EMPTY;
+	private ContextAttributeEnum    contextAttribute  = ContextAttributeEnum.EMPTY;
 																// TODO: eigenes Pdf-Attr
 																//	unschön, da später word, xls,...
-	private ContextTypeEnum                  contextType;
-	private Integer                          id;
-	private String                           ruleName;
+	private ContextTypeEnum         contextType = ContextTypeEnum.EMPTY;
+	private Integer                 id;
+	private String                  ruleName;
 	
 	
 	//
