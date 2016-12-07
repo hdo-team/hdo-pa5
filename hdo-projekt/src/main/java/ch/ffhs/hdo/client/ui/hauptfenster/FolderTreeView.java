@@ -32,7 +32,13 @@ public class FolderTreeView extends View<FolderModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		inboxFolder = new File(getModel().getInboxPath());
+		
+		if (getModel().getInboxPath() != null) {
+			inboxFolder = new File(getModel().getInboxPath());
+		} else {
+			inboxFolder = new File("");
+		}
+		
 		tree = new JTree(addNodes(null, inboxFolder));
 		jPanel.add(tree);
 	}

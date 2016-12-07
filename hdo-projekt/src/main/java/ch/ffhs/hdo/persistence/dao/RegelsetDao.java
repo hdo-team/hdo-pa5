@@ -106,7 +106,7 @@ public class RegelsetDao extends JdbcHelper {
 		ruleset.setInt(2, id);
 		ruleset.setInt(3, id);
 		ruleset.setInt(4, id);
-		final int executeUpdate = ruleset.executeUpdate();
+		final int executeUpdate = ruleset.executeUpdate(); //FRAGEN
 
 	}
 
