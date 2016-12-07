@@ -41,44 +41,6 @@ public class InitDatabase extends JdbcHelper {
 			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test3', 'test3', 'test3', 3, 3, true, CURTIME (),CURTIME ())");
 			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test4', 'test4', 'test4', 4, 4, true, CURTIME (),CURTIME ())");
 
-			// update("INSERT INTO RULESET (targetDirectory,
-			// rulesetName,newFilename,filenameCounter, priority, active,
-			// creationDate, changedate) VALUES ('test', 'test', 'test', 1, 1,
-			// true, CURTIME (),CURTIME ())");
-
-			// ****** TEMP
-			// TODO: in definitiver Version entfernen!
-
-			for (int i = 0; i < 10; i++) {
-				String newFilename;
-				if (i % 2 == 0)
-					newFilename = null;
-				else
-					newFilename = "[Foto|Bild]-" + i + ".jpg";
-
-				System.out.println("ruleset: "
-						+ "INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate)"
-						+ " VALUES ('" + "Regelset " + i + "', '" + "Rechnungen_\\dddd_-" + i + ".pdf" + "', '"
-						+ newFilename + "', " + 990 + i + ", " + i + ", " + (i % 2 == 0) + ", CURTIME (),CURTIME ())");
-				update("INSERT INTO RULESET (targetDirectory, rulesetName,newFilename,filenameCounter, priority, active, creationDate, changedate)"
-						+ " VALUES ('" + "Regelset " + i + "', '" + "Rechnungen_\\dddd_-" + i + ".pdf" + "', '"
-						+ newFilename + "', " + 990 + i + ", " + i + ", " + (i % 2 == 0) + ", CURTIME (),CURTIME ())");
-				System.out.println(
-						"INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)"
-								+ " VALUES (" + i
-								+ ", 'CONTEXT_PDF' ,'PDF_SIZE', 'COMPARISON_GREATER_EQUAL', '20161018', CURTIME (),CURTIME ())");
-				update("INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)"
-						+ " VALUES (" + i
-						+ ", 'CONTEXT_PDF' ,'PDF_SIZE', 'COMPARISON_GREATER_EQUAL', '20161018', CURTIME (),CURTIME ())");
-				System.out.println(
-						"INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)"
-								+ " VALUES (" + i
-								+ ", 'CONTEXT_PDF' ,'PDF_AUTHOR', 'COMPARISON_EQUAL', 'Schreiberling', CURTIME (),CURTIME ())");
-				update("INSERT INTO RULE (rulesetId, contextType,contextAttribute,compareType, compareValue, creationDate, changedate)"
-						+ " VALUES (" + i
-						+ ", 'CONTEXT_PDF' ,'PDF_AUTHOR', 'COMPARISON_EQUAL', 'Schreiberling', CURTIME (),CURTIME ())");
-			}
-
 		} catch (SQLException ex2) {
 
 			// ignore should throw execption since table

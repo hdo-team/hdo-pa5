@@ -30,7 +30,7 @@ public class RegelConverter {
 		regelDto.setCompareType(model.getComparisonType() == null ? null : model.getComparisonType().name());
 		regelDto.setContextAttribute(model.getContextAttribute() == null ? null : model.getContextAttribute().name());
 		regelDto.setRulesetId(id);
-		regelDto.setId(model.getId());
+		//regelDto.setId(model.getId());
 		
 		return regelDto;
 	}

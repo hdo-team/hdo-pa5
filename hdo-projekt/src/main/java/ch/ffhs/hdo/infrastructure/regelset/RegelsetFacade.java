@@ -29,7 +29,7 @@ public class RegelsetFacade {
 		
 		/****
 		// TODO: abklären ob OK
-		//    -> von neues Regelset erstellen => "leeres" Ruleset-Model zurückgeben. 
+		//    -> von neues Regelset erstellen => "leeres" Ruleset-Model zurückgeben.
 		
 		
 		RegelsetDao dao = new RegelsetDao();
@@ -58,13 +58,15 @@ public class RegelsetFacade {
 		List<RegelDto> regelDtoList = new ArrayList<RegelDto>();
 
 		try {
-			regelsetDao.save(regelsetDto, model.getRulesetName() == null);
+			regelsetDao.save(regelsetDto, model.getRulesetId() == null);
+			
 			for (RegelModel regelModel : model.getRuleModelList()) {
-				regelDto = RegelConverter.convert(regelModel, regelModel.getId());
+				regelDto = RegelConverter.convert(regelModel, model.getRulesetId());
 				regelDtoList.add(regelDto);
+				System.out.println("Die ID ist: " + model.getRulesetId());
 			}
 			RegelDao regelDao = new RegelDao();
-			regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
+			//regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
 			regelDao.save(regelDtoList);
 			
 		} catch (SQLException e) {

@@ -3,6 +3,7 @@ package ch.ffhs.hdo.persistence.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RegelsetDao extends JdbcHelper {
 	private final String FIND_SMALLER_PRIO = "(Select id from Ruleset where priority = (SELECT max(priority) from RULESET where priority < (SELECT priority  FROM RULESET where id = ?)))";
 	private final String SWAP_UP = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, "
 			+ FIND_SMALLER_PRIO + ") ) - priority WHERE id IN (?, " + FIND_SMALLER_PRIO + ")";
-
+	
 	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 
 	private final String INSERT_RULESET = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
@@ -29,7 +30,6 @@ public class RegelsetDao extends JdbcHelper {
 	
 	private final String UPDATE_RULESET = "UPDATE RULESET SET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () ) where id = ?";
 	
-
 	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
 
@@ -66,17 +66,24 @@ public class RegelsetDao extends JdbcHelper {
 		PreparedStatement insertRegelset = null;
 
 		if (newEntry) {
-			update(regelsetDto);
-		} else {
-			insertRegelset = conn.prepareStatement(INSERT_RULESET);
+			insertRegelset = conn.prepareStatement(INSERT_RULESET, Statement.RETURN_GENERATED_KEYS);
 			insertRegelset.setString(1, regelsetDto.getTargetDirectory());
 			insertRegelset.setString(2, regelsetDto.getRulesetName());
 			insertRegelset.setString(3, regelsetDto.getNewFilename());
 			insertRegelset.setLong(4, regelsetDto.getFilenameCounter());
 			insertRegelset.setInt(5, regelsetDto.getPrority());
 			insertRegelset.setBoolean(6, regelsetDto.isActive());
-
 			insertRegelset.executeUpdate();
+			
+			ResultSet rs = insertRegelset.getGeneratedKeys();
+	        if (rs.next()){
+	        	regelsetDto.setId(rs.getInt(1));
+	        	System.out.println("Die ID ist: " + rs.getInt(1));
+	        }
+	        rs.close();
+	        
+		} else {
+			update(regelsetDto);
 		}
 
 		terminate();
@@ -84,8 +91,8 @@ public class RegelsetDao extends JdbcHelper {
 
 	private void update(RegelsetDto regelsetDto) throws SQLException {
 		PreparedStatement updateRegelset = null;
-
-		updateRegelset = conn.prepareStatement(INSERT_RULESET);
+		
+		updateRegelset = conn.prepareStatement(UPDATE_RULESET);
 		updateRegelset.setString(1, regelsetDto.getTargetDirectory());
 		updateRegelset.setString(2, regelsetDto.getRulesetName());
 		updateRegelset.setString(3, regelsetDto.getNewFilename());
@@ -93,7 +100,6 @@ public class RegelsetDao extends JdbcHelper {
 		updateRegelset.setInt(5, regelsetDto.getPrority());
 		updateRegelset.setBoolean(6, regelsetDto.isActive());
 		updateRegelset.setInt(7,  regelsetDto.getId());
-		
 		updateRegelset.executeUpdate();
 		
 		terminate();
@@ -101,23 +107,13 @@ public class RegelsetDao extends JdbcHelper {
 
 	public void changePrioDown(int id) throws SQLException {
 
-		final PreparedStatement ruleset = conn.prepareStatement(SWAP_DOWN);
-		ruleset.setInt(1, id);
-		ruleset.setInt(2, id);
-		ruleset.setInt(3, id);
-		ruleset.setInt(4, id);
-		final int executeUpdate = ruleset.executeUpdate(); //FRAGEN
-
+	//tba
+		
 	}
 
 	public void changePrioUp(int id) throws SQLException {
 
-		final PreparedStatement ruleset = conn.prepareStatement(SWAP_UP);
-		ruleset.setInt(1, id);
-		ruleset.setInt(2, id);
-		ruleset.setInt(3, id);
-		ruleset.setInt(4, id);
-		ruleset.executeUpdate();
+	//tba
 
 	}
 
@@ -126,13 +122,16 @@ public class RegelsetDao extends JdbcHelper {
 		try {
 			conn.setAutoCommit(false);
 
+			/**
 			final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
 			deleteRule.setInt(1, regelsetId);
-			deleteRule.executeUpdate();
-
+			deleteRule.executeUpdate();*/
+			System.out.println("here4");
 			final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
 			deleteRuleset.setInt(1, regelsetId);
+			System.out.println("here4.1");
 			deleteRuleset.executeUpdate();
+			System.out.println("here4.2");
 			conn.commit();
 			conn.setAutoCommit(true);
 
@@ -141,6 +140,7 @@ public class RegelsetDao extends JdbcHelper {
 			throw new SQLException(e);
 
 		}
+		
 
 	}
 
