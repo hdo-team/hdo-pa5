@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
-import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
@@ -89,9 +88,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		newButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO:  ohne Argument ??  "leeres Model wird später von Facade geholt" ...
 				getHandler().performOperation(RegelsetViewStartOperation.class);
-				// getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, new RegelsetModel());
 			}
 		});
 
@@ -159,7 +156,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == "serviceStatus") {
-					stateButton.setText(getMessage("hdo.main.button.state."+evt.getNewValue().toString()));
+					stateButton.setText(getMessage("hdo.main.button.state." + evt.getNewValue().toString()));
 				}
 
 			}

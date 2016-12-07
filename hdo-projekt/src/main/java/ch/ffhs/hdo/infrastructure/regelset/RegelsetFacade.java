@@ -72,17 +72,6 @@ public class RegelsetFacade {
 
 	}
 
-	public void deleteRegelset(Integer id) {
-
-		RegelsetDao dao = new RegelsetDao();
-		try {
-			dao.deleteRegelset(id);
-		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler Regelset samt Regeln konnten nicht gelöscht werden");
-		}
-
-	}
-
 	public ArrayList<RegelsetModel> getAllRegelsets() {
 
 		RegelsetDao daoRegelset = new RegelsetDao();
@@ -123,7 +112,6 @@ public class RegelsetFacade {
 			break;
 		case UP:
 			dao.changePrioUp(id);
-
 			break;
 		default:
 			
@@ -140,7 +128,6 @@ public class RegelsetFacade {
 			dao.deleteRegelset(id);
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim löschen eines Regelsets", e);
-
 		}
 
 	}

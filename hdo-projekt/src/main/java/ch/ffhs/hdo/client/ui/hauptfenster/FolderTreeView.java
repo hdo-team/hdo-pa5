@@ -82,7 +82,6 @@ public class FolderTreeView extends View<FolderModel> {
 			else
 				files.addElement(thisObject);
 		}
-		// Pass two: for files.
 
 		return curDir;
 	}
