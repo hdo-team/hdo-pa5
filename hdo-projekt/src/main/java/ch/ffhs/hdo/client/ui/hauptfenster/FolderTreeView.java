@@ -14,6 +14,7 @@ import ch.ffhs.hdo.client.ui.base.View;
 
 public class FolderTreeView extends View<FolderModel> {
 
+	private final String I18N = "hdo.main";
 	private JPanel jPanel;
 	private File inboxFolder;
 	private JTree tree;
@@ -36,7 +37,7 @@ public class FolderTreeView extends View<FolderModel> {
 		if (getModel().getInboxPath() != null) {
 			inboxFolder = new File(getModel().getInboxPath());
 		} else {
-			inboxFolder = new File("");
+			inboxFolder = new File(getMessage(I18N + ".label.nofolderfound"));
 		}
 		
 		tree = new JTree(addNodes(null, inboxFolder));
