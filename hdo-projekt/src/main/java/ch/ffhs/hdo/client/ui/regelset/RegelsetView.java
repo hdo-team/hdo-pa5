@@ -192,6 +192,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		// allgemeine Vergleichs-Operationen 
 		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL.toString().toLowerCase()));
 		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
+		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_LESS_EQUAL.toString().toLowerCase()));
+		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL.toString().toLowerCase()));
+		comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_REGEX.toString().toLowerCase()));
 System.out.println("attribute-ENum" + attributeEnum);		
 		// abhängige Vergleichs-Operationen
 		if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
@@ -199,7 +202,9 @@ System.out.println("attribute-ENum" + attributeEnum);
 			System.out.println("im CreationDAte");
 			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
 			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_UNEQUAL.toString().toLowerCase()));
-			
+			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_LESS_EQUAL.toString().toLowerCase()));
+			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_GREATER_EQUAL.toString().toLowerCase()));
+			comparisonModeItems.add(getMessage(COMPARISON_MODE_COMBOBOXKEY + ".comparison." + RegelModel.ComparisonTypeEnum.COMPARISON_REGEX.toString().toLowerCase()));
 		}//
 		//else if (attributeEnum.equals(attributeEnum.PDF_CREATION_DATE) ||
 		//		attributeEnum.equals(attributeEnum.PDF_CREATION_DATE)) {
@@ -456,24 +461,17 @@ System.out.println("attribute-ENum" + attributeEnum);
 			paneBuilder.addLabel(getMessage(I18N + ".label.sortrule")).rcw(1, 1, 7);
 
 			contextComboBox = new JComboBox<String>(getContextList(ruleModel.getContextType() == null));
-
-//			contextComboBox.setSelectedIndex(ruleModel.getContextType().ordinal() - 1);
+			contextComboBox.setSelectedIndex(ruleModel.getContextType() == null ? 0 : ruleModel.getContextType().ordinal());
 			paneBuilder.add(contextComboBox).rcw(3, 1, 1);
 
 			attributeComboBox = new JComboBox<String>(getAttributList(ruleModel.getContextType()));
-			//attributeComboBox = new JComboBox<RegelModel.ContextAttributeEnum>();
-			//attributeComboBox.setModel(getAttributeModel(ruleModel.getContextType()));
-			//>attributeComboBox.setModel(ruleModel.getContextType());
-	//		attributeComboBox..setModel(RegelModel.ComparisonTypeEnum.values());
-	//		attributeComboBox.setSelectedIndex(ruleModel.getContextAttribute().ordinal() - 1);
+			attributeComboBox.setSelectedIndex(ruleModel.getContextAttribute() == null ? 0 : ruleModel.getContextAttribute().ordinal());
 			paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 			
 			comparisonModeComboBox = new JComboBox<String>(getComparisonModeList(ruleModel.getContextAttribute()));
-			
+			comparisonModeComboBox.setSelectedIndex(ruleModel.getContextAttribute() == null ? 0 : ruleModel.getContextAttribute().ordinal());
 			// default-wERt ins Model sonst NP-Ex	
 			ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
-			
-	//		comparisonModeComboBox.setSelectedIndex(ruleModel.getComparisonType().ordinal() - 1 );
 			paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
 
 
@@ -535,8 +533,9 @@ System.out.println("vor compdate: " + ruleModel.getContextAttribute());
 						if (contextComboBox.getItemAt(0).equals("")) {
 							contextComboBox.removeItemAt(0); 
 						}
-						
-						
+System.out.println("combo selIndex: " + contextComboBox.getSelectedIndex());				
+contextComboBox.setSelectedIndex(1);
+System.out.println("combo selIndex NEW: " + contextComboBox.getSelectedIndex());
 						System.out.println("contextComboBox: " + RegelModel.ContextTypeEnum.values()[contextComboBox.getSelectedIndex()]);
 						ruleModel.setContextType(RegelModel.ContextTypeEnum.values()[contextComboBox.getSelectedIndex()]);
 						// abhängiges AttributeContext neu aufbauen

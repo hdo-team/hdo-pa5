@@ -15,6 +15,9 @@ public class RegelDao extends JdbcHelper {
 
 	private final String INSERT = "INSERT INTO RULE (RULESETID, CONTEXTTYPE ,CONTEXTATTRIBUTE,COMPARETYPE, COMPAREVALUE, CREATIONDATE, CHANGEDATE ) VALUES (?,?,?,?,?, CURTIME (), CURTIME ()) ";
 
+	private final String DELETERULEBYRULESETID = "DELETE FROM RULE WHERE rulesetId = ?";
+	
+	
 	public RegelDao() {
 		super();
 	}
@@ -46,6 +49,17 @@ public class RegelDao extends JdbcHelper {
 
 	}
 
+	public void deleteAllRegelnByRegelsetId(Integer regelsetId) throws SQLException {
+
+		final PreparedStatement deleteRegeln = conn.prepareStatement(DELETERULEBYRULESETID);
+		deleteRegeln.setInt(1, regelsetId);
+		deleteRegeln.executeUpdate();
+
+		conn.commit();
+		conn.setAutoCommit(true);
+		
+	}
+	
 	public void save(List<RegelDto> regelDtos) throws SQLException {
 
 		PreparedStatement insertRegelset = conn.prepareStatement(INSERT);

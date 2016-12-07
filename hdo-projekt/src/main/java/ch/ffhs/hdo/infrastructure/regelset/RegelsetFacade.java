@@ -53,7 +53,7 @@ public class RegelsetFacade {
 		RegelsetDao regelsetDao = new RegelsetDao();
 		RegelsetDto regelsetDto = RegelsetConverter.convert(model);
 		
-		RegelDao regelDao = new RegelDao();
+		//RegelDao regelDao = new RegelDao();
 		RegelDto regelDto = null;
 		List<RegelDto> regelDtoList = new ArrayList<RegelDto>();
 
@@ -63,6 +63,8 @@ public class RegelsetFacade {
 				regelDto = RegelConverter.convert(regelModel, regelModel.getId());
 				regelDtoList.add(regelDto);
 			}
+			RegelDao regelDao = new RegelDao();
+			regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
 			regelDao.save(regelDtoList);
 			
 		} catch (SQLException e) {
