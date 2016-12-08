@@ -512,7 +512,7 @@ public class RegelsetView extends View<RegelsetModel> {
 					int selectedIndex = comboBox.getSelectedIndex();
 					
 					if (comboBox == contextComboBox ){
-						if (contextComboBox.getModel().getElementAt(0).equals("")) { //ContextTypeEnum.EMPTY)) {
+						if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { //ContextTypeEnum.EMPTY)) {
 							contextComboBox.removeItemAt(0); 
 						}
 						System.out.println("contextComboBox: " + contextComboBox.getModel().getSelectedItem());

@@ -62,11 +62,12 @@ public class RegelsetDao extends JdbcHelper {
 		return regelsetlist;
 	}
 
-	public void save(RegelsetDto regelsetDto, boolean newEntry) throws SQLException {
+	public Integer save(RegelsetDto regelsetDto, boolean newEntry) throws SQLException {
 		PreparedStatement insertRegelset = null;
-
+		Integer newRulesetId = null;
+		
 		if (newEntry) {
-			insertRegelset = conn.prepareStatement(INSERT_RULESET, Statement.RETURN_GENERATED_KEYS);
+			insertRegelset = conn.prepareStatement(INSERT_RULESET);
 			insertRegelset.setString(1, regelsetDto.getTargetDirectory());
 			insertRegelset.setString(2, regelsetDto.getRulesetName());
 			insertRegelset.setString(3, regelsetDto.getNewFilename());
@@ -74,11 +75,13 @@ public class RegelsetDao extends JdbcHelper {
 			insertRegelset.setInt(5, regelsetDto.getPrority());
 			insertRegelset.setBoolean(6, regelsetDto.isActive());
 			insertRegelset.executeUpdate();
-			
-			ResultSet rs = insertRegelset.getGeneratedKeys();
-	        if (rs.next()){
-	        	regelsetDto.setId(rs.getInt(1));
-	        	System.out.println("Die ID ist: " + rs.getInt(1));
+
+			// Statement.NO_GENERATED_KEYS is not supported in this db
+			PreparedStatement getLastId = conn.prepareStatement("CALL IDENTITY()");
+			getLastId.executeQuery();
+			ResultSet rs = getLastId.getResultSet();
+	        if (rs.next()) {
+	        	newRulesetId = Integer.valueOf(rs.getInt(1));
 	        }
 	        rs.close();
 	        
@@ -87,6 +90,8 @@ public class RegelsetDao extends JdbcHelper {
 		}
 
 		terminate();
+		
+		return newRulesetId;
 	}
 
 	private void update(RegelsetDto regelsetDto) throws SQLException {

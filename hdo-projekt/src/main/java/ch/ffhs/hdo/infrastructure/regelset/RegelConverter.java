@@ -25,7 +25,7 @@ public class RegelConverter {
 
 		final RegelDto regelDto = new RegelDto();
 		
-		regelDto.setCompareType(model.getComparisonType() ==  null ? null : model.getComparisonType().name());
+		regelDto.setContextType(model.getContextType() ==  null ? null : model.getContextType().name());
 		regelDto.setCompareValue(model.getCompareValue());
 		regelDto.setCompareType(model.getComparisonType() == null ? null : model.getComparisonType().name());
 		regelDto.setContextAttribute(model.getContextAttribute() == null ? null : model.getContextAttribute().name());

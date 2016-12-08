@@ -53,20 +53,25 @@ public class RegelsetFacade {
 		RegelsetDao regelsetDao = new RegelsetDao();
 		RegelsetDto regelsetDto = RegelsetConverter.convert(model);
 		
-		//RegelDao regelDao = new RegelDao();
+		RegelDao regelDao = new RegelDao();
 		RegelDto regelDto = null;
 		List<RegelDto> regelDtoList = new ArrayList<RegelDto>();
 
 		try {
-			regelsetDao.save(regelsetDto, model.getRulesetId() == null);
-			
+			Integer newRulesetId = regelsetDao.save(regelsetDto, model.getRulesetId() == null);
+			if (newRulesetId != null) {
+				// update model with the new primaryKey from of the inserted ruleset
+				model.setRulesetId(newRulesetId);
+			} else {
+				// delete old rules form the updated ruleset
+				regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
+			}
 			for (RegelModel regelModel : model.getRuleModelList()) {
 				regelDto = RegelConverter.convert(regelModel, model.getRulesetId());
 				regelDtoList.add(regelDto);
-				System.out.println("Die ID ist: " + model.getRulesetId());
 			}
-			RegelDao regelDao = new RegelDao();
-			//regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
+			// TODO: terminates checken regelDao hatte hier schon "Session is closed"
+			regelDao = new RegelDao();
 			regelDao.save(regelDtoList);
 			
 		} catch (SQLException e) {

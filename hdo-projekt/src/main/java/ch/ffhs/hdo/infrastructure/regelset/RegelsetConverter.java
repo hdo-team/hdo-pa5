@@ -59,7 +59,7 @@ public class RegelsetConverter {
 		RegelConverter converter = new RegelConverter();
 		for (RegelModel regelModel : ruleModelList) {
 
-			final RegelDto convert = converter.convert(regelModel, regelModel.getId());
+			final RegelDto convert = converter.convert(regelModel, model.getRulesetId());
 			regeln.add(convert);
 
 		}
