@@ -36,11 +36,19 @@ public class InitDatabase extends JdbcHelper {
 			update("INSERT INTO CONFIG (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('intervall','3600',CURTIME (),CURTIME ())");
 			update("INSERT INTO CONFIG (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('inbox_path','',CURTIME (),CURTIME ())");
 
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test1', 'test1', 'test1', 1, 1, true, CURTIME (),CURTIME ())");
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test2', 'test2', 'test2', 2, 2, true, CURTIME (),CURTIME ())");
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test3', 'test3', 'test3', 3, 3, true, CURTIME (),CURTIME ())");
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test4', 'test4', 'test4', 4, 4, true, CURTIME (),CURTIME ())");
+			// TODO: Testdaten - in definitiver Version entfernen
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test-dir1', 'test1', 'test-file1', 91, 1, true, CURTIME (),CURTIME ())");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test-dir2', 'test2', 'test-file2', 92, 2, true, CURTIME (),CURTIME ())");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test-dir3', 'test3', 'test-file3', 93, 3, false, CURTIME (),CURTIME ())");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES ('test-dir4', 'test4', 'test-file4', 94, 4, true, CURTIME (),CURTIME ())");
 
+			// TODO: Testdaten - in definitiver Version entfernen
+			update("INSERT INTO RULE (rulesetId, contextType, contextAttribute,  compareType, compareValue, creationDate, changedate) VALUES (0, 'CONTEXT_PDF', 'PDF_CREATION_DATE',  'COMPARISON_UNEQUAL', '2016-12-08', CURTIME (), CURTIME ())");
+			update("INSERT INTO RULE (rulesetId, contextType, contextAttribute,  compareType, compareValue, creationDate, changedate) VALUES (1, 'CONTEXT_FILE', 'FILE_SIZE',  'COMPARISON_GREATER_EQUAL', 500, CURTIME (), CURTIME ())");
+			update("INSERT INTO RULE (rulesetId, contextType, contextAttribute,  compareType, compareValue, creationDate, changedate) VALUES (1, 'CONTEXT_FILE', 'FILE_SIZE',  'COMPARISON_LESS_EQUAL', 876, CURTIME (), CURTIME ())");
+			update("INSERT INTO RULE (rulesetId, contextType, contextAttribute,  compareType, compareValue, creationDate, changedate) VALUES (2, 'CONTEXT_CONTENT', 'EMPTY',  'COMPARISON_EQUAL', 'Rechnung', CURTIME (), CURTIME ())");
+			update("INSERT INTO RULE (rulesetId, contextType, contextAttribute,  compareType, compareValue, creationDate, changedate) VALUES (3, 'CONTEXT_PDF', 'PDF_TITLE', 'COMPARISON_EQUAL', 'irgendein PDF-Titel', CURTIME (), CURTIME ())");
+			
 		} catch (SQLException ex2) {
 
 			// ignore should throw execption since table

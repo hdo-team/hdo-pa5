@@ -74,7 +74,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private JComboBox targetDirectoryComboBox;
 
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
 	private String targetDirectoryList[];
