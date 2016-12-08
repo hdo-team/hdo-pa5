@@ -32,7 +32,6 @@ public class RegelsetDao extends JdbcHelper {
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
 
 	private final String MAX_PRIORITY = "SELECT MAX(PRIORITY) FROM RULESET";
-	private final String UPDATE_PRIORITY = "tba";
 
 	public List<RegelsetDto> findAllRegelsets() throws SQLException {
 
