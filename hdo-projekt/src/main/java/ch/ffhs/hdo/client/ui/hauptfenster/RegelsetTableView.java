@@ -70,18 +70,31 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				callSwapOperation(1);
+			}
+
+			private void callSwapOperation(int operation) {
 				if (regelsetTable.getSelectedRow() > -1) {
+					final Integer rulesetId = getModel().getRulsetList().get(regelsetTable.getSelectedRow())
+							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
-							new int[] { regelsetTable.getSelectedRow(), 1 });
+							new int[] { rulesetId, operation });
 				}
 			}
 		});
 
 		prioDownButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				callSwapOperation(2);
+
+			}
+
+			private void callSwapOperation(int operation) {
 				if (regelsetTable.getSelectedRow() > -1) {
+					final Integer rulesetId = getModel().getRulsetList().get(regelsetTable.getSelectedRow())
+							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
-							new int[] { regelsetTable.getSelectedRow(), 2 });
+							new int[] { rulesetId, operation });
 				}
 			}
 		});

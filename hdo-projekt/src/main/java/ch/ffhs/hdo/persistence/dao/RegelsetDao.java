@@ -17,18 +17,20 @@ public class RegelsetDao extends JdbcHelper {
 
 	private final String FIND_SMALLER_PRIO = "(Select id from Ruleset where priority = (SELECT max(priority) from RULESET where priority < (SELECT priority  FROM RULESET where id = ?)))";
 	private final String FIND_HIGHER_PRIO = "(Select id from Ruleset where priority = (SELECT min(priority) from RULESET where priority > (SELECT priority  FROM RULESET where id = ?)))";
-	private final String SWAP = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, ?) ) - priority WHERE id IN (?, ?)";
-	
+
+	private final String SUM = "SELECT SUM(priority) FROM RULESET WHERE id IN (?, ?)";
+	private final String SWAP = "UPDATE RULESET SET priority = ? - priority WHERE id IN (?, ?)";
+
 	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 
 	private final String INSERT_RULESET = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 	private final String INSERT_RULE = "INSERT INTO RULE (rulesetId, contextType, contextAttribute, compareType, compareValue, creationDate, changedate) VALUES (?,?,?,?,?, CURTIME () ,CURTIME () )";
-	
+
 	private final String UPDATE_RULESET = "UPDATE RULESET SET targetDirectory = ?, rulesetName = ?, newFilename = ?, filenameCounter = ?, priority = ?, active = ?, changedate = CURTIME() where id = ?";
-	
+
 	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
-			
+
 	private final String MAX_PRIORITY = "SELECT MAX(PRIORITY) FROM RULESET";
 	private final String UPDATE_PRIORITY = "tba";
 
@@ -65,18 +67,18 @@ public class RegelsetDao extends JdbcHelper {
 		PreparedStatement insertRegelset = null;
 		Integer newRulesetId = null;
 		Integer maxPriority = null;
-		
+
 		if (newEntry) {
 			// priority vom höchsten eintrag in db holen
 			PreparedStatement getMaxPriority = conn.prepareStatement(MAX_PRIORITY);
 			getMaxPriority.executeQuery();
 			ResultSet rs_prio = getMaxPriority.getResultSet();
-	        if (rs_prio.next()) {
-	        	maxPriority = Integer.valueOf(rs_prio.getInt(1));
-	        	maxPriority++; // Wert um eins erhöhen
-	        }
-	        rs_prio.close();
-	        
+			if (rs_prio.next()) {
+				maxPriority = Integer.valueOf(rs_prio.getInt(1));
+				maxPriority++; // Wert um eins erhöhen
+			}
+			rs_prio.close();
+
 			insertRegelset = conn.prepareStatement(INSERT_RULESET);
 			insertRegelset.setString(1, regelsetDto.getTargetDirectory());
 			insertRegelset.setString(2, regelsetDto.getRulesetName());
@@ -90,17 +92,17 @@ public class RegelsetDao extends JdbcHelper {
 			PreparedStatement getLastId = conn.prepareStatement("CALL IDENTITY()");
 			getLastId.executeQuery();
 			ResultSet rs_id = getLastId.getResultSet();
-	        if (rs_id.next()) {
-	        	newRulesetId = Integer.valueOf(rs_id.getInt(1));
-	        }
-	        rs_id.close();
-	        
+			if (rs_id.next()) {
+				newRulesetId = Integer.valueOf(rs_id.getInt(1));
+			}
+			rs_id.close();
+
 		} else {
 			update(regelsetDto);
 		}
 
 		terminate();
-		
+
 		return newRulesetId;
 	}
 
@@ -113,13 +115,13 @@ public class RegelsetDao extends JdbcHelper {
 		updateRegelset.setLong(4, regelsetDto.getFilenameCounter());
 		updateRegelset.setInt(5, regelsetDto.getPrority());
 		updateRegelset.setBoolean(6, regelsetDto.isActive());
-		updateRegelset.setInt(7,  regelsetDto.getId());
+		updateRegelset.setInt(7, regelsetDto.getId());
 		updateRegelset.executeUpdate();
 	}
 
 	public void changePrioDown(int id) throws SQLException {
 
-		final PreparedStatement ruleset = conn.prepareStatement(FIND_HIGHER_PRIO );
+		final PreparedStatement ruleset = conn.prepareStatement(FIND_HIGHER_PRIO);
 
 		ruleset.setInt(1, id);
 
@@ -136,13 +138,24 @@ public class RegelsetDao extends JdbcHelper {
 	}
 
 	private void swapPrio(int id, int id2) throws SQLException {
-		final PreparedStatement ruleset = conn.prepareStatement(SWAP);
+
+		// Summe der beiden ids finden
+		final PreparedStatement ruleset = conn.prepareStatement(SUM);
 		ruleset.setInt(1, id);
 		ruleset.setInt(2, id2);
-		ruleset.setInt(3, id);
-		ruleset.setInt(4, id2);
-		ruleset.executeUpdate();
 
+		final ResultSet executeQuery = ruleset.executeQuery();
+		int sum = -1;
+		while (executeQuery.next()) {
+			sum = executeQuery.getInt(1);
+		}
+		if (sum > -1) {
+			final PreparedStatement swapstatement = conn.prepareStatement(SWAP);
+			swapstatement.setInt(1, sum);
+			swapstatement.setInt(2, id);
+			swapstatement.setInt(3, id2);
+			swapstatement.executeUpdate();
+		}
 	}
 
 	public void changePrioUp(int id) throws SQLException {
@@ -170,14 +183,15 @@ public class RegelsetDao extends JdbcHelper {
 			final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
 			deleteRule.setInt(1, regelsetId);
 			deleteRule.executeUpdate();
-			
+
 			final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
 			deleteRuleset.setInt(1, regelsetId);
 			deleteRuleset.executeUpdate();
-			
-			// update all prios (alle ausser die mit dem Wert "1" um eins verkleinern?!
+
+			// update all prios (alle ausser die mit dem Wert "1" um eins
+			// verkleinern?!
 			final PreparedStatement updatePriority = conn.prepareStatement(UPDATE_PRIORITY);
-			
+
 			conn.commit();
 			conn.setAutoCommit(true);
 
@@ -186,7 +200,6 @@ public class RegelsetDao extends JdbcHelper {
 			throw new SQLException(e);
 
 		}
-		
 
 	}
 
