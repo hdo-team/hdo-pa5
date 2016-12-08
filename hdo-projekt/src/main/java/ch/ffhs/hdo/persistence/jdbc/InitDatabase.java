@@ -35,9 +35,9 @@ public class InitDatabase extends JdbcHelper {
 			update("INSERT INTO CONFIG (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('intervall','3600',CURTIME (),CURTIME ())");
 			update("INSERT INTO CONFIG (KEY, VALUE,CREATIONDATE,CHANGEDATE) VALUES ('inbox_path','',CURTIME (),CURTIME ())");
 
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter,  active, creationDate, changedate) VALUES ('test1', 'test1', 'test1', 1,  true, CURTIME (),CURTIME ())");
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter,  active, creationDate, changedate) VALUES ('test2', 'test2', 'test2', 2,  true, CURTIME (),CURTIME ())");
-			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter,  active, creationDate, changedate) VALUES ('test3', 'test3', 'test3', 3,  true, CURTIME (),CURTIME ())");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, active, creationDate, changedate) VALUES ('test1', 'test1', 'test1', 1,  true, CURTIME (),CURTIME ())");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, active, creationDate, changedate) VALUES ('test2', 'test2', 'test2', 2,  true, CURTIME (),CURTIME ())");
+			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, active, creationDate, changedate) VALUES ('test3', 'test3', 'test3', 3,  true, CURTIME (),CURTIME ())");
 			update("INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, active, creationDate, changedate) VALUES ('test4', 'test4', 'test4', 4,  true, CURTIME (),CURTIME ())");
 
 
