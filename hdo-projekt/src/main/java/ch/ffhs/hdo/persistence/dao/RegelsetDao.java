@@ -28,7 +28,7 @@ public class RegelsetDao extends JdbcHelper {
 	private final String INSERT_RULESET = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 	private final String INSERT_RULE = "INSERT INTO RULE (rulesetId, contextType, contextAttribute, compareType, compareValue, creationDate, changedate) VALUES (?,?,?,?,?, CURTIME () ,CURTIME () )";
 	
-	private final String UPDATE_RULESET = "UPDATE RULESET SET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () ) where id = ?";
+	private final String UPDATE_RULESET = "UPDATE RULESET SET targetDirectory = ?, rulesetName = ?, newFilename = ?, filenameCounter = ?, priority = ?, active = ?, changedate = CURTIME() where id = ?";
 	
 	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
@@ -96,7 +96,6 @@ public class RegelsetDao extends JdbcHelper {
 
 	private void update(RegelsetDto regelsetDto) throws SQLException {
 		PreparedStatement updateRegelset = null;
-		
 		updateRegelset = conn.prepareStatement(UPDATE_RULESET);
 		updateRegelset.setString(1, regelsetDto.getTargetDirectory());
 		updateRegelset.setString(2, regelsetDto.getRulesetName());
@@ -106,8 +105,6 @@ public class RegelsetDao extends JdbcHelper {
 		updateRegelset.setBoolean(6, regelsetDto.isActive());
 		updateRegelset.setInt(7,  regelsetDto.getId());
 		updateRegelset.executeUpdate();
-		
-		terminate();
 	}
 
 	public void changePrioDown(int id) throws SQLException {
