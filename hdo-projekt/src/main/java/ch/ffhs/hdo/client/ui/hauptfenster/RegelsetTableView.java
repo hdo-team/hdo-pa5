@@ -124,7 +124,11 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		deleteButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, regelsetTable.getSelectedRow());
+				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
+			}
+
+			private int getRegelsetId() {
+				return getModel().getRulsetList().get(regelsetTable.getSelectedRow()).getRulesetId();
 			}
 		});
 
