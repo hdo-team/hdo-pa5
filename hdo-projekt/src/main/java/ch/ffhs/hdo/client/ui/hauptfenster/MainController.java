@@ -28,9 +28,10 @@ public class MainController extends Controller<MainModel, MainView> {
 
 	private ViewHandlerImpl viewHandler;
 
-	public MainController(MainModel model, RegelsetTableModel regelsetModel) {
+	public MainController(MainModel model, RegelsetTableModel regelsetModel, FolderModel folderModel) {
 		super(model);
 		model.setRegelsetModel(regelsetModel);
+		model.setFolderModel(folderModel);
 
 		this.viewHandler = new ViewHandlerImpl();
 
@@ -61,7 +62,10 @@ public class MainController extends Controller<MainModel, MainView> {
 		getView().setHandler(viewHandler);
 
 		getView().getRegelsetTableView().setModel(getModel().getRegelsetModel());
+		getView().getFolderTreeView().setModel(getModel().getFolderModel());
+		System.out.println(getView().getFolderTreeView().getModel());
 		getView().getRegelsetTableView().setHandler(viewHandler);
+		getView().getFolderTreeView().setHandler(viewHandler);
 	}
 
 }

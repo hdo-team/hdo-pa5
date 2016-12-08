@@ -14,12 +14,14 @@ import ch.ffhs.hdo.client.ui.base.View;
 
 public class FolderTreeView extends View<FolderModel> {
 
+	private final String I18N = "hdo.main";
 	private JPanel jPanel;
 	private File inboxFolder;
 	private JTree tree;
 
-	public FolderTreeView(ResourceBundle resourceBundle) {
+	public FolderTreeView(ResourceBundle resourceBundle, FolderModel folderModel) {
 		super(resourceBundle);
+		this.setModel(folderModel);
 		initComponents();
 	}
 
@@ -31,7 +33,13 @@ public class FolderTreeView extends View<FolderModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		inboxFolder = new File("C:\\Users\\jonas\\hdo");
+		
+		if (getModel().getInboxPath() != null) {
+			inboxFolder = new File(getModel().getInboxPath());
+		} else {
+			inboxFolder = new File(getMessage(I18N + ".label.nofolderfound"));
+		}
+		
 		tree = new JTree(addNodes(null, inboxFolder));
 		jPanel.add(tree);
 	}
@@ -81,7 +89,6 @@ public class FolderTreeView extends View<FolderModel> {
 			else
 				files.addElement(thisObject);
 		}
-		// Pass two: for files.
 
 		return curDir;
 	}
