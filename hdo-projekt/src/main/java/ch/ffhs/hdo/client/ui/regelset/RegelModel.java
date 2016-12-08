@@ -2,6 +2,7 @@ package ch.ffhs.hdo.client.ui.regelset;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import ch.ffhs.hdo.client.ui.base.Model;
 
@@ -12,9 +13,7 @@ public class RegelModel extends Model {
 	// TODO: ist kopiert aus View (sollte nicht kopiert werden)
 	static private final String I18N = "hdo.regelset";
 	static private final String TITLE_KEY = I18N + ".title";
-	static private final String CONTEXT_COMBOBOXKEY = I18N + ".combobox";
-	static private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".combobox";
-	static private final String COMPARISON_MODE_COMBOBOXKEY = I18N + ".combobox";
+	static private final String CONTEXT_COMBOBOXKEY = I18N + ".combobox.attribute.";
 
 	/**
 	 * Model für die Regeln
@@ -23,26 +22,63 @@ public class RegelModel extends Model {
 	 */
 
 	public static enum ComparisonTypeEnum {
-		EMPTY, COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX, COMPARISON_LIST;
+		EMPTY, COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX;
+	}
+
+	public static enum DataTypeEnum {
+		NULL, STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL,
+				ComparisonTypeEnum.COMPARISON_REGEX), INT(ComparisonTypeEnum.COMPARISON_EQUAL,
+						ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
+						ComparisonTypeEnum.COMPARISON_UNEQUAL), DATE(ComparisonTypeEnum.COMPARISON_EQUAL,
+								ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
+								ComparisonTypeEnum.COMPARISON_UNEQUAL);
+
+		private ComparisonTypeEnum[] comparisontype;
+
+		private DataTypeEnum(ComparisonTypeEnum... comparisonTypeEnums) {
+			this.comparisontype = comparisonTypeEnums;
+
+		}
+
+		public ComparisonTypeEnum[] getComparisontype() {
+			return comparisontype;
+		}
 	}
 
 	public static enum ContextAttributeEnum {
-		EMPTY(ContextTypeEnum.EMPTY), PDF_TITLE(ContextTypeEnum.CONTEXT_PDF), PDF_AUTHOR(
-				ContextTypeEnum.CONTEXT_PDF), PDF_CREATION_DATE(ContextTypeEnum.CONTEXT_PDF), PDF_CONTENT(
-						ContextTypeEnum.CONTEXT_PDF), PDF_SIZE(ContextTypeEnum.CONTEXT_PDF), FILE_NAME(
-								ContextTypeEnum.CONTEXT_FILE), FILE_EXTENSION(ContextTypeEnum.CONTEXT_FILE), FILE_SIZE(
-										ContextTypeEnum.CONTEXT_FILE), FILE_CREATION_DATE(
-												ContextTypeEnum.CONTEXT_FILE), FILE_OWNER(ContextTypeEnum.CONTEXT_FILE);
+		EMPTY(ContextTypeEnum.EMPTY, DataTypeEnum.NULL), PDF_TITLE(ContextTypeEnum.CONTEXT_PDF,
+				DataTypeEnum.STRING), PDF_AUTHOR(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), PDF_CREATION_DATE(
+						ContextTypeEnum.CONTEXT_PDF,
+						DataTypeEnum.DATE), PDF_CONTENT(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), PDF_SIZE(
+								ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.INT), FILE_NAME(ContextTypeEnum.CONTEXT_FILE,
+										DataTypeEnum.STRING), FILE_EXTENSION(ContextTypeEnum.CONTEXT_FILE,
+												DataTypeEnum.STRING), FILE_SIZE(ContextTypeEnum.CONTEXT_FILE,
+														DataTypeEnum.INT), FILE_CREATION_DATE(
+																ContextTypeEnum.CONTEXT_FILE,
+																DataTypeEnum.DATE), FILE_OWNER(
+																		ContextTypeEnum.CONTEXT_FILE,
+																		DataTypeEnum.STRING);
 
 		private ContextTypeEnum context;
+		private String I18NValue;
 
-		private ContextAttributeEnum(ContextTypeEnum context) {
+		private DataTypeEnum type;
+
+		private ContextAttributeEnum(ContextTypeEnum context, DataTypeEnum type) {
 			this.context = context;
+			this.type = type;
+			final ResourceBundle bundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
+
+			this.I18NValue = bundle.getString(CONTEXT_COMBOBOXKEY + this.name().toLowerCase());
 
 		}
 
 		public ContextTypeEnum getContextTypeEnum() {
 			return this.context;
+		}
+
+		public DataTypeEnum getDataType() {
+			return this.type;
 		}
 
 		public static ContextAttributeEnum[] values(ContextTypeEnum context) {
@@ -60,7 +96,7 @@ public class RegelModel extends Model {
 
 		@Override
 		public String toString() {
-			return ">>" + name() + "<<";
+			return this.I18NValue;
 
 		}
 	}
