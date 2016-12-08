@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,12 +82,14 @@ public class FileHandling {
 		}
 
 	}
-/**
- * 
- * Verzeichnis löschen
- * 
- * @param folder zu löschende Verzeichnis
- */
+
+	/**
+	 * 
+	 * Verzeichnis löschen
+	 * 
+	 * @param folder
+	 *            zu löschende Verzeichnis
+	 */
 	public static void deleteFolder(File folder) {
 		File[] files = folder.listFiles();
 		if (files != null) { // some JVMs return null for empty dirs
@@ -101,11 +105,13 @@ public class FileHandling {
 		}
 		folder.delete();
 	}
-/**
- * File löschen
- * 
- * @param file zu löschende File
- */
+
+	/**
+	 * File löschen
+	 * 
+	 * @param file
+	 *            zu löschende File
+	 */
 	public static void deleteFile(File file) {
 		LOGGER.debug("File :" + file.getAbsolutePath() + "was deleted");
 		file.delete();
@@ -116,7 +122,17 @@ public class FileHandling {
 	 */
 	public static enum FileMetaData {
 
-		CREATION_TIME, LAST_ACCESS_TIME, LAST_MODIFICATION_TIME, SIZE;
+		CREATION_TIME(FileTime.class), LAST_ACCESS_TIME(FileTime.class), LAST_MODIFICATION_TIME(FileTime.class), SIZE(
+				Long.class);
+
+		private Class type;
+
+		private FileMetaData(Class type) {
+			this.type = type;
+		}
+		public Class getType() {
+			return type;
+		}
 	}
 
 	/**
@@ -133,7 +149,6 @@ public class FileHandling {
 			BasicFileAttributes attr;
 			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
 
-
 			metadata.put(FileMetaData.CREATION_TIME, attr.creationTime());
 			metadata.put(FileMetaData.LAST_ACCESS_TIME, attr.lastAccessTime());
 			metadata.put(FileMetaData.LAST_MODIFICATION_TIME, attr.lastModifiedTime());
@@ -149,9 +164,11 @@ public class FileHandling {
 	 * 
 	 * Gibt eine Collection von Files zurück die gefuden wurden
 	 * 
-	 * @param inboxPath das zu durchsuchende Verzeichnis
-	 * @param rekursive true um Rekursiv in allen Unterverzeichnis zu suchen
-	 * @return Collection von allen gefundenn Files 
+	 * @param inboxPath
+	 *            das zu durchsuchende Verzeichnis
+	 * @param rekursive
+	 *            true um Rekursiv in allen Unterverzeichnis zu suchen
+	 * @return Collection von allen gefundenn Files
 	 */
 	public static Collection<File> getFileList(String inboxPath, boolean rekursiv) {
 		File folder = new File(inboxPath);
@@ -174,7 +191,9 @@ public class FileHandling {
 
 	/**
 	 * Gibt alle Vezeichnisse aus einem Verzeichnis zurück
-	 * @param rootDir das zu durchsuchende Verzeichnis
+	 * 
+	 * @param rootDir
+	 *            das zu durchsuchende Verzeichnis
 	 * @return Liste von Pfaden die gefunden wurden
 	 */
 	public static List<String> getAllFolders(String rootDir) {

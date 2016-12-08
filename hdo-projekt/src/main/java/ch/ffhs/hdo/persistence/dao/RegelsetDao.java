@@ -12,20 +12,16 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public class RegelsetDao extends JdbcHelper {
 
-	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET ORDER BY priority ASC";
+	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET ORDER BY RULESET.priority ASC";
 	// private final String SELECTRULESET = SELECTRULESETS + " WHERE id = ?";
 	// private final String SELECTRULES = "SELECT RULESET.* FROM RULESET";
 	// private final String SELECTRULE = SELECTRULES + " WHERE id = ?";
 	// private final String SELECTRULEBYRULESET = SELECTRULES + " WHERE
 	// rulesetId = ?";
 
-	private final String FIND_BIGGER_PRIO = "(Select id from Ruleset where priority = (SELECT min(priority) from RULESET where priority > (SELECT priority  FROM RULESET where id = ?)))";
-	private final String SWAP_DOWN = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, "
-			+ FIND_BIGGER_PRIO + ") ) - priority WHERE id IN (?, " + FIND_BIGGER_PRIO + ")";
-
 	private final String FIND_SMALLER_PRIO = "(Select id from Ruleset where priority = (SELECT max(priority) from RULESET where priority < (SELECT priority  FROM RULESET where id = ?)))";
-	private final String SWAP_UP = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, "
-			+ FIND_SMALLER_PRIO + ") ) - priority WHERE id IN (?, " + FIND_SMALLER_PRIO + ")";
+	private final String FIND_HIGHER_PRIO = "(Select id from Ruleset where priority = (SELECT min(priority) from RULESET where priority > (SELECT priority  FROM RULESET where id = ?)))";
+	private final String SWAP = "UPDATE RULESET SET priority = ( SELECT SUM(priority) FROM RULESET WHERE id IN (?, ?) ) - priority WHERE id IN (?, ?)";
 
 	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter, priority, active, creationDate, changedate) VALUES (?,?,?,?,?,?, CURTIME () ,CURTIME () )";
 
@@ -117,29 +113,52 @@ public class RegelsetDao extends JdbcHelper {
 
 	private void update(RegelsetDto regelsetDto) {
 		// TODO To Implement
-		
+
 	}
 
 	public void changePrioDown(int id) throws SQLException {
 
-		final PreparedStatement ruleset = conn.prepareStatement(SWAP_DOWN);
+		final PreparedStatement ruleset = conn.prepareStatement(FIND_HIGHER_PRIO );
+
 		ruleset.setInt(1, id);
-		ruleset.setInt(2, id);
+
+		final ResultSet executeQuery = ruleset.executeQuery();
+		int id2 = -1;
+		while (executeQuery.next()) {
+			id2 = executeQuery.getInt(1);
+		}
+
+		if (id2 != -1) {
+			swapPrio(id, id2);
+		}
+
+	}
+
+	private void swapPrio(int id, int id2) throws SQLException {
+		final PreparedStatement ruleset = conn.prepareStatement(SWAP);
+		ruleset.setInt(1, id);
+		ruleset.setInt(2, id2);
 		ruleset.setInt(3, id);
-		ruleset.setInt(4, id);
-		final int executeUpdate = ruleset.executeUpdate();
+		ruleset.setInt(4, id2);
+		ruleset.executeUpdate();
 
 	}
 
 	public void changePrioUp(int id) throws SQLException {
 
-		final PreparedStatement ruleset = conn.prepareStatement(SWAP_UP);
-		ruleset.setInt(1, id);
-		ruleset.setInt(2, id);
-		ruleset.setInt(3, id);
-		ruleset.setInt(4, id);
-		ruleset.executeUpdate();
+		final PreparedStatement ruleset = conn.prepareStatement(FIND_SMALLER_PRIO);
 
+		ruleset.setInt(1, id);
+
+		final ResultSet executeQuery = ruleset.executeQuery();
+		int id2 = -1;
+		while (executeQuery.next()) {
+			id2 = executeQuery.getInt(1);
+		}
+
+		if (id2 != -1) {
+			swapPrio(id, id2);
+		}
 	}
 
 	public void deleteRegelset(int regelsetId) throws SQLException {
