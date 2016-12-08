@@ -188,10 +188,6 @@ public class RegelsetDao extends JdbcHelper {
 			deleteRuleset.setInt(1, regelsetId);
 			deleteRuleset.executeUpdate();
 
-			// update all prios (alle ausser die mit dem Wert "1" um eins
-			// verkleinern?!
-			final PreparedStatement updatePriority = conn.prepareStatement(UPDATE_PRIORITY);
-
 			conn.commit();
 			conn.setAutoCommit(true);
 
