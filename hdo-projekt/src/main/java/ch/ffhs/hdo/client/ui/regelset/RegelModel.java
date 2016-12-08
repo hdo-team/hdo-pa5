@@ -8,12 +8,6 @@ import ch.ffhs.hdo.client.ui.base.Model;
 
 public class RegelModel extends Model {
 
-	// TODO: ruleset-ID brauchts nicht. => nur auf DB
-
-	// TODO: ist kopiert aus View (sollte nicht kopiert werden)
-	static private final String I18N = "hdo.regelset";
-	static private final String TITLE_KEY = I18N + ".title";
-	static private final String CONTEXT_COMBOBOXKEY = I18N + ".combobox.attribute.";
 
 	/**
 	 * Model für die Regeln
@@ -22,44 +16,36 @@ public class RegelModel extends Model {
 	 */
 
 	public static enum ComparisonTypeEnum {
-		EMPTY, COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_LESS_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_REGEX;
+		COMPARISON_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_LESS_EQUAL, COMPARISON_REGEX, COMPARISON_UNEQUAL, EMPTY;
 	}
-
-	public static enum DataTypeEnum {
-		NULL, STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL,
-				ComparisonTypeEnum.COMPARISON_REGEX), INT(ComparisonTypeEnum.COMPARISON_EQUAL,
-						ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
-						ComparisonTypeEnum.COMPARISON_UNEQUAL), DATE(ComparisonTypeEnum.COMPARISON_EQUAL,
-								ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
-								ComparisonTypeEnum.COMPARISON_UNEQUAL);
-
-		private ComparisonTypeEnum[] comparisontype;
-
-		private DataTypeEnum(ComparisonTypeEnum... comparisonTypeEnums) {
-			this.comparisontype = comparisonTypeEnums;
-
-		}
-
-		public ComparisonTypeEnum[] getComparisontype() {
-			return comparisontype;
-		}
-	}
-
 	public static enum ContextAttributeEnum {
-		EMPTY(ContextTypeEnum.EMPTY, DataTypeEnum.NULL), PDF_TITLE(ContextTypeEnum.CONTEXT_PDF,
-				DataTypeEnum.STRING), PDF_AUTHOR(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), PDF_CREATION_DATE(
-						ContextTypeEnum.CONTEXT_PDF,
-						DataTypeEnum.DATE), PDF_CONTENT(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), PDF_SIZE(
-								ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.INT), FILE_NAME(ContextTypeEnum.CONTEXT_FILE,
-										DataTypeEnum.STRING), FILE_EXTENSION(ContextTypeEnum.CONTEXT_FILE,
-												DataTypeEnum.STRING), FILE_SIZE(ContextTypeEnum.CONTEXT_FILE,
-														DataTypeEnum.INT), FILE_CREATION_DATE(
-																ContextTypeEnum.CONTEXT_FILE,
-																DataTypeEnum.DATE), FILE_OWNER(
-																		ContextTypeEnum.CONTEXT_FILE,
+		EMPTY(ContextTypeEnum.EMPTY, DataTypeEnum.NULL), FILE_CREATION_DATE(
+				ContextTypeEnum.CONTEXT_FILE,
+				DataTypeEnum.DATE), FILE_EXTENSION(ContextTypeEnum.CONTEXT_FILE,
+						DataTypeEnum.STRING), FILE_NAME(ContextTypeEnum.CONTEXT_FILE,
+						DataTypeEnum.STRING), FILE_OWNER(
+								ContextTypeEnum.CONTEXT_FILE,
+								DataTypeEnum.STRING), FILE_SIZE(ContextTypeEnum.CONTEXT_FILE,
+								DataTypeEnum.INT), PDF_AUTHOR(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), PDF_CONTENT(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), PDF_CREATION_DATE(
+														ContextTypeEnum.CONTEXT_PDF,
+														DataTypeEnum.DATE), PDF_SIZE(
+																ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.INT), PDF_TITLE(ContextTypeEnum.CONTEXT_PDF,
 																		DataTypeEnum.STRING);
 
+		public static ContextAttributeEnum[] values(ContextTypeEnum context) {
+
+			List<ContextAttributeEnum> attributeEnumsList = new ArrayList<ContextAttributeEnum>();
+
+			for (ContextAttributeEnum attribute : ContextAttributeEnum.values()) {
+				if (attribute.getContextTypeEnum().equals(context)) {
+					attributeEnumsList.add(attribute);
+				}
+			}
+
+			return attributeEnumsList.toArray(new ContextAttributeEnum[0]);
+		}
 		private ContextTypeEnum context;
+
 		private String I18NValue;
 
 		private DataTypeEnum type;
@@ -81,19 +67,6 @@ public class RegelModel extends Model {
 			return this.type;
 		}
 
-		public static ContextAttributeEnum[] values(ContextTypeEnum context) {
-
-			List<ContextAttributeEnum> attributeEnumsList = new ArrayList<ContextAttributeEnum>();
-
-			for (ContextAttributeEnum attribute : ContextAttributeEnum.values()) {
-				if (attribute.getContextTypeEnum().equals(context)) {
-					attributeEnumsList.add(attribute);
-				}
-			}
-
-			return attributeEnumsList.toArray(new ContextAttributeEnum[0]);
-		}
-
 		@Override
 		public String toString() {
 			return this.I18NValue;
@@ -102,22 +75,40 @@ public class RegelModel extends Model {
 	}
 
 	public static enum ContextTypeEnum {
-		EMPTY, CONTEXT_PDF, CONTEXT_FILE, CONTEXT_CONTENT;
-		// TODO: Content für PDF und FILE getrennt handeln?
+		CONTEXT_CONTENT, CONTEXT_FILE, CONTEXT_PDF, EMPTY;
 	}
+
+	public static enum DataTypeEnum {
+		DATE(ComparisonTypeEnum.COMPARISON_EQUAL,
+				ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
+				ComparisonTypeEnum.COMPARISON_UNEQUAL), INT(ComparisonTypeEnum.COMPARISON_EQUAL,
+				ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
+				ComparisonTypeEnum.COMPARISON_UNEQUAL), NULL, STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL,
+								ComparisonTypeEnum.COMPARISON_REGEX);
+
+		private ComparisonTypeEnum[] comparisontype;
+
+		private DataTypeEnum(ComparisonTypeEnum... comparisonTypeEnums) {
+			this.comparisontype = comparisonTypeEnums;
+
+		}
+
+		public ComparisonTypeEnum[] getComparisontype() {
+			return comparisontype;
+		}
+	}
+
+	static private final String I18N = "hdo.regelset";
+	static private final String CONTEXT_COMBOBOXKEY = I18N + ".combobox.attribute.";
 
 	private String compareValue;
 	private ComparisonTypeEnum comparisonType = ComparisonTypeEnum.EMPTY;
 	private ContextAttributeEnum contextAttribute = ContextAttributeEnum.EMPTY;
-	// TODO: eigenes Pdf-Attr
-	// unschön, da später word, xls,...
 	private ContextTypeEnum contextType = ContextTypeEnum.EMPTY;
 	private Integer id;
 	private String ruleName;
 
-	//
-	// TODO: sind alle firePropertyChange wirlich nötig?
-	// (gibt ja kein dynanisches nachladen von DB)
+	
 
 	public String getCompareValue() {
 		return compareValue;
