@@ -64,6 +64,8 @@ public class RegelsetFacade {
 				model.setRulesetId(newRulesetId);
 			} else {
 				// delete old rules form the updated ruleset
+				// TODO: terminates checken regelDao hatte hier schon "Session is closed"
+				regelDao = new RegelDao();
 				regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
 			}
 			for (RegelModel regelModel : model.getRuleModelList()) {
