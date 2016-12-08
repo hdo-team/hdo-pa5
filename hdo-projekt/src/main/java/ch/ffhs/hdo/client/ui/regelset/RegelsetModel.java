@@ -1,40 +1,39 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.ffhs.hdo.client.ui.base.Model;
 
 public class RegelsetModel extends Model {
 
-	private List<String>     directories;		// Liste mit möglichen Ziel-Verzeichnissen
-	private Long             filenameCounter;
-	private String           newFilename;
-	private Integer			 rulesetId;
-	private Integer          priority;			// TODO: ?? evtl. nur in DB?? oder nötig für Jonas?
-	private boolean          ruleActiv;
-	private List<RegelModel> ruleModelList;		// alle Regeln pro Regelset werden AND-verknuepft
-	private String           rulesetName;
-	private String           targetDirectory;
-	
-	
+	private List<String> directories; // Liste mit möglichen Ziel-Verzeichnissen
+	private Long filenameCounter;
+	private String newFilename;
+	private Integer rulesetId;
+	private Integer priority; // TODO: ?? evtl. nur in DB?? oder nötig für
+								// Jonas?
+	private boolean ruleActiv;
+	private List<RegelModel> ruleModelList; // alle Regeln pro Regelset werden
+											// AND-verknuepft
+	private String rulesetName;
+	private String targetDirectory;
 
 	/**
-	* TODO: getXyzList().add(xy) funktionier nicht => kein
-	* fireProperty??
-	* TODO: bruacht's das überhaupt oder ist Inhalt "fix" ab DB? kein
-	* dynamisches Nachladen?
-	* => final => keine andere LIST zuweisbar? aber doch List.add()
-	* möglich???
-	* 
-	* 
-	* TODO: KEIN Setter für List<> ?? 
-	* 
-	*/
-	
-	
+	 * TODO: getXyzList().add(xy) funktionier nicht => kein fireProperty?? TODO:
+	 * bruacht's das überhaupt oder ist Inhalt "fix" ab DB? kein dynamisches
+	 * Nachladen? => final => keine andere LIST zuweisbar? aber doch List.add()
+	 * möglich???
+	 * 
+	 * 
+	 * TODO: KEIN Setter für List<> ??
+	 * 
+	 */
+
 	public List<String> getDirectories() {
 		return directories;
 	}
+
 	public Long getFilenameCounter() {
 		return filenameCounter;
 	}
@@ -70,13 +69,12 @@ public class RegelsetModel extends Model {
 		return ruleActiv;
 	}
 
-
 	public void setFilenameCounter(Long filenameCounter) {
 		Long oldValue = this.filenameCounter;
 		this.filenameCounter = filenameCounter;
 		firePropertyChange("filecounter", oldValue, filenameCounter);
 	}
-	
+
 	public void setDirectories(List<String> directories) {
 		List<String> oldValue = this.directories;
 		this.directories = directories;
@@ -124,4 +122,15 @@ public class RegelsetModel extends Model {
 		this.targetDirectory = targetDirectory;
 		firePropertyChange("targetDirectory", oldValue, targetDirectory);
 	}
+
+	public static RegelsetModel getNullModel() {
+		RegelsetModel model = new RegelsetModel();
+		model.setFilenameCounter(0L);
+		model.setPriority(0);
+		model.setRuleActiv(true);
+		model.setRuleModelList(new ArrayList<RegelModel>());
+		model.getRuleModelList().add(new RegelModel());
+		return model;
+	}
+
 }

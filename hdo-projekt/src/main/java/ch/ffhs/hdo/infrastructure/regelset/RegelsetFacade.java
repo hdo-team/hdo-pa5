@@ -17,37 +17,7 @@ import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 public class RegelsetFacade {
 	private static Logger LOGGER = LogManager.getLogger(RegelsetFacade.class);
 
-	public RegelsetModel getModel() {
-
-		RegelsetModel regelsetModel = new RegelsetModel();
-		regelsetModel.setFilenameCounter(0L);		// TODO: oder Default-Werte besser in View setzen
-		regelsetModel.setPriority(0);
-		regelsetModel.setRuleActiv(true);;
-		regelsetModel.setRuleModelList(new ArrayList<RegelModel>());
-		regelsetModel.getRuleModelList().add(new RegelModel());
-		return regelsetModel;
-		
-		/****
-		// TODO: abklären ob OK
-		//    -> von neues Regelset erstellen => "leeres" Ruleset-Model zurückgeben.
-		
-		
-		RegelsetDao dao = new RegelsetDao();
-
-		RegelsetDto findAllRegelsets;
-		try {
-			findAllRegelsets = (RegelsetDto) dao.findAllRegelsets();
-
-			RegelsetModel model = RegelsetConverter.convert(findAllRegelsets);
-			return model;
-
-		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim laden aller Regelsets", e);
-		}
-		return new RegelsetModel();
-		 ***/
-	}
-
+	
 	public void save(RegelsetModel model) {
 
 		RegelsetDao regelsetDao = new RegelsetDao();
