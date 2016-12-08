@@ -32,6 +32,9 @@ public class RegelsetDao extends JdbcHelper {
 	
 	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
+			
+	private final String MAX_PRIORITY = "SELECT MAX(PRIORITY) FROM RULESET";
+	private final String UPDATE_PRIORITY = "tba";
 
 	public List<RegelsetDto> findAllRegelsets() throws SQLException {
 
@@ -65,25 +68,36 @@ public class RegelsetDao extends JdbcHelper {
 	public Integer save(RegelsetDto regelsetDto, boolean newEntry) throws SQLException {
 		PreparedStatement insertRegelset = null;
 		Integer newRulesetId = null;
+		Integer maxPriority = null;
 		
 		if (newEntry) {
+			// priority vom höchsten eintrag in db holen
+			PreparedStatement getMaxPriority = conn.prepareStatement(MAX_PRIORITY);
+			getMaxPriority.executeQuery();
+			ResultSet rs_prio = getMaxPriority.getResultSet();
+	        if (rs_prio.next()) {
+	        	maxPriority = Integer.valueOf(rs_prio.getInt(1));
+	        	maxPriority++; // Wert um eins erhöhen
+	        }
+	        rs_prio.close();
+	        
 			insertRegelset = conn.prepareStatement(INSERT_RULESET);
 			insertRegelset.setString(1, regelsetDto.getTargetDirectory());
 			insertRegelset.setString(2, regelsetDto.getRulesetName());
 			insertRegelset.setString(3, regelsetDto.getNewFilename());
 			insertRegelset.setLong(4, regelsetDto.getFilenameCounter());
-			insertRegelset.setInt(5, regelsetDto.getPrority());
+			insertRegelset.setInt(5, maxPriority);
 			insertRegelset.setBoolean(6, regelsetDto.isActive());
 			insertRegelset.executeUpdate();
 
 			// Statement.NO_GENERATED_KEYS is not supported in this db
 			PreparedStatement getLastId = conn.prepareStatement("CALL IDENTITY()");
 			getLastId.executeQuery();
-			ResultSet rs = getLastId.getResultSet();
-	        if (rs.next()) {
-	        	newRulesetId = Integer.valueOf(rs.getInt(1));
+			ResultSet rs_id = getLastId.getResultSet();
+	        if (rs_id.next()) {
+	        	newRulesetId = Integer.valueOf(rs_id.getInt(1));
 	        }
-	        rs.close();
+	        rs_id.close();
 	        
 		} else {
 			update(regelsetDto);
@@ -124,16 +138,17 @@ public class RegelsetDao extends JdbcHelper {
 		try {
 			conn.setAutoCommit(false);
 
-			/**
 			final PreparedStatement deleteRule = conn.prepareStatement(DELETE_RULE);
 			deleteRule.setInt(1, regelsetId);
-			deleteRule.executeUpdate();*/
-			System.out.println("here4");
+			deleteRule.executeUpdate();
+			
 			final PreparedStatement deleteRuleset = conn.prepareStatement(DELETE_RULESET);
 			deleteRuleset.setInt(1, regelsetId);
-			System.out.println("here4.1");
 			deleteRuleset.executeUpdate();
-			System.out.println("here4.2");
+			
+			// update all prios (alle ausser die mit dem Wert "1" um eins verkleinern?!
+			final PreparedStatement updatePriority = conn.prepareStatement(UPDATE_PRIORITY);
+			
 			conn.commit();
 			conn.setAutoCommit(true);
 
