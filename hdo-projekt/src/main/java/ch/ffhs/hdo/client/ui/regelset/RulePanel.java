@@ -13,9 +13,9 @@ import javax.swing.border.EmptyBorder;
 
 import com.jgoodies.forms.builder.FormBuilder;
 
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ComparisonTypeEnum;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextAttributeEnum;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextTypeEnum;
+import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
+import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
+import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -34,22 +34,16 @@ public class RulePanel extends JPanel {
 
 	DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
 	DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
-	DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
 
-	DefaultComboBoxModel<RegelModel.ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
-		DefaultComboBoxModel<RegelModel.ContextAttributeEnum> attributeModel = null;
+	DefaultComboBoxModel<ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
+		DefaultComboBoxModel<ContextAttributeEnum> attributeModel = null;
 
 		if (regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_PDF)) {
 			attributeModel = pdfAttributeModel;
 		} else if (regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_FILE)) {
 			attributeModel = fileAttributeModel;
-		} else if (regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_CONTENT)) {
-			attributeModel = contentAttributeModel;
-		} // else if (regelModel.getContextType().equals(ContextTypeEnum.EMPTY))
-			// {
-			// attributeModel = contentAttributeModel; // TODO: sollte
-			// eigentlich nicht sein
-			// }//
+		}
+		
 		if (regelModel.getContextAttribute() == null) {
 
 		}
@@ -58,7 +52,7 @@ public class RulePanel extends JPanel {
 		return attributeModel;
 	}
 
-	DefaultComboBoxModel getComparisonModeModel(RegelModel.ContextAttributeEnum attributeEnum) {
+	DefaultComboBoxModel getComparisonModeModel(ContextAttributeEnum attributeEnum) {
 
 		// Es wird immer ein neues Model gemacht... TODO: besser das Model NUR
 		// anpasssen?
@@ -101,7 +95,7 @@ public class RulePanel extends JPanel {
 		// comparisonModeComboBox.setSelectedIndex(ruleModel.getContextAttribute()
 		// == null ? 0 : ruleModel.getContextAttribute().ordinal() - 1);
 		// default-wERt ins Model sonst NP-Ex
-		ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
+		ruleModel.setComparisonType(ComparisonTypeEnum.COMPARISON_EQUAL);
 		paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
 
 		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.rule.dynamic")).rcw(7, 1, 7);
@@ -154,8 +148,6 @@ public class RulePanel extends JPanel {
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_PDF));
 		fileAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_FILE));
-		contentAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(
-				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_CONTENT));
 	}
 
 	private class ComboBoxActionListener implements ActionListener {
@@ -189,7 +181,7 @@ public class RulePanel extends JPanel {
 					comparisonModeComboBox.setModel(getComparisonModeModel(ruleModel.getContextAttribute()));
 
 					// default-wERt ins Model sonst NP-Ex
-					ruleModel.setComparisonType(RegelModel.ComparisonTypeEnum.COMPARISON_EQUAL);
+					ruleModel.setComparisonType(ComparisonTypeEnum.COMPARISON_EQUAL);
 
 				} else if (comboBox == comparisonModeComboBox) {
 					System.out

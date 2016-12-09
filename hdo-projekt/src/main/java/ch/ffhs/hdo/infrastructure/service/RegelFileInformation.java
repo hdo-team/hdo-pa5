@@ -3,8 +3,8 @@ package ch.ffhs.hdo.infrastructure.service;
 import java.util.HashMap;
 import java.util.Set;
 
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ComparisonTypeEnum;
 import ch.ffhs.hdo.domain.document.DocumentModel;
+import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling.FileMetaData;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 

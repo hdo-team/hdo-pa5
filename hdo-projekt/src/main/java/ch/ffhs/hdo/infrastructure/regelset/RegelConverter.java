@@ -1,9 +1,9 @@
 package ch.ffhs.hdo.infrastructure.regelset;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelModel;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ComparisonTypeEnum;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextAttributeEnum;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextTypeEnum;
+import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
+import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
+import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 
 public class RegelConverter {

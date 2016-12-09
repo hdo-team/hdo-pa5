@@ -28,11 +28,10 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ComparisonTypeEnum;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextAttributeEnum;
-import ch.ffhs.hdo.client.ui.regelset.RegelModel.ContextTypeEnum;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
-
+import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
+import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
+import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
@@ -57,9 +56,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	final String I18N = "hdo.regelset";
 	private final String TITLE_KEY = I18N + ".title";
-	private final String CONTEXT_COMBOBOXKEY = I18N + ".combobox";
-	private final String ATTRIBUTE_COMBOBOXKEY = I18N + ".combobox";
-	private final String COMPARISON_MODE_COMBOBOXKEY = I18N + ".combobox";
 	private JTextField regelsetNameTextField;
 	private JTextField newFilenameTextField;
 
@@ -109,7 +105,7 @@ public class RegelsetView extends View<RegelsetModel> {
 			contextList.add(ContextTypeEnum.EMPTY);
 		}
 
-		for (ContextTypeEnum contextItem : RegelModel.ContextTypeEnum.values()) {
+		for (ContextTypeEnum contextItem : ContextTypeEnum.values()) {
 			if (!contextItem.equals(ContextTypeEnum.EMPTY)) {
 				contextList.add(contextItem);
 			}
@@ -118,7 +114,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		return contextList.toArray(new ContextTypeEnum[0]);
 	}
 
-	ContextAttributeEnum[] getAttributList(RegelModel.ContextTypeEnum contextEnum) { // RegelModel
+	ContextAttributeEnum[] getAttributList(ContextTypeEnum contextEnum) { // RegelModel
 																						// ruleModel)
 																						// {
 		// ContextTypeEnum []attributeList; // = new String[];
@@ -138,19 +134,17 @@ public class RegelsetView extends View<RegelsetModel> {
 		// => elegante Methode suchen, dass weniger Duplicates in namen
 		//
 		if (contextEnum.equals(ContextTypeEnum.CONTEXT_PDF)) {
-			for (ContextAttributeEnum contextItem : RegelModel.ContextAttributeEnum.values()) {
+			for (ContextAttributeEnum contextItem : ContextAttributeEnum.values()) {
 				if (contextItem.name().startsWith("PDF_")) {
 					attributeList.add(contextItem);
 				}
 			}
 		} else if (contextEnum.equals(ContextTypeEnum.CONTEXT_FILE)) {
-			for (ContextAttributeEnum contextItem : RegelModel.ContextAttributeEnum.values()) {
+			for (ContextAttributeEnum contextItem : ContextAttributeEnum.values()) {
 				if (contextItem.name().startsWith("FILE_")) {
 					attributeList.add(contextItem);
 				}
 			}
-		} else if (contextEnum.equals(ContextTypeEnum.CONTEXT_CONTENT)) {
-			// keine zweite ComboBox nötig
 		}
 
 		return attributeList.toArray(new ContextAttributeEnum[] {});
