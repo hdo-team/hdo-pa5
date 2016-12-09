@@ -30,6 +30,7 @@ public class SortService extends SwingWorker<String, Integer> {
 	@Override
 	protected void process(List<Integer> chunks) {
 		super.process(chunks);
+		mainModel.setServiceStatus(ServiceStatus.START);
 
 	}
 
@@ -39,14 +40,25 @@ public class SortService extends SwingWorker<String, Integer> {
 		mainModel.setServiceStatus(ServiceStatus.DONE);
 	}
 
+	
+	
 	@Override
 	protected String doInBackground() throws Exception {
+		
+		
+		System.out.println("Start doInBackground");
+		
 		OptionDao optionDao = new OptionDao();
-		mainModel.setServiceStatus(ServiceStatus.START);
+		System.out.println("in try");
 		try {
+			
 			OptionFacade facade = new OptionFacade();
+			
+			facade.getTimeLapsed();
+			System.out.println("called time lapsed");
 			OptionModel model = facade.getModel();
 
+			
 			int intervall = model.getIntervall();
 			LOGGER.debug("Intervall geladen: " + intervall);
 

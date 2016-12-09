@@ -15,6 +15,7 @@ public class ServiceStartOperationExecutable implements Executable {
 
 	public void execute(Object arg) {
 		sortService.execute();
+		
 	}
 
 }

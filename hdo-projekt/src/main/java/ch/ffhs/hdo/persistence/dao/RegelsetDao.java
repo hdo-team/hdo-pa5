@@ -3,7 +3,6 @@ package ch.ffhs.hdo.persistence.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class RegelsetDao extends JdbcHelper {
 
 	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET ORDER BY RULESET.priority ASC";
 
-	private final String FIND_SMALLER_PRIO = "(Select id from Ruleset where priority = (SELECT max(priority) from RULESET where priority < (SELECT priority  FROM RULESET where id = ?)))";
-	private final String FIND_HIGHER_PRIO = "(Select id from Ruleset where priority = (SELECT min(priority) from RULESET where priority > (SELECT priority  FROM RULESET where id = ?)))";
+	private final String FIND_SMALLER_PRIO = "(SELECT id FROM Ruleset WHERE priority = (SELECT max(priority) FROM RULESET where priority < (SELECT priority  FROM RULESET where id = ?)))";
+	private final String FIND_HIGHER_PRIO = "(SELECT id FROM Ruleset WHERE priority = (SELECT min(priority) FROM RULESET where priority > (SELECT priority  FROM RULESET where id = ?)))";
 
 	private final String SUM = "SELECT SUM(priority) FROM RULESET WHERE id IN (?, ?)";
 	private final String SWAP = "UPDATE RULESET SET priority = ? - priority WHERE id IN (?, ?)";

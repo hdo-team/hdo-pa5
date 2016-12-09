@@ -1,5 +1,6 @@
 package ch.ffhs.hdo.infrastructure.option;
 
+import java.security.cert.PKIXRevocationChecker.Option;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
@@ -45,4 +46,31 @@ public class OptionFacade {
 		}
 
 	}
+
+	public boolean getTimeLapsed() {
+
+		OptionDao dao = new OptionDao();
+		try {
+			final long timeLapsed = dao.timeLapsed();
+
+			if (timeLapsed == -1) {
+				return true;
+			} else {
+				final OptionModel model = getModel();
+
+				if (timeLapsed > model.getIntervall()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim Laden der Lapsed-Time: ", e);
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+
 }
