@@ -174,6 +174,22 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == "serviceStatus") {
 					stateButton.setText(getMessage("hdo.main.button.state." + evt.getNewValue().toString()));
+					if(evt.getNewValue().toString().equals("START")){
+						newButton.setEnabled(false);;
+						editButton.setEnabled(false);
+						prioUpButton.setEnabled(false);
+						prioDownButton.setEnabled(false);
+						deleteButton.setEnabled(false);
+					}
+					if(evt.getNewValue().toString().equals("STOP")){
+						newButton.setEnabled(true);;
+						editButton.setEnabled(true);
+						prioUpButton.setEnabled(true);
+						prioDownButton.setEnabled(true);
+						deleteButton.setEnabled(true);
+					}
+						
+					
 				}
 
 			}

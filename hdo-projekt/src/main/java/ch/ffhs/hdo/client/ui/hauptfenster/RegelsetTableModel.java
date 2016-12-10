@@ -52,8 +52,9 @@ public class RegelsetTableModel extends Model {
 	public void setServiceStatus(ServiceStatus serviceStatus) {
 		ServiceStatus oldValue = this.serviceStatus;
 		this.serviceStatus = serviceStatus;
-
 		firePropertyChange("serviceStatus", oldValue, serviceStatus);
 	}
+	
+	
 
 }

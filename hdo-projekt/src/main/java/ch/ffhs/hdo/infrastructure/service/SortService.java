@@ -37,7 +37,7 @@ public class SortService extends SwingWorker<String, Integer> {
 	@Override
 	protected void done() {
 		super.done();
-		mainModel.setServiceStatus(ServiceStatus.DONE);
+		mainModel.setServiceStatus(ServiceStatus.START);
 	}
 
 	
@@ -75,6 +75,7 @@ public class SortService extends SwingWorker<String, Integer> {
 				if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
 					documentModels.add(new DocumentModel(file));
 				}
+				
 				if (mainModel.getServiceStatus().equals(ServiceStatus.STOP)) {
 					break;
 				}
@@ -89,8 +90,8 @@ public class SortService extends SwingWorker<String, Integer> {
 		} catch (Exception e) {
 			LOGGER.error("Beim File Sortierservice ist ein Fehler aufgetreten ", e);
 			optionDao.protocollSortServiceRun(false);
-
 		}
+
 		return null;
 	}
 }
