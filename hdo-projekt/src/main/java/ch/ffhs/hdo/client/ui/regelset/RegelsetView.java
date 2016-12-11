@@ -29,6 +29,8 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
@@ -98,7 +100,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		return allFolders.toArray(new String[0]);
 	}
 
-	ContextTypeEnum[] getContextList(boolean firstShow) { 
+	ContextTypeEnum[] getContextList(boolean firstShow) {
 
 		List<ContextTypeEnum> contextList = new ArrayList<ContextTypeEnum>();
 
@@ -114,8 +116,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		return contextList.toArray(new ContextTypeEnum[0]);
 	}
 
-	ContextAttributeEnum[] getAttributList(ContextTypeEnum contextEnum) { 
-		
+	ContextAttributeEnum[] getAttributList(ContextTypeEnum contextEnum) {
+
 		List<ContextAttributeEnum> attributeList = new ArrayList<ContextAttributeEnum>();
 
 		// beim Neuerstellen ist erster Eintrag leer
@@ -124,23 +126,21 @@ public class RegelsetView extends View<RegelsetModel> {
 			attributeList.add(attributeItem);
 		}
 
-
 		return attributeList.toArray(new ContextAttributeEnum[] {});
 	}
 
 	ComparisonTypeEnum[] getComparisonModeList(ContextAttributeEnum attributeEnum) {
 		List<ComparisonTypeEnum> comparisonList = new ArrayList<ComparisonTypeEnum>();
-		
+
 		final ComparisonTypeEnum[] comparisontype = attributeEnum.getDataType().getComparisontype();
 
 		// beim Neuerstellen ist erster Eintrag leer
 		comparisonList.add(ComparisonTypeEnum.EMPTY);
 		for (ComparisonTypeEnum comparisonTypeEnum : comparisontype) {
-			
+
 			comparisonList.add(comparisonTypeEnum);
 		}
-		
-		
+
 		return comparisonList.toArray(new ComparisonTypeEnum[0]);
 	}
 
@@ -168,7 +168,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				// TDODO Check's auf Null oder ist dies aus der DB gegeneben?
-				// 	Rulesets ohne Rules sind nicht möglich
+				// Rulesets ohne Rules sind nicht möglich
 				RegelModel ruleModel = new RegelModel();
 				getModel().getRuleModelList().add(tabbedPane.getSelectedIndex(), ruleModel);
 				tabbedPane.add("frisch geADDed", new RulePanel(RegelsetView.this, ruleModel)); // getModel()));
@@ -210,7 +210,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(9, 1, 2);
 		builder.add(newFilenameTextField).rcw(11, 1, 2);
-		
+
 		builder.addLabel(getMessage(I18N + ".label.status")).rcw(13, 1, 3);
 		builder.add(statusCheckBox).rcw(15, 1, 3);
 
@@ -243,35 +243,28 @@ public class RegelsetView extends View<RegelsetModel> {
 		newFilenameTextField.setText(getModel().getNewFilename());
 		statusCheckBox.setSelected(getModel().isRuleActiv());
 		/*
-		getModel().addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				// TODO ist dies nötig??
-				
-				if (evt.getPropertyName() == "directories") {
-					// TODO: es gehört nur das ausgewählte directory ins Model ?!
-					//       und nicht die ganze Liste
-					
-				} else if (evt.getPropertyName() == "newFilename") {
-					newFilenameTextField.setText(getModel().getNewFilename());
-				} else if (evt.getPropertyName() == "rulesetId") {
-					// NICHT AUF View
-				} else if (evt.getPropertyName() == "priority") {
-					// Nicht auf DIESER VIEW => ....
-				} else if (evt.getPropertyName() == "ruleActiv") {
-					statusCheckBox.setSelected(getModel().isRuleActiv());
-				} else if (evt.getPropertyName() == "ruleList") {
-					
-				} else if (evt.getPropertyName() == "rulesetName") {
-					regelsetNameTextField.setText(getModel().getRulesetName());
-				} else if (evt.getPropertyName() == "targetDirectory") {
-					targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
-				}
-			}
-		});
-		*/
+		 * getModel().addPropertyChangeListener(new PropertyChangeListener() {
+		 * public void propertyChange(PropertyChangeEvent evt) { // TODO ist
+		 * dies nötig??
+		 * 
+		 * if (evt.getPropertyName() == "directories") { // TODO: es gehört nur
+		 * das ausgewählte directory ins Model ?! // und nicht die ganze Liste
+		 * 
+		 * } else if (evt.getPropertyName() == "newFilename") {
+		 * newFilenameTextField.setText(getModel().getNewFilename()); } else if
+		 * (evt.getPropertyName() == "rulesetId") { // NICHT AUF View } else if
+		 * (evt.getPropertyName() == "priority") { // Nicht auf DIESER VIEW =>
+		 * .... } else if (evt.getPropertyName() == "ruleActiv") {
+		 * statusCheckBox.setSelected(getModel().isRuleActiv()); } else if
+		 * (evt.getPropertyName() == "ruleList") {
+		 * 
+		 * } else if (evt.getPropertyName() == "rulesetName") {
+		 * regelsetNameTextField.setText(getModel().getRulesetName()); } else if
+		 * (evt.getPropertyName() == "targetDirectory") {
+		 * targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory
+		 * ()); } } });
+		 */
 
-			
-		
 		List<RegelModel> regelModel = getModel().getRuleModelList();
 
 		statusCheckBox.addActionListener(new ActionListener() {
@@ -310,31 +303,38 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private String checkInputValues() {
 		String errorString = null;
-		
+
 		// TODO: anständige Plausi / Fehlerhandling
 		//
-		
+
 		// Whitespace entfernen und dann erst checken!
 		if (getModel().getRulesetName() == null || getModel().getRulesetName().equals("")) {
-			errorString = "Bitte Regelsetname erfassen";   // TODO via ressourcen
+			errorString = "Bitte Regelsetname erfassen"; // TODO via ressourcen
 		}
-		
+
 		return errorString;
 	}
+
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 			// TODO: anständige Plausi / Fehlerhandling
 			//
-			
+
 			// Whitespace entfernen und dann erst checken!
 			String errorMsg = checkInputValues();
 			if (errorMsg != null) {
-				JOptionPane.showMessageDialog(null, errorMsg);				
+				JOptionPane.showMessageDialog(null, errorMsg);
 			} else {
 				// Plausi Ok
 				getHandler().performOperation(RegelsetSaveOperation.class);
-				getHandler().performOperation(CloseViewOperation.class);
+				if (getModel().getRegelsetTableModel() == null) {
+					getHandler().performOperation(CloseViewOperation.class);
+				}
+				else {
+					getModel().getRegelsetTableModel().setUpdateView(true);
+					getHandler().performOperation(CloseViewOperation.class);
+				}
 			}
 		}
 	}
@@ -380,4 +380,3 @@ public class RegelsetView extends View<RegelsetModel> {
 	}
 
 }
-

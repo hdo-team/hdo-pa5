@@ -109,7 +109,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		newButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperation(RegelsetViewStartOperation.class);
+				getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, getModel());
 			}
 		});
 
