@@ -7,7 +7,7 @@ import ch.ffhs.hdo.client.ui.hauptfenster.FolderModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainController;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
-import ch.ffhs.hdo.infrastructure.option.OptionFacade;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
@@ -22,7 +22,7 @@ public class Main {
 		
 		
 		RegelsetTableModel regelsetsTable = new RegelsetTableModel(new RegelsetFacade().getAllRegelsets());
-		FolderModel folderModel = new FolderModel(new OptionFacade().getModel().getInboxPath());
+		FolderModel folderModel = new FolderModel(ApplicationSettings.getInstance().getInbox_path() + "/.db");
 		
 		
 
