@@ -12,7 +12,7 @@ public class ServiceStartOperationExecutable implements Executable {
 
 	public ServiceStartOperationExecutable(RegelsetTableModel model) {
 		this.model = model;
-		this.sortService = new SortService(model);
+		this.sortService = SortService.getInstance(model);
 
 	}
 
@@ -20,15 +20,15 @@ public class ServiceStartOperationExecutable implements Executable {
 
 		if (model != null) {
 			if (model.getServiceStatus() == null) {
-				sortService.execute(); //first Start
+				sortService.execute(); // first Start
 			} else {
 				if (model.getServiceStatus().equals(ServiceStatus.START)) {
 					model.setServiceStatus(ServiceStatus.STOP);
-					sortService=null;
+					sortService.cancel(true);
 				} else {
 					this.sortService = new SortService(model);
 					sortService.execute();
-					
+
 				}
 			}
 

@@ -1,6 +1,5 @@
 package ch.ffhs.hdo.infrastructure.option;
 
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;

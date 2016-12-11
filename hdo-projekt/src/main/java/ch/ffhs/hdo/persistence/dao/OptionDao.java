@@ -55,6 +55,7 @@ public class OptionDao extends JdbcHelper {
 			insertConfig.setString(2, value);
 
 			insertConfig.executeUpdate();
+			insertConfig.closeOnCompletion();
 		}
 
 	}

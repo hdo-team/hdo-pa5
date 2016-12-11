@@ -135,19 +135,28 @@ public abstract class AbstractRegel {
 	}
 
 	protected boolean mainCompare() {
-		final DataTypeEnum dataType = this.getContextAttribute().getDataType();
-		switch (dataType) {
-		case DATE:
-			return compareDate();
-		case INT:
-			return compareInt();
-		case STRING:
-			return compareString();
-		case NULL:
-			return false;
-		default:
+
+		try {
+			final DataTypeEnum dataType = this.getContextAttribute().getDataType();
+			switch (dataType) {
+			case DATE:
+				return compareDate();
+			case INT:
+				return compareInt();
+			case STRING:
+				return compareString();
+			case NULL:
+				return false;
+			default:
+				return false;
+			}
+
+		} catch (Exception e) {
+			//Ein Fehler in der Konfiguraiton soll nicht zum Abbruch führen.
+			
 			return false;
 		}
+
 	}
 
 	public void setCompareToValue(Object compareToValue) {

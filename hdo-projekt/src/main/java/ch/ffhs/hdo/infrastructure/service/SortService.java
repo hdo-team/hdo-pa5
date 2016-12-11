@@ -25,18 +25,28 @@ import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
  *
  */
 
-public class SortService extends SwingWorker<String, Integer> {
+public class SortService extends SwingWorker<String, String> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
 	private RegelsetTableModel mainModel;
 
-	public SortService(RegelsetTableModel model) {
+	private static SortService instance;
+
+	public static SortService getInstance(RegelsetTableModel model) {
+
+		if (instance == null) {
+			instance = new SortService(model);
+		}
+		return instance;
+	}
+
+	private SortService(RegelsetTableModel model) {
 		this.mainModel = model;
 	}
 
 	@Override
-	protected void process(List<Integer> chunks) {
+	protected void process(List<String> chunks) {
 		super.process(chunks);
-		mainModel.setServiceStatus(ServiceStatus.START);
+		mainModel.setServiceStatus(ServiceStatus.PROCESSING);
 
 	}
 
@@ -51,10 +61,11 @@ public class SortService extends SwingWorker<String, Integer> {
 
 		RegelsetFacade regelsetFacade = new RegelsetFacade();
 		List<Regelset> regelsets = regelsetFacade.getRegelsets();
-		
-		System.out.println("Start doInBackground");
 
-	//	while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP)) {
+		System.out.println("Start doInBackground");
+		while (!isCancelled()) {
+			// while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP))
+			// {
 			OptionFacade facade = new OptionFacade();
 			if (facade.getTimeLapsed()) {
 
@@ -93,11 +104,11 @@ public class SortService extends SwingWorker<String, Integer> {
 
 				}
 
+			} else {
+				Thread.sleep(1000);
 			}
+		}
 
-			// Sortiervorgang protokollieren.
-
-		
 		return null;
 	}
 }
