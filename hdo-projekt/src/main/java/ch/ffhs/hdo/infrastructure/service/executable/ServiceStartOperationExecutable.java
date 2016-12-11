@@ -26,6 +26,7 @@ public class ServiceStartOperationExecutable implements Executable {
 					model.setServiceStatus(ServiceStatus.STOP);
 					sortService=null;
 				} else {
+					this.sortService = new SortService(model);
 					sortService.execute();
 					
 				}
