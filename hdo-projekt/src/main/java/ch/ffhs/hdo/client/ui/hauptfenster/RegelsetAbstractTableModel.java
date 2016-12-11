@@ -35,6 +35,10 @@ public class RegelsetAbstractTableModel extends AbstractTableModel {
 	public String getColumnName(int columnIndex) {
 		return columnNames[columnIndex];
 	}
+	
+	public void setRulsets(ArrayList<RegelsetModel> rulsets) {
+		this.rulsets = rulsets;
+	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		final RegelsetModel rulset = rulsets.get(rowIndex);

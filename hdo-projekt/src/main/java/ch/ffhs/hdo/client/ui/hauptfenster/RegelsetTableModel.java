@@ -41,7 +41,11 @@ public class RegelsetTableModel extends Model {
 	}
 	
 	public void setRulsetList(ArrayList<RegelsetModel> rulsets) {
-		this.rulsets=rulsets;
+		ArrayList<RegelsetModel> oldValue = this.rulsets;
+		this.rulsets = rulsets;
+		firePropertyChange("rulsets", oldValue, rulsets);
+		abstractModel.fireTableDataChanged();
+		
 	}
 
 	public ServiceStatus getServiceStatus() {
@@ -58,7 +62,5 @@ public class RegelsetTableModel extends Model {
 		this.serviceStatus = serviceStatus;
 		firePropertyChange("serviceStatus", oldValue, serviceStatus);
 	}
-	
-	
 
 }
