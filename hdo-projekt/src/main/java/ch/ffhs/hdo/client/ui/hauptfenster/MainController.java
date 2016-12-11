@@ -8,6 +8,8 @@ import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartExecutable;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
@@ -52,6 +54,7 @@ public class MainController extends Controller<MainModel, MainView> {
 		this.viewHandler.addOperation(ServiceStartOperation.class,
 				new ServiceStartOperationExecutable(getModel().getRegelsetModel()));
 		this.viewHandler.addOperation(RegelsetSwapOperation.class, new RegelsetSwapOperationExecutable());
+		this.viewHandler.addOperation(RegelsetTableUpdateOperation.class, new RegelsetTableUpdateOperationExecutable());
 
 	}
 
