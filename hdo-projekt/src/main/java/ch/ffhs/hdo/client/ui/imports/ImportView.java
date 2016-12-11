@@ -2,12 +2,15 @@ package ch.ffhs.hdo.client.ui.imports;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -15,8 +18,12 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
+import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**
  * 
@@ -26,7 +33,8 @@ public class ImportView extends View<ImportModel> {
 
 	private final String I18N = "hdo.import";
 	private final String TITLE_KEY = I18N + ".title";
-	JTextField filePath; // FRAGE
+	
+	JTextField filePath;
 	private JButton filePathButton;
 	private JButton loadButton;
 	private JButton cancelButton;
@@ -46,13 +54,13 @@ public class ImportView extends View<ImportModel> {
 
 	@Override
 	public void configureBindings() {
-		getModel().addObserver(new Observer() {
 
-			public void update(Observable o, Object arg) {
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 
-				filePath.setText((String) arg);
-
-				System.out.println(o.toString() + " " + arg.toString());
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "filePath") {
+					filePath.setText(getModel().getFilePath());
+				}
 
 			}
 		});
@@ -62,11 +70,15 @@ public class ImportView extends View<ImportModel> {
 	private void createComponents() {
 
 		filePath = new JTextField();
-		filePathButton = new JButton(getMessage(I18N + ".button.filePathButton"));
+		filePathButton = new JButton(getMessage(I18N + ".button.pathChooser"));
 		filePathButton.addActionListener(new ChooseFilePathAction());
+		
 		loadButton = new JButton(getMessage(I18N + ".button.import"));
-		loadButton.addActionListener(new ReadFileAction());
+		loadButton.addActionListener(new ImportAction());
+		
 		cancelButton = new JButton(getMessage("base.cancel"));
+		cancelButton.addActionListener(new CloseAction());
+		
 	}
 
 	private void layoutForm() {
@@ -89,25 +101,59 @@ public class ImportView extends View<ImportModel> {
 
 		setDimension(430, 145);
 	}
+	
+	private class ImportAction extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+			
+			String errorMsg_folder = checkFilePathValue();
+			String errorMsg_inbox = checkInboxPathValue();
+			
+			if (errorMsg_folder != null) {
+				JOptionPane.showMessageDialog(null, errorMsg_folder);	
+			} else if (errorMsg_inbox != null){
+				JOptionPane.showMessageDialog(null, errorMsg_inbox);
+			} else {
+				getHandler().performOperation(ImportSaveOperation.class);
+				getHandler().performOperation(CloseViewOperation.class);
+			}
+		}
+	}
 
 	private class ChooseFilePathAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 
 			getHandler().performOperation(ChooseFilePathViewOperation.class);
-			
 		}
-
 	}
+	
+	private String checkFilePathValue() {
+		String errorString = null;
 
-	private class ReadFileAction extends AbstractAction {
+		if (filePath.getText() == null || filePath.getText().equals("")) {
+			errorString = "Bitte eine Importdatei auswählen";
+		}
+		return errorString;
+	}
+	
+	private String checkInboxPathValue() {
+		String errorString = null;
+	
+		String inboxPath = ApplicationSettings.getInstance().getInbox_path();
+		
+		if (inboxPath == null || inboxPath.equals("")) {
+			errorString = "Bitte einen Inbox-Pfad in den Einstellungen angeben";
+		}
+		return errorString;
+	}
+	
+	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 
-			getHandler().performOperation(ReadFileViewOperation.class);
-
+			getHandler().performOperation(CloseViewOperation.class);
 		}
-
 	}
-
+	
 }
