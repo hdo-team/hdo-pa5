@@ -26,7 +26,6 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
 
-
 public class RegelsetTableView extends View<RegelsetTableModel> {
 
 	private final String I18N = "hdo.main";
@@ -82,9 +81,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
 							new int[] { rulesetId, operation });
-					int selection=regelsetTable.getSelectedRow();
-					getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
-					regelsetTable.setRowSelectionInterval(0, selection-1);
+					int selection = regelsetTable.getSelectedRow();
+					getModel().setUpdateView(true);
+					regelsetTable.setRowSelectionInterval(0, selection - 1);
 				}
 			}
 		});
@@ -101,9 +100,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
 							new int[] { rulesetId, operation });
-					int selection=regelsetTable.getSelectedRow();
-					getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
-					regelsetTable.setRowSelectionInterval(0, selection+1);
+					int selection = regelsetTable.getSelectedRow();
+					getModel().setUpdateView(true);
+					regelsetTable.setRowSelectionInterval(0, selection + 1);
 				}
 			}
 		});
@@ -134,7 +133,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		deleteButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
-				getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
+				getModel().setUpdateView(true);
 			}
 
 			private int getRegelsetId() {
@@ -184,22 +183,29 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == "serviceStatus") {
 					stateButton.setText(getMessage("hdo.main.button.state." + evt.getNewValue().toString()));
-					if(evt.getNewValue().toString().equals("START")){
-						newButton.setEnabled(false);;
+					if (evt.getNewValue().toString().equals("START")) {
+						newButton.setEnabled(false);
+						;
 						editButton.setEnabled(false);
 						prioUpButton.setEnabled(false);
 						prioDownButton.setEnabled(false);
 						deleteButton.setEnabled(false);
 					}
-					if(evt.getNewValue().toString().equals("STOP")){
-						newButton.setEnabled(true);;
+					if (evt.getNewValue().toString().equals("STOP")) {
+						newButton.setEnabled(true);
+						;
 						editButton.setEnabled(true);
 						prioUpButton.setEnabled(true);
 						prioDownButton.setEnabled(true);
 						deleteButton.setEnabled(true);
 					}
-						
-					
+
+				}
+				if (evt.getPropertyName() == "updateView") {
+					if (getModel().getUpdateView()) {
+						getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
+						getModel().setUpdateView(false);
+					}
 				}
 
 			}
