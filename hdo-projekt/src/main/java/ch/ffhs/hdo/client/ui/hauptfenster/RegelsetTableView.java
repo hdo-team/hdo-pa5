@@ -83,7 +83,11 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							new int[] { rulesetId, operation });
 					int selection = regelsetTable.getSelectedRow();
 					getModel().setUpdateView(true);
-					regelsetTable.setRowSelectionInterval(0, selection - 1);
+					if (selection > 0) {
+						regelsetTable.setRowSelectionInterval(0, selection - 1);
+					} else {
+						regelsetTable.setRowSelectionInterval(0, selection);
+					}
 				}
 			}
 		});
@@ -102,7 +106,11 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							new int[] { rulesetId, operation });
 					int selection = regelsetTable.getSelectedRow();
 					getModel().setUpdateView(true);
-					regelsetTable.setRowSelectionInterval(0, selection + 1);
+					if (selection < regelsetTable.getRowCount()-1) {
+						regelsetTable.setRowSelectionInterval(0, selection + 1);
+					} else {
+						regelsetTable.setRowSelectionInterval(0, selection);
+					}
 				}
 			}
 		});
