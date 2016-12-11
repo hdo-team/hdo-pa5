@@ -90,7 +90,7 @@ public class RulePanel extends JPanel {
 		paneBuilder.add(ruleNameLabel).rcw(1, 1, 7);
 
 		contextComboBox = new JComboBox<ContextTypeEnum>(
-				rulePanelView.getContextList(ruleModel.getContextType() == null));
+				rulePanelView.getContextList(ruleModel.getContextType() == ContextTypeEnum.EMPTY));
 		contextComboBox.setSelectedItem(ruleModel.getContextType());
 		paneBuilder.add(contextComboBox).rcw(3, 1, 1);
 
