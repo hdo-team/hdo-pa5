@@ -327,6 +327,7 @@ public class RegelsetView extends View<RegelsetModel> {
 					getHandler().performOperation(CloseViewOperation.class);
 				}
 				else {
+					//New Regelset->Update View
 					getModel().getRegelsetTableModel().setUpdateView(true);
 					getHandler().performOperation(CloseViewOperation.class);
 				}

@@ -8,6 +8,8 @@ import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartExecutable;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.FolderTreeUpdateOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.FolderTreeUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
 import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartExecutable;
@@ -18,6 +20,7 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperationExecutable;
 
@@ -44,7 +47,6 @@ public class MainController extends Controller<MainModel, MainView> {
 	}
 
 	private void initlizeHandler() {
-
 		this.viewHandler.addOperation(OptionViewStartOperation.class, new OptionViewStartExecutable());
 		this.viewHandler.addOperation(RegelsetViewStartOperation.class, new RegelsetViewStartExecutable());
 		this.viewHandler.addOperation(ExportViewStartOperation.class, new ExportViewStartExecutable());
@@ -55,7 +57,7 @@ public class MainController extends Controller<MainModel, MainView> {
 				new ServiceStartOperationExecutable(getModel().getRegelsetModel()));
 		this.viewHandler.addOperation(RegelsetSwapOperation.class, new RegelsetSwapOperationExecutable());
 		this.viewHandler.addOperation(RegelsetTableUpdateOperation.class, new RegelsetTableUpdateOperationExecutable(this.getModel().getRegelsetModel()));
-
+		this.viewHandler.addOperation(FolderTreeUpdateOperation.class, new FolderTreeUpdateOperationExecutable(this.getModel().getFolderModel()));
 	}
 
 	@Override

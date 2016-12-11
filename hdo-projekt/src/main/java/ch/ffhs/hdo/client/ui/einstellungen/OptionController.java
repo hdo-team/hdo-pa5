@@ -6,6 +6,7 @@ import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveExecutable;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.FolderModel;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
@@ -18,9 +19,9 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	private final ViewHandlerImpl viewHandler;
 
-	public OptionController(OptionModel model) {
+	public OptionController(OptionModel model, FolderModel folderModel) {
 		super(model);
-
+		model.setFolderModel(folderModel);
 		setView(new OptionView(getResourceBundle()));
 		viewHandler = new ViewHandlerImpl();
 

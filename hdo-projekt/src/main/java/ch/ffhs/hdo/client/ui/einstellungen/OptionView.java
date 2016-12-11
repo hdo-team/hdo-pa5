@@ -156,6 +156,7 @@ public class OptionView extends View<OptionModel> {
 
 			// Saves settings into Database.
 			getHandler().performOperation(OptionsSaveOperation.class);
+			getModel().getFolderModel().setUpdateView(true);
 			getHandler().performOperation(CloseViewOperation.class);
 
 		}

@@ -3,16 +3,17 @@ package ch.ffhs.hdo.client.ui.einstellungen.executable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.einstellungen.OptionController;
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.FolderModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 
-public class OptionViewStartExecutable implements Executable<Object> {
+public class OptionViewStartExecutable implements Executable<FolderModel> {
 
-	public void execute(Object args) {
+	public void execute(FolderModel folderModel) {
 
 		OptionFacade facade = new OptionFacade();
 		OptionModel model = facade.getModel();
-
-		OptionController optionController = new OptionController(model);
+		model.setFolderModel(folderModel);
+		OptionController optionController = new OptionController(model, folderModel);
 
 		optionController.show();
 	}

@@ -87,7 +87,7 @@ public class MainView extends View<MainModel> {
 		optionsConfig.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperation(OptionViewStartOperation.class);
+				getHandler().performOperationWithArgs(OptionViewStartOperation.class, getModel().getFolderModel());
 			}
 		});
 
@@ -103,11 +103,12 @@ public class MainView extends View<MainModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO: Zum Testen das Erste ELement mitgeben
-				//	  End-Version: null wenn neues Regelset erstellt werden soll
-				//    				effektives Model (muss ja nicht Index 0) sein!
+				// End-Version: null wenn neues Regelset erstellt werden soll
+				// effektives Model (muss ja nicht Index 0) sein!
 				//
 				if (getModel().getRegelsetModel().getRulsetList() != null) {
-					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class, getModel().getRegelsetModel().getRulsetList().get(0));
+					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
+							getModel().getRegelsetModel().getRulsetList().get(0));
 				} else {
 					// Kein Model => keine Argument)
 					getHandler().performOperation(RegelsetViewStartOperation.class);
@@ -122,11 +123,9 @@ public class MainView extends View<MainModel> {
 		folderScrollPane = new JScrollPane(folderTreeView.getPanel());
 
 		// Create Rulset Panel
-		
-		regelsetTableView = new RegelsetTableView(resourceBundle, getModel().getRegelsetModel());
-		
 
-		
+		regelsetTableView = new RegelsetTableView(resourceBundle, getModel().getRegelsetModel());
+
 		regelsetScrollPane = new JScrollPane(regelsetTableView.getPanel());
 
 		layoutsplitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, folderScrollPane, regelsetScrollPane);
@@ -148,9 +147,6 @@ public class MainView extends View<MainModel> {
 		layoutsplitpane.setDividerLocation(210);
 		folderScrollPane.setMinimumSize(minimumSize);
 		regelsetScrollPane.setMinimumSize(minimumSize);
-		
-		
-
 
 		getFrame().setJMenuBar(menuBar);
 		getFrame().add(layoutsplitpane, BorderLayout.CENTER);

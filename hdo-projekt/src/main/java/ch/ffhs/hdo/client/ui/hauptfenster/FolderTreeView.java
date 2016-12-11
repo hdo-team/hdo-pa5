@@ -1,6 +1,8 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -11,6 +13,9 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.FolderTreeUpdateOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 public class FolderTreeView extends View<FolderModel> {
 
@@ -33,13 +38,13 @@ public class FolderTreeView extends View<FolderModel> {
 
 	private void createComponents() {
 		jPanel = new JPanel();
-		
+
 		if (getModel().getInboxPath() != null) {
 			inboxFolder = new File(getModel().getInboxPath());
 		} else {
 			inboxFolder = new File(getMessage(I18N + ".label.nofolderfound"));
 		}
-		
+
 		tree = new JTree(addNodes(null, inboxFolder));
 		jPanel.add(tree);
 	}
@@ -50,8 +55,18 @@ public class FolderTreeView extends View<FolderModel> {
 
 	@Override
 	public void configureBindings() {
-		// TODO Auto-generated method stub
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "updateView") {
+					if (getModel().getUpdateView()) {
+						getHandler().performOperationWithArgs(FolderTreeUpdateOperation.class, ApplicationSettings.getInstance().getInbox_path());
+						getModel().setUpdateView(false);
+					}
+				}
+
+			}
+		});
 	}
 
 	public JPanel getPanel() {
