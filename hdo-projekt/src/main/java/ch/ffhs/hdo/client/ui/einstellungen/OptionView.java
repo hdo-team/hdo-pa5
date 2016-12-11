@@ -25,6 +25,7 @@ import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class OptionView extends View<OptionModel> {
@@ -108,7 +109,8 @@ public class OptionView extends View<OptionModel> {
 	@Override
 	public void configureBindings() {
 
-		inboxPathTextField.setText(getModel().getInboxPath());
+		//inboxPathTextField.setText(getModel().getInboxPath());
+		inboxPathTextField.setText(ApplicationSettings.getInstance().getInbox_path());
 
 		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getIntervall() / 60);
 
