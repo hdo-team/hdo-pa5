@@ -48,10 +48,10 @@ public class RegelModel extends Model {
 		return ruleName;
 	}
 
-	public void setCompareValue(String compareValueMap) {
-		String oldValue = compareValueMap;
-		this.compareValue = compareValueMap;
-		firePropertyChange("compareValueMap", oldValue, compareValueMap);
+	public void setCompareValue(String compareValue) {
+		String oldValue = compareValue;
+		this.compareValue = compareValue;
+		firePropertyChange("compareValue", oldValue, compareValue);
 	}
 
 	public void setComparisonType(ComparisonTypeEnum comparisonType) {

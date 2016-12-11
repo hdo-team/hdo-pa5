@@ -72,7 +72,7 @@ public class RegelsetModel extends Model {
 	public void setFilenameCounter(Long filenameCounter) {
 		Long oldValue = this.filenameCounter;
 		this.filenameCounter = filenameCounter;
-		firePropertyChange("filecounter", oldValue, filenameCounter);
+		firePropertyChange("filenameCounter", oldValue, filenameCounter);
 	}
 
 	public void setDirectories(List<String> directories) {
