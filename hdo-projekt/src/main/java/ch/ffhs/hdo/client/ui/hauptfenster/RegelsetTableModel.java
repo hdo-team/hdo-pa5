@@ -39,6 +39,10 @@ public class RegelsetTableModel extends Model {
 	public ArrayList<RegelsetModel> getRulsetList() {
 		return rulsets;
 	}
+	
+	public void steRulsetList(ArrayList<RegelsetModel> rulsets) {
+		this.rulsets=rulsets;
+	}
 
 	public ServiceStatus getServiceStatus() {
 		return serviceStatus;

@@ -3,6 +3,8 @@ package ch.ffhs.hdo.client.ui.regelset;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.CookieManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	private final String TITLE_KEY = I18N + ".title";
 	private JTextField regelsetNameTextField;
 	private JTextField newFilenameTextField;
+	private JTextField filenameCounter;
 
 	private JTextField targetDirectoryTextField;
 
@@ -97,8 +100,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		return allFolders.toArray(new String[0]);
 	}
 
-	ContextTypeEnum[] getContextList(boolean firstShow) { // RegelModel
-															// ruleModel) {
+	ContextTypeEnum[] getContextList(boolean firstShow) { 
+
 		List<ContextTypeEnum> contextList = new ArrayList<ContextTypeEnum>();
 
 		if (firstShow) {
@@ -114,38 +117,21 @@ public class RegelsetView extends View<RegelsetModel> {
 		return contextList.toArray(new ContextTypeEnum[0]);
 	}
 
-	ContextAttributeEnum[] getAttributList(ContextTypeEnum contextEnum) { // RegelModel
-																						// ruleModel)
-																						// {
-		// ContextTypeEnum []attributeList; // = new String[];
+	ContextAttributeEnum[] getAttributList(ContextTypeEnum contextEnum) { 
+		
 		List<ContextAttributeEnum> attributeList = new ArrayList<ContextAttributeEnum>();
 
-		//
-		// TODO holprig
-		//
 		if (contextEnum == ContextTypeEnum.EMPTY) {
 			// return attributeList.toArray(new ContextAttributeEnum[0]); //
 			// darf eigentlich nicht null sein ///Leer ODER mit EMPTY-item ?
 			attributeList.add(ContextAttributeEnum.EMPTY);
 		}
 
-		//
-		// Resourcen + ENUM => attribute <PFD|FILE> pdf_title
-		// => elegante Methode suchen, dass weniger Duplicates in namen
-		//
-		if (contextEnum.equals(ContextTypeEnum.CONTEXT_PDF)) {
-			for (ContextAttributeEnum contextItem : ContextAttributeEnum.values()) {
-				if (contextItem.name().startsWith("PDF_")) {
-					attributeList.add(contextItem);
-				}
-			}
-		} else if (contextEnum.equals(ContextTypeEnum.CONTEXT_FILE)) {
-			for (ContextAttributeEnum contextItem : ContextAttributeEnum.values()) {
-				if (contextItem.name().startsWith("FILE_")) {
-					attributeList.add(contextItem);
-				}
-			}
+		
+		for (ContextAttributeEnum attributeItem : ContextAttributeEnum.values(contextEnum)) {
+			attributeList.add(attributeItem);
 		}
+
 
 		return attributeList.toArray(new ContextAttributeEnum[] {});
 	}
@@ -173,6 +159,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		newFilenameTextField = new JTextField();
 		statusCheckBox = new JCheckBox(getMessage(I18N + ".checkbox.status"));
 
+		filenameCounter = new JTextField();
+		
+		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		addButton = new JButton(getMessage(I18N + ".button.add.icon"));
@@ -227,8 +216,11 @@ public class RegelsetView extends View<RegelsetModel> {
 		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryList);
 		builder.add(targetDirectoryComboBox).rcw(7, 1, 3);
 
-		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(9, 1, 7);
-		builder.add(newFilenameTextField).rcw(11, 1, 3);
+		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(9, 1, 2);
+		builder.add(newFilenameTextField).rcw(11, 1, 2);
+		
+		builder.addLabel(getMessage(I18N + ".label.filenameCounter")).rcw(9, 3, 2);
+		builder.add(filenameCounter).rcw(11, 3, 2);
 
 		builder.addLabel(getMessage(I18N + ".label.status")).rcw(13, 1, 3);
 		builder.add(statusCheckBox).rcw(15, 1, 3);
@@ -257,11 +249,43 @@ public class RegelsetView extends View<RegelsetModel> {
 	@Override
 	public void configureBindings() {
 
-		regelsetNameTextField.setText(getModel().getRulesetName());
-		newFilenameTextField.setText(getModel().getNewFilename());
-		statusCheckBox.setSelected(getModel().isRuleActiv());
-		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
+		//regelsetNameTextField.setText(getModel().getRulesetName());
+		//newFilenameTextField.setText(getModel().getNewFilename());
+		//statusCheckBox.setSelected(getModel().isRuleActiv());
+		
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO ist dies nötig??
+				
+				if (evt.getPropertyName() == "filenameCounter") {
+					// TODO: brauchen wir den FileCounter nocht??
+					
+				} else if (evt.getPropertyName() == "directories") {
+					// TODO: es gehört nur das ausgewählte directory ins Model ?!
+					//       und nicht die ganze Liste
+					
+				} else if (evt.getPropertyName() == "newFilename") {
+					newFilenameTextField.setText(getModel().getNewFilename());
+				} else if (evt.getPropertyName() == "rulesetId") {
+					// NICHT AUF View
+				} else if (evt.getPropertyName() == "priority") {
+					// Nicht auf DIESER VIEW => ....
+				} else if (evt.getPropertyName() == "ruleActiv") {
+					statusCheckBox.setSelected(getModel().isRuleActiv());
+				} else if (evt.getPropertyName() == "ruleList") {
+					
+				} else if (evt.getPropertyName() == "rulesetName") {
+					regelsetNameTextField.setText(getModel().getRulesetName());
+				} else if (evt.getPropertyName() == "targetDirectory") {
+					targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
+				} else if (evt.getPropertyName() == "filecounter") {
+					//filenameCounterTextField.setText(getModel().getFilenameCounter());					
+				}
+			}
+		});
 
+			
+		
 		List<RegelModel> regelModel = getModel().getRuleModelList();
 
 		statusCheckBox.addActionListener(new ActionListener() {
@@ -298,11 +322,34 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	}
 
+	private String checkInputValues() {
+		String errorString = null;
+		
+		// TODO: anständige Plausi / Fehlerhandling
+		//
+		
+		// Whitespace entfernen und dann erst checken!
+		if (getModel().getRulesetName() == null || getModel().getRulesetName().equals("")) {
+			errorString = "Bitte Regelsetname erfassen";   // TODO via ressourcen
+		}
+		
+		return errorString;
+	}
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
-			getHandler().performOperation(RegelsetSaveOperation.class);
-			getHandler().performOperation(CloseViewOperation.class);
+			// TODO: anständige Plausi / Fehlerhandling
+			//
+			
+			// Whitespace entfernen und dann erst checken!
+			String errorMsg = checkInputValues();
+			if (errorMsg != null) {
+				JOptionPane.showMessageDialog(null, errorMsg);				
+			} else {
+				// Plausi Ok
+				getHandler().performOperation(RegelsetSaveOperation.class);
+				getHandler().performOperation(CloseViewOperation.class);
+			}
 		}
 	}
 
@@ -342,11 +389,9 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			} else if (myTextField == newFilenameTextField) {
 				getModel().setNewFilename(myTextField.getText());
-			} else {
-				System.out.println("?????????????????: " + myTextField.getText());
 			}
-
 		}
 	}
 
 }
+

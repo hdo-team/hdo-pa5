@@ -1,18 +1,26 @@
 package ch.ffhs.hdo.domain.regel;
 
-import static ch.ffhs.hdo.domain.regel.ComparisonTypeEnum.*;
+/**
+ * Enum für Regel-Kontext
+ * 
+ * 
+ * @author Daniel Crazzolara
+ */
 
 public enum DataTypeEnum {
-	DATE(COMPARISON_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_LESS_EQUAL, COMPARISON_UNEQUAL), 
-	INT(COMPARISON_EQUAL,COMPARISON_GREATER_EQUAL, COMPARISON_LESS_EQUAL, COMPARISON_UNEQUAL), 
+	DATE(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, 
+		 ComparisonTypeEnum.COMPARISON_LESS_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL),
+	INT(ComparisonTypeEnum.COMPARISON_EQUAL,
+		ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
+		 ComparisonTypeEnum.COMPARISON_UNEQUAL), 
 	NULL, 
-	STRING(COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_REGEX);
+	STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL,
+		   ComparisonTypeEnum.COMPARISON_REGEX);
 
 	private ComparisonTypeEnum[] comparisontype;
 
 	private DataTypeEnum(ComparisonTypeEnum... comparisonTypeEnums) {
 		this.comparisontype = comparisonTypeEnums;
-
 	}
 
 	public ComparisonTypeEnum[] getComparisontype() {
