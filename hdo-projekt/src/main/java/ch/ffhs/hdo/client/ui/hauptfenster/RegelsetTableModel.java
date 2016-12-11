@@ -44,6 +44,7 @@ public class RegelsetTableModel extends Model {
 		ArrayList<RegelsetModel> oldValue = this.rulsets;
 		this.rulsets = rulsets;
 		firePropertyChange("rulsets", oldValue, rulsets);
+		abstractModel.setRulsets(rulsets);
 		abstractModel.fireTableDataChanged();
 		
 	}

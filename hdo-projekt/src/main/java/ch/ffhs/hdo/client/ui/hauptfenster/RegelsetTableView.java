@@ -99,6 +99,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
 							new int[] { rulesetId, operation });
+					getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
 				}
 			}
 		});
@@ -129,6 +130,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		deleteButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
+				getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
 			}
 
 			private int getRegelsetId() {
