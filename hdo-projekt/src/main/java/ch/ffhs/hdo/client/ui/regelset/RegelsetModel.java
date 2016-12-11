@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.ffhs.hdo.client.ui.base.Model;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 
 public class RegelsetModel extends Model {
 
@@ -17,6 +18,7 @@ public class RegelsetModel extends Model {
 											// AND-verknuepft
 	private String rulesetName;
 	private String targetDirectory;
+	private RegelsetTableModel regelsetTableModel;
 
 	/**
 	 * TODO: getXyzList().add(xy) funktionier nicht => kein fireProperty?? TODO:
@@ -110,6 +112,14 @@ public class RegelsetModel extends Model {
 		String oldValue = this.targetDirectory;
 		this.targetDirectory = targetDirectory;
 		firePropertyChange("targetDirectory", oldValue, targetDirectory);
+	}
+
+	public void setRegelsetTableModel(RegelsetTableModel tableModel) {
+		this.regelsetTableModel = tableModel;
+	}
+
+	public RegelsetTableModel getRegelsetTableModel() {
+		return regelsetTableModel;
 	}
 
 	public static RegelsetModel getNullModel() {

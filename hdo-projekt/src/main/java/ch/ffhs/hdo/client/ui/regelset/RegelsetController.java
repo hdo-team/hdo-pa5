@@ -4,6 +4,9 @@ import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
 
@@ -25,6 +28,16 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 		setupViewHandler();
 		initializeView();
 
+	}
+
+	public RegelsetController(RegelsetModel model, RegelsetTableModel tableModel) {
+		super(model);
+		model.setRegelsetTableModel(tableModel);
+		setView(new RegelsetView(getResourceBundle()));
+		viewHandler = new ViewHandlerImpl();
+
+		setupViewHandler();
+		initializeView();
 	}
 
 	@Override
