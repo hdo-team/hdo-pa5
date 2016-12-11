@@ -14,7 +14,7 @@ public class RegelConverter {
 
 	public static RegelModel convert(RegelDto dto, Integer id) {
 
-		RegelModel model = new RegelModel();
+		RegelModel model = RegelModel.getNullModel();
 
 		model.setId(id);
 		model.setContextType(dto.getContextType() == null ? null : ContextTypeEnum.valueOf(dto.getContextType()));
@@ -30,7 +30,7 @@ public class RegelConverter {
 
 		AbstractRegel abRegel = null;
 
-		RegelModel model = new RegelModel();
+		RegelModel model = RegelModel.getNullModel();
 
 		final ContextTypeEnum valueOf = ContextTypeEnum.valueOf(dto.getContextType());
 

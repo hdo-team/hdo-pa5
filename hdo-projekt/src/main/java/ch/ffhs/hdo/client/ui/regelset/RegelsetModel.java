@@ -118,7 +118,7 @@ public class RegelsetModel extends Model {
 		model.setPriority(0);
 		model.setRuleActiv(true);
 		model.setRuleModelList(new ArrayList<RegelModel>());
-		model.getRuleModelList().add(new RegelModel());
+		model.getRuleModelList().add(RegelModel.getNullModel());  // TODO: nicht nötig; wir bei <<add REegel>> gemacht? 
 		return model;
 	}
 

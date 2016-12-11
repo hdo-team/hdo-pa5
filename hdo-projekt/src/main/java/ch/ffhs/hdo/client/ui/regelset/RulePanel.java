@@ -78,40 +78,45 @@ public class RulePanel extends JPanel {
 		rulePanelView = regelsetView;
 		this.ruleModel = ruleModel;
 
+
 		createComponent();
 		setComboboxModel();
 
 		FormBuilder paneBuilder = setLayout();
-
+		this.add(paneBuilder.build());
+		
 		configureBinding();
+	}
 
-		attributeComboBox.setSelectedItem(ruleModel.getContextAttribute());
+	
+	private void configureBinding() {
+		contextComboBox.setSelectedItem(this.ruleModel.getContextType());
+		attributeComboBox.setSelectedItem(this.ruleModel.getContextAttribute());
+		comparisonModeComboBox.setSelectedItem(this.ruleModel.getComparisonType());
 
-		comparisonModeComboBox = new JComboBox<ComparisonTypeEnum>(
-				rulePanelView.getComparisonModeList(ruleModel.getContextAttribute()));
-		comparisonModeComboBox.setSelectedItem(ruleModel.getComparisonType());
+		if (this.ruleModel.getContextAttribute().getDataType() == DataTypeEnum.DATE) {
+			Date compareDate = null;
+			try {
+				compareDate = rulePanelView.simpleDateFormat.parse(ruleModel.getCompareValue());
+			} catch (ParseException e1) {
+				// TODO: Error Loggen ? und
+				// 
+				throw new IllegalArgumentException("invalid date: " + ruleModel.getCompareValue());
 
-		final UtilDateModel modelDate = new UtilDateModel();
-		// TODO: Date compareDate = null;
-		//
-		Date compareDate = null;// TDOO: default <heute> Nok //TDOO: default
-								// <heute> Nok
-		try {
-			compareDate = rulePanelView.simpleDateFormat.parse(ruleModel.getCompareValue());
-		} catch (ParseException e1) {
-			// TODO: throw new IllegalArgumentException("invalid date: " +
-			// compareDate);
-		} catch (NullPointerException npEx) {
-			// TODO: wieder Entfernen, und abfragen auf DATE
+			}
+			((UtilDateModel)datePanel.getModel()).setValue(compareDate);
+		} else {
+			compareValueTextField.setText(ruleModel.getCompareValue());
 		}
-		modelDate.setValue(compareDate);
-		datePanel = new JDatePanelImpl(modelDate);
+	}
+
+	private void createComponent() {
+		contextComboBox = new JComboBox<ContextTypeEnum>(rulePanelView.getContextList());
+		attributeComboBox = new JComboBox<ContextAttributeEnum>(rulePanelView.getAttributList(ruleModel.getContextType()));
+		comparisonModeComboBox = new JComboBox<ComparisonTypeEnum>( rulePanelView.getComparisonModeList(ruleModel.getContextAttribute()));
+		datePanel = new JDatePanelImpl(new UtilDateModel());
 		datePicker = new JDatePickerImpl(datePanel, null);
-
 		compareValueTextField = new JTextField();
-		paneBuilder.add(compareValueTextField).rcw(15, 1, 9);
-
-		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
 
 		datePicker.addActionListener(new ActionListener() {
 
@@ -129,96 +134,7 @@ public class RulePanel extends JPanel {
 		comparisonModeComboBox.addActionListener(al);
 		compareValueTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(compareValueTextField));
 
-		ruleModel.addPropertyChangeListener(new PropertyChangeListener() {
-
-			// TODO: abhängige Comboboxen hier cheken und aufbauen?
-			// oder im ActionListener?
-
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals("compareValueMap")) { // TODO
-																		// sollte
-																		// doch
-																		// anderer
-																		// -Nanme
-																		// sein
-																		// ==>
-																		// kein
-																		// MAp..
-					System.out.println("Property: compareValueMap");
-					// compareTextField
-				} else if (evt.getPropertyName().equals("comparisonType")) {
-					comparisonModeComboBox.setSelectedItem(evt.getNewValue());
-				} else if (evt.getPropertyName().equals("contextType")) {
-					contextComboBox.setSelectedItem(evt.getNewValue());
-				} else if (evt.getPropertyName().equals("contextAttribute")) {
-					attributeComboBox.setSelectedItem(evt.getNewValue());
-					//
-					// je nach Attribute Datum-Picker oder compareValueField
-					ContextAttributeEnum attribute = (ContextAttributeEnum) evt.getNewValue();
-					if (attribute == ContextAttributeEnum.EMPTY) {
-						comparisonModeComboBox.setVisible(false);
-
-						datePanel.setVisible(false);
-						datePicker.setVisible(false);
-
-						compareValueTextField.setVisible(false);
-					} else {
-						comparisonModeComboBox.setVisible(true);
-						if (attribute.getDataType() == DataTypeEnum.DATE) {
-							datePanel.setVisible(true);
-							datePicker.setVisible(true);
-							compareValueTextField.setVisible(false);
-						} else {
-							datePanel.setVisible(false);
-							datePicker.setVisible(false);
-							compareValueTextField.setVisible(true);
-						}
-					}
-				} else if (evt.getPropertyName().equals("id")) {
-					// TODO: nicht auf View! Code entfernen?
-				} else if (evt.getPropertyName().equals("ruleName")) {
-					reiterNameLabel.setText((String) evt.getNewValue());
-				} else if (evt.getPropertyName().equals("compareValue")) {
-					ContextAttributeEnum attribute = (ContextAttributeEnum) attributeComboBox.getSelectedItem();
-
-					if (attribute.getDataType() == DataTypeEnum.DATE) {
-						Date compareDate;
-						try {
-							compareDate = rulePanelView.simpleDateFormat.parse(ruleModel.getCompareValue());
-						} catch (ParseException e1) {
-							throw new IllegalArgumentException("invalid date: " + ruleModel.getCompareValue());
-						}
-						modelDate.setValue(compareDate);
-					} else {
-						compareValueTextField.setText((String) evt.getNewValue());
-					}
-
-				}
-			}
-		});
-
-		/******************
-		 * 
-		 * 
-		 * 
-		 * private JComboBox<ContextTypeEnum> ; private
-		 * JComboBox<ContextAttributeEnum> ; private
-		 * JComboBox<ComparisonTypeEnum> ; private JTextField ;
-		 */
-
-		this.add(paneBuilder.build());
-	}
-
-	private void configureBinding() {
-		contextComboBox.setSelectedItem(this.ruleModel.getContextType());
-	}
-
-	private void createComponent() {
-		ContextTypeEnum[] contextList = rulePanelView
-				.getContextList(this.ruleModel.getContextType() == ContextTypeEnum.EMPTY);
-		contextComboBox = new JComboBox<ContextTypeEnum>(contextList);
-		attributeComboBox = new JComboBox<ContextAttributeEnum>(
-				rulePanelView.getAttributList(ruleModel.getContextType()));
+		ruleModel.addPropertyChangeListener(new MyPropertyChangeListener()); 
 	}
 
 	private FormBuilder setLayout() {
@@ -236,6 +152,9 @@ public class RulePanel extends JPanel {
 		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.rule.from")).rcw(9, 1, 7);
 		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.rule.to")).rcw(9, 4, 2);
 		paneBuilder.add(datePicker).rcw(11, 4, 6);
+		paneBuilder.add(compareValueTextField).rcw(15, 1, 9);
+
+		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
 
 		return paneBuilder;
 	}
@@ -251,11 +170,10 @@ public class RulePanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 
-			int tabIndex = RulePanel.this.rulePanelView.tabbedPane.getSelectedIndex();
-			RegelModel ruleModel = RulePanel.this.rulePanelView.getModel().getRuleModelList().get(tabIndex);
+
 			if (e.getSource() instanceof JComboBox) {
 				JComboBox comboBox = (JComboBox) e.getSource();
-				int selectedIndex = comboBox.getSelectedIndex();
+
 
 				if (comboBox == contextComboBox) {
 					if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { // ContextTypeEnum.EMPTY))
@@ -264,9 +182,11 @@ public class RulePanel extends JPanel {
 					}
 					System.out.println("contextComboBox: " + contextComboBox.getModel().getSelectedItem());
 					ruleModel.setContextType((ContextTypeEnum) contextComboBox.getSelectedItem());
+					
 					// abhängiges AttributeContext neu aufbauen
 					attributeComboBox.setModel(getAttributeModel(ruleModel)); // .getContextType()));
-
+					ruleModel.setContextAttribute(ContextAttributeEnum.EMPTY);
+					
 					attributeComboBox.setVisible(attributeComboBox.getModel().getSize() != 0);
 				} else if (comboBox == attributeComboBox) {
 					System.out.println("attributeComboBox: "
@@ -321,4 +241,65 @@ public class RulePanel extends JPanel {
 			}
 		}
 	}
+	
+	private class MyPropertyChangeListener implements PropertyChangeListener {
+
+		// TODO: abhängige Comboboxen hier cheken und aufbauen?
+		// oder im ActionListener?
+
+		public void propertyChange(PropertyChangeEvent evt) {
+			if (evt.getPropertyName().equals("compareValue")) { 
+				System.out.println("Property: compareValue");
+				// compareTextField
+			} else if (evt.getPropertyName().equals("comparisonType")) {
+				comparisonModeComboBox.setSelectedItem(evt.getNewValue());
+			} else if (evt.getPropertyName().equals("contextType")) {
+				contextComboBox.setSelectedItem(evt.getNewValue());
+			} else if (evt.getPropertyName().equals("contextAttribute")) {
+				attributeComboBox.setSelectedItem(evt.getNewValue());
+				//
+				// je nach Attribute Datum-Picker oder compareValueField
+				ContextAttributeEnum attribute = (ContextAttributeEnum) evt.getNewValue();
+				if (attribute == ContextAttributeEnum.EMPTY) {
+					comparisonModeComboBox.setVisible(false);
+
+					datePanel.setVisible(false);
+					datePicker.setVisible(false);
+
+					compareValueTextField.setVisible(false);
+				} else {
+					comparisonModeComboBox.setVisible(true);
+					if (attribute.getDataType() == DataTypeEnum.DATE) {
+						datePanel.setVisible(true);
+						datePicker.setVisible(true);
+						compareValueTextField.setVisible(false);
+					} else {
+						datePanel.setVisible(false);
+						datePicker.setVisible(false);
+						compareValueTextField.setVisible(true);
+					}
+				}
+			} else if (evt.getPropertyName().equals("id")) {
+				// TODO: nicht auf View! Code entfernen?
+			} else if (evt.getPropertyName().equals("ruleName")) {
+				reiterNameLabel.setText((String) evt.getNewValue());
+			} else if (evt.getPropertyName().equals("compareValue")) {
+				ContextAttributeEnum attribute = (ContextAttributeEnum) attributeComboBox.getSelectedItem();
+
+				if (attribute.getDataType() == DataTypeEnum.DATE) {
+					Date compareDate;
+					try {
+						compareDate = rulePanelView.simpleDateFormat.parse(ruleModel.getCompareValue());
+					} catch (ParseException e1) {
+						throw new IllegalArgumentException("invalid date: " + ruleModel.getCompareValue());
+					}
+					((UtilDateModel)datePanel.getModel()).setValue(compareDate);
+				} else {
+					compareValueTextField.setText((String) evt.getNewValue());
+				}
+
+			}
+		}
+	}
+
 }

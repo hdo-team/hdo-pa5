@@ -1,5 +1,7 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
+import java.util.ArrayList;
+
 /**
  * Regelmodel
  * 
@@ -22,7 +24,10 @@ public class RegelModel extends Model {
 	private Integer id;
 	private String ruleName;
 
-	
+	private RegelModel() {
+		// don't creat new Instance
+		// use 	public static RegelsetModel getNullModel() {
+	}
 
 	public String getCompareValue() {
 		return compareValue;
@@ -82,5 +87,15 @@ public class RegelModel extends Model {
 		String oldValue = this.ruleName;
 		this.ruleName = ruleName;
 		firePropertyChange("ruleName", oldValue, ruleName);
+	}
+	
+	public static RegelModel getNullModel() {
+		RegelModel model = new RegelModel();
+
+		model.setContextType(ContextTypeEnum.EMPTY);
+		model.setContextAttribute(ContextAttributeEnum.EMPTY);
+		model.setComparisonType(ComparisonTypeEnum.EMPTY);
+		
+		return model;
 	}
 }

@@ -98,13 +98,12 @@ public class RegelsetView extends View<RegelsetModel> {
 		return allFolders.toArray(new String[0]);
 	}
 
-	ContextTypeEnum[] getContextList(boolean firstShow) { 
+	ContextTypeEnum[] getContextList() { 
 
 		List<ContextTypeEnum> contextList = new ArrayList<ContextTypeEnum>();
 
-		if (firstShow) {
-			contextList.add(ContextTypeEnum.EMPTY);
-		}
+		// beim Neuerstellen ist erster Eintrag leer
+		contextList.add(ContextTypeEnum.EMPTY);
 		for (ContextTypeEnum contextItem : ContextTypeEnum.values()) {
 			if (!contextItem.equals(ContextTypeEnum.EMPTY)) {
 				contextList.add(contextItem);
@@ -169,7 +168,7 @@ public class RegelsetView extends View<RegelsetModel> {
 			public void actionPerformed(ActionEvent e) {
 				// TDODO Check's auf Null oder ist dies aus der DB gegeneben?
 				// 	Rulesets ohne Rules sind nicht möglich
-				RegelModel ruleModel = new RegelModel();
+				RegelModel ruleModel = RegelModel.getNullModel();
 				getModel().getRuleModelList().add(tabbedPane.getSelectedIndex(), ruleModel);
 				tabbedPane.add("frisch geADDed", new RulePanel(RegelsetView.this, ruleModel)); // getModel()));
 			}
