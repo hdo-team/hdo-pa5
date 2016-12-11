@@ -14,6 +14,6 @@ public class RegelsetTableUpdateOperationExecutable implements Executable {
 
 	public void execute(Object arg) {
 		RegelsetFacade facade = new RegelsetFacade();
-		model.steRulsetList(facade.getAllRegelsets());
+		model.setRulsetList(facade.getAllRegelsets());
 	}
 }

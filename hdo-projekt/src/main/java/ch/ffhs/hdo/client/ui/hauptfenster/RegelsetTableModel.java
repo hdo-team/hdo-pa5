@@ -40,7 +40,7 @@ public class RegelsetTableModel extends Model {
 		return rulsets;
 	}
 	
-	public void steRulsetList(ArrayList<RegelsetModel> rulsets) {
+	public void setRulsetList(ArrayList<RegelsetModel> rulsets) {
 		this.rulsets=rulsets;
 	}
 
