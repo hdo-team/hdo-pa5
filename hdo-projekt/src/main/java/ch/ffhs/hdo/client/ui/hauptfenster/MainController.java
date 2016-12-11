@@ -66,7 +66,6 @@ public class MainController extends Controller<MainModel, MainView> {
 
 		getView().getRegelsetTableView().setModel(getModel().getRegelsetModel());
 		getView().getFolderTreeView().setModel(getModel().getFolderModel());
-		System.out.println(getView().getFolderTreeView().getModel());
 		getView().getRegelsetTableView().setHandler(viewHandler);
 		getView().getFolderTreeView().setHandler(viewHandler);
 	}
