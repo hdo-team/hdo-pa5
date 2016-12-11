@@ -43,7 +43,7 @@ public class SortService extends SwingWorker<String, Integer> {
 	@Override
 	protected void done() {
 		super.done();
-		mainModel.setServiceStatus(ServiceStatus.DONE);
+		mainModel.setServiceStatus(ServiceStatus.START);
 	}
 
 	@Override
@@ -94,6 +94,9 @@ public class SortService extends SwingWorker<String, Integer> {
 				}
 
 			}
+
+			// Sortiervorgang protokollieren.
+
 		
 		return null;
 	}
