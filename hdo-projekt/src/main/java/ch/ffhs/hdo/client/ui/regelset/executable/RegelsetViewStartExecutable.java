@@ -5,6 +5,12 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetController;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
+/**
+ * RegelsetViewStartExecutable
+ * 
+ * @author Daniel Crazzolara
+ */
+
 public class RegelsetViewStartExecutable implements Executable<Object> {
 
 	public void execute(Object args) {

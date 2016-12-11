@@ -26,7 +26,7 @@ public class ServiceStartOperationExecutable implements Executable {
 					model.setServiceStatus(ServiceStatus.STOP);
 					sortService.cancel(true);
 				} else {
-					this.sortService = new SortService(model);
+					// TODO :  da notVisible => entfernt, damit Pgm trotzdem startet  this.sortService = new SortService(model);
 					sortService.execute();
 
 				}

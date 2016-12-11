@@ -3,6 +3,8 @@ package ch.ffhs.hdo.client.ui.regelset;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +37,7 @@ import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 /******************************************************
- * 
- * 
- * 
- * wird noch überarbeitet !!!!!!!!!!!!!!!!
- * 
- * 
- * 
- * 
+ * RegelsetView 
  * 
  * @author Daniel Crazzolara
  *
@@ -59,7 +54,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private JTextField targetDirectoryTextField;
 
-	private JComboBox targetDirectoryComboBox;
+	private JComboBox<String> targetDirectoryComboBox;
 
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -99,7 +94,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		List<ContextTypeEnum> contextList = new ArrayList<ContextTypeEnum>();
 
-		// beim Neuerstellen ist erster Eintrag leer
 		contextList.add(ContextTypeEnum.EMPTY);
 		for (ContextTypeEnum contextItem : ContextTypeEnum.values()) {
 			if (!contextItem.equals(ContextTypeEnum.EMPTY)) {
@@ -114,7 +108,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		List<ContextAttributeEnum> attributeList = new ArrayList<ContextAttributeEnum>();
 
-		// beim Neuerstellen ist erster Eintrag leer
 		attributeList.add(ContextAttributeEnum.EMPTY);
 		for (ContextAttributeEnum attributeItem : ContextAttributeEnum.values(contextEnum)) {
 			attributeList.add(attributeItem);
@@ -128,7 +121,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		final ComparisonTypeEnum[] comparisontype = attributeEnum.getDataType().getComparisontype();
 
-		// beim Neuerstellen ist erster Eintrag leer
 		comparisonList.add(ComparisonTypeEnum.EMPTY);
 		for (ComparisonTypeEnum comparisonTypeEnum : comparisontype) {
 
@@ -161,12 +153,19 @@ public class RegelsetView extends View<RegelsetModel> {
 		addButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// TDODO Check's auf Null oder ist dies aus der DB gegeneben?
+				// TODO Check's auf Null oder ist dies aus der DB gegeneben?
 
 				// 	Rulesets ohne Rules sind nicht möglich
 				RegelModel ruleModel = RegelModel.getNullModel();
+
 				getModel().getRuleModelList().add(tabbedPane.getSelectedIndex(), ruleModel);
-				tabbedPane.add("frisch geADDed", new RulePanel(RegelsetView.this, ruleModel)); // getModel()));
+				ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + (tabbedPane.getTabCount() + 1));
+
+				//tabbedPane.add(ruleModel.getRuleName(), new RulePanel(RegelsetView.this, ruleModel));
+				
+				tabbedPane.insertTab("Insert-Pos", null, new RulePanel(RegelsetView.this, ruleModel), null, 2);
+				
+				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 			}
 		});
 
@@ -237,29 +236,12 @@ public class RegelsetView extends View<RegelsetModel> {
 		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
 		newFilenameTextField.setText(getModel().getNewFilename());
 		statusCheckBox.setSelected(getModel().isRuleActiv());
-		/*
-		 * getModel().addPropertyChangeListener(new PropertyChangeListener() {
-		 * public void propertyChange(PropertyChangeEvent evt) { // TODO ist
-		 * dies nötig??
-		 * 
-		 * if (evt.getPropertyName() == "directories") { // TODO: es gehört nur
-		 * das ausgewählte directory ins Model ?! // und nicht die ganze Liste
-		 * 
-		 * } else if (evt.getPropertyName() == "newFilename") {
-		 * newFilenameTextField.setText(getModel().getNewFilename()); } else if
-		 * (evt.getPropertyName() == "rulesetId") { // NICHT AUF View } else if
-		 * (evt.getPropertyName() == "priority") { // Nicht auf DIESER VIEW =>
-		 * .... } else if (evt.getPropertyName() == "ruleActiv") {
-		 * statusCheckBox.setSelected(getModel().isRuleActiv()); } else if
-		 * (evt.getPropertyName() == "ruleList") {
-		 * 
-		 * } else if (evt.getPropertyName() == "rulesetName") {
-		 * regelsetNameTextField.setText(getModel().getRulesetName()); } else if
-		 * (evt.getPropertyName() == "targetDirectory") {
-		 * targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory
-		 * ()); } } });
-		 */
-
+		
+		// TODO: Ohne PropertyChangeListener funktionierts besser
+		//
+		//getModel().addPropertyChangeListener(new MyPropertyChangeListener());
+		
+		
 		List<RegelModel> regelModel = getModel().getRuleModelList();
 
 		statusCheckBox.addActionListener(new ActionListener() {
@@ -283,15 +265,19 @@ public class RegelsetView extends View<RegelsetModel> {
 		regelsetNameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(regelsetNameTextField));
 		newFilenameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(newFilenameTextField));
 
+		int counter = 1;
 		for (RegelModel ruleModel : getModel().getRuleModelList()) {
-			String name;
+			ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + counter);
+			counter++;
+			/***
 			if (ruleModel.getContextType() != null) {
-				name = ruleModel.getContextType().toString();
+				//name = ruleModel.getContextType().toString();
 			} else {
 				name = "TODO: Titel generisch generieren..."; // .. gemäss
 																// Combo-Auswahl
 			}
-			tabbedPane.addTab(name, new RulePanel(this, ruleModel));
+			***/
+			tabbedPane.addTab(ruleModel.getRuleName(), new RulePanel(this, ruleModel));
 		}
 
 	}
@@ -375,4 +361,31 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 	}
 
+	private class MyPropertyChangeListener implements PropertyChangeListener {
+		
+		
+		 public void propertyChange(PropertyChangeEvent evt) { 
+			 if (evt.getPropertyName() == "directories") { 
+				 // TODO: gehört directories ins Model?
+				 //       oder immer neu ab FileSystem lesen?
+			 } else if (evt.getPropertyName() == "newFilename") {
+				 newFilenameTextField.setText(getModel().getNewFilename());
+			 } else if (evt.getPropertyName() == "rulesetId") { // NICHT AUF View  
+				 
+			 } else if (evt.getPropertyName() == "priority") { // Nicht auf DIESER VIEW =>
+			 } else if (evt.getPropertyName() == "ruleActiv") {
+				 statusCheckBox.setSelected(getModel().isRuleActiv()); 
+			 } else if (evt.getPropertyName() == "ruleList") {
+				  
+		     } else if (evt.getPropertyName() == "rulesetName") {
+		    	 if (! evt.getOldValue().equals(evt.getNewValue())) {
+		    		 regelsetNameTextField.setText(getModel().getRulesetName());
+		    	 }
+		     } else if (evt.getPropertyName() == "targetDirectory") {
+		    	 if (! evt.getOldValue().equals(evt.getNewValue())) {
+		    		 targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
+		    	 }
+		     }
+		}
+	}
 }

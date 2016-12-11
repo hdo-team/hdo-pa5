@@ -16,7 +16,7 @@ public class RegelsetConverter {
 
 	public static RegelsetModel convert(RegelsetDto regelsetDto) {
 
-		RegelsetModel regelsetModel = new RegelsetModel();
+		RegelsetModel regelsetModel = RegelsetModel.getNullModel();
 
 		regelsetModel.setRulesetId(regelsetDto.getId());
 		regelsetModel.setRulesetName(regelsetDto.getRulesetName());
@@ -26,7 +26,7 @@ public class RegelsetConverter {
 		regelsetModel.setPriority(Integer.valueOf(regelsetDto.getPrority()));
 		regelsetModel.setRuleActiv(regelsetDto.isActive());
 
-		final ArrayList<RegelModel> regelModelList = new ArrayList<RegelModel>();
+		List<RegelModel> regelModelList = regelsetModel.getRuleModelList();
 
 		final List<RegelDto> regeln = regelsetDto.getRegeln();
 		for (RegelDto regeldto : regeln) {
@@ -34,7 +34,6 @@ public class RegelsetConverter {
 			final RegelModel regelmodel = RegelConverter.convert(regeldto, regelsetModel.getRulesetId());
 			regelModelList.add(regelmodel);
 		}
-		regelsetModel.setRuleModelList(regelModelList);
 
 		return regelsetModel;
 

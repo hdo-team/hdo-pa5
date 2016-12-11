@@ -6,30 +6,24 @@ import java.util.List;
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 
+
+/**
+ * Controller für das RegelsetModel
+ * 
+ * @author Daniel Crazzolara
+ */
+
 public class RegelsetModel extends Model {
 
 	private Long filenameCounter;
 	private String newFilename;
 	private Integer rulesetId;
-	private Integer priority; // TODO: ?? evtl. nur in DB?? oder nötig für
-								// Jonas?
+	private Integer priority;
 	private boolean ruleActiv;
-	private List<RegelModel> ruleModelList; // alle Regeln pro Regelset werden
-											// AND-verknuepft
+	private List<RegelModel> ruleModelList;
 	private String rulesetName;
 	private String targetDirectory;
 	private RegelsetTableModel regelsetTableModel;
-
-	/**
-	 * TODO: getXyzList().add(xy) funktionier nicht => kein fireProperty?? TODO:
-	 * bruacht's das überhaupt oder ist Inhalt "fix" ab DB? kein dynamisches
-	 * Nachladen? => final => keine andere LIST zuweisbar? aber doch List.add()
-	 * möglich???
-	 * 
-	 * 
-	 * TODO: KEIN Setter für List<> ??
-	 * 
-	 */
 
 	public Long getFilenameCounter() {
 		return filenameCounter;
@@ -96,12 +90,6 @@ public class RegelsetModel extends Model {
 		firePropertyChange("ruleActiv", oldValue, ruleActiv);
 	}
 
-	public void setRuleModelList(List<RegelModel> ruleList) {
-		List<RegelModel> oldValue = this.ruleModelList;
-		this.ruleModelList = ruleList;
-		firePropertyChange("ruleList", oldValue, ruleList);
-	}
-
 	public void setRulesetName(String rulesetName) {
 		String oldValue = this.rulesetName;
 		this.rulesetName = rulesetName;
@@ -127,8 +115,8 @@ public class RegelsetModel extends Model {
 		model.setFilenameCounter(0L);
 		model.setPriority(0);
 		model.setRuleActiv(true);
-		model.setRuleModelList(new ArrayList<RegelModel>());
-		model.getRuleModelList().add(RegelModel.getNullModel());  // TODO: nicht nötig; wir bei <<add REegel>> gemacht? 
+		model.ruleModelList = new ArrayList<RegelModel>();
+		model.getRuleModelList().add(RegelModel.getNullModel()); 
 		return model;
 	}
 

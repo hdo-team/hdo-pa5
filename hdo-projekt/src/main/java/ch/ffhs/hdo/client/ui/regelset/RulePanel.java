@@ -47,9 +47,16 @@ public class RulePanel extends JPanel {
 	private JDatePanelImpl datePanel;
 	private RegelModel model;
 
+	
 	DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
 	DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
 
+	RulePanel getRulePanel() {
+		return this;
+	}
+	
+	
+	
 	private DefaultComboBoxModel<ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
 		DefaultComboBoxModel<ContextAttributeEnum> attributeModel = null;
 
@@ -85,8 +92,6 @@ public class RulePanel extends JPanel {
 		super();
 		rulePanelView = regelsetView;
 		this.model= ruleModel;
-
-		
 		
 		createComponent();
 		setComboboxModel();
@@ -95,7 +100,9 @@ public class RulePanel extends JPanel {
 		setLayout();
 	}
 
+	
 	private void configureBinding() {
+									
 		contextComboBox.setSelectedItem(getModel().getContextType());
 		attributeComboBox.setSelectedItem(getModel().getContextAttribute());
 		comparisonModeComboBox.setSelectedItem(getModel().getComparisonType());
@@ -151,8 +158,9 @@ public class RulePanel extends JPanel {
 						"right:pref, 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p, $lg, p, $lg, p");
 
-		reiterNameLabel = new JLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.sortrule"));
-		paneBuilder.add(reiterNameLabel).rcw(1, 1, 7);
+		// TODO: Titel von TAB  reiterNameLabel = new JLabel();
+
+		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.sortrule")).rcw(1, 1, 7);
 		paneBuilder.add(contextComboBox).rcw(3, 1, 1);
 		paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 		paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
@@ -189,7 +197,7 @@ public class RulePanel extends JPanel {
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_FILE));
 	}
 
-	private class ComboBoxActionListener implements ActionListener {
+	private class ComboBoxActionListenerALT implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 
@@ -197,15 +205,21 @@ public class RulePanel extends JPanel {
 				JComboBox comboBox = (JComboBox) e.getSource();
 
 				if (comboBox == contextComboBox) {
-					if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { // ContextTypeEnum.EMPTY))
-																									// {
-						contextComboBox.removeItemAt(0);
+					if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { 
+						// -TODO
+						//contextComboBox.removeItemAt(0);
 					}
 					LOGGER.debug("contextComboBox: " + contextComboBox.getModel().getSelectedItem());
+
 					model.setContextType((ContextTypeEnum) contextComboBox.getSelectedItem());
 
 					// abhängiges AttributeContext neu aufbauen
-					attributeComboBox.setModel(getAttributeModel(model)); // .getContextType()));
+System.out.println("attributeComboBox:_ " + attributeComboBox); 
+System.out.println("model: " + model);
+System.out.println("model-ctx: " + getModel().getContextType());
+System.out.println("model-attr: " + getModel().getContextAttribute());
+System.out.println("model-comp: " + getModel().getCompareValue());
+					attributeComboBox.setModel(getAttributeModel(getModel()));
 					model.setContextAttribute(ContextAttributeEnum.EMPTY);
 
 					attributeComboBox.setVisible(attributeComboBox.getModel().getSize() != 0);
@@ -229,6 +243,37 @@ public class RulePanel extends JPanel {
 		}
 	}
 
+	
+	private class ComboBoxActionListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
+			if (e.getSource() instanceof JComboBox) {
+				JComboBox comboBox = (JComboBox) e.getSource();
+
+				if (comboBox == contextComboBox) {
+					if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { 
+						// -TODO
+						//contextComboBox.removeItemAt(0);
+					}
+					LOGGER.debug("contextComboBox: " + contextComboBox.getModel().getSelectedItem());
+
+					model.setContextType((ContextTypeEnum) contextComboBox.getSelectedItem());
+				} else if (comboBox == attributeComboBox) {
+					System.out.println("attributeComboBox: "
+							+ ((ContextAttributeEnum) attributeComboBox.getModel().getSelectedItem()).name());
+					model.setContextAttribute((ContextAttributeEnum) attributeComboBox.getModel().getSelectedItem());
+				} else if (comboBox == comparisonModeComboBox) {
+					System.out
+							.println("comparisonModeComboBox: " + comparisonModeComboBox.getModel().getSelectedItem());
+					model.setComparisonType((ComparisonTypeEnum) comparisonModeComboBox.getModel().getSelectedItem());
+				}
+			}
+		}
+	}
+
+	
+	
 	private class RegelsetDocumentListener implements DocumentListener {
 
 		// TODO gleicher DocumentListener für RegelsetView + RulePanel
@@ -274,8 +319,23 @@ public class RulePanel extends JPanel {
 				comparisonModeComboBox.setSelectedItem(evt.getNewValue());
 			} else if (evt.getPropertyName().equals("contextType")) {
 				contextComboBox.setSelectedItem(evt.getNewValue());
+				if (! evt.getNewValue().equals(evt.getOldValue())) {
+					model.setContextAttribute(ContextAttributeEnum.EMPTY);
+					attributeComboBox.setModel(getAttributeModel(getModel()));
+					attributeComboBox.setVisible(attributeComboBox.getModel().getSize() != 0);
+					
+					model.setRuleName(evt.getNewValue().toString());
+				}
 			} else if (evt.getPropertyName().equals("contextAttribute")) {
 				attributeComboBox.setSelectedItem(evt.getNewValue());
+				if (! evt.getNewValue().equals(evt.getOldValue())) {
+					// => neu Comparison Combo aufbauen
+					model.setComparisonType(ComparisonTypeEnum.EMPTY);
+					comparisonModeComboBox.setModel(getComparisonModeModel(model.getContextAttribute()));
+				}
+			
+				
+				
 				//
 				// je nach Attribute Datum-Picker oder compareValueField
 				ContextAttributeEnum attribute = (ContextAttributeEnum) evt.getNewValue();
@@ -301,7 +361,7 @@ public class RulePanel extends JPanel {
 			} else if (evt.getPropertyName().equals("id")) {
 				// TODO: nicht auf View! Code entfernen?
 			} else if (evt.getPropertyName().equals("ruleName")) {
-				reiterNameLabel.setText((String) evt.getNewValue());
+				// TODO: Tab-Titel anpassen reiterNameLabel.setText((String) evt.getNewValue());
 			} else if (evt.getPropertyName().equals("compareValue")) {
 				ContextAttributeEnum attribute = (ContextAttributeEnum) attributeComboBox.getSelectedItem();
 

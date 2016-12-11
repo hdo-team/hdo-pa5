@@ -1,18 +1,17 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
-import java.util.ArrayList;
-
-/**
- * Regelmodel
- * 
- * 
- * @author Daniel Crazzolara
- */
-
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
+
+
+/**
+ * RegelModel
+ * 
+ * 
+ * @author Daniel Crazzolara
+ */
 
 public class RegelModel extends Model {
 
