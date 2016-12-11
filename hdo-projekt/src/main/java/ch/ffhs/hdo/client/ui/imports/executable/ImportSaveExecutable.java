@@ -15,20 +15,19 @@ public class ImportSaveExecutable implements Executable<ImportModel> {
 	private ImportModel model;
 
 	public ImportSaveExecutable(ImportModel model) {
-		
 		this.model = model;
 
 	}
 
 	public void execute(ImportModel arg) {
 		
-		String inboxPath = ApplicationSettings.getInstance().getInbox_path() + "/.db/";
+		String inboxPath = ApplicationSettings.getInstance().getInbox_path() + "/.db";
 		
 		// Importdatei und Zielverzeichnis angeben
 		File archive = new File(model.getFilePath());
 		File destination = new File(inboxPath);
 	
-		
+		// Importdatei entpacken und in Ordner verschieben
 		Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
 		try {
 			archiver.extract(archive, destination);
@@ -36,13 +35,5 @@ public class ImportSaveExecutable implements Executable<ImportModel> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		/**
-		// Tar.gz Datei entpacken und ablegen
-		final TarUnArchiver ua = new TarUnArchiver();
-		ua.setSourceFile(archive);
-		ua.setDestDirectory(destination);
-		ua.extract();*/
-
 	}
 }

@@ -10,9 +10,9 @@ public class ExportDao extends JdbcHelper {
 	private String filePath;
 
 	public void backup(ExportModel model) throws SQLException {
-		
-		filePath = model.getFilePath();
-		filePath = filePath + "\\";
+	
+		// Pfad komplett mit letztem Slash angeben
+		filePath = model.getFilePath() + "\\";
 		
 		String BACKUP = "BACKUP DATABASE TO " + "'" + filePath + "' BLOCKING";
 		
