@@ -8,16 +8,12 @@ public class RegelsetTableUpdateOperationExecutable implements Executable {
 
 	private RegelsetTableModel model;
 
-	public RegelsetTableUpdateOperationExecutable() {
-		
-		
-
+	public RegelsetTableUpdateOperationExecutable(RegelsetTableModel model) {
+		this.model=model;
 	}
 
 	public void execute(Object arg) {
-
 		RegelsetFacade facade = new RegelsetFacade();
-		facade.getAllRegelsets();
-
+		model.steRulsetList(facade.getAllRegelsets());
 	}
 }

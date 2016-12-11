@@ -54,7 +54,7 @@ public class MainController extends Controller<MainModel, MainView> {
 		this.viewHandler.addOperation(ServiceStartOperation.class,
 				new ServiceStartOperationExecutable(getModel().getRegelsetModel()));
 		this.viewHandler.addOperation(RegelsetSwapOperation.class, new RegelsetSwapOperationExecutable());
-		this.viewHandler.addOperation(RegelsetTableUpdateOperation.class, new RegelsetTableUpdateOperationExecutable());
+		this.viewHandler.addOperation(RegelsetTableUpdateOperation.class, new RegelsetTableUpdateOperationExecutable(this.getModel().getRegelsetModel()));
 
 	}
 
