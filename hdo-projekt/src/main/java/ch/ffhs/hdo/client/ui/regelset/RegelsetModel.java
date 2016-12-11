@@ -7,7 +7,6 @@ import ch.ffhs.hdo.client.ui.base.Model;
 
 public class RegelsetModel extends Model {
 
-	private List<String> directories; // Liste mit möglichen Ziel-Verzeichnissen
 	private Long filenameCounter;
 	private String newFilename;
 	private Integer rulesetId;
@@ -29,10 +28,6 @@ public class RegelsetModel extends Model {
 	 * TODO: KEIN Setter für List<> ??
 	 * 
 	 */
-
-	public List<String> getDirectories() {
-		return directories;
-	}
 
 	public Long getFilenameCounter() {
 		return filenameCounter;
@@ -73,12 +68,6 @@ public class RegelsetModel extends Model {
 		Long oldValue = this.filenameCounter;
 		this.filenameCounter = filenameCounter;
 		firePropertyChange("filenameCounter", oldValue, filenameCounter);
-	}
-
-	public void setDirectories(List<String> directories) {
-		List<String> oldValue = this.directories;
-		this.directories = directories;
-		firePropertyChange("directories", oldValue, directories);
 	}
 
 	public void setNewFilename(String newFilename) {

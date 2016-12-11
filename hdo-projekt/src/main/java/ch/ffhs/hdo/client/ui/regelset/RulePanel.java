@@ -77,7 +77,6 @@ public class RulePanel extends JPanel {
 
 		
 		setComboboxModel();
-
 		
 		
 		
@@ -97,6 +96,7 @@ public class RulePanel extends JPanel {
 		attributeComboBox = new JComboBox<ContextAttributeEnum>(
 				rulePanelView.getAttributList(ruleModel.getContextType()));
 		attributeComboBox.setSelectedItem(ruleModel.getContextAttribute());
+
 		paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
 
 		comparisonModeComboBox = new JComboBox<ComparisonTypeEnum>(
@@ -140,7 +140,8 @@ public class RulePanel extends JPanel {
 				ruleModel.setCompareValue(RulePanel.this.rulePanelView.simpleDateFormat.format(date));
 			}
 		});
-
+		
+		
 		ActionListener al = new ComboBoxActionListener();
 		contextComboBox.addActionListener(al);
 		attributeComboBox.addActionListener(al);

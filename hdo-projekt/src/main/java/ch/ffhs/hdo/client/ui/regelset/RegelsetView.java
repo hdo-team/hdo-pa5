@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.net.CookieManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,6 @@ public class RegelsetView extends View<RegelsetModel> {
 	private final String TITLE_KEY = I18N + ".title";
 	private JTextField regelsetNameTextField;
 	private JTextField newFilenameTextField;
-	private JTextField filenameCounter;
 
 	private JTextField targetDirectoryTextField;
 
@@ -107,7 +105,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		if (firstShow) {
 			contextList.add(ContextTypeEnum.EMPTY);
 		}
-
 		for (ContextTypeEnum contextItem : ContextTypeEnum.values()) {
 			if (!contextItem.equals(ContextTypeEnum.EMPTY)) {
 				contextList.add(contextItem);
@@ -121,13 +118,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		
 		List<ContextAttributeEnum> attributeList = new ArrayList<ContextAttributeEnum>();
 
-		if (contextEnum == ContextTypeEnum.EMPTY) {
-			// return attributeList.toArray(new ContextAttributeEnum[0]); //
-			// darf eigentlich nicht null sein ///Leer ODER mit EMPTY-item ?
-			attributeList.add(ContextAttributeEnum.EMPTY);
-		}
-
-		
+		// beim Neuerstellen ist erster Eintrag leer
+		attributeList.add(ContextAttributeEnum.EMPTY);
 		for (ContextAttributeEnum attributeItem : ContextAttributeEnum.values(contextEnum)) {
 			attributeList.add(attributeItem);
 		}
@@ -140,6 +132,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		List<ComparisonTypeEnum> comparisonList = new ArrayList<ComparisonTypeEnum>();
 		
 		final ComparisonTypeEnum[] comparisontype = attributeEnum.getDataType().getComparisontype();
+
+		// beim Neuerstellen ist erster Eintrag leer
+		comparisonList.add(ComparisonTypeEnum.EMPTY);
 		for (ComparisonTypeEnum comparisonTypeEnum : comparisontype) {
 			
 			comparisonList.add(comparisonTypeEnum);
@@ -159,9 +154,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		newFilenameTextField = new JTextField();
 		statusCheckBox = new JCheckBox(getMessage(I18N + ".checkbox.status"));
 
-		filenameCounter = new JTextField();
-		
-		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		addButton = new JButton(getMessage(I18N + ".button.add.icon"));
@@ -176,7 +168,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				// TDODO Check's auf Null oder ist dies aus der DB gegeneben?
-				// Rulesets ohne Rules sind nicht möglich
+				// 	Rulesets ohne Rules sind nicht möglich
 				RegelModel ruleModel = new RegelModel();
 				getModel().getRuleModelList().add(tabbedPane.getSelectedIndex(), ruleModel);
 				tabbedPane.add("frisch geADDed", new RulePanel(RegelsetView.this, ruleModel)); // getModel()));
@@ -219,9 +211,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(9, 1, 2);
 		builder.add(newFilenameTextField).rcw(11, 1, 2);
 		
-		builder.addLabel(getMessage(I18N + ".label.filenameCounter")).rcw(9, 3, 2);
-		builder.add(filenameCounter).rcw(11, 3, 2);
-
 		builder.addLabel(getMessage(I18N + ".label.status")).rcw(13, 1, 3);
 		builder.add(statusCheckBox).rcw(15, 1, 3);
 
@@ -249,18 +238,16 @@ public class RegelsetView extends View<RegelsetModel> {
 	@Override
 	public void configureBindings() {
 
-		//regelsetNameTextField.setText(getModel().getRulesetName());
-		//newFilenameTextField.setText(getModel().getNewFilename());
-		//statusCheckBox.setSelected(getModel().isRuleActiv());
-		
+		regelsetNameTextField.setText(getModel().getRulesetName());
+		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
+		newFilenameTextField.setText(getModel().getNewFilename());
+		statusCheckBox.setSelected(getModel().isRuleActiv());
+		/*
 		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				// TODO ist dies nötig??
 				
-				if (evt.getPropertyName() == "filenameCounter") {
-					// TODO: brauchen wir den FileCounter nocht??
-					
-				} else if (evt.getPropertyName() == "directories") {
+				if (evt.getPropertyName() == "directories") {
 					// TODO: es gehört nur das ausgewählte directory ins Model ?!
 					//       und nicht die ganze Liste
 					
@@ -278,11 +265,10 @@ public class RegelsetView extends View<RegelsetModel> {
 					regelsetNameTextField.setText(getModel().getRulesetName());
 				} else if (evt.getPropertyName() == "targetDirectory") {
 					targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
-				} else if (evt.getPropertyName() == "filecounter") {
-					//filenameCounterTextField.setText(getModel().getFilenameCounter());					
 				}
 			}
 		});
+		*/
 
 			
 		
