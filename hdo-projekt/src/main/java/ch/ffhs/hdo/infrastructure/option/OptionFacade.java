@@ -31,6 +31,15 @@ public class OptionFacade {
 
 	}
 
+	public void protocollSortServiceRun(boolean successfull) {
+		OptionDao dao = new OptionDao();
+		try {
+			dao.protocollSortServiceRun(successfull);
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim protokollieren des Sortiervorgang", e);
+		}
+	}
+
 	public void save(OptionModel model) {
 
 		OptionDao dao = new OptionDao();

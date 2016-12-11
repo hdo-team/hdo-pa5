@@ -1,12 +1,12 @@
 package ch.ffhs.hdo.domain.regel;
 
+import static ch.ffhs.hdo.domain.regel.ComparisonTypeEnum.*;
+
 public enum DataTypeEnum {
-	DATE(ComparisonTypeEnum.COMPARISON_EQUAL,
-			ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
-			ComparisonTypeEnum.COMPARISON_UNEQUAL), INT(ComparisonTypeEnum.COMPARISON_EQUAL,
-			ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL,
-			ComparisonTypeEnum.COMPARISON_UNEQUAL), NULL, STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL,
-							ComparisonTypeEnum.COMPARISON_REGEX);
+	DATE(COMPARISON_EQUAL, COMPARISON_GREATER_EQUAL, COMPARISON_LESS_EQUAL, COMPARISON_UNEQUAL), 
+	INT(COMPARISON_EQUAL,COMPARISON_GREATER_EQUAL, COMPARISON_LESS_EQUAL, COMPARISON_UNEQUAL), 
+	NULL, 
+	STRING(COMPARISON_EQUAL, COMPARISON_UNEQUAL, COMPARISON_REGEX);
 
 	private ComparisonTypeEnum[] comparisontype;
 

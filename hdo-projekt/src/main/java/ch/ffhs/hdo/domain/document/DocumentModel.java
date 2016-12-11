@@ -3,17 +3,16 @@ package ch.ffhs.hdo.domain.document;
 import java.io.File;
 import java.util.HashMap;
 
+import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
-import ch.ffhs.hdo.infrastructure.service.util.FileHandling.FileMetaData;
 import ch.ffhs.hdo.infrastructure.service.util.PdfUtils;
-import ch.ffhs.hdo.infrastructure.service.util.PdfUtils.PdfMetaData;
 
 public class DocumentModel {
 
-	private String content;
 	private File file;
-	private HashMap<FileMetaData, Object> fileMetadata;
-	private HashMap<PdfMetaData, Object> pdfMetadata;
+	private String content;
+	private HashMap<ContextAttributeEnum, Object> fileMetadata;
+	private HashMap<ContextAttributeEnum, Object> pdfMetadata;
 
 	public DocumentModel(File file) {
 
@@ -32,11 +31,11 @@ public class DocumentModel {
 		return file;
 	}
 
-	public HashMap<FileMetaData, Object> getFileMetadata() {
+	public HashMap<ContextAttributeEnum, Object> getFileMetadata() {
 		return fileMetadata;
 	}
 
-	public HashMap<PdfMetaData, Object> getPdfMetadata() {
+	public HashMap<ContextAttributeEnum, Object> getPdfMetadata() {
 		return pdfMetadata;
 	}
 

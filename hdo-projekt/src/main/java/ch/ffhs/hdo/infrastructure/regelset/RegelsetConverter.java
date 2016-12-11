@@ -5,6 +5,8 @@ import java.util.List;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.domain.regel.AbstractRegel;
+import ch.ffhs.hdo.domain.regel.Regelset;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
@@ -23,21 +25,47 @@ public class RegelsetConverter {
 		regelsetModel.setFilenameCounter(regelsetDto.getFilenameCounter());
 		regelsetModel.setPriority(Integer.valueOf(regelsetDto.getPrority()));
 		regelsetModel.setRuleActiv(regelsetDto.isActive());
-		
 
 		final ArrayList<RegelModel> regelModelList = new ArrayList<RegelModel>();
-
-		RegelConverter converter = new RegelConverter();
 
 		final List<RegelDto> regeln = regelsetDto.getRegeln();
 		for (RegelDto regeldto : regeln) {
 
-			final RegelModel regelmodel = converter.convert(regeldto,  regelsetModel.getRulesetId());
+			final RegelModel regelmodel = RegelConverter.convert(regeldto, regelsetModel.getRulesetId());
 			regelModelList.add(regelmodel);
 		}
 		regelsetModel.setRuleModelList(regelModelList);
 
 		return regelsetModel;
+
+	}
+
+	public static Regelset convertToRegelset(RegelsetDto regelsetDto) {
+
+		
+		if (regelsetDto.isActive()){
+		 
+		Regelset regelsetModel = new Regelset();
+
+		regelsetModel.setPath(regelsetDto.getTargetDirectory());
+		regelsetModel.setRenamePattern(regelsetDto.getNewFilename());
+		regelsetModel.setFilenameCounter(regelsetDto.getFilenameCounter());
+		
+
+		final ArrayList<AbstractRegel> regelList = new ArrayList<AbstractRegel>();
+
+
+		final List<RegelDto> regeln = regelsetDto.getRegeln();
+		for (RegelDto regeldto : regeln) {
+
+			final AbstractRegel regel = RegelConverter.convert(regeldto);
+			regelList.add(regel);
+		}
+		regelsetModel.setRegeln(regelList);
+
+		return regelsetModel;
+		}
+		return null;
 
 	}
 
@@ -56,10 +84,9 @@ public class RegelsetConverter {
 		final ArrayList<RegelDto> regeln = new ArrayList<RegelDto>();
 
 		final List<RegelModel> ruleModelList = model.getRuleModelList();
-		RegelConverter converter = new RegelConverter();
 		for (RegelModel regelModel : ruleModelList) {
 
-			final RegelDto convert = converter.convert(regelModel, model.getRulesetId());
+			final RegelDto convert = RegelConverter.convert(regelModel, model.getRulesetId());
 			regeln.add(convert);
 
 		}

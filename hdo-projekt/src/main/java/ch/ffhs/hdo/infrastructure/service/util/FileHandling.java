@@ -8,7 +8,6 @@ import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +18,8 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 
 /**
  * Utility um Dateien zu bearbeiten.
@@ -63,24 +64,26 @@ public class FileHandling {
 				while (destnew.exists()) {
 
 					i++;
-					String[] name = dest.getName().split("\\.(?=[^\\.]+$)");
+					String[] name = getExtension(dest);
 					destnew = new File(destnew.getParent() + File.separator + name[0] + "(" + i + ")." + name[1]);
 
 					LOGGER.debug("Try Rename File " + dest.getAbsolutePath() + " to  " + destnew.getName());
 				}
 				dest = destnew;
 			}
-
-			if (file.renameTo(dest)) {
-				LOGGER.debug("File: " + file.getName() + " moved from [" + filePath + "] to [" + newLocation + "]");
-			} else {
-				LOGGER.error("File [" + filePath + "]is failed to move to [" + newLocation + "]!");
-			}
+			FileUtils.moveFile(file, dest);
+			LOGGER.debug("File: " + file.getName() + " moved from [" + filePath + "] to [" + newLocation + "]");
 
 		} catch (Exception e) {
+			LOGGER.error("File [" + filePath + "]is failed to move to [" + newLocation + "]!");
 			LOGGER.error("Ein Fehler ist beim Verschieben aufgetreten !", e);
 		}
 
+	}
+
+	private static String[] getExtension(File dest) {
+		String[] name = dest.getName().split("\\.(?=[^\\.]+$)");
+		return name;
 	}
 
 	/**
@@ -118,41 +121,23 @@ public class FileHandling {
 	}
 
 	/**
-	 * Eigenschaften eines Files
-	 */
-	public static enum FileMetaData {
-
-		CREATION_TIME(FileTime.class), LAST_ACCESS_TIME(FileTime.class), LAST_MODIFICATION_TIME(FileTime.class), SIZE(
-				Long.class);
-
-		private Class type;
-
-		private FileMetaData(Class type) {
-			this.type = type;
-		}
-		public Class getType() {
-			return type;
-		}
-	}
-
-	/**
 	 * Liefert die Metadaten einer Datei zurück.
 	 * 
 	 * @param file
 	 *            das zu analysierende File
 	 * @return MashMap mit Key die {@link FileMetaData} mit deren Objekten
 	 */
-	public static HashMap<FileMetaData, Object> getFileMetaData(File file) {
+	public static HashMap<ContextAttributeEnum, Object> getFileMetaData(File file) {
 
-		HashMap<FileMetaData, Object> metadata = new HashMap<FileHandling.FileMetaData, Object>();
+		HashMap<ContextAttributeEnum, Object> metadata = new HashMap<ContextAttributeEnum, Object>();
 		try {
 			BasicFileAttributes attr;
 			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
 
-			metadata.put(FileMetaData.CREATION_TIME, attr.creationTime());
-			metadata.put(FileMetaData.LAST_ACCESS_TIME, attr.lastAccessTime());
-			metadata.put(FileMetaData.LAST_MODIFICATION_TIME, attr.lastModifiedTime());
-			metadata.put(FileMetaData.SIZE, attr.size());
+			metadata.put(ContextAttributeEnum.FILE_CREATION_DATE, attr.creationTime());
+			metadata.put(ContextAttributeEnum.FILE_EXTENSION, getExtension(file)[1]);
+			metadata.put(ContextAttributeEnum.FILE_NAME, file.getName());
+			metadata.put(ContextAttributeEnum.FILE_SIZE, attr.size());
 
 		} catch (IOException e) {
 			LOGGER.error("Metadaten einer Datei konnten nicht geleasen werden ", e);

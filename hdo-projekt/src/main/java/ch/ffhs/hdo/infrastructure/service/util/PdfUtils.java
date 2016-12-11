@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.xml.transform.Source;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.cos.COSDocument;
@@ -12,6 +15,8 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.text.PDFTextStripper;
+
+import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 
 /**
  * Utility um PDF Eigenschaften zu lesen.
@@ -34,29 +39,32 @@ public class PdfUtils {
 		PDFTextStripper pdfStripper = null;
 		PDDocument pdDoc = null;
 		COSDocument cosDoc = null;
-
+		RandomAccessFile source = null;
 		try {
-			PDFParser parser = new PDFParser(new RandomAccessFile(file, "r"));
+			source = new RandomAccessFile(file, "r");
+			PDFParser parser = new PDFParser(source);
 			parser.parse();
 			cosDoc = parser.getDocument();
 			pdfStripper = new PDFTextStripper();
 			pdDoc = new PDDocument(cosDoc);
 
 			String parsedText = pdfStripper.getText(pdDoc);
+			source.close();
 			return parsedText;
 		} catch (IOException e) {
 			LOGGER.error("Pdf konnte nicht gelesen werden ", e);
+		} finally {
+			try {
+				cosDoc.close();
+				pdDoc.close();
+				IOUtils.closeQuietly(source);
+
+			} catch (IOException e) {
+				// do nothing - PDF bereits geschlossen
+			}
 		}
 		return null;
 
-	}
-
-	/**
-	 * Eigenschaften eines PDFs
-	 */
-	public static enum PdfMetaData {
-
-		PAGECOUNT, TITLE, AUTHOR, SUBJECT, KEYWORDS, CREATOR, PRODUCER, CREATION_DATE, MODIFICATION_DATE;
 	}
 
 	/**
@@ -65,34 +73,44 @@ public class PdfUtils {
 	 * @param file
 	 * @return MashMap mit Key die {@link PdfMetaData} mit deren Objekten
 	 */
-	public static HashMap<PdfMetaData, Object> getDocumentInformation(File file) {
+	public static HashMap<ContextAttributeEnum, Object> getDocumentInformation(File file) {
 
 		PDDocument pdDoc = null;
 		COSDocument cosDoc = null;
-
+		RandomAccessFile source = null;
 		try {
-			PDFParser parser = new PDFParser(new RandomAccessFile(file, "r"));
+			source  = new RandomAccessFile(file, "r");
+			PDFParser parser = new PDFParser(source);
 			parser.parse();
 			cosDoc = parser.getDocument();
 			pdDoc = new PDDocument(cosDoc);
 
 			PDDocumentInformation info = pdDoc.getDocumentInformation();
 
-			HashMap<PdfMetaData, Object> metaData = new HashMap<PdfMetaData, Object>();
+			HashMap<ContextAttributeEnum, Object> metaData = new HashMap<ContextAttributeEnum, Object>();
 
-			metaData.put(PdfMetaData.PAGECOUNT, pdDoc.getNumberOfPages());
-			metaData.put(PdfMetaData.TITLE, info.getTitle());
-			metaData.put(PdfMetaData.AUTHOR, info.getAuthor());
-			metaData.put(PdfMetaData.SUBJECT, info.getSubject());
-			metaData.put(PdfMetaData.KEYWORDS, info.getKeywords());
-			metaData.put(PdfMetaData.CREATOR, info.getCreator());
-			metaData.put(PdfMetaData.PRODUCER, info.getProducer());
-			metaData.put(PdfMetaData.CREATION_DATE, info.getCreationDate());
-			metaData.put(PdfMetaData.MODIFICATION_DATE, info.getModificationDate());
+			metaData.put(ContextAttributeEnum.PDF_PAGECOUNT, pdDoc.getNumberOfPages());
+			metaData.put(ContextAttributeEnum.PDF_TITLE, info.getTitle());
+			metaData.put(ContextAttributeEnum.PDF_AUTHOR, info.getAuthor());
+			metaData.put(ContextAttributeEnum.PDF_SUBJECT, info.getSubject());
+			metaData.put(ContextAttributeEnum.PDF_KEYWORDS, info.getKeywords());
+			metaData.put(ContextAttributeEnum.PDF_CREATOR, info.getCreator());
+			metaData.put(ContextAttributeEnum.PDF_PRODUCER, info.getProducer());
+			metaData.put(ContextAttributeEnum.PDF_CREATION_DATE, info.getCreationDate());
+			metaData.put(ContextAttributeEnum.PDF_MODIFICATION_DATE, info.getModificationDate());
 
 			return metaData;
 		} catch (Exception e) {
 			LOGGER.error("Fehler beim lesen von PDF Eigenschaften", e);
+		} finally {
+			try {
+				cosDoc.close();
+				pdDoc.close();
+				IOUtils.closeQuietly(source);
+
+				} catch (IOException e) {
+				// do nothing - pdf already closeds
+			}
 		}
 		return null;
 

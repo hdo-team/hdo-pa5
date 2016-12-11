@@ -11,13 +11,19 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.domain.document.DocumentModel;
+import ch.ffhs.hdo.domain.regel.Regelset;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
+import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
-import ch.ffhs.hdo.persistence.dao.OptionDao;
+
+/**
+ * 
+ * @author Denis Bittante
+ *
+ */
 
 public class SortService extends SwingWorker<String, Integer> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
@@ -40,57 +46,55 @@ public class SortService extends SwingWorker<String, Integer> {
 		mainModel.setServiceStatus(ServiceStatus.DONE);
 	}
 
-	
-	
 	@Override
 	protected String doInBackground() throws Exception {
-		
+
+		RegelsetFacade regelsetFacade = new RegelsetFacade();
+		List<Regelset> regelsets = regelsetFacade.getRegelsets();
 		
 		System.out.println("Start doInBackground");
-		
-		OptionDao optionDao = new OptionDao();
-		System.out.println("in try");
-		try {
-			
+
+	//	while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP)) {
 			OptionFacade facade = new OptionFacade();
-			
-			facade.getTimeLapsed();
-			System.out.println("called time lapsed");
-			OptionModel model = facade.getModel();
+			if (facade.getTimeLapsed()) {
 
-			
-			int intervall = model.getIntervall();
-			LOGGER.debug("Intervall geladen: " + intervall);
+				try {
 
-			String inboxPath = model.getInboxPath();
-			Collection<File> fileList = FileHandling.getFileList(inboxPath, false);
+					// Load Rulesets with Rules
 
-			ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
+					String inboxPath = facade.getModel().getInboxPath();
+					Collection<File> fileList = FileHandling.getFileList(inboxPath, false);
 
-			for (File file : fileList) {
+					ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
 
-				mainModel.setServiceStatus(ServiceStatus.PROCESSING);
+					for (File file : fileList) {
+						// Die Files die behandelt werden sind nur PDFs
+						if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
+							documentModels.add(new DocumentModel(file));
+						}
+					}
 
-				// Die Files die behandelt werden sind nur PDFs
-				if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
-					documentModels.add(new DocumentModel(file));
-				}
-				if (mainModel.getServiceStatus().equals(ServiceStatus.STOP)) {
-					break;
+					for (DocumentModel documentModel : documentModels) {
+						for (Regelset regelset : regelsets) {
+							final boolean verfizieren = regelset.verfizieren(documentModel);
+							if (verfizieren) {
+								regelset.rename(documentModel);
+								FileHandling.moveFile(documentModel.getFile().getAbsolutePath(), regelset.getPath());
+								break;
+							}
+						}
+					}
+					// Sortiervorgang protokollieren.
+					facade.protocollSortServiceRun(true);
+
+				} catch (Exception e) {
+					LOGGER.error("Beim File Sortierservice ist ein Fehler aufgetreten ", e);
+					facade.protocollSortServiceRun(false);
+
 				}
 
 			}
-
-			// Sortiervorgang protokollieren.
-
-			optionDao.protocollSortServiceRun(true);
-
-			return null;
-		} catch (Exception e) {
-			LOGGER.error("Beim File Sortierservice ist ein Fehler aufgetreten ", e);
-			optionDao.protocollSortServiceRun(false);
-
-		}
+		
 		return null;
 	}
 }

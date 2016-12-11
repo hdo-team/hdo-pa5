@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.regelset.RegelModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
+import ch.ffhs.hdo.domain.regel.Regelset;
 import ch.ffhs.hdo.persistence.dao.RegelDao;
 import ch.ffhs.hdo.persistence.dao.RegelsetDao;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
@@ -17,12 +18,11 @@ import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 public class RegelsetFacade {
 	private static Logger LOGGER = LogManager.getLogger(RegelsetFacade.class);
 
-	
 	public void save(RegelsetModel model) {
 
 		RegelsetDao regelsetDao = new RegelsetDao();
 		RegelsetDto regelsetDto = RegelsetConverter.convert(model);
-		
+
 		RegelDao regelDao = new RegelDao();
 		RegelDto regelDto = null;
 		List<RegelDto> regelDtoList = new ArrayList<RegelDto>();
@@ -30,11 +30,13 @@ public class RegelsetFacade {
 		try {
 			Integer newRulesetId = regelsetDao.save(regelsetDto, model.getRulesetId() == null);
 			if (newRulesetId != null) {
-				// update model with the new primaryKey from of the inserted ruleset
+				// update model with the new primaryKey from of the inserted
+				// ruleset
 				model.setRulesetId(newRulesetId);
 			} else {
 				// delete old rules form the updated ruleset
-				// TODO: terminates checken regelDao hatte hier schon "Session is closed"
+				// TODO: terminates checken regelDao hatte hier schon "Session
+				// is closed"
 				regelDao = new RegelDao();
 				regelDao.deleteAllRegelnByRegelsetId(model.getRulesetId());
 			}
@@ -42,10 +44,11 @@ public class RegelsetFacade {
 				regelDto = RegelConverter.convert(regelModel, model.getRulesetId());
 				regelDtoList.add(regelDto);
 			}
-			// TODO: terminates checken regelDao hatte hier schon "Session is closed"
+			// TODO: terminates checken regelDao hatte hier schon "Session is
+			// closed"
 			regelDao = new RegelDao();
 			regelDao.save(regelDtoList);
-			
+
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim Saven aller Regelsets", e);
 
@@ -68,7 +71,7 @@ public class RegelsetFacade {
 
 				regelsets.add(RegelsetConverter.convert(regelsetDto));
 			}
-		
+
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
 		}
@@ -81,22 +84,22 @@ public class RegelsetFacade {
 
 	}
 
-	public void swapPriority(int id, PriorityAction action)  {
+	public void swapPriority(int id, PriorityAction action) {
 
 		RegelsetDao dao = new RegelsetDao();
 
 		try {
-		switch (action) {
-		case DOWN:
+			switch (action) {
+			case DOWN:
 
 				dao.changePrioDown(id);
-			break;
-		case UP:
-			dao.changePrioUp(id);
-			break;
-		default:
-			
-		}
+				break;
+			case UP:
+				dao.changePrioUp(id);
+				break;
+			default:
+
+			}
 		} catch (SQLException e) {
 			throw new IllegalArgumentException();
 		}
@@ -110,6 +113,32 @@ public class RegelsetFacade {
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim löschen eines Regelsets", e);
 		}
+
+	}
+
+	public List<Regelset> getRegelsets() {
+
+		RegelsetDao daoRegelset = new RegelsetDao();
+		RegelDao daoRegel = new RegelDao();
+		ArrayList<Regelset> regelsets = new ArrayList<Regelset>();
+		List<RegelsetDto> findAllRegelsets;
+
+		try {
+			findAllRegelsets = daoRegelset.findAllRegelsets();
+
+			for (RegelsetDto regelsetDto : findAllRegelsets) {
+				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
+
+				final Regelset convertToRegelset = RegelsetConverter.convertToRegelset(regelsetDto);
+				if (convertToRegelset != null) {
+					regelsets.add(convertToRegelset);
+				}
+			}
+
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
+		}
+		return regelsets;
 
 	}
 
