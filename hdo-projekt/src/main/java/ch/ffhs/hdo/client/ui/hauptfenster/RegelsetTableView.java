@@ -82,7 +82,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
 							new int[] { rulesetId, operation });
+					int selection=regelsetTable.getSelectedRow();
 					getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
+					regelsetTable.setRowSelectionInterval(0, selection-1);
 				}
 			}
 		});
@@ -99,7 +101,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							.getRulesetId();
 					getHandler().performOperationWithArgs(RegelsetSwapOperation.class,
 							new int[] { rulesetId, operation });
+					int selection=regelsetTable.getSelectedRow();
 					getHandler().performOperationWithArgs(RegelsetTableUpdateOperation.class, getModel());
+					regelsetTable.setRowSelectionInterval(0, selection+1);
 				}
 			}
 		});
