@@ -18,5 +18,4 @@ public class ExportModel extends Model implements IFileModel {
 		firePropertyChange("filePath", oldValue, filePath);
 
 	}
-
 }

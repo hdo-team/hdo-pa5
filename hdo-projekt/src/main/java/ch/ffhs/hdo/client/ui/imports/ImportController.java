@@ -1,13 +1,11 @@
 package ch.ffhs.hdo.client.ui.imports;
 
 import ch.ffhs.hdo.client.ui.base.Controller;
-import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
-import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
-import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveExecutable;
-import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
+import ch.ffhs.hdo.client.ui.utils.ReadFileExecutable;
+import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 
 /**
  * Controller für den Konfigurations-Import
@@ -33,8 +31,7 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 
 	private void initializeViewHandler() {
 		viewHandler.addOperation(ChooseFilePathViewOperation.class, new FileChooserExecuter(getModel()));
-		viewHandler.addOperation(ImportSaveOperation.class, new ImportSaveExecutable(getModel()));
-		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
+		viewHandler.addOperation(ReadFileViewOperation.class, new ReadFileExecutable(getModel()));
 	}
 
 	public void initializeView() {

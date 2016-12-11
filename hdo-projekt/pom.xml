@@ -32,7 +32,7 @@
 			<email></email>
 		</contributor>
 		<contributor>
-			<name>Jonas Segessemann</name>
+			<name>Johnas Segessemann</name>
 			<email></email>
 		</contributor>
 	</contributors>
@@ -92,19 +92,7 @@
 			<artifactId>commons-configuration</artifactId>
 			<version>1.10</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-archiver
-		<dependency>
-    		<groupId>org.codehaus.plexus</groupId>
-    		<artifactId>plexus-archiver</artifactId>
-    		<version>3.4</version>
-		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/org.rauschig/jarchivelib -->
-		<dependency>
-    		<groupId>org.rauschig</groupId>
-    		<artifactId>jarchivelib</artifactId>
-    		<version>0.7.1</version>
-		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
