@@ -23,7 +23,6 @@ public class FolderModel extends Model {
 		boolean oldValue = this.updateView;
 		this.updateView = updateView;
 		firePropertyChange("updateView", oldValue, updateView);
-
 	}
 
 	public boolean getUpdateView() {

@@ -61,6 +61,7 @@ public class FolderTreeView extends View<FolderModel> {
 				if (evt.getPropertyName() == "updateView") {
 					if (getModel().getUpdateView()) {
 						getHandler().performOperationWithArgs(FolderTreeUpdateOperation.class, ApplicationSettings.getInstance().getInbox_path());
+						//TODO: Tree neu aufbauen
 						getModel().setUpdateView(false);
 					}
 				}
