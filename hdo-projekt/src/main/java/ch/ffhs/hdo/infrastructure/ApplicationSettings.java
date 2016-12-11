@@ -19,11 +19,6 @@ public class ApplicationSettings {
 
 	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 	private static final String INBOXPATH = "inboxPath";
-	private static final String RULESET_NAME = "rulesetName";
-	private static final String TARGETDIR_PATH = "targetDirectory";
-	private static final String FILENAME = "filenameKonfiguration";
-	private static final String RULESET_STATUS = "ruleActiv";
-
 	private static ApplicationSettings instance = null;
 
 	private static PropertiesConfiguration config = null;

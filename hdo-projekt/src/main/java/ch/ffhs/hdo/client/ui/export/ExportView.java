@@ -2,12 +2,15 @@ package ch.ffhs.hdo.client.ui.export;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +18,8 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 
 public class ExportView extends View<ExportModel> {
@@ -43,13 +48,13 @@ public class ExportView extends View<ExportModel> {
 
 	@Override
 	public void configureBindings() {
-		getModel().addObserver(new Observer() {
+	
+		getModel().addPropertyChangeListener(new PropertyChangeListener() {
 
-			public void update(Observable o, Object arg) {
-
-				pathTextField.setText((String) arg);
-
-				System.out.println(o.toString() + " " + arg.toString());
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName() == "filePath") {
+					pathTextField.setText(getModel().getFilePath());
+				}
 
 			}
 		});
@@ -61,11 +66,14 @@ public class ExportView extends View<ExportModel> {
 		pathTextField = new JTextField();
 
 		pathChooserButton = new JButton(getMessage(I18N + ".button.pathChooser"));
-		pathChooserButton.addActionListener(new ChooseFilePathAction());
+		pathChooserButton.addActionListener(new ChooseFolderPathAction());
 		
 
 		exportButton = new JButton(getMessage(I18N + ".button.export"));
+		exportButton.addActionListener(new ExportAllAction());
+		
 		cancelButton = new JButton(getMessage("base.cancel"));
+		cancelButton.addActionListener(new CloseAction());
 	}
 
 	private void layoutForm() {
@@ -89,15 +97,44 @@ public class ExportView extends View<ExportModel> {
 		setDimension(430, 145);
 	}
 		
+	private class ExportAllAction extends AbstractAction {
 
-	private class ChooseFilePathAction extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			
+			String errorMsg = checkFolderPathValue();
+			if (errorMsg != null) {
+				JOptionPane.showMessageDialog(null, errorMsg);				
+			} else {
+				getHandler().performOperation(ExportSaveOperation.class);
+				getHandler().performOperation(CloseViewOperation.class);
+			}
+		}
+	}
+	
+	private class ChooseFolderPathAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 
 			getHandler().performOperation(ChooseDirectoryPathViewOperation.class);
-
 		}
-
+	}
+	
+	private String checkFolderPathValue() {
+		String errorString = null;
+	
+		// Whitespace entfernen und dann erst checken!
+		if (pathTextField.getText() == null || pathTextField.getText().equals("")) {
+			errorString = "Bitte Speicherort auswählen";   // TODO via ressourcen
+		}
+		return errorString;
 	}
 
+	private class CloseAction extends AbstractAction {
+
+		public void actionPerformed(ActionEvent e) {
+
+			getHandler().performOperation(CloseViewOperation.class);
+		}
+	}
+	
 }
