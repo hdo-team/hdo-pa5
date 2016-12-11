@@ -22,7 +22,7 @@ public class Main {
 		
 		
 		RegelsetTableModel regelsetsTable = new RegelsetTableModel(new RegelsetFacade().getAllRegelsets());
-		FolderModel folderModel = new FolderModel(ApplicationSettings.getInstance().getInbox_path() + "/.db");
+		FolderModel folderModel = new FolderModel(ApplicationSettings.getInstance().getInbox_path());
 		
 		
 
