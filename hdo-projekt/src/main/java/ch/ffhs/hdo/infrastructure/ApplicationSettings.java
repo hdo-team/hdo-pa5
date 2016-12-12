@@ -16,7 +16,6 @@ public class ApplicationSettings {
 	private static final File APP_CONFIG = new File(
 			System.getProperty("user.home") + File.separator + "hdo" + File.separator + "hdo.settings");
 
-
 	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 	private static final String INBOXPATH = "inboxPath";
 	private static ApplicationSettings instance = null;
@@ -28,6 +27,7 @@ public class ApplicationSettings {
 		try {
 
 			if (!APP_CONFIG.exists()) {
+				APP_CONFIG.getParentFile().mkdirs();
 				APP_CONFIG.createNewFile();
 				config = new PropertiesConfiguration(APP_CONFIG);
 
@@ -42,7 +42,6 @@ public class ApplicationSettings {
 			LOGGER.error("Configurationsfehler beim laden der Daten", e);
 		}
 
-
 	}
 
 	public static ApplicationSettings getInstance() {
@@ -52,11 +51,11 @@ public class ApplicationSettings {
 		return instance;
 	}
 
-
 	public String getInbox_path() {
-		return config.getString(INBOXPATH);
-	}
 
+		return config.getString(INBOXPATH);
+
+	}
 
 	public void saveInboxPath(String inboxPath) {
 		try {
@@ -68,7 +67,6 @@ public class ApplicationSettings {
 				new InitDatabase();
 			}
 
-			
 		} catch (ConfigurationException e) {
 			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);
 		}
