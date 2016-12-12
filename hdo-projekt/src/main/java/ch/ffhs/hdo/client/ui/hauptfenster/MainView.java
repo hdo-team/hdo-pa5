@@ -159,7 +159,7 @@ public class MainView extends View<MainModel> {
 
 	}
 
-	public View<FolderModel> getFolderTreeView() {
+	public View<FolderTreeModel> getFolderTreeView() {
 		return folderTreeView;
 	}
 

@@ -33,7 +33,7 @@ public class MainController extends Controller<MainModel, MainView> {
 
 	private ViewHandlerImpl viewHandler;
 
-	public MainController(MainModel model, RegelsetTableModel regelsetModel, FolderModel folderModel) {
+	public MainController(MainModel model, RegelsetTableModel regelsetModel, FolderTreeModel folderModel) {
 		super(model);
 		model.setRegelsetModel(regelsetModel);
 		model.setFolderModel(folderModel);

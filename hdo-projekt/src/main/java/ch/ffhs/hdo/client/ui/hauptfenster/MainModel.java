@@ -4,14 +4,14 @@ import ch.ffhs.hdo.client.ui.base.Model;
 
 public class MainModel extends Model {
 
-	private FolderModel folderModel;
+	private FolderTreeModel folderModel;
 	private RegelsetTableModel regelsetModel;
 
-	public void setFolderModel(FolderModel folderModel) {
+	public void setFolderModel(FolderTreeModel folderModel) {
 		this.folderModel = folderModel;
 	}
 
-	public FolderModel getFolderModel() {
+	public FolderTreeModel getFolderModel() {
 		return folderModel;
 	}
 

@@ -1,7 +1,7 @@
 package ch.ffhs.hdo.client.ui.einstellungen;
 
 import ch.ffhs.hdo.client.ui.base.Model;
-import ch.ffhs.hdo.client.ui.hauptfenster.FolderModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
 
 public class OptionModel extends Model implements IFileModel {
@@ -9,7 +9,7 @@ public class OptionModel extends Model implements IFileModel {
 	private String inboxPath;
 	private boolean autoModus = false;
 	private int intervall = -1;
-	private FolderModel folderModel;
+	private FolderTreeModel folderModel;
 
 	public String getInboxPath() {
 		return inboxPath;
@@ -56,11 +56,11 @@ public class OptionModel extends Model implements IFileModel {
 		setInboxPath(newValue);
 	}
 	
-	public void setFolderModel(FolderModel folderModel){
+	public void setFolderModel(FolderTreeModel folderModel){
 		this.folderModel=folderModel;
 	}
 	
-	public FolderModel getFolderModel() {
+	public FolderTreeModel getFolderModel() {
 		return folderModel;
 	}
 

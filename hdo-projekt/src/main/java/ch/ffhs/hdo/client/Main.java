@@ -3,7 +3,7 @@ package ch.ffhs.hdo.client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.ffhs.hdo.client.ui.hauptfenster.FolderModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainController;
 import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
@@ -22,7 +22,7 @@ public class Main {
 		
 		
 		RegelsetTableModel regelsetsTable = new RegelsetTableModel(new RegelsetFacade().getAllRegelsets());
-		FolderModel folderModel = new FolderModel(ApplicationSettings.getInstance().getInbox_path());
+		FolderTreeModel folderModel = new FolderTreeModel(ApplicationSettings.getInstance().getInbox_path());
 		
 		
 
