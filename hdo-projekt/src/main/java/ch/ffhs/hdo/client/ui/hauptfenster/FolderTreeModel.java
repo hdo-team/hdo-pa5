@@ -1,19 +1,26 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
+import java.awt.Component;
 import java.io.File;
-import java.util.Collections;
-import java.util.Vector;
 
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.ffhs.hdo.client.ui.base.Model;
+import ch.ffhs.hdo.infrastructure.service.SortService;
 
 public class FolderTreeModel extends Model {
+	private static Logger LOGGER = LogManager.getLogger(SortService.class);
 	private File inboxFolder;
 	private boolean updateView = false;
 	private DefaultMutableTreeNode treeNode;
 	private DefaultTreeModel treeModel;
+	private String HIDDEN_FOLDER = ".db";
 
 	public FolderTreeModel(String inboxPath) {
 
@@ -62,37 +69,31 @@ public class FolderTreeModel extends Model {
 	}
 
 	public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) {
-		String curPath = dir.getPath();
-		DefaultMutableTreeNode curDir = new DefaultMutableTreeNode(curPath);
-		if (curTop != null) { // should only be null at root
-			curTop.add(curDir);
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode(dir);
+		for (File file : dir.listFiles()) {
+			if (file.isDirectory() && !file.getName().equals(HIDDEN_FOLDER)) {
+				node.add(addNodes(null, file));
+			}
 		}
-		Vector ol = new Vector();
-		String[] tmp = dir.list();
-		try {
-			for (int i = 0; i < tmp.length; i++)
-				ol.addElement(tmp[i]);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		Collections.sort(ol, String.CASE_INSENSITIVE_ORDER);
-		File f;
-		Vector files = new Vector();
-		// Make two passes, one for Dirs and one for Files. This is #1.
-		for (int i = 0; i < ol.size(); i++) {
-			String thisObject = (String) ol.elementAt(i);
-			String newPath;
-			if (curPath.equals("."))
-				newPath = thisObject;
-			else
-				newPath = curPath + File.separator + thisObject;
-			if ((f = new File(newPath)).isDirectory())
-				addNodes(curDir, f);
-			else
-				files.addElement(thisObject);
-		}
+		return node;
+	}
 
-		return curDir;
+}
+
+class FileTreeCellRenderer extends DefaultTreeCellRenderer {
+
+	@Override
+	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf,
+			int row, boolean hasFocus) {
+		if (value instanceof DefaultMutableTreeNode) {
+			value = ((DefaultMutableTreeNode) value).getUserObject();
+			if (value instanceof File) {
+				value = ((File) value).getName();
+			}
+		}
+		super.setLeafIcon(super.getClosedIcon());
+		;
+		return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 	}
 
 }
