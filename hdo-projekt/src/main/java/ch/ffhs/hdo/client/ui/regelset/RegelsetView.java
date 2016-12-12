@@ -163,7 +163,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 				//tabbedPane.add(ruleModel.getRuleName(), new RulePanel(RegelsetView.this, ruleModel));
 				
-				tabbedPane.insertTab("Insert-Pos", null, new RulePanel(RegelsetView.this, ruleModel), null, 2);
+				tabbedPane.insertTab("Insert-Pos", null, new RulePanel(RegelsetView.this, ruleModel), null, tabbedPane.getTabCount());
 				
 				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 			}
