@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
-import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.domain.regel.Regelset;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
@@ -31,29 +30,24 @@ public class SortService extends SwingWorker<String, String> {
 
 	private static SortService instance;
 
-	public static SortService getInstance(RegelsetTableModel model) {
+	public static SortService getInstance() {
 
 		if (instance == null) {
-			instance = new SortService(model);
+			instance = new SortService();
 		}
 		return instance;
 	}
 
-	private SortService(RegelsetTableModel model) {
-		this.mainModel = model;
-	}
 
 	@Override
 	protected void process(List<String> chunks) {
 		super.process(chunks);
-		mainModel.setServiceStatus(ServiceStatus.PROCESSING);
 
 	}
 
 	@Override
 	protected void done() {
 		super.done();
-		mainModel.setServiceStatus(ServiceStatus.START);
 	}
 
 	@Override

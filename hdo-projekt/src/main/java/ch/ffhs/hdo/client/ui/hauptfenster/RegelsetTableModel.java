@@ -1,6 +1,5 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.event.TableModelListener;
@@ -18,7 +17,7 @@ public class RegelsetTableModel extends Model {
 
 	private ArrayList<RegelsetModel> rulsets;
 
-	private ServiceStatus serviceStatus;
+	private ServiceStatus serviceStatus = ServiceStatus.START;
 
 	private boolean updateView = false;
 

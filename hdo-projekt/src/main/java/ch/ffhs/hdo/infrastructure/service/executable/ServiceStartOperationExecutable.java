@@ -12,27 +12,32 @@ public class ServiceStartOperationExecutable implements Executable {
 
 	public ServiceStartOperationExecutable(RegelsetTableModel model) {
 		this.model = model;
-		this.sortService = SortService.getInstance(model);
+		this.sortService = SortService.getInstance();
 
 	}
 
 	public void execute(Object arg) {
 
-		if (model != null) {
-			if (model.getServiceStatus() == null) {
-				sortService.execute(); // first Start
-			} else {
-				if (model.getServiceStatus().equals(ServiceStatus.START)) {
-					model.setServiceStatus(ServiceStatus.STOP);
-					sortService.cancel(true);
-				} else {
-					// TODO :  da notVisible => entfernt, damit Pgm trotzdem startet  this.sortService = new SortService(model);
-					sortService.execute();
+		switch (model.getServiceStatus()) {
+		case START:
+			sortService.execute(); // first Start
+			model.setServiceStatus(ServiceStatus.STOP);
 
-				}
-			}
+			break;
 
+		case STOP:
+			sortService.cancel(true);
+			model.setServiceStatus(ServiceStatus.START);
+
+			break;
+
+		default:
+			model.setServiceStatus(ServiceStatus.START);
+			sortService.cancel(true);
+
+			break;
 		}
+
 	}
 
 }
