@@ -13,7 +13,7 @@ import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class Main {
 
-	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static Logger LOGGER = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) {
 

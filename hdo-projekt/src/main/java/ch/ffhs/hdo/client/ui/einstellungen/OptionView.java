@@ -29,7 +29,7 @@ import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class OptionView extends View<OptionModel> {
-	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static Logger LOGGER = LogManager.getLogger(OptionView.class);
 
 	private final String I18N = "hdo.option";
 	private final String TITLE_KEY = I18N + ".title";

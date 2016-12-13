@@ -56,12 +56,13 @@ public class SortService extends SwingWorker<String, String> {
 		RegelsetFacade regelsetFacade = new RegelsetFacade();
 		List<Regelset> regelsets = regelsetFacade.getRegelsets();
 
-		System.out.println("Start doInBackground");
+		LOGGER.debug("Start doInBackground");
 		while (!isCancelled()) {
 			// while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP))
 			// {
 			OptionFacade facade = new OptionFacade();
 			if (facade.getTimeLapsed()) {
+				LOGGER.debug("run started");
 
 				try {
 

@@ -45,7 +45,7 @@ import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class RegelsetView extends View<RegelsetModel> {
 
-	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static Logger LOGGER = LogManager.getLogger(RegelsetView.class);
 
 	final String I18N = "hdo.regelset";
 	private final String TITLE_KEY = I18N + ".title";

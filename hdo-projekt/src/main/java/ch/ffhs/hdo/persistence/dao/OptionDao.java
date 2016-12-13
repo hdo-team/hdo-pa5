@@ -74,7 +74,6 @@ public class OptionDao extends JdbcHelper {
 
 	public long timeLapsed() throws SQLException {
 
-		System.out.println("time to runn beenn called");
 
 		PreparedStatement lastRunPrepStatement = conn.prepareStatement(TIMESINCEALSTRUN);
 

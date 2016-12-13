@@ -16,7 +16,7 @@ public class ApplicationSettings {
 	private static final File APP_CONFIG = new File(
 			System.getProperty("user.home") + File.separator + "hdo" + File.separator + "hdo.settings");
 
-	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static Logger LOGGER = LogManager.getLogger(ApplicationSettings.class);
 	private static final String INBOXPATH = "inboxPath";
 	private static ApplicationSettings instance = null;
 

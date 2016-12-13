@@ -35,7 +35,7 @@ public class RulePanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -3417369737468476369L;
-	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
+	private static Logger LOGGER = LogManager.getLogger(RulePanel.class);
 
 	private RegelsetView rulePanelView;
 	private JComboBox<ContextTypeEnum> contextComboBox;
