@@ -39,10 +39,8 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
-import ch.ffhs.hdo.domain.regel.DataTypeEnum;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /******************************************************
  * RegelsetView 
@@ -77,10 +75,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private JTabbedPane tabbedPane;
 	
-	private int currentTabIndex = 0;
-	private int previousTabIndex = 0;
-
-	private int crazziPrevIndex = -1;  	// TODO entfernen
+	private int previousTabIndex = -1;
 	
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -93,7 +88,6 @@ public class RegelsetView extends View<RegelsetModel> {
 	private void initComponents() {
 		createComponents();
 		layoutForm();
-	//	System.out.println("initComps. model-anzahl Reln: " + getModel().getRuleModelList().size());
 	}
 
 	private String[] getDirectories(String inboxDirectory, boolean recursiv) {
@@ -169,12 +163,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		addButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// Vor dem adden Check auf Valid
 				int actualPanelIndex = tabbedPane.getSelectedIndex();
-				
-				// TODO: methode is ActualRulePanelValid()
-				if ( ((RulePanel)tabbedPane.getComponentAt(actualPanelIndex)).isPanelValid()) {
-					// 	Rulesets ohne Rules sind nicht möglich
+				if (((RulePanel)tabbedPane.getComponentAt(actualPanelIndex)).isPanelValid()) {
+					
 					RegelModel ruleModel = RegelModel.getNullModel();
 
 					getModel().getRuleModelList().add(tabbedPane.getSelectedIndex(), ruleModel);
@@ -198,8 +189,6 @@ public class RegelsetView extends View<RegelsetModel> {
 								getMessage(I18N + ".dialog.rule.delete.title"), JOptionPane.YES_NO_OPTION);
 
 					if (confirmed == JOptionPane.YES_OPTION) {
-						LOGGER.debug("Remove Tab: " + tabbedPane.getSelectedIndex() + "(currentTabIndex: " + currentTabIndex + ")");
-						System.out.println("Remove Tab: " + tabbedPane.getSelectedIndex() + "(currentTabIndex: " + currentTabIndex + ")");
 						tabbedPane.remove(tabbedPane.getSelectedIndex());
 					}
 				} else {
@@ -212,85 +201,23 @@ public class RegelsetView extends View<RegelsetModel> {
 	        
 			private boolean tabChangePrevented = false;
 			
-			// TODO diese Degug Methode entfernen!
-			private void debug(String header) {
-				System.out.println(header + ":        previous: " + previousTabIndex + "  -  current: " + currentTabIndex + "  -  selected: " 
-									+ tabbedPane.getSelectedIndex() + "  -  prevented: " + tabChangePrevented
-									+ "   -   crazzi: " + crazziPrevIndex);
-			}
-			
 			public void stateChanged(ChangeEvent e) {
-	        	// 
-	        	// Tab-Wechsel nur möglicht wenn Tab OK
-	        	
-	        /**	
-				if (tabChangePrevented) {
-					tabChangePrevented = false;
-					
-					debug("do NOTHING (prevented change)");
-                } else {
-                	previousTabIndex = currentTabIndex;
-	        		currentTabIndex = tabbedPane.getSelectedIndex();
-	        		debug("ELSE (not prevented change)");
-                }
-                	
-	        	if (((RulePanel)tabbedPane.getComponentAt(previousTabIndex)).isPanelValid()) {
-	        		debug("prev ist ok");
-	                	
-
-	        	} else {
-	        		tabChangePrevented = true;     		
-	        		debug("NOK: auf alten(" + previousTabIndex + ") INDEX zurückgestellt");
-	        		tabbedPane.setSelectedIndex(previousTabIndex);
-	        	}
-	        	debug("nach IF");
-               */
 				
 				if (tabChangePrevented) {
-					// Tabwechsel wurde verhindert
-					// wir sind nur hier, weil wieder auf alte Tab gewechelst wurde
+					// Tab change was prevented (changed back to origin) because rule was not valid
 					tabChangePrevented = false;
 				} else {
-					// User hat tabWechsel gemacht
-					debug("User");
-					if (crazziPrevIndex == -1 || ((RulePanel)tabbedPane.getComponentAt(crazziPrevIndex)).isPanelValid()) {
-						// die Alte Tab ist OK   (Index==-1 => erstes MAl angezeigt)
-						// der Wechsel vom User wird akzeptiert
-						crazziPrevIndex = tabbedPane.getSelectedIndex();
+					// 'normal' tab change
+					if (previousTabIndex == -1 || ((RulePanel)tabbedPane.getComponentAt(previousTabIndex)).isPanelValid()) {
+						// displayed first or origin tab is OK -> accept tab change
+						previousTabIndex = tabbedPane.getSelectedIndex();
 					} else {
-						// der Alte TAb ist NOK
-						// = wir verhindern Tab-Wechsel bzw. zurücksetzen auf alte Tab
+						// origin tab is NOK -> prevent tab change (change back to origin)
 						tabChangePrevented = true;
-						tabbedPane.setSelectedIndex(crazziPrevIndex);
+						tabbedPane.setSelectedIndex(previousTabIndex);
 					}
-					debug("End User");
 				}
 				
-	        	
-				
-	            
-	            /*-----------------------------
-	          //this is used so when we allow the user not to go to the new tab by setting
-	           *  the tabb index to the previous one we dont want our 
-	           *  changelistener to fire again as if the user were changing the tabs
-                if (automatedStateChange) {
-                    automatedStateChange = false;
-                } else {
-                    previousTabIndex = currentTabIndex;
-                    currentTabIndex = tabbedPane.getSelectedIndex();
-                }
-
-                if (valid) {
-                    System.out.println("Current tab is:" + currentTabIndex);
-                    System.out.println("Previous tab is:" + previousTabIndex);
-                    System.out.println("Validation succeeded: " + valid);
-                    changeVariableBtn.doClick();
-                } else {
-                    System.out.println("You need to enter all valid data first!");
-                    automatedStateChange = true;
-                    tabbedPane.setSelectedIndex(previousTabIndex);
-                }
-	            ---------------------------*/
 	        }
 	    });
 
@@ -320,10 +247,6 @@ public class RegelsetView extends View<RegelsetModel> {
 		builder.addLabel(getMessage(I18N + ".label.status")).rcw(15, 1, 3);
 		builder.add(statusCheckBox).rcw(17, 1, 3);
 
-		//
-		// Rule Panel erst später, weil hier ist Model noch nicht bekannt
-		// -TODO: Oder bereits "leer" erstellen?
-		//
 		builder.addSeparator(null).rcw(25, 1, 7);
 		builder.add(tabbedPane).rcw(27, 1, 1);
 		builder.addSeparator(null).rcw(33, 1, 7);
@@ -349,15 +272,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		newFilenameTextField.setText(getModel().getNewFilename());
 		statusCheckBox.setSelected(getModel().isRuleActiv());
 		
-		// TODO: Ohne PropertyChangeListener funktionierts besser
-		//
-		//getModel().addPropertyChangeListener(new MyPropertyChangeListener());
-		
-		
-		List<RegelModel> regelModel = getModel().getRuleModelList();
 
 		statusCheckBox.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				getModel().setRuleActiv(statusCheckBox.isSelected());
 
@@ -366,40 +282,24 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		targetDirectoryComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO: bei jeder Action? eher unschön?
-				// sollte doch nur bei ÄNDERUND des selektierten Items
-				String selectedDirectory = (String) targetDirectoryComboBox.getSelectedItem();
+				String selectedDirectory = (String)targetDirectoryComboBox.getSelectedItem();
 				getModel().setTargetDirectory(selectedDirectory);
 
 			}
 		});
 
-		regelsetNameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(regelsetNameTextField));
-		newFilenameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(newFilenameTextField));
+		regelsetNameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(getModel(), regelsetNameTextField));
+		newFilenameTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(getModel(), newFilenameTextField));
 
-System.out.println("make " + getModel().getRuleModelList().size() + " new RulePaneTabs" );
 		int counter = 1;
 		for (RegelModel ruleModel : getModel().getRuleModelList()) {
-			ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + counter);
-			counter++;
-			/***
-			if (ruleModel.getContextType() != null) {
-				//name = ruleModel.getContextType().toString();
-			} else {
-				name = "TODO: Titel generisch generieren..."; // .. gemäss
-																// Combo-Auswahl
-			}
-			***/
+			ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + counter++);
 			tabbedPane.addTab(ruleModel.getRuleName(), new RulePanel(this, ruleModel));
 		}
 
 	}
 	
 	protected boolean isRulesetValid() {
-		// is the RulePanel valid?
-		// else return ErrorMessage
-		
-		// TODO oder besser Check auf Model?
 
 		boolean isValid = false;
 		String errorMessage = "";
@@ -409,17 +309,11 @@ System.out.println("make " + getModel().getRuleModelList().size() + " new RulePa
 		} else if (targetDirectoryComboBox.getSelectedItem() == null || targetDirectoryComboBox.getSelectedItem().equals("")) { 
 			errorMessage = I18N + ".error.targetdirectory.empty";
 		}
-		// DateiNamen (optional) und 
-		// und Status (checkbox)
-		//    müssen nicht gecheckt werden 
 		isValid = errorMessage.equals("");
 		
 		
-		// TODO:   !!! Methode für  getAktuelle TAB Pane
-		
-		
 		if (!isValid) {
-			rulesetErrorLabel.setText(getMessage(errorMessage));		// TODO: ist dies erlaubt "erlaubt"   (ErrorLabel im View protected)
+			rulesetErrorLabel.setText(getMessage(errorMessage));
 		}
 		rulesetErrorLabel.setVisible(!isValid);
 		
@@ -434,9 +328,7 @@ System.out.println("make " + getModel().getRuleModelList().size() + " new RulePa
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
-			// TODO: anständige Plausi / Fehlerhandling
-			//
-			// Plausi Ok
+
 			if (isRulesetValid()) {
 				getHandler().performOperation(RegelsetSaveOperation.class);
 				if (getModel().getRegelsetTableModel() == null) {
@@ -460,8 +352,10 @@ System.out.println("make " + getModel().getRuleModelList().size() + " new RulePa
 	private class RegelsetDocumentListener implements DocumentListener {
 
 		JTextField myTextField = null;
+		RegelsetModel model = null;
 
-		public RegelsetDocumentListener(JTextField myTextField) { // + MODEL$$$
+		public RegelsetDocumentListener(RegelsetModel model, JTextField myTextField) {
+			this.model = model;
 			this.myTextField = myTextField;
 		}
 
@@ -482,16 +376,15 @@ System.out.println("make " + getModel().getRuleModelList().size() + " new RulePa
 		private void processEvent(DocumentEvent e) {
 
 			if (myTextField == regelsetNameTextField) {
-				getModel().setRulesetName(myTextField.getText());
+				model.setRulesetName(myTextField.getText());
 
 			} else if (myTextField == newFilenameTextField) {
-				getModel().setNewFilename(myTextField.getText());
+				model.setNewFilename(myTextField.getText());
 			}
 		}
 	}
 
 	private class MyPropertyChangeListener implements PropertyChangeListener {
-		
 		
 		 public void propertyChange(PropertyChangeEvent evt) { 
 			 if (evt.getPropertyName() == "directories") { 

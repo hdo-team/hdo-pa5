@@ -68,10 +68,6 @@ public class RulePanel extends JPanel {
 			attributeModel = fileAttributeModel;
 		}
 
-		if (regelModel.getContextAttribute() == null) {
-
-		}
-		// attributeModel.setSelectedItem(anObject);
 
 		return attributeModel;
 	}
@@ -159,7 +155,7 @@ public class RulePanel extends JPanel {
 		contextComboBox.addActionListener(al);
 		attributeComboBox.addActionListener(al);
 		comparisonModeComboBox.addActionListener(al);
-		compareValueTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(compareValueTextField));
+		compareValueTextField.getDocument().addDocumentListener(new RegelDocumentListener(model, compareValueTextField));
 	}
 
 	private void setLayout() {
@@ -253,57 +249,11 @@ public class RulePanel extends JPanel {
 		
 		isValid = errorMessage.equals("");
 		if (!isValid) {
-			ruleErrorLabel.setText(rulePanelView.getMessage(errorMessage));		// TODO: ist dies erlaubt "erlaubt"   (ErrorLabel im View protected)
+			ruleErrorLabel.setText(rulePanelView.getMessage(errorMessage));
 		}
 		ruleErrorLabel.setVisible(!isValid);
 		
 		return isValid;
-	}
-
-	private class ComboBoxActionListenerALT implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-
-			if (e.getSource() instanceof JComboBox) {
-				JComboBox comboBox = (JComboBox) e.getSource();
-
-				if (comboBox == contextComboBox) {
-					if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { 
-						// -TODO
-						//contextComboBox.removeItemAt(0);
-					}
-					LOGGER.debug("contextComboBox: " + contextComboBox.getModel().getSelectedItem());
-
-					model.setContextType((ContextTypeEnum) contextComboBox.getSelectedItem());
-
-					// abhängiges AttributeContext neu aufbauen
-System.out.println("attributeComboBox:_ " + attributeComboBox); 
-System.out.println("model: " + model);
-System.out.println("model-ctx: " + getModel().getContextType());
-System.out.println("model-attr: " + getModel().getContextAttribute());
-System.out.println("model-comp: " + getModel().getCompareValue());
-					attributeComboBox.setModel(getAttributeModel(getModel()));
-					model.setContextAttribute(ContextAttributeEnum.EMPTY);
-
-					attributeComboBox.setVisible(attributeComboBox.getModel().getSize() != 0);
-				} else if (comboBox == attributeComboBox) {
-					System.out.println("attributeComboBox: "
-							+ ((ContextAttributeEnum) attributeComboBox.getModel().getSelectedItem()).name());
-					model.setContextAttribute((ContextAttributeEnum) attributeComboBox.getModel().getSelectedItem());
-
-					// abhängiges AttributeContext neu aufbauen
-					comparisonModeComboBox.setModel(getComparisonModeModel(model.getContextAttribute()));
-
-					// default-wERt ins Model sonst NP-Ex
-					model.setComparisonType(ComparisonTypeEnum.COMPARISON_EQUAL);
-
-				} else if (comboBox == comparisonModeComboBox) {
-					System.out
-							.println("comparisonModeComboBox: " + comparisonModeComboBox.getModel().getSelectedItem());
-					model.setComparisonType((ComparisonTypeEnum) comparisonModeComboBox.getModel().getSelectedItem());
-				}
-			}
-		}
 	}
 
 	
@@ -337,13 +287,13 @@ System.out.println("model-comp: " + getModel().getCompareValue());
 
 	
 	
-	private class RegelsetDocumentListener implements DocumentListener {
+	private class RegelDocumentListener implements DocumentListener {
 
-		// TODO gleicher DocumentListener für RegelsetView + RulePanel
-		// in separater Klasse möglich ?
+		RegelModel model = null;
 		JTextField myTextField = null;
 
-		public RegelsetDocumentListener(JTextField myTextField) { // + MODEL$$$
+		public RegelDocumentListener(RegelModel model, JTextField myTextField) {
+			this.model = model;
 			this.myTextField = myTextField;
 		}
 
@@ -371,9 +321,6 @@ System.out.println("model-comp: " + getModel().getCompareValue());
 
 	private class MyPropertyChangeListener implements PropertyChangeListener {
 
-		// TODO: abhängige Comboboxen hier cheken und aufbauen?
-		// oder im ActionListener?
-
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (evt.getPropertyName().equals("compareValue")) {
 				System.out.println("Property: compareValue");
@@ -397,9 +344,6 @@ System.out.println("model-comp: " + getModel().getCompareValue());
 					comparisonModeComboBox.setModel(getComparisonModeModel(model.getContextAttribute()));
 				}
 			
-				
-				
-				//
 				// je nach Attribute Datum-Picker oder compareValueField
 				ContextAttributeEnum attribute = (ContextAttributeEnum) evt.getNewValue();
 				if (attribute == ContextAttributeEnum.EMPTY) {
@@ -424,7 +368,8 @@ System.out.println("model-comp: " + getModel().getCompareValue());
 			} else if (evt.getPropertyName().equals("id")) {
 				// TODO: nicht auf View! Code entfernen?
 			} else if (evt.getPropertyName().equals("ruleName")) {
-				// TODO: Tab-Titel anpassen reiterNameLabel.setText((String) evt.getNewValue());
+				// TODO: Tab-Titel anpassen
+				//       oder fix => kein check
 			} else if (evt.getPropertyName().equals("compareValue")) {
 				ContextAttributeEnum attribute = (ContextAttributeEnum)attributeComboBox.getSelectedItem();
 
@@ -443,5 +388,4 @@ System.out.println("model-comp: " + getModel().getCompareValue());
 			}
 		}
 	}
-
 }
