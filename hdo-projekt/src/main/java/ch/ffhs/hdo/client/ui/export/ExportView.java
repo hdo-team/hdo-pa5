@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -106,6 +110,19 @@ public class ExportView extends View<ExportModel> {
 				JOptionPane.showMessageDialog(null, errorMsg);				
 			} else {
 				getHandler().performOperation(ExportSaveOperation.class);
+				
+				// Ordnerstruktur speichern
+				XMLEncoder enc = null;
+				try {
+					enc = new XMLEncoder(new BufferedOutputStream(
+					          new FileOutputStream(System.getProperty("user.home") + "/Desktop/tree.xml")));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				enc.writeObject(getModel().getFolderModel().getTreeModel());
+				enc.close();
+				
 				getHandler().performOperation(CloseViewOperation.class);
 			}
 		}

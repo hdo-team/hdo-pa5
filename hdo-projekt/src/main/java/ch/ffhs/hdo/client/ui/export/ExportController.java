@@ -6,6 +6,7 @@ import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
 import ch.ffhs.hdo.client.ui.export.executable.ExportSaveExecutable;
 import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
@@ -18,9 +19,10 @@ public class ExportController extends Controller<ExportModel, ExportView> {
 
 	private ViewHandlerImpl viewHandler;
 	
-	public ExportController(ExportModel model) {
+	public ExportController(ExportModel model, FolderTreeModel folderModel) {
 		
 		super(model);
+		model.setFolderModel(folderModel);
 		setView(new ExportView(getResourceBundle()));
 		
 		viewHandler = new ViewHandlerImpl();

@@ -114,7 +114,13 @@ public class ImportView extends View<ImportModel> {
 			} else if (errorMsg_inbox != null){
 				JOptionPane.showMessageDialog(null, errorMsg_inbox);
 			} else {
-				getHandler().performOperation(ImportSaveOperation.class);
+				
+				try {
+					getHandler().performOperation(ImportSaveOperation.class);
+					JOptionPane.showMessageDialog(null, "Import erfolgreich!/nBitte Programm schliessen und erneut starten!");
+				} catch (Exception e1){
+					JOptionPane.showMessageDialog(null, "Import nicht erfolgreich!");
+				}
 				getHandler().performOperation(CloseViewOperation.class);
 			}
 		}
