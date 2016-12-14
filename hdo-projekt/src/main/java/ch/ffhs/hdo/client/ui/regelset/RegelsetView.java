@@ -165,7 +165,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			public void actionPerformed(ActionEvent e) {
 				int actualPanelIndex = tabbedPane.getSelectedIndex();
-				if (((RulePanel)tabbedPane.getComponentAt(actualPanelIndex)).isPanelValid()) {
+				if (((RegelPanel)tabbedPane.getComponentAt(actualPanelIndex)).isPanelValid()) {
 					
 					RegelModel ruleModel = RegelModel.getNullModel();
 
@@ -173,7 +173,7 @@ public class RegelsetView extends View<RegelsetModel> {
 					ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + (tabbedPane.getTabCount() + 1));
 
 					int tabInsertIndex = tabbedPane.getSelectedIndex() + 1;
-					tabbedPane.insertTab(ruleModel.getRuleName(), null, new RulePanel(RegelsetView.this, ruleModel), null, tabInsertIndex);
+					tabbedPane.insertTab(ruleModel.getRuleName(), null, new RegelPanel(RegelsetView.this, ruleModel), null, tabInsertIndex);
 					tabbedPane.setSelectedIndex(tabInsertIndex);
 				}
 			}
@@ -186,7 +186,7 @@ public class RegelsetView extends View<RegelsetModel> {
 				if (tabbedPane.getTabCount() > 1) {
 					int confirmed = JOptionPane.showConfirmDialog(null,
 								getMessage(I18N + ".dialog.rule.delete.confirm",
-											((RulePanel)tabbedPane.getSelectedComponent()).getModel().getRuleName()),
+											((RegelPanel)tabbedPane.getSelectedComponent()).getModel().getRuleName()),
 								getMessage(I18N + ".dialog.rule.delete.title"), JOptionPane.YES_NO_OPTION);
 
 					if (confirmed == JOptionPane.YES_OPTION) {
@@ -209,7 +209,7 @@ public class RegelsetView extends View<RegelsetModel> {
 					tabChangePrevented = false;
 				} else {
 					// 'normal' tab change
-					if (previousTabIndex == -1 || ((RulePanel)tabbedPane.getComponentAt(previousTabIndex)).isPanelValid()) {
+					if (previousTabIndex == -1 || ((RegelPanel)tabbedPane.getComponentAt(previousTabIndex)).isPanelValid()) {
 						// displayed first or origin tab is OK -> accept tab change
 						previousTabIndex = tabbedPane.getSelectedIndex();
 					} else {
@@ -295,7 +295,7 @@ public class RegelsetView extends View<RegelsetModel> {
 		int counter = 1;
 		for (RegelModel ruleModel : getModel().getRuleModelList()) {
 			ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + counter++);
-			tabbedPane.addTab(ruleModel.getRuleName(), new RulePanel(this, ruleModel));
+			tabbedPane.addTab(ruleModel.getRuleName(), new RegelPanel(this, ruleModel));
 		}
 
 		// TODO:   GUI funktioniert nicht mehr anständig mit PropertyChangeListener... !!!
@@ -321,8 +321,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 		rulesetErrorLabel.setVisible(!isValid);
 		
-		// no short-circuit evaluation (check rulepanel in every case) 
-		isValid = isValid & ((RulePanel)tabbedPane.getComponentAt(tabbedPane.getSelectedIndex())).isPanelValid();
+		// no short-circuit evaluation (check RegelPanel in every case) 
+		isValid = isValid & ((RegelPanel)tabbedPane.getComponentAt(tabbedPane.getSelectedIndex())).isPanelValid();
 				
 		return isValid;
 	}
