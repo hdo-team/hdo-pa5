@@ -116,7 +116,6 @@ public class RegelsetModel extends Model {
 		model.setPriority(0);
 		model.setRuleActiv(true);
 		model.ruleModelList = new ArrayList<RegelModel>();
-		model.getRuleModelList().add(RegelModel.getNullModel()); 
 		return model;
 	}
 

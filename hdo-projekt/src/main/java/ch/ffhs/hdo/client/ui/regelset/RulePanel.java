@@ -1,5 +1,7 @@
 package ch.ffhs.hdo.client.ui.regelset;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -43,11 +45,11 @@ public class RulePanel extends JPanel {
 	private JComboBox<ComparisonTypeEnum> comparisonModeComboBox;
 	private JTextField compareValueTextField;
 	private JDatePickerImpl datePicker;
-	private JLabel reiterNameLabel;
 	private JDatePanelImpl datePanel;
 	private RegelModel model;
-
+	private JLabel ruleErrorLabel;
 	
+
 	DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
 	DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
 
@@ -102,7 +104,7 @@ public class RulePanel extends JPanel {
 
 	
 	private void configureBinding() {
-									
+
 		contextComboBox.setSelectedItem(getModel().getContextType());
 		attributeComboBox.setSelectedItem(getModel().getContextAttribute());
 		comparisonModeComboBox.setSelectedItem(getModel().getComparisonType());
@@ -112,8 +114,9 @@ public class RulePanel extends JPanel {
 			try {
 				compareDate = rulePanelView.simpleDateFormat.parse(model.getCompareValue());
 			} catch (ParseException e1) {
-				LOGGER.error("Datum konnte nicht konveriert werden.", e1);
-				throw new IllegalArgumentException("invalid date: " + model.getCompareValue());
+				// impossible Error
+				LOGGER.error("FATAL: Datum " +  model.getCompareValue() + " konnte nicht konveriert werden.", e1);
+				//throw new IllegalArgumentException("invalid date: " + model.getCompareValue());
 
 			}
 			((UtilDateModel) datePanel.getModel()).setValue(compareDate);
@@ -122,9 +125,18 @@ public class RulePanel extends JPanel {
 		} else {
 			compareValueTextField.setText(model.getCompareValue());
 		}
+		
+		model.addPropertyChangeListener(new MyPropertyChangeListener());
 	}
 
 	private void createComponent() {
+
+		ruleErrorLabel = new JLabel();
+		ruleErrorLabel.setForeground(Color.red);
+		Font font = ruleErrorLabel.getFont();
+		ruleErrorLabel.setFont(new Font(font.getFontName(), Font.BOLD, font.getSize()));
+		ruleErrorLabel.setVisible(false);
+		
 		contextComboBox = new JComboBox<ContextTypeEnum>(rulePanelView.getContextList());
 		attributeComboBox = new JComboBox<ContextAttributeEnum>(rulePanelView.getAttributList(model.getContextType()));
 		comparisonModeComboBox = new JComboBox<ComparisonTypeEnum>(
@@ -148,29 +160,24 @@ public class RulePanel extends JPanel {
 		attributeComboBox.addActionListener(al);
 		comparisonModeComboBox.addActionListener(al);
 		compareValueTextField.getDocument().addDocumentListener(new RegelsetDocumentListener(compareValueTextField));
-
-		model.addPropertyChangeListener(new MyPropertyChangeListener());
 	}
 
-	private FormBuilder setLayout() {
+	private void setLayout() {
 		FormBuilder paneBuilder = FormBuilder.create()
 				.columns(
 						"right:pref, 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
-				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p, $lg, p, $lg, p");
+				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p, $lg, p, $lg, p");
 
-		// TODO: Titel von TAB  reiterNameLabel = new JLabel();
-
-		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.sortrule")).rcw(1, 1, 7);
-		paneBuilder.add(contextComboBox).rcw(3, 1, 1);
-		paneBuilder.add(attributeComboBox).rcw(3, 4, 4);
-		paneBuilder.add(comparisonModeComboBox).rcw(11, 1, 2);
-		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.rule.dynamic")).rcw(7, 1, 7);
-		paneBuilder.add(datePicker).rcw(11, 4, 6);
-		paneBuilder.add(compareValueTextField).rcw(15, 1, 9);
+		paneBuilder.add(ruleErrorLabel).rcw(1, 1, 9);;
+		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.sortrule")).rcw(3, 1, 7);
+		paneBuilder.add(contextComboBox).rcw(5, 1, 1);
+		paneBuilder.add(attributeComboBox).rcw(5, 4, 4);
+		paneBuilder.add(comparisonModeComboBox).rcw(13, 1, 2);
+		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.rule.dynamic")).rcw(9, 1, 7);
+		paneBuilder.add(datePicker).rcw(13, 4, 6);
+		paneBuilder.add(compareValueTextField).rcw(17, 1, 9);
 
 		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
-
-		
 		
 		if (getModel().getContextAttribute().getDataType() == DataTypeEnum.DATE) {
 			datePanel.setVisible(true);
@@ -183,11 +190,7 @@ public class RulePanel extends JPanel {
 			
 		}
 
-		
-
 		this.add(paneBuilder.build());
-
-		return paneBuilder;
 	}
 
 	private void setComboboxModel() {
@@ -195,6 +198,66 @@ public class RulePanel extends JPanel {
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_PDF));
 		fileAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_FILE));
+	}
+	
+	//	private String getValidationError() {
+	protected boolean isPanelValid() {
+		// is the RulePanel valid?
+		// else return ErrorMessage
+		
+		// TODO oder besser Check auf Model?
+
+		boolean isValid = false;
+		String errorMessage = "";
+		
+		// Plausi Eingabe-Felder und ComboBoxen
+		//
+		// TODO :   ComboBox attributeComboBox ist evntl nicht vorhanden!!
+		//         oder hat nix selektiert
+		// 
+		if (contextComboBox.getSelectedItem().equals(ContextTypeEnum.EMPTY)) {
+			errorMessage = rulePanelView.I18N + ".error.contexttype.empty";
+		//} else if (attributeComboBox.getSelectedItem().equals(ContextAttributeEnum.EMPTY)) {
+		//	errorMessage = rulePanelView.I18N + ".error.contextattribute.empty"; 
+		} else if (comparisonModeComboBox.getSelectedItem().equals(ComparisonTypeEnum.EMPTY)) {
+			errorMessage = rulePanelView.I18N + ".error.comparisonmode.empty";
+		}
+		ContextAttributeEnum contextAttribute = (ContextAttributeEnum)attributeComboBox.getSelectedItem();
+		switch (contextAttribute.getDataType()) {
+		case DATE:
+			if ( ((UtilDateModel)datePanel.getModel()).getValue() == null) {
+				errorMessage = rulePanelView.I18N + ".error.comparedate.empty";
+			}
+			
+			break;
+		case INT:
+			if (compareValueTextField.getText() == null || compareValueTextField.getText().equals("")) {
+				errorMessage = rulePanelView.I18N + ".error.comparevalue.empty";
+			} else {
+				try {
+					Integer.valueOf(compareValueTextField.getText());
+				} catch (NumberFormatException nfe) {
+					LOGGER.debug("Vergleichswert is kein Integer", nfe);
+					errorMessage = rulePanelView.I18N + ".error.comparevalue.not.integer";	
+				}
+			}
+			break;
+		case STRING:
+			if (compareValueTextField.getText() == null || compareValueTextField.getText().equals("")) {
+				errorMessage = rulePanelView.I18N + ".error.comparevalue.empty";
+			}
+		default:
+			break;
+		}
+
+		
+		isValid = errorMessage.equals("");
+		if (!isValid) {
+			ruleErrorLabel.setText(rulePanelView.getMessage(errorMessage));		// TODO: ist dies erlaubt "erlaubt"   (ErrorLabel im View protected)
+		}
+		ruleErrorLabel.setVisible(!isValid);
+		
+		return isValid;
 	}
 
 	private class ComboBoxActionListenerALT implements ActionListener {
@@ -363,7 +426,7 @@ System.out.println("model-comp: " + getModel().getCompareValue());
 			} else if (evt.getPropertyName().equals("ruleName")) {
 				// TODO: Tab-Titel anpassen reiterNameLabel.setText((String) evt.getNewValue());
 			} else if (evt.getPropertyName().equals("compareValue")) {
-				ContextAttributeEnum attribute = (ContextAttributeEnum) attributeComboBox.getSelectedItem();
+				ContextAttributeEnum attribute = (ContextAttributeEnum)attributeComboBox.getSelectedItem();
 
 				if (attribute.getDataType() == DataTypeEnum.DATE) {
 					Date compareDate;
