@@ -27,7 +27,7 @@ public class FolderTreeModel extends Model {
 		if (inboxPath != null) {
 			this.inboxFolder = new File(inboxPath);
 		} else {
-			this.inboxFolder = new File("nofolderfound");
+			this.inboxFolder = new File("No-Inbox-Folder");
 		}
 		setTreeNode(inboxFolder);
 		treeModel = new DefaultTreeModel(getTreeNode());
@@ -70,14 +70,17 @@ public class FolderTreeModel extends Model {
 
 	public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) {
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode(dir);
-		for (File file : dir.listFiles()) {
-			if (file.isDirectory() && !file.getName().equals(HIDDEN_FOLDER)) {
-				node.add(addNodes(null, file));
+		
+		if (dir.listFiles() != null) {
+			for (File file : dir.listFiles()) {
+				if (file.isDirectory() && !file.getName().equals(HIDDEN_FOLDER)) {
+					node.add(addNodes(null, file));
+				}
 			}
 		}
 		return node;
 	}
-
+	
 }
 
 class FileTreeCellRenderer extends DefaultTreeCellRenderer {
