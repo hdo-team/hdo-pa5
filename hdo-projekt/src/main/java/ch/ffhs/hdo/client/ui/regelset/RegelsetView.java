@@ -79,6 +79,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
+		
 		setTitle(getMessage(TITLE_KEY));
 
 		initComponents();
@@ -297,6 +298,9 @@ public class RegelsetView extends View<RegelsetModel> {
 			tabbedPane.addTab(ruleModel.getRuleName(), new RulePanel(this, ruleModel));
 		}
 
+		// TODO:   GUI funktioniert nicht mehr anständig mit PropertyChangeListener... !!!
+		//
+		//getModel().addPropertyChangeListener(new MyPropertyChangeListener(getModel()));
 	}
 	
 	protected boolean isRulesetValid() {
@@ -385,27 +389,31 @@ public class RegelsetView extends View<RegelsetModel> {
 	}
 
 	private class MyPropertyChangeListener implements PropertyChangeListener {
-		
+		RegelsetModel model = null;
+
+		 public MyPropertyChangeListener(RegelsetModel model) {
+			 this.model = model;
+		 }
 		 public void propertyChange(PropertyChangeEvent evt) { 
 			 if (evt.getPropertyName() == "directories") { 
 				 // TODO: gehört directories ins Model?
 				 //       oder immer neu ab FileSystem lesen?
 			 } else if (evt.getPropertyName() == "newFilename") {
-				 newFilenameTextField.setText(getModel().getNewFilename());
+				 newFilenameTextField.setText(model.getNewFilename());
 			 } else if (evt.getPropertyName() == "rulesetId") { // NICHT AUF View  
 				 
 			 } else if (evt.getPropertyName() == "priority") { // Nicht auf DIESER VIEW =>
 			 } else if (evt.getPropertyName() == "ruleActiv") {
-				 statusCheckBox.setSelected(getModel().isRuleActiv()); 
+				 statusCheckBox.setSelected(model.isRuleActiv()); 
 			 } else if (evt.getPropertyName() == "ruleList") {
 				  
 		     } else if (evt.getPropertyName() == "rulesetName") {
 		    	 if (! evt.getOldValue().equals(evt.getNewValue())) {
-		    		 regelsetNameTextField.setText(getModel().getRulesetName());
+		    		 regelsetNameTextField.setText(model.getRulesetName());
 		    	 }
 		     } else if (evt.getPropertyName() == "targetDirectory") {
 		    	 if (! evt.getOldValue().equals(evt.getNewValue())) {
-		    		 targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
+		    		 targetDirectoryComboBox.setSelectedItem(model.getTargetDirectory());
 		    	 }
 		     }
 		}

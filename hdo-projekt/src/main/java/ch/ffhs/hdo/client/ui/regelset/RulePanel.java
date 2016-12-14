@@ -27,7 +27,6 @@ import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 import ch.ffhs.hdo.domain.regel.DataTypeEnum;
-import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -165,12 +164,14 @@ public class RulePanel extends JPanel {
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p, $lg, p, $lg, p");
 
 		paneBuilder.add(ruleErrorLabel).rcw(1, 1, 9);;
-		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.sortrule")).rcw(3, 1, 7);
+		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.rulecontext")).rcw(3, 1, 7);
+		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.ruleattribute")).rcw(3, 4, 4);
 		paneBuilder.add(contextComboBox).rcw(5, 1, 1);
 		paneBuilder.add(attributeComboBox).rcw(5, 4, 4);
 		paneBuilder.add(comparisonModeComboBox).rcw(13, 1, 2);
-		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.rule.dynamic")).rcw(9, 1, 7);
+		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.comparemode")).rcw(9, 1, 7);
 		paneBuilder.add(datePicker).rcw(13, 4, 6);
+		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.comparevalue")).rcw(15, 1, 9);
 		paneBuilder.add(compareValueTextField).rcw(17, 1, 9);
 
 		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
@@ -196,25 +197,17 @@ public class RulePanel extends JPanel {
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_FILE));
 	}
 	
-	//	private String getValidationError() {
 	protected boolean isPanelValid() {
 		// is the RulePanel valid?
-		// else return ErrorMessage
-		
-		// TODO oder besser Check auf Model?
 
 		boolean isValid = false;
 		String errorMessage = "";
 		
-		// Plausi Eingabe-Felder und ComboBoxen
-		//
-		// TODO :   ComboBox attributeComboBox ist evntl nicht vorhanden!!
-		//         oder hat nix selektiert
-		// 
 		if (contextComboBox.getSelectedItem().equals(ContextTypeEnum.EMPTY)) {
 			errorMessage = rulePanelView.I18N + ".error.contexttype.empty";
-		//} else if (attributeComboBox.getSelectedItem().equals(ContextAttributeEnum.EMPTY)) {
-		//	errorMessage = rulePanelView.I18N + ".error.contextattribute.empty"; 
+		} else if (attributeComboBox.isVisible() &&					// TODO gibt's diesen Fall noch?
+				   attributeComboBox.getSelectedItem().equals(ContextAttributeEnum.EMPTY)) {
+			errorMessage = rulePanelView.I18N + ".error.contextattribute.empty"; 
 		} else if (comparisonModeComboBox.getSelectedItem().equals(ComparisonTypeEnum.EMPTY)) {
 			errorMessage = rulePanelView.I18N + ".error.comparisonmode.empty";
 		}
@@ -265,27 +258,35 @@ public class RulePanel extends JPanel {
 				JComboBox comboBox = (JComboBox) e.getSource();
 
 				if (comboBox == contextComboBox) {
-					if (contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) { 
-						// -TODO
-						//contextComboBox.removeItemAt(0);
-					}
-					LOGGER.debug("contextComboBox: " + contextComboBox.getModel().getSelectedItem());
-
 					model.setContextType((ContextTypeEnum) contextComboBox.getSelectedItem());
+					if (! model.getContextType().equals(ContextTypeEnum.EMPTY) &&
+					      contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) {
+						 // once a context is selected, remove the empty-item
+						contextComboBox.removeItemAt(0);
+					}
+					LOGGER.debug("selected context: " + contextComboBox.getSelectedItem());
+					
 				} else if (comboBox == attributeComboBox) {
-					System.out.println("attributeComboBox: "
-							+ ((ContextAttributeEnum) attributeComboBox.getModel().getSelectedItem()).name());
-					model.setContextAttribute((ContextAttributeEnum) attributeComboBox.getModel().getSelectedItem());
+					model.setContextAttribute((ContextAttributeEnum) attributeComboBox.getSelectedItem());
+					if (! model.getContextAttribute().equals(ContextAttributeEnum.EMPTY) &&
+							attributeComboBox.getModel().getElementAt(0).equals(ContextAttributeEnum.EMPTY)) {
+							 // once an attribute is selected, remove the empty-item
+							attributeComboBox.removeItemAt(0);
+					}
+					LOGGER.debug("selected attribute: "	+ attributeComboBox.getModel().getSelectedItem());
 				} else if (comboBox == comparisonModeComboBox) {
-					System.out
-							.println("comparisonModeComboBox: " + comparisonModeComboBox.getModel().getSelectedItem());
-					model.setComparisonType((ComparisonTypeEnum) comparisonModeComboBox.getModel().getSelectedItem());
+					model.setComparisonType((ComparisonTypeEnum) comparisonModeComboBox.getSelectedItem());
+					if (! model.getComparisonType().equals(ComparisonTypeEnum.EMPTY) &&
+							comparisonModeComboBox.getModel().getElementAt(0).equals(ComparisonTypeEnum.EMPTY)) {
+							 // once a comparemode is selected, remove the empty-item
+						comparisonModeComboBox.removeItemAt(0);
+					}
+					LOGGER.debug("comparisonModeComboBox: " + comparisonModeComboBox.getSelectedItem());
 				}
 			}
 		}
 	}
 
-	
 	
 	private class RegelDocumentListener implements DocumentListener {
 
