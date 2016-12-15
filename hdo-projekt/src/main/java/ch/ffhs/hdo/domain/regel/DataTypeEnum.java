@@ -15,7 +15,8 @@ public enum DataTypeEnum {
 		 ComparisonTypeEnum.COMPARISON_UNEQUAL), 
 	NULL, 
 	STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL,
-		   ComparisonTypeEnum.COMPARISON_REGEX);
+		   ComparisonTypeEnum.COMPARISON_REGEX),
+	CONTENT_STRING( ComparisonTypeEnum.COMPARISON_REGEX);
 
 	private ComparisonTypeEnum[] comparisontype;
 

@@ -11,7 +11,6 @@ import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -54,6 +53,7 @@ public class RegelPanel extends JPanel {
 
 	DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
 	DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
+	DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
 
 	RegelPanel getRulePanel() {
 		return this;
@@ -66,6 +66,9 @@ public class RegelPanel extends JPanel {
 			attributeModel = pdfAttributeModel;
 		} else if (regelModel.getContextType().equals(ContextTypeEnum.CONTEXT_FILE)) {
 			attributeModel = fileAttributeModel;
+
+		} else if (regelModel.getContextType().equals(ContextTypeEnum.CONTENT_FILE)) {
+			attributeModel = contentAttributeModel;
 		}
 
 		return attributeModel;
@@ -186,7 +189,6 @@ public class RegelPanel extends JPanel {
 
 		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
 
-		
 		visibiltyComponentInCombination(getModel().getContextAttribute());
 
 		this.add(paneBuilder.build());
@@ -197,6 +199,8 @@ public class RegelPanel extends JPanel {
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_PDF));
 		fileAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_FILE));
+		contentAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(
+				rulePanelView.getAttributList(ContextTypeEnum.CONTENT_FILE));
 	}
 
 	protected boolean isPanelValid() {
@@ -331,7 +335,8 @@ public class RegelPanel extends JPanel {
 
 		public void propertyChange(PropertyChangeEvent evt) {
 
-			if (evt.getPropertyName().equals("contextType")) {
+			final String propertyName = evt.getPropertyName();
+			if (propertyName.equals("contextType")) {
 				contextComboBox.setSelectedItem(evt.getNewValue());
 				if (!evt.getNewValue().equals(evt.getOldValue())) {
 					model.setContextAttribute(ContextAttributeEnum.EMPTY);
@@ -340,7 +345,7 @@ public class RegelPanel extends JPanel {
 
 					model.setRuleName(evt.getNewValue().toString());
 				}
-			} else if (evt.getPropertyName().equals("contextAttribute")) {
+			} else if (propertyName.equals("contextAttribute")) {
 				attributecmbox.setSelectedItem(evt.getNewValue());
 				if (!evt.getNewValue().equals(evt.getOldValue())) {
 					// => neu Comparison Combo aufbauen
@@ -350,7 +355,7 @@ public class RegelPanel extends JPanel {
 
 				visibiltyComponentInCombination((ContextAttributeEnum) evt.getNewValue());
 
-			} else if (evt.getPropertyName().equals("compareValue")) {
+			} else if (propertyName.equals("compareValue")) {
 				ContextAttributeEnum attribute = (ContextAttributeEnum) attributecmbox.getSelectedItem();
 
 				if (attribute.getDataType() == DataTypeEnum.DATE) {

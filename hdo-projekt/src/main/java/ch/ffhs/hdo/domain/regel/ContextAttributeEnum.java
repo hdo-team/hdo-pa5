@@ -21,7 +21,7 @@ public enum ContextAttributeEnum {
 	FILE_OWNER(ContextTypeEnum.CONTEXT_FILE, DataTypeEnum.STRING), 
 	FILE_SIZE(ContextTypeEnum.CONTEXT_FILE,	DataTypeEnum.INT), 
 	PDF_AUTHOR(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), 
-	PDF_CONTENT(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING), 
+	PDF_CONTENT(ContextTypeEnum.CONTENT_FILE, DataTypeEnum.CONTENT_STRING), 
 	PDF_CREATION_DATE(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.DATE),
 	PDF_SIZE(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.INT),
 	PDF_TITLE(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.STRING),

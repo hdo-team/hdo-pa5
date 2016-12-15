@@ -145,6 +145,8 @@ public abstract class AbstractRegel {
 				return compareInt();
 			case STRING:
 				return compareString();
+			case CONTENT_STRING:
+				return compareString();
 			case NULL:
 				return false;
 			default:
@@ -152,8 +154,8 @@ public abstract class AbstractRegel {
 			}
 
 		} catch (Exception e) {
-			//Ein Fehler in der Konfiguraiton soll nicht zum Abbruch führen.
-			
+			// Ein Fehler in der Konfiguraiton soll nicht zum Abbruch führen.
+
 			return false;
 		}
 
