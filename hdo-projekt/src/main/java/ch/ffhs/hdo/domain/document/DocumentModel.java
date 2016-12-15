@@ -7,6 +7,13 @@ import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import ch.ffhs.hdo.infrastructure.service.util.PdfUtils;
 
+/**
+ * DocumentModel ist die Representation aller Informationen die vom Service
+ * geprüft werden
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class DocumentModel {
 
 	private File file;
@@ -23,18 +30,35 @@ public class DocumentModel {
 
 	}
 
+	/**
+	 * Retourniert den Inhalt eines PDFs
+	 * @return Pdf Inhalt
+	 */
 	public String getContent() {
 		return content;
 	}
 
+	/**
+	 * Retourniert das File
+	 * @return Pdf als File
+	 */
 	public File getFile() {
 		return file;
 	}
 
+	/**
+	 * Gibt die Metadaten von eines Files zurück
+	 *
+	 * @return HashMap von Attributen und den Values
+	 */
 	public HashMap<ContextAttributeEnum, Object> getFileMetadata() {
 		return fileMetadata;
 	}
-
+	/**
+	 * Gibt die Metadaten von eines PDFs zurück
+	 *
+	 * @return HashMap von Attributen und den Values
+	 */
 	public HashMap<ContextAttributeEnum, Object> getPdfMetadata() {
 		return pdfMetadata;
 	}
