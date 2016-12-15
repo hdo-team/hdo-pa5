@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -47,6 +48,9 @@ public class RegelPanel extends JPanel {
 	private JDatePanelImpl datePanel;
 	private RegelModel model;
 	private JLabel ruleErrorLabel;
+	private JLabel comparisonModeLabel;
+	private JLabel compareValueLabel;
+	private JLabel compareValueDateLabel;
 
 	DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
 	DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
@@ -116,10 +120,16 @@ public class RegelPanel extends JPanel {
 			compareValueTextField.setText(model.getCompareValue());
 		}
 
-		model.addPropertyChangeListener(new MyPropertyChangeListener());
+		model.addPropertyChangeListener(new ModelChangeListener());
 	}
 
 	private void createComponent() {
+		final String compmode = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparemode");
+		final String compareval = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparevalue");
+
+		compareValueDateLabel = new JLabel(compareval);
+		compareValueLabel = new JLabel(compareval);
+		comparisonModeLabel = new JLabel(compmode);
 
 		ruleErrorLabel = new JLabel();
 		ruleErrorLabel.setForeground(Color.red);
@@ -166,23 +176,18 @@ public class RegelPanel extends JPanel {
 		paneBuilder.add(contextComboBox).rcw(5, 1, 1);
 		paneBuilder.add(attributecmbox).rcw(5, 4, 4);
 		paneBuilder.add(comparisonModeComboBox).rcw(13, 1, 2);
-		paneBuilder.addLabel(rulePanelView.getMessage(rulePanelView.I18N + ".label.comparemode")).rcw(9, 1, 7);
+
+		paneBuilder.add(comparisonModeLabel).rcw(9, 1, 3);
+		paneBuilder.add(compareValueDateLabel).rcw(9, 4, 6);
 		paneBuilder.add(datePicker).rcw(13, 4, 6);
-		paneBuilder.add(rulePanelView.getMessage(rulePanelView.I18N + ".label.comparevalue")).rcw(15, 1, 9);
+
+		paneBuilder.add(compareValueLabel).rcw(15, 1, 9);
 		paneBuilder.add(compareValueTextField).rcw(17, 1, 9);
 
 		paneBuilder.padding(new EmptyBorder(5, 5, 5, 5));
 
-		if (getModel().getContextAttribute().getDataType() == DataTypeEnum.DATE) {
-			datePanel.setVisible(true);
-			datePicker.setVisible(true);
-			compareValueTextField.setVisible(false);
-		} else {
-			datePanel.setVisible(false);
-			datePicker.setVisible(false);
-			compareValueTextField.setVisible(true);
-
-		}
+		
+		visibiltyComponentInCombination(getModel().getContextAttribute());
 
 		this.add(paneBuilder.build());
 	}
@@ -322,15 +327,11 @@ public class RegelPanel extends JPanel {
 		}
 	}
 
-	private class MyPropertyChangeListener implements PropertyChangeListener {
+	private class ModelChangeListener implements PropertyChangeListener {
 
 		public void propertyChange(PropertyChangeEvent evt) {
-			if (evt.getPropertyName().equals("compareValue")) {
-				System.out.println("Property: compareValue");
-				// compareTextField
-			} else if (evt.getPropertyName().equals("comparisonType")) {
-				comparisonModeComboBox.setSelectedItem(evt.getNewValue());
-			} else if (evt.getPropertyName().equals("contextType")) {
+
+			if (evt.getPropertyName().equals("contextType")) {
 				contextComboBox.setSelectedItem(evt.getNewValue());
 				if (!evt.getNewValue().equals(evt.getOldValue())) {
 					model.setContextAttribute(ContextAttributeEnum.EMPTY);
@@ -347,32 +348,8 @@ public class RegelPanel extends JPanel {
 					comparisonModeComboBox.setModel(getComparisonModeModel(model.getContextAttribute()));
 				}
 
-				// je nach Attribute Datum-Picker oder compareValueField
-				ContextAttributeEnum attribute = (ContextAttributeEnum) evt.getNewValue();
-				if (attribute == ContextAttributeEnum.EMPTY) {
-					comparisonModeComboBox.setVisible(false);
+				visibiltyComponentInCombination((ContextAttributeEnum) evt.getNewValue());
 
-					datePanel.setVisible(false);
-					datePicker.setVisible(false);
-
-					compareValueTextField.setVisible(false);
-				} else {
-					comparisonModeComboBox.setVisible(true);
-					if (attribute.getDataType() == DataTypeEnum.DATE) {
-						datePanel.setVisible(true);
-						datePicker.setVisible(true);
-						compareValueTextField.setVisible(false);
-					} else {
-						datePanel.setVisible(false);
-						datePicker.setVisible(false);
-						compareValueTextField.setVisible(true);
-					}
-				}
-			} else if (evt.getPropertyName().equals("id")) {
-				// TODO: nicht auf View! Code entfernen?
-			} else if (evt.getPropertyName().equals("ruleName")) {
-				// TODO: Tab-Titel anpassen
-				// oder fix => kein check
 			} else if (evt.getPropertyName().equals("compareValue")) {
 				ContextAttributeEnum attribute = (ContextAttributeEnum) attributecmbox.getSelectedItem();
 
@@ -389,6 +366,36 @@ public class RegelPanel extends JPanel {
 				}
 
 			}
+
+		}
+
+	}
+
+	private void visibiltyComponentInCombination(ContextAttributeEnum attribute) {
+		// je nach Attribute Datum-Picker oder compareValueField
+		if (attribute == ContextAttributeEnum.EMPTY) {
+			setCombinationVisible(false, false, false);
+
+		} else {
+			if (attribute.getDataType() == DataTypeEnum.DATE) {
+				setCombinationVisible(true, true, false);
+			} else {
+				setCombinationVisible(true, false, true);
+			}
 		}
 	}
+
+	private void setCombinationVisible(boolean compMode, boolean dateFields, boolean compval) {
+
+		comparisonModeComboBox.setVisible(compMode);
+		comparisonModeLabel.setVisible(compMode);
+
+		datePanel.setVisible(dateFields);
+		datePicker.setVisible(dateFields);
+		compareValueDateLabel.setVisible(dateFields);
+
+		compareValueLabel.setVisible(compval);
+		compareValueTextField.setVisible(compval);
+	}
+
 }
