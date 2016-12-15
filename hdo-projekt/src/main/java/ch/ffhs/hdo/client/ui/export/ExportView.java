@@ -19,15 +19,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.einstellungen.OptionView;
 import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 
 public class ExportView extends View<ExportModel> {
-
+	private static Logger LOGGER = LogManager.getLogger(ExportView.class);
+	
 	private final String I18N = "hdo.export";
 	private final String TITLE_KEY = I18N + ".title";
 	private JTextField pathTextField;
@@ -100,7 +106,7 @@ public class ExportView extends View<ExportModel> {
 
 		setDimension(430, 145);
 	}
-		
+	
 	private class ExportAllAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -120,7 +126,24 @@ public class ExportView extends View<ExportModel> {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				enc.writeObject(getModel().getFolderModel().getTreeModel());
+				if (getModel() != null) {
+					System.out.println("Teil 1");
+					if (getModel().getFolderModel() != null) {
+						System.out.println("Teil 2");
+						
+						if (getModel().getFolderModel().getTreeModel() != null) {
+							System.out.println("Teil 3");
+						} else {
+						System.out.println("Teil 3 Abbruch");
+						} 
+					
+					}	else {
+					System.out.println("Teil 2 Abbruch");
+					}
+				} else {
+					System.out.println("Teil 1 Abbruch");
+				}
+				//enc.writeObject(getModel().getFolderModel().getTreeModel());
 				enc.close();
 				
 				getHandler().performOperation(CloseViewOperation.class);

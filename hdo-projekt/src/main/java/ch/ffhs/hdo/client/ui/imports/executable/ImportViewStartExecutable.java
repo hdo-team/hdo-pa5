@@ -1,16 +1,17 @@
 package ch.ffhs.hdo.client.ui.imports.executable;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.imports.ImportController;
 import ch.ffhs.hdo.client.ui.imports.ImportModel;
 
-public class ImportViewStartExecutable implements Executable<Object> {
+public class ImportViewStartExecutable implements Executable<RegelsetTableModel> {
 
-	public void execute(Object args) {
+	public void execute(RegelsetTableModel regelsetModel) {
 		
 		ImportModel model = new ImportModel();
-		
-		ImportController importController = new ImportController(model);
+		model.setRegelsetModel(regelsetModel);
+		ImportController importController = new ImportController(model, regelsetModel);
 		importController.show();
 		
 	}

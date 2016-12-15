@@ -117,9 +117,22 @@ public class ImportView extends View<ImportModel> {
 				
 				try {
 					getHandler().performOperation(ImportSaveOperation.class);
-					JOptionPane.showMessageDialog(null, "Import erfolgreich!/nBitte Programm schliessen und erneut starten!");
+					/**
+					* ---- HIGH PRIORITY ----
+					* Wäre super, wenn das RegelsetTableModel dynamisch geupdatet wird, somit würde
+					* ein Programm restart entfallen...
+					* 
+					* ---- LOW PRIORITY ----
+					* Natürlich wäre dies auch der Idealfall wenn der FolderTreeModel Export funktionieren würde,
+					* somit würden beide Tables geupdatet werden beim Import... 
+					*
+					* ---- NullPointerException -> brauche hier HILFE! ----
+					* // getModel().getRegelsetModel().setUpdateView(true);
+					* 
+					*/
+					JOptionPane.showMessageDialog(null, "Import erfolgreich!\n\nBitte Programm schliessen und erneut starten!");
 				} catch (Exception e1){
-					JOptionPane.showMessageDialog(null, "Import nicht erfolgreich!");
+					JOptionPane.showMessageDialog(null, "Import nicht erfolgreich!\n\nEs ist ein Fehler aufgetreten.");
 				}
 				getHandler().performOperation(CloseViewOperation.class);
 			}

@@ -4,6 +4,7 @@ import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
@@ -18,9 +19,10 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 
 	private ViewHandlerImpl viewHandler;
 
-	public ImportController(ImportModel model) {
+	public ImportController(ImportModel model, RegelsetTableModel regelsetModel) {
 
 		super(model);
+		model.setRegelsetModel(regelsetModel);
 		setView(new ImportView(getResourceBundle()));
 
 		viewHandler = new ViewHandlerImpl();

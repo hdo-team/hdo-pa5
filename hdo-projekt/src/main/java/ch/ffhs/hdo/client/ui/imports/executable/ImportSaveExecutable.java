@@ -32,6 +32,15 @@ public class ImportSaveExecutable implements Executable<ImportModel> {
 		try {
 			archiver.extract(archive, destination);
 		} catch (IOException e) {
+			/**
+			* 
+			* Falls ein falsches Fileformat (kein .gz) ausgewählt wird, gibts hier die Exception
+			* und der Benutzer erhält einen Hinweis, dass der Importvorgang erfolgreich war...
+			* 
+			* Entweder bei der Fileauswahl checken ob es ein .gz Format ist, oder einen return-Value an die View
+			* mitgeben, damit dort dann dementsprechend der Dialog angezeigt wird.
+			* 
+			*/
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
