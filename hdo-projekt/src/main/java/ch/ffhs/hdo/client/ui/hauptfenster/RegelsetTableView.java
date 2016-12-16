@@ -19,12 +19,11 @@ import javax.swing.border.EmptyBorder;
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
-import ch.ffhs.hdo.client.ui.base.viewhandler.ViewOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
-import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
 
 public class RegelsetTableView extends View<RegelsetTableModel> {
 

@@ -1,7 +1,5 @@
 package ch.ffhs.hdo.client.ui.base.executable;
 
-import org.apache.logging.log4j.spi.Terminable;
-
 import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.ParamChecker;
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;

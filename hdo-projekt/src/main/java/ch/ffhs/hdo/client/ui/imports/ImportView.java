@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -19,10 +17,8 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
-import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
-import ch.ffhs.hdo.client.ui.utils.ReadFileViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**

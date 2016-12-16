@@ -8,8 +8,6 @@ import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -26,9 +24,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
-import ch.ffhs.hdo.client.ui.einstellungen.OptionView;
 import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
-import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 
 public class ExportView extends View<ExportModel> {

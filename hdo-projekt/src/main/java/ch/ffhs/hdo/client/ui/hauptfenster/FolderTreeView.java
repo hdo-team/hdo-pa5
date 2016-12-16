@@ -1,15 +1,12 @@
 package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTree;
-import javax.swing.border.LineBorder;
-import javax.swing.tree.TreeSelectionModel;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.hauptfenster.executable.FolderTreeUpdateOperation;

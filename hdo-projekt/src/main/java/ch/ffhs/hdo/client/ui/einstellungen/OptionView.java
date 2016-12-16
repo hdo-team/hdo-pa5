@@ -26,7 +26,6 @@ import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
-import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class OptionView extends View<OptionModel> {
 	private static Logger LOGGER = LogManager.getLogger(OptionView.class);

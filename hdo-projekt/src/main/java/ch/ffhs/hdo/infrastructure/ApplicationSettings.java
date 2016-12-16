@@ -8,7 +8,6 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 import ch.ffhs.hdo.persistence.jdbc.InitDatabase;
 
 public class ApplicationSettings {

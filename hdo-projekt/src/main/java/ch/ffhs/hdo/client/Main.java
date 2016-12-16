@@ -9,7 +9,6 @@ import ch.ffhs.hdo.client.ui.hauptfenster.MainModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
-import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 public class Main {
 
