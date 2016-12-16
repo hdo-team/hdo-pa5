@@ -169,7 +169,7 @@ public class RegelPanel extends JPanel {
 	private void setLayout() {
 		FormBuilder paneBuilder = FormBuilder.create()
 				.columns(
-						"right:pref, 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
+						"left:pref, 5dlu, [30dlu, pref], 5dlu, [30dlu, pref], 5dlu, [30dlu, pref], 5dlu, [30dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p , $lg, p, $lg, p, $lg, p");
 
 		paneBuilder.add(ruleErrorLabel).rcw(1, 1, 9);

@@ -236,29 +236,29 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		FormBuilder builder = FormBuilder.create()
 				.columns(
-						"right:pref, 5dlu, [20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref], 5dlu, [20dlu, pref]")
+						"[20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
 
 		builder.add(rulesetErrorLabel).rcw(1, 1, 7);
 		;
 
 		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(3, 1, 7);
-		builder.add(regelsetNameTextField).rcw(5, 1, 3);
+		builder.add(regelsetNameTextField).rcw(5, 1, 7);
 
 		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(7, 1, 7);
 
 		targetDirectoryList = getDirectories(ApplicationSettings.getInstance().getInbox_path(), true);
 		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryList);
-		builder.add(targetDirectoryComboBox).rcw(9, 1, 3);
+		builder.add(targetDirectoryComboBox).rcw(9, 1, 7);
 
-		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(11, 1, 2);
-		builder.add(newFilenameTextField).rcw(13, 1, 2);
+		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(11, 1, 7);
+		builder.add(newFilenameTextField).rcw(13, 1, 7);
 
-		builder.addLabel(getMessage(I18N + ".label.status")).rcw(15, 1, 3);
+		builder.addLabel(getMessage(I18N + ".label.status")).rcw(15, 1, 7);
 		builder.add(statusCheckBox).rcw(17, 1, 3);
 
 		builder.addSeparator(null).rcw(25, 1, 7);
-		builder.add(tabbedPane).rcw(27, 1, 1);
+		builder.add(tabbedPane).rcw(27, 1, 7);
 		builder.addSeparator(null).rcw(33, 1, 7);
 
 		builder.add(addButton).rcw(35, 1, 1);
@@ -271,7 +271,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		getFrame().add(new JScrollPane(build), BorderLayout.CENTER);
 
-		setDimension(800, 600);
+		setDimension(425, 600);
 	}
 
 	@Override
