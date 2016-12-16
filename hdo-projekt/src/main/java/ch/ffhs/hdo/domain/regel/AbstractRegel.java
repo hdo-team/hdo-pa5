@@ -99,7 +99,7 @@ public abstract class AbstractRegel {
 
 		switch (this.getComparisonType()) {
 		case COMPARISON_EQUAL:
-			valStr.equals(this.regelValue);
+			return valStr.equals(this.regelValue);
 		case COMPARISON_GREATER_EQUAL:
 			return false;
 		case COMPARISON_LESS_EQUAL:
