@@ -31,6 +31,11 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
+/**
+ * 
+ * @author Daniel Crazzolara
+ *
+ */
 public class RegelPanel extends JPanel {
 	/**
 	 * 
@@ -51,13 +56,9 @@ public class RegelPanel extends JPanel {
 	private JLabel compareValueLabel;
 	private JLabel compareValueDateLabel;
 
-	DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
-	DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
-	DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
-
-	RegelPanel getRulePanel() {
-		return this;
-	}
+	private DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
+	private DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
+	private DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
 
 	private DefaultComboBoxModel<ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
 		DefaultComboBoxModel<ContextAttributeEnum> attributeModel = null;
@@ -74,10 +75,10 @@ public class RegelPanel extends JPanel {
 		return attributeModel;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private DefaultComboBoxModel getComparisonModeModel(ContextAttributeEnum attributeEnum) {
 
-		// Es wird immer ein neues Model gemacht... TODO: besser das Model NUR
-		// anpasssen?
+		@SuppressWarnings("unchecked")
 		DefaultComboBoxModel attributeModel = new DefaultComboBoxModel(
 				rulePanelView.getComparisonModeList(attributeEnum));
 
@@ -203,6 +204,12 @@ public class RegelPanel extends JPanel {
 				rulePanelView.getAttributList(ContextTypeEnum.CONTENT_FILE));
 	}
 
+	/**
+	 * Prüfung ob die Inhalte und Auswahl korrekt sind
+	 * 
+	 * @return <code>true</code> : es ist valid <br>
+	 *         <code>false</code> = nicht valid
+	 */
 	protected boolean isPanelValid() {
 		// is the RulePanel valid?
 
@@ -262,6 +269,11 @@ public class RegelPanel extends JPanel {
 		return isValid;
 	}
 
+	/**
+	 * {@link ComboBoxActionListener} für alle Comboboxen in den Tabbs des
+	 * Regelpanel
+	 *
+	 */
 	private class ComboBoxActionListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {

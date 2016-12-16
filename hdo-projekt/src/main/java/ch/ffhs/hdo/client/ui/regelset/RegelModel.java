@@ -5,7 +5,6 @@ import ch.ffhs.hdo.domain.regel.ComparisonTypeEnum;
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 
-
 /**
  * RegelModel
  * 
@@ -14,7 +13,6 @@ import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
  */
 
 public class RegelModel extends Model {
-
 
 	private String compareValue;
 	private ComparisonTypeEnum comparisonType = ComparisonTypeEnum.EMPTY;
@@ -25,7 +23,7 @@ public class RegelModel extends Model {
 
 	private RegelModel() {
 		// don't creat new Instance
-		// use 	public static RegelsetModel getNullModel() {
+		// use public static RegelsetModel getNullModel() {
 	}
 
 	public String getCompareValue() {
@@ -87,14 +85,14 @@ public class RegelModel extends Model {
 		this.ruleName = ruleName;
 		firePropertyChange("ruleName", oldValue, ruleName);
 	}
-	
+
 	public static RegelModel getNullModel() {
 		RegelModel model = new RegelModel();
 
 		model.setContextType(ContextTypeEnum.EMPTY);
 		model.setContextAttribute(ContextAttributeEnum.EMPTY);
 		model.setComparisonType(ComparisonTypeEnum.EMPTY);
-		
+
 		return model;
 	}
 }

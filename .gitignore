@@ -1,1 +1,5 @@
 hdo-projekt/dependency-reduced-pom.xml
+hdo-projekt/doc/**/*.html
+hdo-projekt/doc/**/*.js
+hdo-projekt/doc/package-list
+hdo-projekt/doc/**/*.css

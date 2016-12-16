@@ -8,7 +8,7 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 
 
 /**
- * Controller für das RegelsetModel
+ * Model für das Regelset 
  * 
  * @author Daniel Crazzolara
  */

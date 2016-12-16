@@ -5,10 +5,20 @@ import java.util.ResourceBundle;
 
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
+/**
+ * 
+ * Stammklasse um die Controller zu erstellen. Gibt den Ramen und Anforderung
+ * für einen Controller an.
+ * 
+ * @author Denis Bittante
+ * 
+ *
+ * @param <M>
+ *            ist das zu benutzende {@link Model}
+ * @param <V>
+ *            ist die zu benutzende {@link View}
+ */
 public abstract class Controller<M extends Model, V extends View<M>> {
-
-	// weiter Informationen :
-	// https://docs.oracle.com/javase/tutorial/i18n/resbundle/concept.html
 
 	ResourceBundle resourceBundle;
 	M model;
@@ -53,7 +63,7 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 		try {
 			jdbcHelper.terminate();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 	}

@@ -7,22 +7,50 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Observable;
 
+/**
+ * 
+ * Stammklasse um die Models zu erstellen. Gibt den Ramen und Anforderung für
+ * ein Model an.
+ * 
+ * @author Denis Bittante
+ * 
+ */
 public abstract class Model extends Observable {
 
 	private final PropertyChangeSupport listeners;
 
 	protected Model() {
-	        listeners = new PropertyChangeSupport(this);
-	    }
+		listeners = new PropertyChangeSupport(this);
+	}
 
+	/**
+	 * Ein {@link PropertyChangeListener} kann registiert werden, der aufgerufen
+	 * wird sobald sich ein Property des Models geändert hat.
+	 * 
+	 * @param listener
+	 *            {@link PropertyChangeListener} der benutzt wird um zu
+	 *            notifizieren.
+	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		listeners.addPropertyChangeListener(listener);
 	}
 
+	/**
+	 * Ein {@link PropertyChangeListener} kann registiert werden und hier
+	 * angeknöpft werden damit keine Aktion ausgelöst wird.
+	 * 
+	 * @param listener
+	 *            {@link PropertyChangeListener} der benutzt wurde um zu
+	 *            notifizieren.
+	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		listeners.removePropertyChangeListener(listener);
 	}
 
+	/**
+	 * 
+	 * @return {@link Iterator} um alle Listeners zu bekommen.
+	 */
 	public Iterator<PropertyChangeListener> listenerIterator() {
 		return Arrays.asList(listeners.getPropertyChangeListeners()).iterator();
 	}
