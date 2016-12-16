@@ -11,6 +11,14 @@ import javax.swing.WindowConstants;
 
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
 
+/**
+ * Stammklasse für die Views
+ * 
+ * @author Denis Bittante
+ *
+ * @param <M>
+ *            Modeltyp, gleiches wie für die Controller
+ */
 public abstract class View<M extends Model> {
 
 	ResourceBundle resourceBundle;
@@ -43,19 +51,44 @@ public abstract class View<M extends Model> {
 
 	}
 
+	/**
+	 * Setzt die Grösse des Fensters
+	 * 
+	 * @param width
+	 *            -> Breite
+	 * @param height
+	 *            -> Höhe
+	 */
 	public void setDimension(int width, int height) {
 		this.dimension = new Dimension(width, height);
 
 	}
 
+	/**
+	 * Setzt die ResourceBundles, diese sind anhand des Locals geladen worden.
+	 * 
+	 * @param resourceBundle
+	 *            {@link ResourceBundle}
+	 */
 	public void setResourceBundle(ResourceBundle resourceBundle) {
 		this.resourceBundle = resourceBundle;
 	}
 
+	/**
+	 * Gibt den Fenstertitel zurück.
+	 * 
+	 * @return Fenstertitel
+	 */
 	private String getTitle() {
 		return title;
 	}
 
+	/**
+	 * Setzt die Grösse des Fensters
+	 * 
+	 * @param dimension
+	 *            -> Höhe und Breite
+	 */
 	public void setDimension(Dimension dimension) {
 		this.dimension = dimension;
 	}
@@ -97,7 +130,7 @@ public abstract class View<M extends Model> {
 	public String getMessage(String key) {
 		return resourceBundle.getString(key);
 	}
-	
+
 	public String getMessage(String key, String replacement) {
 		return (resourceBundle.getString(key)).replaceAll("%s", replacement);
 	}

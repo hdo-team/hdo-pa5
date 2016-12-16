@@ -24,12 +24,25 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 	M model;
 	V view;
 
+	/**
+	 * 
+	 * @param model:
+	 *            Model für den Controller
+	 */
 	public Controller(M model) {
 		this.resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
 		this.model = model;
 
 	}
 
+	/**
+	 * Initialisiert die Handler üblicherweiese wird folgendes
+	 * implementiert:<br>
+	 * <code>getView().setHandler(viewHandler);</code><br>
+	 * <code>getView().setResourceBundle(getResourceBundle());</code><br>
+	 * <code>getView().setModel(getModel());</code>
+	 * 
+	 */
 	public abstract void initializeView();
 
 	public ResourceBundle getResourceBundle() {

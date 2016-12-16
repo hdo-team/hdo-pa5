@@ -7,7 +7,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.base.ParamChecker;
-
+/**
+ * Implementation für {@link ViewHandler}
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class ViewHandlerImpl implements ViewHandler {
 
 	static Logger LOGGER = LogManager.getLogger(ViewHandlerImpl.class);
