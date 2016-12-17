@@ -6,19 +6,33 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.export.ExportModel;
 import ch.ffhs.hdo.persistence.dao.ExportDao;
 
-public class ExportSaveExecutable implements Executable<ExportModel> {
-	
+/**
+ * Speichert die Konfigurationen der Datenbank in das ExportModel.
+ * 
+ * @author Adrian Perez
+ *
+ */
+public class ExportSaveExecutable implements Executable {
+
 	private ExportModel model;
-	
+
+	/**
+	 * Konstruktor zur erstellung des Objekts.
+	 * 
+	 * @param model
+	 *            Model, in welchem die Datenbank-Daten gespeichert werden.
+	 */
 	public ExportSaveExecutable(ExportModel model) {
 		this.model = model;
 
 	}
 
-	public void execute(ExportModel arg) {
-
+	/**
+	 * Daten aus der Datenbank werden in das Model gespeichert.
+	 */
+	public void execute(Object arg) {
 		ExportDao dao = new ExportDao();
-		
+
 		try {
 			dao.backup(model);
 
@@ -26,7 +40,7 @@ public class ExportSaveExecutable implements Executable<ExportModel> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

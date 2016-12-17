@@ -28,7 +28,8 @@ import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**
- * Konfigurationsfenster welches über das Menü Optionen geöffnet werden kann
+ * Konfigurationsfenster welches über das Menü Optionen im Haupfenster geöffnet
+ * werden kann.
  * 
  * @author Jonas Segessemann
  *
