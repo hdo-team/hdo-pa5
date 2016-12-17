@@ -70,7 +70,7 @@ public class FolderTreeModel extends Model {
 
 	public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) {
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode(dir);
-		
+
 		if (dir.listFiles() != null) {
 			for (File file : dir.listFiles()) {
 				if (file.isDirectory() && !file.getName().equals(HIDDEN_FOLDER)) {
@@ -80,7 +80,7 @@ public class FolderTreeModel extends Model {
 		}
 		return node;
 	}
-	
+
 }
 
 class FileTreeCellRenderer extends DefaultTreeCellRenderer {

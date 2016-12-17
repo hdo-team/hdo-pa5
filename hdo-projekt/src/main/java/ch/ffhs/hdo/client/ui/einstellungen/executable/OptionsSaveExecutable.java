@@ -22,7 +22,7 @@ public class OptionsSaveExecutable implements Executable {
 
 	}
 /**
- * Speicher mithilfe der OptionFassade das Model in die Datenbank.
+ * Speichert mithilfe der OptionFassade das Model in die Datenbank.
  */
 	public void execute(Object arg) {
 
