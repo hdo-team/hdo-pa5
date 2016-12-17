@@ -6,11 +6,11 @@ import java.util.List;
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 
-
 /**
- * Model für das Regelset 
+ * Model für das Regelset Fenster.
  * 
- * @author Daniel Crazzolara
+ * @author Adrian Perez Rodriguez
+ *
  */
 
 public class RegelsetModel extends Model {

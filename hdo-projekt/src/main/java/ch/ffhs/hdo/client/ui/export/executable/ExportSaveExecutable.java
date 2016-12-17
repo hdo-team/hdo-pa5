@@ -9,7 +9,7 @@ import ch.ffhs.hdo.persistence.dao.ExportDao;
 /**
  * Speichert die Konfigurationen der Datenbank in das ExportModel.
  * 
- * @author Adrian Perez
+ * @author Adrian Perez Rodriguez
  *
  */
 public class ExportSaveExecutable implements Executable {

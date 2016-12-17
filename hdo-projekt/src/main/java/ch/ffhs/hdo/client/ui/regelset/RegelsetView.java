@@ -42,8 +42,9 @@ import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
-/******************************************************
- * RegelsetView
+/**
+ * Regelsetfenster welches über das Menü Neusortierung im Haupfenster oder unterhalb über den Neubutton geöffnet
+ * werden kann.
  * 
  * @author Daniel Crazzolara
  *
@@ -77,6 +78,12 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private int previousTabIndex = -1;
 
+	/**
+	 * Konstruktor welcher das View Objekt erstellt.
+	 * 
+	 * @param resourceBundle
+	 *            Übersetzungen der aktuellen Sprache.
+	 */
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 
@@ -86,6 +93,9 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	}
 
+	/**
+	 * Initialisierung des Konfigurations-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
@@ -138,6 +148,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		return comparisonList.toArray(new ComparisonTypeEnum[0]);
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 
 		rulesetErrorLabel = new JLabel();
@@ -232,6 +245,9 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	}
 
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 
 		FormBuilder builder = FormBuilder.create()
@@ -274,6 +290,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		setDimension(425, 600);
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
 	@Override
 	public void configureBindings() {
 
@@ -315,6 +334,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		// MyPropertyChangeListener(getModel()));
 	}
 
+	/**
+	 * Überprüfung der Ruleset Eingabem vom Benutzer
+	 */
 	protected boolean isRulesetValid() {
 
 		boolean isValid = false;
@@ -339,6 +361,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		return isValid;
 	}
 
+	/**
+	 * Speichert das Regelset in die Datenbank.
+	 */
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -356,6 +381,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 	}
 
+	/**
+	 * Schliesst das Regelset-Fenster.
+	 */
 	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -363,6 +391,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 	}
 
+	/**
+	 * DANIEL BITTE HINZUFÜGEN
+	 */
 	private class RegelsetDocumentListener implements DocumentListener {
 
 		JTextField myTextField = null;
@@ -398,6 +429,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 	}
 
+	/**
+	 * DANIEL BITTE HINZUFÜGEN
+	 */
 	private class MyPropertyChangeListener implements PropertyChangeListener {
 		RegelsetModel model = null;
 

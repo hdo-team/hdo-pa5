@@ -5,7 +5,7 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.ViewOperation;
 /**
  * Interface für die Zuweisung im ViewHandler zum Export aller Konfigurationen.
  * 
- * @author Jonas Segessemann
+ * @author Adrian Perez Rodriguez
  *
  */
 public interface ExportSaveOperation extends ViewOperation {

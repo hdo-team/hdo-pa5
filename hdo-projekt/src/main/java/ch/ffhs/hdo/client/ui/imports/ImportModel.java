@@ -5,8 +5,10 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
 
 /**
+ * Model für das Konfigurations-Import Fenster.
  * 
  * @author Adrian Perez Rodriguez
+ * 
  */
 public class ImportModel extends Model implements IFileModel {
 

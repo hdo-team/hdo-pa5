@@ -22,8 +22,11 @@ import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**
+ * Importfenster welches über das Menü Import im Hauptfenster geöffnet werden
+ * kann.
  * 
  * @author Adrian Perez Rodriguez
+ *
  */
 public class ImportView extends View<ImportModel> {
 
@@ -35,6 +38,12 @@ public class ImportView extends View<ImportModel> {
 	private JButton loadButton;
 	private JButton cancelButton;
 
+	/**
+	 * Lädt die Sprachdatei, und setzt den Titel des Fensters.
+	 * 
+	 * @param resourceBundle
+	 *            Übersetzungen der aktuellen Sprache.
+	 */
 	public ImportView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 		setTitle(getMessage(TITLE_KEY));
@@ -42,12 +51,18 @@ public class ImportView extends View<ImportModel> {
 		initComponents();
 	}
 
+	/**
+	 * Initialisierung des Import-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
 	@Override
 	public void configureBindings() {
 
@@ -63,6 +78,9 @@ public class ImportView extends View<ImportModel> {
 
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 
 		filePath = new JTextField();
@@ -77,6 +95,9 @@ public class ImportView extends View<ImportModel> {
 		
 	}
 
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 
 		FormBuilder builder = FormBuilder.create()
@@ -98,6 +119,9 @@ public class ImportView extends View<ImportModel> {
 		setDimension(430, 145);
 	}
 	
+	/**
+	 * Importiert alle Konfigurationen vom ausgewählten Pfad im Fenster
+	 */
 	private class ImportAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -135,6 +159,9 @@ public class ImportView extends View<ImportModel> {
 		}
 	}
 
+	/**
+	 * Öffnet die Verzeichnisauswahl (nur Dateien können ausgewählt werden), um eine Importdatei auszuwählen.
+	 */
 	private class ChooseFilePathAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -143,6 +170,11 @@ public class ImportView extends View<ImportModel> {
 		}
 	}
 	
+	/**
+	 * Überprüft ob eine gültige Importdatei ausgwewählt wurde.
+	 * 
+	 * @return null oder im Fehlerfall eine Meldung.
+	 */
 	private String checkFilePathValue() {
 		String errorString = null;
 
@@ -152,6 +184,11 @@ public class ImportView extends View<ImportModel> {
 		return errorString;
 	}
 	
+	/**
+	 * Überprüft ob ein Inbox-Pfad in den Einstellungen ausgewählt wurde.
+	 * 
+	 * @return null oder im Fehlerfall eine Meldung.
+	 */
 	private String checkInboxPathValue() {
 		String errorString = null;
 	
@@ -163,6 +200,9 @@ public class ImportView extends View<ImportModel> {
 		return errorString;
 	}
 	
+	/**
+	 * Schliesst das Import-Fenster.
+	 */
 	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.13" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <component id="1" language="java" name="src/test/java" project="hdo" file="/hdo/src/test/java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="117" y="82"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </component>  
+  <package id="2" language="java" name="ch.ffhs.hdo.infrastructure.option" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/infrastructure/option" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="331" y="88"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="ch.ffhs.hdo.infrastructure.service.util" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/infrastructure/service/util" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="626" y="85"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="ch.ffhs.hdo.infrastructure.regelset" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/infrastructure/regelset" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1005" y="86"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="5" language="java" name="ch.ffhs.hdo.infrastructure.option.OptionConverterTest" project="hdo" 
+    file="/hdo/src/test/java/ch/ffhs/hdo/infrastructure/option/OptionConverterTest.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="338" y="388"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="ch.ffhs.hdo.infrastructure.regelset.RegelsetConverterTest" project="hdo" 
+    file="/hdo/src/test/java/ch/ffhs/hdo/infrastructure/regelset/RegelsetConverterTest.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1052" y="397"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="ch.ffhs.hdo.infrastructure.service.util.FileHandlingTest" project="hdo" 
+    file="/hdo/src/test/java/ch/ffhs/hdo/infrastructure/service/util/FileHandlingTest.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="673" y="263"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ch.ffhs.hdo.infrastructure.service.util.PdfUtilsTest" project="hdo" 
+    file="/hdo/src/test/java/ch/ffhs/hdo/infrastructure/service/util/PdfUtilsTest.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="592" y="467"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

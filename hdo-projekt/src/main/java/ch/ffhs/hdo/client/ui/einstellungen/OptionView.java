@@ -175,9 +175,6 @@ public class OptionView extends View<OptionModel> {
 
 	/**
 	 * Speichert die Konfigurationen.
-	 * 
-	 * @author Jonas Segessemann
-	 *
 	 */
 	private class SaveAction extends AbstractAction {
 
@@ -194,9 +191,6 @@ public class OptionView extends View<OptionModel> {
 
 	/**
 	 * Schliesst das Konfigurations-Fenster.
-	 * 
-	 * @author Jonas Segessemann
-	 *
 	 */
 	private class CloseAction extends AbstractAction {
 
@@ -210,9 +204,6 @@ public class OptionView extends View<OptionModel> {
 
 	/**
 	 * Öffnet die Verzeichnisauswahl, um einen Inbox Pfad auszuwählen.
-	 * 
-	 * @author Jonas Segessemann
-	 *
 	 */
 	private class OpenDirectoryChooser extends AbstractAction {
 

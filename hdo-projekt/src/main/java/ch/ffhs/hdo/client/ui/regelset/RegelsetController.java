@@ -9,15 +9,23 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
 
 /**
- * Controller für das Regelset
+ * Controller für die Regelsets
  * 
- * @author Daniel Crazzolara
+ * @author Adrian Perez Rodriguez
  */
 
 public class RegelsetController extends Controller<RegelsetModel, RegelsetView> {
 
 	private final ViewHandlerImpl viewHandler;
 
+	/**
+	 * 
+	 * Controller Konstruktor welcher die Models dem erstellten View übergibt.
+	 * 
+	 * @param model
+	 *            Regelset-Model welches die Daten aus der DB enhält.
+	 *            
+	 */
 	public RegelsetController(RegelsetModel model) {
 		super(model);
 
@@ -29,6 +37,16 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 
 	}
 
+	/**
+	 * 
+	 * Controller Konstruktor welcher die Models dem erstellten View übergibt.
+	 * 
+	 * @param model
+	 *            Model welches die Daten aus der DB enhält.
+	 * @param tableModel
+	 *            Model welches die Regelset-Daten enthält.
+	 *                      
+	 */
 	public RegelsetController(RegelsetModel model, RegelsetTableModel tableModel) {
 		super(model);
 		model.setRegelsetTableModel(tableModel);
@@ -39,6 +57,9 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 		initializeView();
 	}
 
+	/**
+	 * Inizialisierung der erstellten View.
+	 */
 	@Override
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
@@ -46,6 +67,9 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 		getView().setHandler(viewHandler);
 	}
 
+	/**
+	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 */
 	private void setupViewHandler() {
 		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		this.viewHandler.addOperation(RegelsetSaveOperation.class, new RegelsetSaveOperationExecutable(getModel()));

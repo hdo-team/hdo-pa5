@@ -13,12 +13,20 @@ import ch.ffhs.hdo.client.ui.utils.FileChooserExecuter;
 /**
  * Controller für den Konfigurations-Import
  * 
- * @author Adrian Perez Rodirguez
+ * @author Adrian Perez Rodriguez
  */
 public class ImportController extends Controller<ImportModel, ImportView> {
 
 	private ViewHandlerImpl viewHandler;
 
+	/**
+	 * Erstellt das Objekt
+	 * 
+	 * @param model
+	 *            Import Model welches die Einstellungen vor dem Import aus der View erhält.
+	 * @param regelsetModel
+	 *            Enhält Regelsetstruktur, welche importiert werden.
+	 */
 	public ImportController(ImportModel model, RegelsetTableModel regelsetModel) {
 
 		super(model);
@@ -33,12 +41,18 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 		initializeView();
 	}
 
+	/**
+	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 */
 	private void initializeViewHandler() {
 		viewHandler.addOperation(ChooseFilePathViewOperation.class, new FileChooserExecuter(getModel()));
 		viewHandler.addOperation(ImportSaveOperation.class, new ImportSaveExecutable(getModel()));
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 	}
 
+	/**
+	 * Inizialisierung der erstellten View.
+	 */
 	public void initializeView() {
 		getView().setHandler(viewHandler);
 		getView().setResourceBundle(getResourceBundle());
