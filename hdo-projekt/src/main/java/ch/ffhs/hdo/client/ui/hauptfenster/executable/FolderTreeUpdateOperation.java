@@ -3,7 +3,7 @@ package ch.ffhs.hdo.client.ui.hauptfenster.executable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewOperation;
 
 /**
- * Interface für die Zuweisung im ViewHandler zum Aktualisieren der Verzeichnis Übersicht.
+ * Interface für die Zuweisung im ViewHandler zum Aktualisieren der Verzeichnis
  * Übersicht.
  * 
  * @author Jonas Segessemann
