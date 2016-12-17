@@ -10,15 +10,30 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.imports.ImportModel;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
+/**
+ * Speichert die Konfigurationen der importierten Daten in das Verzeichnis.
+ * 
+ * @author Adrian Perez Rodriguez
+ *
+ */
 public class ImportSaveExecutable implements Executable<ImportModel> {
 
 	private ImportModel model;
 
+	/**
+	 * Konstruktor zur erstellung des Objekts.
+	 * 
+	 * @param model
+	 *            Model, von welchem der Inboxpfad hinterlegt ist..
+	 */
 	public ImportSaveExecutable(ImportModel model) {
 		this.model = model;
 
 	}
 
+	/**
+	 * Daten aus der Importdatei werden in das Verzeichnis gespeichert.
+	 */
 	public void execute(ImportModel arg) {
 		
 		String inboxPath = ApplicationSettings.getInstance().getInbox_path() + "/.db";

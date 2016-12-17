@@ -60,7 +60,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Initialisierung des Konfigurations-Fensters.
+	 * Initialisierung des Export-Fensters.
 	 */
 	private void initComponents() {
 		createComponents();
@@ -128,10 +128,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Speichert alle Konfigurationen unter dem Export Pfad.
-	 * 
-	 * @author Adrian Perez
-	 *
+	 * Speichert alle Konfigurationen unter dem Export-Pfad.
 	 */
 	private class ExportAllAction extends AbstractAction {
 
@@ -177,10 +174,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Öffnet die Verzeichnisauswahl, um einen Export Pfad auszuwählen.
-	 * 
-	 * @author Jonas Segessemann
-	 *
+	 * Öffnet die Verzeichnisauswahl, um einen Export-Pfad auszuwählen.
 	 */
 	private class ChooseFolderPathAction extends AbstractAction {
 
@@ -191,7 +185,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Überprüft ob einen gültigen Inbox Pfad ausgwewählt wurde.
+	 * Überprüft ob ein gültiger Export-Pfad ausgwewählt wurde.
 	 * 
 	 * @return null oder im Fehlerfall eine Meldung.
 	 */
@@ -206,10 +200,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Schliesst das Konfigurations-Fenster.
-	 * 
-	 * @author Jonas Segessemann
-	 *
+	 * Schliesst das Export-Fenster.
 	 */
 	private class CloseAction extends AbstractAction {
 

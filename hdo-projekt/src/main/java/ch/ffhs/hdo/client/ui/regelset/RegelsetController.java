@@ -9,9 +9,9 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
 
 /**
- * Controller für das Regelset
+ * Controller für die Regelsets
  * 
- * @author Daniel Crazzolara
+ * @author Adrian Perez Rodriguez
  */
 
 public class RegelsetController extends Controller<RegelsetModel, RegelsetView> {

@@ -12,8 +12,9 @@ import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
  *
  */
 public class ExportViewStartExecutable implements Executable<FolderTreeModel> {
+	
 	/**
-	 * Öffnet das Konfigurationsfenster
+	 * Öffnet das Exportfenster
 	 * 
 	 * @param folderModel
 	 *            Verzeichnisstruktur, welche exportiert wird.

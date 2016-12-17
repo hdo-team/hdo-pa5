@@ -40,8 +40,10 @@ import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
+
 /******************************************************
  * View zum Erstellen und Bearbeiten von Regelsets.
+ *
  * 
  * @author Daniel Crazzolara
  *
@@ -379,7 +381,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	}
 
 	/**
-	 * Speichert das Regelset und schliesst das Regelset-Fenster
+	 * Speichert das Regelset in die Datenbank.
 	 */
 	private class SaveRulesetAction extends AbstractAction {
 

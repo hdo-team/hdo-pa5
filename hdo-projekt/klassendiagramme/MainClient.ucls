@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.13" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="ch.ffhs.hdo.client.ui.export" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="174" x="546" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="ch.ffhs.hdo.client.ui.hauptfenster" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/hauptfenster" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="210" x="943" y="194"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="ch.ffhs.hdo.client.ui.regelset" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="184" x="742" y="284"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="ch.ffhs.hdo.client.ui.utils" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/utils" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="161" x="742" y="194"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="5" language="java" name="ch.ffhs.hdo.client.Main" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/Main.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="291" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="6" language="java" name="ch.ffhs.hdo.client.ui.imports" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/imports" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="181" x="1174" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="7" language="java" name="ch.ffhs.hdo.client.ui.base" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/base" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="165" x="742" y="374"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="8" language="java" name="ch.ffhs.hdo.client.ui.einstellungen" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/einstellungen" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="213" x="760" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="9" language="java" name="ch.ffhs.hdo.client.ui" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="134" x="372" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="10" language="java" name="ch.ffhs.hdo.client" project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="121" x="1013" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="12">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="14">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="15">    
+    <bendpoint x="653" y="194"/>    
+    <bendpoint x="653" y="284"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="17">    
+    <bendpoint x="1183" y="194"/>    
+    <bendpoint x="1183" y="284"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="18">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="20">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="21">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="22">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="23">    
+    <bendpoint x="711" y="194"/>    
+    <bendpoint x="711" y="284"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="24">    
+    <bendpoint x="956" y="284"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
