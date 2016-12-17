@@ -19,6 +19,16 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	private final ViewHandlerImpl viewHandler;
 
+	/**
+	 * 
+	 * Controller Konstruktor welche Models der erstellten View übergibt.
+	 * 
+	 * @param model
+	 *            Option Model welches die Einstellungen aus der DB enhält.
+	 * @param folderModel
+	 *            Verzeichnisstruktur, bei welcher der auswählbare Inbox Pfad
+	 *            hinterlegt ist.
+	 */
 	public OptionController(OptionModel model, FolderTreeModel folderModel) {
 		super(model);
 		model.setFolderModel(folderModel);
@@ -31,6 +41,9 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	}
 
+	/**
+	 * Inizialisierung der erstellten View.
+	 */
 	@Override
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
@@ -38,6 +51,9 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 		getView().setHandler(viewHandler);
 	}
 
+	/**
+	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 */
 	private void setupViewHandler() {
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		viewHandler.addOperation(OptionsSaveOperation.class, new OptionsSaveExecutable(getModel()));
