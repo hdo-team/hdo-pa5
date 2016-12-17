@@ -6,8 +6,16 @@ import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 
+/**
+ * Kann das Konfigurationsfenster mit den aktuellen Einstellungen öffnen.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class OptionViewStartExecutable implements Executable<FolderTreeModel> {
-
+	/**
+	 * Öffnet die Konfigurationen mit den aktuellen Einstellungen.
+	 */
 	public void execute(FolderTreeModel folderModel) {
 
 		OptionFacade facade = new OptionFacade();
