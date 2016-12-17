@@ -54,7 +54,7 @@ public class RegelPanel extends JPanel {
 	private JLabel ruleErrorLabel;
 	private JLabel comparisonModeLabel;
 	private JLabel compareValueLabel;
-	private JLabel compareValueDateLabel;
+	private JLabel compareDateLabel;
 
 	private DefaultComboBoxModel<ContextAttributeEnum> pdfAttributeModel;
 	private DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
@@ -130,8 +130,9 @@ public class RegelPanel extends JPanel {
 	private void createComponent() {
 		final String compmode = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparemode");
 		final String compareval = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparevalue");
+		final String comparedate = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparedate");
 
-		compareValueDateLabel = new JLabel(compareval);
+		compareDateLabel = new JLabel(comparedate);
 		compareValueLabel = new JLabel(compareval);
 		comparisonModeLabel = new JLabel(compmode);
 
@@ -182,7 +183,7 @@ public class RegelPanel extends JPanel {
 		paneBuilder.add(comparisonModeComboBox).rcw(13, 1, 2);
 
 		paneBuilder.add(comparisonModeLabel).rcw(9, 1, 3);
-		paneBuilder.add(compareValueDateLabel).rcw(9, 4, 6);
+		paneBuilder.add(compareDateLabel).rcw(9, 4, 6);
 		paneBuilder.add(datePicker).rcw(13, 4, 6);
 
 		paneBuilder.add(compareValueLabel).rcw(15, 1, 9);
@@ -409,7 +410,7 @@ public class RegelPanel extends JPanel {
 
 		datePanel.setVisible(dateFields);
 		datePicker.setVisible(dateFields);
-		compareValueDateLabel.setVisible(dateFields);
+		compareDateLabel.setVisible(dateFields);
 
 		compareValueLabel.setVisible(compval);
 		compareValueTextField.setVisible(compval);
