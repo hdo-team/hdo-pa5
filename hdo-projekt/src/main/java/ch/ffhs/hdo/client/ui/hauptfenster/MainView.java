@@ -20,6 +20,13 @@ import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
+/**
+ * Hauptfenster welches die Menüleiste und das den Rahmen der beinden Panels
+ * (Verzeichnisstruktur, Regelset-Übersicht) enthält.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class MainView extends View<MainModel> {
 
 	private ResourceBundle resourceBundle;
@@ -39,6 +46,14 @@ public class MainView extends View<MainModel> {
 	private JSplitPane layoutsplitpane;
 	Dimension minimumSize;
 
+	/**
+	 * Konstruktor welcher das View Objekt erstellt.
+	 * 
+	 * @param resourceBundle
+	 *            Übersetzungen der aktuellen Sprache.
+	 * @param model
+	 *            Model welches die Informationen das Main View enthalten.
+	 */
 	public MainView(ResourceBundle resourceBundle, MainModel model) {
 		super(resourceBundle);
 		this.setModel(model);
@@ -48,12 +63,18 @@ public class MainView extends View<MainModel> {
 
 	}
 
+	/**
+	 * Initialisierung des Konfigurations-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 		configureBindings();
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 		menuBar = new JMenuBar();
 		file = new JMenu(getMessage(I18N + ".menu.file"));
@@ -128,6 +149,9 @@ public class MainView extends View<MainModel> {
 
 	}
 
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 		// Create Menubar Layout
 		menuBar.add(file);
@@ -151,14 +175,27 @@ public class MainView extends View<MainModel> {
 
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
 	public void configureBindings() {
 
 	}
 
+	/**
+	 * Gibt die View mit der Verzeichnisstruktur zurück.
+	 * 
+	 * @return View Verzeicnisstruktur.
+	 */
 	public View<FolderTreeModel> getFolderTreeView() {
 		return folderTreeView;
 	}
 
+	/**
+	 * Gibt die View mit der Regelset-Übersicht zurück.
+	 * 
+	 * @return View Regelset-Übersicht.
+	 */
 	public View<RegelsetTableModel> getRegelsetTableView() {
 		return regelsetTableView;
 	}

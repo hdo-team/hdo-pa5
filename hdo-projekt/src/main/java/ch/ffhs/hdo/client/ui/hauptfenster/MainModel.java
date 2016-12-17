@@ -2,6 +2,12 @@ package ch.ffhs.hdo.client.ui.hauptfenster;
 
 import ch.ffhs.hdo.client.ui.base.Model;
 
+/**
+ * Model für das Hauptfenster.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class MainModel extends Model {
 
 	private FolderTreeModel folderModel;

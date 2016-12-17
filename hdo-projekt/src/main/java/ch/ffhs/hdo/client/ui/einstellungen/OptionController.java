@@ -21,7 +21,7 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	/**
 	 * 
-	 * Controller Konstruktor welche Models der erstellten View übergibt.
+	 * Controller Konstruktor welcher die Models dem erstellten View übergibt.
 	 * 
 	 * @param model
 	 *            Option Model welches die Einstellungen aus der DB enhält.

@@ -50,7 +50,7 @@ public class OptionView extends View<OptionModel> {
 	private HashMap<String, Integer> comboBoxListe = new HashMap<String, Integer>();
 
 	/**
-	 * Lädt die Sprachdatei, und setzt den Titel des Fensters.
+	 * Konstruktor welcher das View Objekt erstellt.
 	 * 
 	 * @param resourceBundle
 	 *            Übersetzungen der aktuellen Sprache.
