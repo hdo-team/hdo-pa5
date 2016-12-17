@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +41,7 @@ import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 /******************************************************
- * RegelsetView
+ * View zum Erstellen und Bearbeiten von Regelsets.
  * 
  * @author Daniel Crazzolara
  *
@@ -75,8 +73,14 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	private JTabbedPane tabbedPane;
 
-	private int previousTabIndex = -1;
+	private int previousTabIndex = 0;
 
+	/**
+	 * Konstruktor welcher das View Objekt erstellt.
+	 * 
+	 * @param resourceBundle
+	 *            Übersetzungen der aktuellen Sprache.
+	 */
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 
@@ -86,11 +90,17 @@ public class RegelsetView extends View<RegelsetModel> {
 
 	}
 
+	/**
+	 * Initialisierung des Regelset-Fensters
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 	}
 
+	/**
+	 * Holen aller Directories unterhalb der INBOX 
+	 */
 	private String[] getDirectories(String inboxDirectory, boolean recursiv) {
 
 		final List<String> allFolders = FileHandling.getAllFolders(inboxDirectory);
@@ -98,6 +108,12 @@ public class RegelsetView extends View<RegelsetModel> {
 		return allFolders.toArray(new String[0]);
 	}
 
+	/**
+	 * Liefert die KontextType-Enums fuer die Regelkontext Combobox
+	 * 
+	 * @return Array mit den Regelkontext Enumerationen
+	 * 
+	 */
 	ContextTypeEnum[] getContextList() {
 
 		List<ContextTypeEnum> contextList = new ArrayList<ContextTypeEnum>();
@@ -112,6 +128,15 @@ public class RegelsetView extends View<RegelsetModel> {
 		return contextList.toArray(new ContextTypeEnum[0]);
 	}
 
+	
+	/**
+	 * Liefert (abhaengig vom Regelkontext) die Attribut-Enums fuer die 
+	 * Regelattribut Combobox 
+	 *
+	 * @param contextEnum
+	 *                   Regelkontext
+	 * @return Array mit den Regelattribut Enumerationen
+	 */
 	ContextAttributeEnum[] getAttributList(ContextTypeEnum contextEnum) {
 
 		List<ContextAttributeEnum> attributeList = new ArrayList<ContextAttributeEnum>();
@@ -124,6 +149,14 @@ public class RegelsetView extends View<RegelsetModel> {
 		return attributeList.toArray(new ContextAttributeEnum[] {});
 	}
 
+	/**
+	 * Liefert (abhaengig vom Regelattribut) die Comparison-Enums für die 
+	 * Vergleichsart Combobox
+	 * 
+	 * @param attributeEnum
+	 *                     Regelattribut
+	 * @return Array mit den Vergleichsart Enumerationen
+	 */
 	ComparisonTypeEnum[] getComparisonModeList(ContextAttributeEnum attributeEnum) {
 		List<ComparisonTypeEnum> comparisonList = new ArrayList<ComparisonTypeEnum>();
 
@@ -138,6 +171,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		return comparisonList.toArray(new ComparisonTypeEnum[0]);
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 
 		rulesetErrorLabel = new JLabel();
@@ -161,6 +197,90 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		saveButton.addActionListener(new SaveRulesetAction());
 		cancelButton.addActionListener(new CloseAction());
+	}
+
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
+	private void layoutForm() {
+
+		FormBuilder builder = FormBuilder.create()
+				.columns(
+						"[20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu, pref]")
+				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
+
+		builder.add(rulesetErrorLabel).rcw(1, 1, 7);
+		;
+
+		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(3, 1, 7);
+		builder.add(regelsetNameTextField).rcw(5, 1, 7);
+
+		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(7, 1, 7);
+
+		targetDirectoryList = getDirectories(ApplicationSettings.getInstance().getInbox_path(), true);
+		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryList);
+		builder.add(targetDirectoryComboBox).rcw(9, 1, 7);
+
+		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(11, 1, 7);
+		builder.add(newFilenameTextField).rcw(13, 1, 7);
+
+		builder.addLabel(getMessage(I18N + ".label.status")).rcw(15, 1, 7);
+		builder.add(statusCheckBox).rcw(17, 1, 3);
+
+		builder.addSeparator(null).rcw(25, 1, 7);
+		builder.add(tabbedPane).rcw(27, 1, 7);
+		builder.addSeparator(null).rcw(33, 1, 7);
+
+		builder.add(addButton).rcw(35, 1, 1);
+		builder.add(deleteButton).rcw(35, 3, 1);
+		builder.add(saveButton).rcw(35, 5, 1);
+		builder.add(cancelButton).rcw(35, 7, 1);
+
+		builder.padding(new EmptyBorder(5, 5, 5, 5));
+		JPanel build = builder.build();
+
+		getFrame().add(new JScrollPane(build), BorderLayout.CENTER);
+
+		setDimension(425, 600);
+	}
+
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
+	@Override
+	public void configureBindings() {
+
+		regelsetNameTextField.setText(getModel().getRulesetName());
+		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
+		newFilenameTextField.setText(getModel().getNewFilename());
+		statusCheckBox.setSelected(getModel().isRuleActiv());
+
+		statusCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getModel().setRuleActiv(statusCheckBox.isSelected());
+
+			}
+		});
+
+		targetDirectoryComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selectedDirectory = (String) targetDirectoryComboBox.getSelectedItem();
+				getModel().setTargetDirectory(selectedDirectory);
+
+			}
+		});
+
+		regelsetNameTextField.getDocument()
+				.addDocumentListener(new RegelsetDocumentListener(getModel(), regelsetNameTextField));
+		newFilenameTextField.getDocument()
+				.addDocumentListener(new RegelsetDocumentListener(getModel(), newFilenameTextField));
+
+		int counter = 1;
+		for (RegelModel ruleModel : getModel().getRuleModelList()) {
+			ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + counter++);
+			tabbedPane.addTab(ruleModel.getRuleName(), new RegelPanel(this, ruleModel));
+		}
+		
 		addButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -205,22 +325,19 @@ public class RegelsetView extends View<RegelsetModel> {
 			private boolean tabChangePrevented = false;
 
 			public void stateChanged(ChangeEvent e) {
-
 				if (tabChangePrevented) {
-					// Tab change was prevented (changed back to origin) because
-					// rule was not valid
+					// Tab-Wechsel verhindert (bzw. auf urspruenglichen Tab zurueck gewechselt),
+					// da Regel-Plausibiliserung NOK war 
 					tabChangePrevented = false;
 				} else {
-					// 'normal' tab change
+					// "normaler" Tab-Wechsel
 					if (getModel().getRuleModelList().size() > previousTabIndex) {
-						
-						if (previousTabIndex == -1 || ((RegelPanel) tabbedPane.getComponentAt(previousTabIndex)).isPanelValid()) {
-							// displayed first or origin tab is OK -> accept tab
-							// change
+						if (((RegelPanel) tabbedPane.getComponentAt(previousTabIndex)).isPanelValid()) {
+							// Regel-Plausibilisierung OK -> Tab-Wechsel akzeptieren
 							previousTabIndex = tabbedPane.getSelectedIndex();
 						} else {
-							// origin tab is NOK -> prevent tab change (change
-							// back to origin)
+							// Regel-Plausibilisierung NOK -> Tab-Wechel verhindern (bzw. auf 
+							// vorherige Tab zurück wechseln)
 							tabChangePrevented = true;
 							tabbedPane.setSelectedIndex(previousTabIndex);
 						}
@@ -229,92 +346,14 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			}
 		});
-
 	}
 
-	private void layoutForm() {
-
-		FormBuilder builder = FormBuilder.create()
-				.columns(
-						"[20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu, pref]")
-				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
-
-		builder.add(rulesetErrorLabel).rcw(1, 1, 7);
-		;
-
-		builder.addLabel(getMessage(I18N + ".label.rulesetName")).rcw(3, 1, 7);
-		builder.add(regelsetNameTextField).rcw(5, 1, 7);
-
-		builder.addLabel(getMessage(I18N + ".label.targetDirectory")).rcw(7, 1, 7);
-
-		targetDirectoryList = getDirectories(ApplicationSettings.getInstance().getInbox_path(), true);
-		targetDirectoryComboBox = new JComboBox<String>(targetDirectoryList);
-		builder.add(targetDirectoryComboBox).rcw(9, 1, 7);
-
-		builder.addLabel(getMessage(I18N + ".label.newFilename")).rcw(11, 1, 7);
-		builder.add(newFilenameTextField).rcw(13, 1, 7);
-
-		builder.addLabel(getMessage(I18N + ".label.status")).rcw(15, 1, 7);
-		builder.add(statusCheckBox).rcw(17, 1, 3);
-
-		builder.addSeparator(null).rcw(25, 1, 7);
-		builder.add(tabbedPane).rcw(27, 1, 7);
-		builder.addSeparator(null).rcw(33, 1, 7);
-
-		builder.add(addButton).rcw(35, 1, 1);
-		builder.add(deleteButton).rcw(35, 3, 1);
-		builder.add(saveButton).rcw(35, 5, 1);
-		builder.add(cancelButton).rcw(35, 7, 1);
-
-		builder.padding(new EmptyBorder(5, 5, 5, 5));
-		JPanel build = builder.build();
-
-		getFrame().add(new JScrollPane(build), BorderLayout.CENTER);
-
-		setDimension(425, 600);
-	}
-
-	@Override
-	public void configureBindings() {
-
-		regelsetNameTextField.setText(getModel().getRulesetName());
-		targetDirectoryComboBox.setSelectedItem(getModel().getTargetDirectory());
-		newFilenameTextField.setText(getModel().getNewFilename());
-		statusCheckBox.setSelected(getModel().isRuleActiv());
-
-		statusCheckBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getModel().setRuleActiv(statusCheckBox.isSelected());
-
-			}
-		});
-
-		targetDirectoryComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String selectedDirectory = (String) targetDirectoryComboBox.getSelectedItem();
-				getModel().setTargetDirectory(selectedDirectory);
-
-			}
-		});
-
-		regelsetNameTextField.getDocument()
-				.addDocumentListener(new RegelsetDocumentListener(getModel(), regelsetNameTextField));
-		newFilenameTextField.getDocument()
-				.addDocumentListener(new RegelsetDocumentListener(getModel(), newFilenameTextField));
-
-		int counter = 1;
-		for (RegelModel ruleModel : getModel().getRuleModelList()) {
-			ruleModel.setRuleName(getMessage(I18N + ".label.rulename_prefix") + counter++);
-			tabbedPane.addTab(ruleModel.getRuleName(), new RegelPanel(this, ruleModel));
-		}
-
-		// TODO: GUI funktioniert nicht mehr anständig mit
-		// PropertyChangeListener... !!!
-		//
-		// getModel().addPropertyChangeListener(new
-		// MyPropertyChangeListener(getModel()));
-	}
-
+	/**
+	 * Prüfung ob die Eingabewerte des Regelsets und der aktuellen Regel korrekt sind
+	 * 
+	 * @return <code>true</code> : es ist valid <br>
+	 *         <code>false</code> = nicht valid
+	 */
 	protected boolean isRulesetValid() {
 
 		boolean isValid = false;
@@ -333,29 +372,33 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 		rulesetErrorLabel.setVisible(!isValid);
 
-		// no short-circuit evaluation (check RegelPanel in every case)
+		// immer auch noch aktuelle Regel checken (kein short-circuit)
 		isValid = isValid & ((RegelPanel) tabbedPane.getComponentAt(tabbedPane.getSelectedIndex())).isPanelValid();
 
 		return isValid;
 	}
 
+	/**
+	 * Speichert das Regelset und schliesst das Regelset-Fenster
+	 */
 	private class SaveRulesetAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
 
 			if (isRulesetValid()) {
 				getHandler().performOperation(RegelsetSaveOperation.class);
-				if (getModel().getRegelsetTableModel() == null) {
-					getHandler().performOperation(CloseViewOperation.class);
-				} else {
+				if (getModel().getRegelsetTableModel() != null) {
 					// New Regelset->Update View
 					getModel().getRegelsetTableModel().setUpdateView(true);
-					getHandler().performOperation(CloseViewOperation.class);
 				}
+				getHandler().performOperation(CloseViewOperation.class);
 			}
 		}
 	}
 
+	/**
+	 *  Schliesst das Regelset-Fenster
+	 */
 	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -363,6 +406,9 @@ public class RegelsetView extends View<RegelsetModel> {
 		}
 	}
 
+	/**
+	 *  DocumentListener fuer die JText-Felder Regelsetname und newFilename
+	 */
 	private class RegelsetDocumentListener implements DocumentListener {
 
 		JTextField myTextField = null;
@@ -394,40 +440,6 @@ public class RegelsetView extends View<RegelsetModel> {
 
 			} else if (myTextField == newFilenameTextField) {
 				model.setNewFilename(myTextField.getText());
-			}
-		}
-	}
-
-	private class MyPropertyChangeListener implements PropertyChangeListener {
-		RegelsetModel model = null;
-
-		public MyPropertyChangeListener(RegelsetModel model) {
-			this.model = model;
-		}
-
-		public void propertyChange(PropertyChangeEvent evt) {
-			if (evt.getPropertyName() == "directories") {
-				// TODO: gehört directories ins Model?
-				// oder immer neu ab FileSystem lesen?
-			} else if (evt.getPropertyName() == "newFilename") {
-				newFilenameTextField.setText(model.getNewFilename());
-			} else if (evt.getPropertyName() == "rulesetId") { // NICHT AUF View
-
-			} else if (evt.getPropertyName() == "priority") { // Nicht auf
-																// DIESER VIEW
-																// =>
-			} else if (evt.getPropertyName() == "ruleActiv") {
-				statusCheckBox.setSelected(model.isRuleActiv());
-			} else if (evt.getPropertyName() == "ruleList") {
-
-			} else if (evt.getPropertyName() == "rulesetName") {
-				if (!evt.getOldValue().equals(evt.getNewValue())) {
-					regelsetNameTextField.setText(model.getRulesetName());
-				}
-			} else if (evt.getPropertyName() == "targetDirectory") {
-				if (!evt.getOldValue().equals(evt.getNewValue())) {
-					targetDirectoryComboBox.setSelectedItem(model.getTargetDirectory());
-				}
 			}
 		}
 	}

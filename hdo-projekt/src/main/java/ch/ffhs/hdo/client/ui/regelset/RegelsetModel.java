@@ -8,7 +8,7 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 
 
 /**
- * Model für das Regelset 
+ * Model für das Regelset (inkl. Liste von Regel-Models)
  * 
  * @author Daniel Crazzolara
  */
@@ -110,6 +110,12 @@ public class RegelsetModel extends Model {
 		return regelsetTableModel;
 	}
 
+	/**
+	 * erstellt ein "leeres" Regelset Model (null object)
+	 *
+	 * @return model
+	 *             Neues Regelset Model
+	 */
 	public static RegelsetModel getNullModel() {
 		RegelsetModel model = new RegelsetModel();
 		model.setFilenameCounter(0L);

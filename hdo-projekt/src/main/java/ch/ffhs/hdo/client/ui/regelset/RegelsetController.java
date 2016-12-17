@@ -18,6 +18,13 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 
 	private final ViewHandlerImpl viewHandler;
 
+	/**
+	 * Konstruktor welcher das Model dem erstellten View übergibt.
+	 * (Regelset bearbeiten)
+	 * 
+	 * @param model
+	 *            Regelset Model, das ein bestehendes Regelset enthält
+	 */
 	public RegelsetController(RegelsetModel model) {
 		super(model);
 
@@ -29,6 +36,15 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 
 	}
 
+	/**
+	 * Konstruktor welcher die Models dem erstellten View übergibt.
+	 * (Regelset neu erstellen)
+	 * 
+	 * @param model
+	 *            leeres Regelset Model 
+	 * @param tableModel
+	 * 			  RegelsetTableModel der Hauptuebersicht
+	 */
 	public RegelsetController(RegelsetModel model, RegelsetTableModel tableModel) {
 		super(model);
 		model.setRegelsetTableModel(tableModel);
@@ -39,6 +55,9 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 		initializeView();
 	}
 
+	/**
+	 * Inizialisierung der erstellten View.
+	 */
 	@Override
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
@@ -46,6 +65,9 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 		getView().setHandler(viewHandler);
 	}
 
+	/**
+	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 */
 	private void setupViewHandler() {
 		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		this.viewHandler.addOperation(RegelsetSaveOperation.class, new RegelsetSaveOperationExecutable(getModel()));

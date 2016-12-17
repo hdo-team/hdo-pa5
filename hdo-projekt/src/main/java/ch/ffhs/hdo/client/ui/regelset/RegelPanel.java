@@ -32,14 +32,13 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
+ * Panel zum Erstellen und Bearbeiten einer spezifischen Regel eines Regelsets
  * 
  * @author Daniel Crazzolara
  *
  */
 public class RegelPanel extends JPanel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3417369737468476369L;
 	private static Logger LOGGER = LogManager.getLogger(RegelPanel.class);
 
@@ -60,6 +59,14 @@ public class RegelPanel extends JPanel {
 	private DefaultComboBoxModel<ContextAttributeEnum> fileAttributeModel;
 	private DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
 
+	/**
+	 * Liefert (abhängig vom Regelkontext) das Model für die RegelAttribut-Combobox
+	 * 
+	 * @param RegelModel
+	 *            RegelModel (inkl. Regelkontext)
+	 * @return attributeModel
+	 *		       Model für die Combobox
+	 */
 	private DefaultComboBoxModel<ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
 		DefaultComboBoxModel<ContextAttributeEnum> attributeModel = null;
 
@@ -75,20 +82,35 @@ public class RegelPanel extends JPanel {
 		return attributeModel;
 	}
 
-	@SuppressWarnings("rawtypes")
-	private DefaultComboBoxModel getComparisonModeModel(ContextAttributeEnum attributeEnum) {
+	/**
+	 * Liefert (abhängig vom Regelattribut) das Model für die Vergleichsart-Combobox
+	 * 
+	 * @param RegelModel
+	 *            RegelModel (inkl. Regelattribut)
+	 * @return comparisionModeModel
+	 *		       Model für die Combobox
+	 */
+	private DefaultComboBoxModel<ComparisonTypeEnum> getComparisonModeModel(ContextAttributeEnum attributeEnum) {
 
-		@SuppressWarnings("unchecked")
-		DefaultComboBoxModel attributeModel = new DefaultComboBoxModel(
-				rulePanelView.getComparisonModeList(attributeEnum));
+		DefaultComboBoxModel<ComparisonTypeEnum> comparisionModeModel = 
+					new DefaultComboBoxModel<ComparisonTypeEnum>(
+								rulePanelView.getComparisonModeList(attributeEnum));
 
-		return attributeModel;
+		return comparisionModeModel;
 	}
 
 	public RegelModel getModel() {
 		return model;
 	}
 
+	/**
+	 * Kontruktor welcher das Regel-Panel erstellt
+	 * 
+	 * @param regelsetView
+	 *            View auf dem das Regelset (inkl. dieses Panels) dargestellt wird
+	 * @param ruleModel
+	 *            Regelmodel das zur Regel auf diesem Panel gehoert
+	 */
 	public RegelPanel(RegelsetView regelsetView, final RegelModel ruleModel) {
 		super();
 		rulePanelView = regelsetView;
@@ -101,32 +123,9 @@ public class RegelPanel extends JPanel {
 		setLayout();
 	}
 
-	private void configureBinding() {
-
-		contextComboBox.setSelectedItem(getModel().getContextType());
-		attributecmbox.setSelectedItem(getModel().getContextAttribute());
-		comparisonModeComboBox.setSelectedItem(getModel().getComparisonType());
-
-		if (getModel().getContextAttribute().getDataType() == DataTypeEnum.DATE) {
-			Date compareDate = null;
-			try {
-				compareDate = rulePanelView.simpleDateFormat.parse(model.getCompareValue());
-			} catch (ParseException e1) {
-				// impossible Error
-				LOGGER.error("FATAL: Datum " + model.getCompareValue() + " konnte nicht konveriert werden.", e1);
-				// throw new IllegalArgumentException("invalid date: " +
-				// model.getCompareValue());
-
-			}
-			((UtilDateModel) datePanel.getModel()).setValue(compareDate);
-
-		} else {
-			compareValueTextField.setText(model.getCompareValue());
-		}
-
-		model.addPropertyChangeListener(new ModelChangeListener());
-	}
-
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponent() {
 		final String compmode = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparemode");
 		final String compareval = rulePanelView.getMessage(rulePanelView.I18N + ".label.comparevalue");
@@ -167,7 +166,10 @@ public class RegelPanel extends JPanel {
 		compareValueTextField.getDocument()
 				.addDocumentListener(new RegelDocumentListener(model, compareValueTextField));
 	}
-
+	
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void setLayout() {
 		FormBuilder paneBuilder = FormBuilder.create()
 				.columns(
@@ -196,6 +198,35 @@ public class RegelPanel extends JPanel {
 		this.add(paneBuilder.build());
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
+	private void configureBinding() {
+
+		contextComboBox.setSelectedItem(getModel().getContextType());
+		attributecmbox.setSelectedItem(getModel().getContextAttribute());
+		comparisonModeComboBox.setSelectedItem(getModel().getComparisonType());
+
+		if (getModel().getContextAttribute().getDataType() == DataTypeEnum.DATE) {
+			Date compareDate = null;
+			try {
+				compareDate = rulePanelView.simpleDateFormat.parse(model.getCompareValue());
+			} catch (ParseException e1) {
+				// "unmoeglicher" Fehler (User kann Datum nirgends "frei" eingeben)
+				LOGGER.error("FATAL: Datum " + model.getCompareValue() + " konnte nicht konveriert werden.", e1);
+			}
+			((UtilDateModel) datePanel.getModel()).setValue(compareDate);
+		} else {
+			compareValueTextField.setText(model.getCompareValue());
+		}
+
+		model.addPropertyChangeListener(new ModelChangeListener());
+	}
+
+	/**
+	 * Erstellt kontextabhängige Default-Models für die Regelattribute-Combobox
+	 * 
+	 */
 	private void setComboboxModel() {
 		pdfAttributeModel = new DefaultComboBoxModel<ContextAttributeEnum>(
 				rulePanelView.getAttributList(ContextTypeEnum.CONTEXT_PDF));
@@ -209,10 +240,9 @@ public class RegelPanel extends JPanel {
 	 * Prüfung ob die Inhalte und Auswahl korrekt sind
 	 * 
 	 * @return <code>true</code> : es ist valid <br>
-	 *         <code>false</code> = nicht valid
+	 *         <code>false</code> : nicht valid
 	 */
 	protected boolean isPanelValid() {
-		// is the RulePanel valid?
 
 		boolean isValid = false;
 		String errorMessage = "";
@@ -271,8 +301,8 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * {@link ComboBoxActionListener} für alle Comboboxen in den Tabbs des
-	 * Regelpanel
+	 * {@link ComboBoxActionListener} für alle Comboboxen in den Tabs des
+	 * Regelpanels
 	 *
 	 */
 	private class ComboBoxActionListener implements ActionListener {
@@ -286,7 +316,7 @@ public class RegelPanel extends JPanel {
 					model.setContextType((ContextTypeEnum) contextComboBox.getSelectedItem());
 					if (!model.getContextType().equals(ContextTypeEnum.EMPTY)
 							&& contextComboBox.getModel().getElementAt(0).equals(ContextTypeEnum.EMPTY)) {
-						// once a context is selected, remove the empty-item
+						// nach erster Auswahl "Leer-Element" entfernen
 						contextComboBox.removeItemAt(0);
 					}
 					LOGGER.debug("selected context: " + contextComboBox.getSelectedItem());
@@ -295,7 +325,7 @@ public class RegelPanel extends JPanel {
 					model.setContextAttribute((ContextAttributeEnum) attributecmbox.getSelectedItem());
 					if (!model.getContextAttribute().equals(ContextAttributeEnum.EMPTY)
 							&& attributecmbox.getModel().getElementAt(0).equals(ContextAttributeEnum.EMPTY)) {
-						// once an attribute is selected, remove the empty-item
+						// nach erster Auswahl "Leer-Element" entfernen
 						attributecmbox.removeItemAt(0);
 					}
 					LOGGER.debug("selected attribute: " + attributecmbox.getModel().getSelectedItem());
@@ -303,7 +333,7 @@ public class RegelPanel extends JPanel {
 					model.setComparisonType((ComparisonTypeEnum) comparisonModeComboBox.getSelectedItem());
 					if (!model.getComparisonType().equals(ComparisonTypeEnum.EMPTY)
 							&& comparisonModeComboBox.getModel().getElementAt(0).equals(ComparisonTypeEnum.EMPTY)) {
-						// once a comparemode is selected, remove the empty-item
+						// nach erster Auswahl "Leer-Element" entfernen
 						comparisonModeComboBox.removeItemAt(0);
 					}
 					LOGGER.debug("comparisonModeComboBox: " + comparisonModeComboBox.getSelectedItem());
@@ -312,6 +342,9 @@ public class RegelPanel extends JPanel {
 		}
 	}
 
+	/**
+	 *  DocumentListener fuer das JText-Feld Vergleichswert
+	 */
 	private class RegelDocumentListener implements DocumentListener {
 
 		RegelModel model = null;
@@ -344,6 +377,11 @@ public class RegelPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Dieser ModelChangeListener ist ein PropertyChangeListener des Regel-Models und 
+	 * dient dazu die Models und Sichtbarkeiten der abhaengigen Komponenten anzupassen
+	 *
+	 */
 	private class ModelChangeListener implements PropertyChangeListener {
 
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -351,23 +389,21 @@ public class RegelPanel extends JPanel {
 			final String propertyName = evt.getPropertyName();
 			if (propertyName.equals("contextType")) {
 				contextComboBox.setSelectedItem(evt.getNewValue());
-				if (!evt.getNewValue().equals(evt.getOldValue())) {
-					model.setContextAttribute(ContextAttributeEnum.EMPTY);
-					attributecmbox.setModel(getAttributeModel(getModel()));
-					attributecmbox.setVisible(attributecmbox.getModel().getSize() != 0);
 
-					model.setRuleName(evt.getNewValue().toString());
-				}
+				// Attribut Combobox neu aufbauen
+				model.setContextAttribute(ContextAttributeEnum.EMPTY);
+				attributecmbox.setModel(getAttributeModel(getModel()));
+				attributecmbox.setVisible(attributecmbox.getModel().getSize() != 0);
+
+				model.setRuleName(evt.getNewValue().toString());
 			} else if (propertyName.equals("contextAttribute")) {
 				attributecmbox.setSelectedItem(evt.getNewValue());
-				if (!evt.getNewValue().equals(evt.getOldValue())) {
-					// => neu Comparison Combo aufbauen
-					model.setComparisonType(ComparisonTypeEnum.EMPTY);
-					comparisonModeComboBox.setModel(getComparisonModeModel(model.getContextAttribute()));
-				}
+
+				// Comparison Combobox neu aufbauen
+				model.setComparisonType(ComparisonTypeEnum.EMPTY);
+				comparisonModeComboBox.setModel(getComparisonModeModel(model.getContextAttribute()));
 
 				visibiltyComponentInCombination((ContextAttributeEnum) evt.getNewValue());
-
 			} else if (propertyName.equals("compareValue")) {
 				ContextAttributeEnum attribute = (ContextAttributeEnum) attributecmbox.getSelectedItem();
 
@@ -382,15 +418,17 @@ public class RegelPanel extends JPanel {
 				} else {
 					compareValueTextField.setText((String) evt.getNewValue());
 				}
-
 			}
-
 		}
-
 	}
 
+	/**
+	 * Sichtbarkeiten abhaengigkeit vom Regelattribut setzen 
+	 * 
+	 * @param attribut
+	 *            Regelattribut
+	 */
 	private void visibiltyComponentInCombination(ContextAttributeEnum attribute) {
-		// je nach Attribute Datum-Picker oder compareValueField
 		if (attribute == ContextAttributeEnum.EMPTY) {
 			setCombinationVisible(false, false, false);
 
@@ -403,6 +441,17 @@ public class RegelPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Sichtbarkeiten von Vergleichsart, Vergleichsdatum und Vergleichswert setzen 
+	 * 
+	 * @param compMode
+	 *            Comobox und Label fuer Vergeleichsart sichtbar
+	 * @param dateFields
+	 *            Textfeld, Picker und Label fuer Vergleichsdatum sichtbar
+	 * @param compval
+	 *            Textfeld und Label fuer Vergleihswert sichtbar
+	 * 
+	 */
 	private void setCombinationVisible(boolean compMode, boolean dateFields, boolean compval) {
 
 		comparisonModeComboBox.setVisible(compMode);
