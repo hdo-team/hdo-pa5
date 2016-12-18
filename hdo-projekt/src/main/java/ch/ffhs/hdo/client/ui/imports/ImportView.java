@@ -17,9 +17,13 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
+import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
 /**
  * Importfenster welches ueber das Menue Import im Hauptfenster geoeffnet werden
@@ -137,19 +141,6 @@ public class ImportView extends View<ImportModel> {
 				
 				try {
 					getHandler().performOperation(ImportSaveOperation.class);
-					/**
-					* ---- HIGH PRIORITY ----
-					* Waere super, wenn das RegelsetTableModel dynamisch geupdatet wird, somit wuerde
-					* ein Programm restart entfallen...
-					* 
-					* ---- LOW PRIORITY ----
-					* Natuerlich waere dies auch der Idealfall wenn der FolderTreeModel Export funktionieren wuerde,
-					* somit wuerden beide Tables geupdatet werden beim Import... 
-					*
-					* ---- NullPointerException -> brauche hier HILFE! ----
-					* // getModel().getRegelsetModel().setUpdateView(true);
-					* 
-					*/
 					JOptionPane.showMessageDialog(null, "Import erfolgreich!\n\nBitte Programm schliessen und erneut starten!");
 				} catch (Exception e1){
 					JOptionPane.showMessageDialog(null, "Import nicht erfolgreich!\n\nEs ist ein Fehler aufgetreten.");

@@ -26,7 +26,7 @@ public class ImportModel extends Model implements IFileModel {
 		firePropertyChange("filePath", oldValue, filePath);
 	}
 	
-	public void setRegelsetModel(RegelsetTableModel regelsetModel){
+	public void setRegelsetTableModel(RegelsetTableModel regelsetModel){
 		this.regelsetModel=regelsetModel;
 	}
 	

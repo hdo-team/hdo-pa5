@@ -22,7 +22,7 @@ public class ImportViewStartExecutable implements Executable<RegelsetTableModel>
 	public void execute(RegelsetTableModel regelsetModel) {
 		
 		ImportModel model = new ImportModel();
-		model.setRegelsetModel(regelsetModel);
+		model.setRegelsetTableModel(regelsetModel);
 		ImportController importController = new ImportController(model, regelsetModel);
 		importController.show();
 		

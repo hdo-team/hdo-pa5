@@ -145,30 +145,16 @@ public class ExportView extends View<ExportModel> {
 				try {
 					enc = new XMLEncoder(new BufferedOutputStream(
 							new FileOutputStream(System.getProperty("user.home") + "/Desktop/tree.xml")));
+					enc.writeObject(getModel().getFolderModel().getTreeModel());
+					
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-				if (getModel() != null) {
-					System.out.println("Teil 1");
-					if (getModel().getFolderModel() != null) {
-						System.out.println("Teil 2");
-
-						if (getModel().getFolderModel().getTreeModel() != null) {
-							System.out.println("Teil 3");
-						} else {
-							System.out.println("Teil 3 Abbruch");
-						}
-
-					} else {
-						System.out.println("Teil 2 Abbruch");
-					}
-				} else {
-					System.out.println("Teil 1 Abbruch");
-				}
+			
 				enc.close();
 
 				getHandler().performOperation(CloseViewOperation.class);
+				}
 			}
 		}
 	}

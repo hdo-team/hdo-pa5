@@ -4,6 +4,7 @@ import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.base.executable.DefaultClosingViewExecutable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandlerImpl;
+import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
@@ -30,7 +31,7 @@ public class ImportController extends Controller<ImportModel, ImportView> {
 	public ImportController(ImportModel model, RegelsetTableModel regelsetModel) {
 
 		super(model);
-		model.setRegelsetModel(regelsetModel);
+		model.setRegelsetTableModel(regelsetModel);
 		setView(new ImportView(getResourceBundle()));
 
 		viewHandler = new ViewHandlerImpl();

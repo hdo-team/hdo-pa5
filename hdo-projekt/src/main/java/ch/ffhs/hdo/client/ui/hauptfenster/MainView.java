@@ -86,7 +86,7 @@ public class MainView extends View<MainModel> {
 		fileExport.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperation(ExportViewStartOperation.class);
+				getHandler().performOperationWithArgs(ExportViewStartOperation.class, getModel().getFolderModel());
 			}
 		});
 
@@ -111,7 +111,7 @@ public class MainView extends View<MainModel> {
 		fileImport.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperation(ImportViewStartOperation.class);
+				getHandler().performOperationWithArgs(ImportViewStartOperation.class, getModel().getRegelsetModel());
 			}
 		});
 
