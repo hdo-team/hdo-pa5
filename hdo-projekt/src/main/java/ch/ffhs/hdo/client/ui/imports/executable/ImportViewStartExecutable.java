@@ -6,7 +6,7 @@ import ch.ffhs.hdo.client.ui.imports.ImportController;
 import ch.ffhs.hdo.client.ui.imports.ImportModel;
 
 /**
- * Öffnet das Importfenster für den Import aller Konfigurationen.
+ * Oeffnet das Importfenster fuer den Import aller Konfigurationen.
  * 
  * @author Adrian Perez Rodriguez
  *
@@ -14,7 +14,7 @@ import ch.ffhs.hdo.client.ui.imports.ImportModel;
 public class ImportViewStartExecutable implements Executable<RegelsetTableModel> {
 
 	/**
-	 * Öffnet das Importfenster
+	 * Oeffnet das Importfenster
 	 * 
 	 * @param regelsetModel
 	 *            Regelsetstruktur, welche importiert wird.

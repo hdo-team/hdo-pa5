@@ -9,7 +9,7 @@ import java.util.Observable;
 
 /**
  * 
- * Stammklasse um die Models zu erstellen. Gibt den Ramen und Anforderung für
+ * Stammklasse um die Models zu erstellen. Gibt den Ramen und Anforderung fuer
  * ein Model an.
  * 
  * @author Denis Bittante
@@ -25,7 +25,7 @@ public abstract class Model extends Observable {
 
 	/**
 	 * Ein {@link PropertyChangeListener} kann registiert werden, der aufgerufen
-	 * wird sobald sich ein Property des Models geändert hat.
+	 * wird sobald sich ein Property des Models geaendert hat.
 	 * 
 	 * @param listener
 	 *            {@link PropertyChangeListener} der benutzt wird um zu
@@ -37,7 +37,7 @@ public abstract class Model extends Observable {
 
 	/**
 	 * Ein {@link PropertyChangeListener} kann registiert werden und hier
-	 * angeknöpft werden damit keine Aktion ausgelöst wird.
+	 * angeknoepft werden damit keine Aktion ausgeloest wird.
 	 * 
 	 * @param listener
 	 *            {@link PropertyChangeListener} der benutzt wurde um zu

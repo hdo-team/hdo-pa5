@@ -24,7 +24,7 @@ import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperationExecutable;
 
 /**
- * Controller für das Hauptfenster
+ * Controller fuer das Hauptfenster
  * 
  * @author Jonas Segessemann
  */
@@ -33,7 +33,7 @@ public class MainController extends Controller<MainModel, MainView> {
 	private ViewHandlerImpl viewHandler;
 
 	/**
-	 * Controller Konstruktor welcher die Models dem erstellten View übergibt.
+	 * Controller Konstruktor welcher die Models dem erstellten View uebergibt.
 	 * 
 	 * @param model
 	 *            Model Main Model.
@@ -56,7 +56,7 @@ public class MainController extends Controller<MainModel, MainView> {
 	}
 
 	/**
-	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
 	 */
 	private void initlizeHandler() {
 		this.viewHandler.addOperation(OptionViewStartOperation.class, new OptionViewStartExecutable());

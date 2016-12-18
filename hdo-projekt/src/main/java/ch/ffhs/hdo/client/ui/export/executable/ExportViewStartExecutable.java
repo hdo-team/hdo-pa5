@@ -6,7 +6,7 @@ import ch.ffhs.hdo.client.ui.export.ExportModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 
 /**
- * Öffnet das Exportfenster für den Export aller Konfigurationen.
+ * Oeffnet das Exportfenster fuer den Export aller Konfigurationen.
  * 
  * @author Jonas Segessemann
  *
@@ -14,7 +14,7 @@ import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 public class ExportViewStartExecutable implements Executable<FolderTreeModel> {
 	
 	/**
-	 * Öffnet das Exportfenster
+	 * Oeffnet das Exportfenster
 	 * 
 	 * @param folderModel
 	 *            Verzeichnisstruktur, welche exportiert wird.

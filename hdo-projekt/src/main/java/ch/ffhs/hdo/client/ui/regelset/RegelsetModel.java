@@ -7,7 +7,7 @@ import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 
 /**
- * Model für das Regelset (inkl. Liste von Regel-Models)
+ * Model fuer das Regelset (inkl. Liste von Regel-Models)
  * 
  * @author Adrian Perez Rodriguez
  *

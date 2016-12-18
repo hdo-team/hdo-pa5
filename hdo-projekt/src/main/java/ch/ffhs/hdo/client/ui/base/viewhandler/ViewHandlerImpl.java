@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.base.ParamChecker;
 /**
- * Implementation für {@link ViewHandler}
+ * Implementation fuer {@link ViewHandler}
  * 
  * @author Denis Bittante
  *

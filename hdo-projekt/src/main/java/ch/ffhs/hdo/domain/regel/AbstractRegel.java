@@ -154,7 +154,7 @@ public abstract class AbstractRegel {
 			}
 
 		} catch (Exception e) {
-			// Ein Fehler in der Konfiguraiton soll nicht zum Abbruch führen.
+			// Ein Fehler in der Konfiguraiton soll nicht zum Abbruch fuehren.
 
 			return false;
 		}

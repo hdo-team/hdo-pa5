@@ -60,12 +60,12 @@ public class RegelPanel extends JPanel {
 	private DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
 
 	/**
-	 * Liefert (abhängig vom Regelkontext) das Model für die RegelAttribut-Combobox
+	 * Liefert (abhaengig vom Regelkontext) das Model fuer die RegelAttribut-Combobox
 	 * 
 	 * @param RegelModel
 	 *            RegelModel (inkl. Regelkontext)
 	 * @return attributeModel
-	 *		       Model für die Combobox
+	 *		       Model fuer die Combobox
 	 */
 	private DefaultComboBoxModel<ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
 		DefaultComboBoxModel<ContextAttributeEnum> attributeModel = null;
@@ -83,12 +83,12 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Liefert (abhängig vom Regelattribut) das Model für die Vergleichsart-Combobox
+	 * Liefert (abhaengig vom Regelattribut) das Model fuer die Vergleichsart-Combobox
 	 * 
 	 * @param RegelModel
 	 *            RegelModel (inkl. Regelattribut)
 	 * @return comparisionModeModel
-	 *		       Model für die Combobox
+	 *		       Model fuer die Combobox
 	 */
 	private DefaultComboBoxModel<ComparisonTypeEnum> getComparisonModeModel(ContextAttributeEnum attributeEnum) {
 
@@ -224,7 +224,7 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Erstellt kontextabhängige Default-Models für die Regelattribute-Combobox
+	 * Erstellt kontextabhaengige Default-Models fuer die Regelattribute-Combobox
 	 * 
 	 */
 	private void setComboboxModel() {
@@ -237,7 +237,7 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Prüfung ob die Inhalte und Auswahl korrekt sind
+	 * Pruefung ob die Inhalte und Auswahl korrekt sind
 	 * 
 	 * @return <code>true</code> : es ist valid <br>
 	 *         <code>false</code> : nicht valid
@@ -301,7 +301,7 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * {@link ComboBoxActionListener} für alle Comboboxen in den Tabs des
+	 * {@link ComboBoxActionListener} fuer alle Comboboxen in den Tabs des
 	 * Regelpanels
 	 *
 	 */

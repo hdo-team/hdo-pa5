@@ -7,17 +7,17 @@ import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 
 /**
- * Öffnet das Konfigurationsfenster mit den aktuellen Einstellungen öffnen.
+ * Oeffnet das Konfigurationsfenster mit den aktuellen Einstellungen oeffnen.
  * 
  * @author Jonas Segessemann
  *
  */
 public class OptionViewStartExecutable implements Executable<FolderTreeModel> {
 	/**
-	 * Öffnet die Konfigurationen mit den aktuellen Einstellungen.
+	 * Oeffnet die Konfigurationen mit den aktuellen Einstellungen.
 	 * 
 	 * @param folderModel
-	 *            Model in welchem der Inbox Pfad geändert wird und das View
+	 *            Model in welchem der Inbox Pfad geaendert wird und das View
 	 *            aktualisiert wird.
 	 */
 	public void execute(FolderTreeModel folderModel) {

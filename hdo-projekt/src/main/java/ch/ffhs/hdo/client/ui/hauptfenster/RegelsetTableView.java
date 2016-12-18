@@ -26,8 +26,8 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 
 /**
- * Regelset-Übersicht und Navigationsbar innerhalb des Hauptfensters. Wird beim
- * Start der Applikation geöffnet.
+ * Regelset-Uebersicht und Navigationsbar innerhalb des Hauptfensters. Wird beim
+ * Start der Applikation geoeffnet.
  * 
  * @author Jonas Segessemann
  *
@@ -50,9 +50,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 	 * Konstruktor welcher das View Objekt erstellt.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 * @param model
-	 *            Model welches die Daten für die Anzeige enthält.
+	 *            Model welches die Daten fuer die Anzeige enthaelt.
 	 */
 	public RegelsetTableView(ResourceBundle resourceBundle, RegelsetTableModel model) {
 		super(resourceBundle);
@@ -69,7 +69,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		configureBindings();
 	}
 	/**
-	 * Erstellt alle GUI Komponenten und fügt die Listener hinzu.
+	 * Erstellt alle GUI Komponenten und fuegt die Listener hinzu.
 	 */
 	private void createComponents() {
 		jPanel = new JPanel();
@@ -203,7 +203,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		jPanel.add(toolbarPanel, BorderLayout.SOUTH);
 	}
 	/**
-	 * Konfiguriert die einzelnen Komponenten bei Statusänderungen.
+	 * Konfiguriert die einzelnen Komponenten bei Statusaenderungen.
 	 */
 	@Override
 	public void configureBindings() {
@@ -243,7 +243,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 	}
 /**
- * Übergibt die Gesamte Regelset Übersicht als Panel.
+ * Uebergibt die Gesamte Regelset Uebersicht als Panel.
  * @return Regelset Panel.
  */
 	public JPanel getPanel() {

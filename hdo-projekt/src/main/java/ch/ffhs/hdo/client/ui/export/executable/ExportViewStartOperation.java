@@ -3,7 +3,7 @@ package ch.ffhs.hdo.client.ui.export.executable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewOperation;
 
 /**
- * Interface für die Zuweisung im ViewHandler zum Öffnen des Export Fensters.
+ * Interface fuer die Zuweisung im ViewHandler zum Oeffnen des Export Fensters.
  * 
  * @author Jonas Segessemann
  *

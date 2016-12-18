@@ -21,8 +21,8 @@ import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
 /**
- * Hauptfenster welches die Menüleiste und das den Rahmen der beinden Panels
- * (Verzeichnisstruktur, Regelset-Übersicht) enthält.
+ * Hauptfenster welches die Menueleiste und das den Rahmen der beinden Panels
+ * (Verzeichnisstruktur, Regelset-Uebersicht) enthaelt.
  * 
  * @author Jonas Segessemann
  *
@@ -50,7 +50,7 @@ public class MainView extends View<MainModel> {
 	 * Konstruktor welcher das View Objekt erstellt.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 * @param model
 	 *            Model welches die Informationen das Main View enthalten.
 	 */
@@ -108,7 +108,7 @@ public class MainView extends View<MainModel> {
 			}
 		});
 
-		// Listener für den Importeintrag im Menü
+		// Listener fuer den Importeintrag im Menue
 		fileImport.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -183,18 +183,18 @@ public class MainView extends View<MainModel> {
 	}
 
 	/**
-	 * Gibt die View mit der Verzeichnisstruktur zurück.
+	 * Gibt die View mit der Verzeichnisstruktur zurueck.
 	 * 
-	 * @return View Verzeicnisstruktur.
+	 * @return View Verzeichnisstruktur.
 	 */
 	public View<FolderTreeModel> getFolderTreeView() {
 		return folderTreeView;
 	}
 
 	/**
-	 * Gibt die View mit der Regelset-Übersicht zurück.
+	 * Gibt die View mit der Regelset-Uebersicht zurueck.
 	 * 
-	 * @return View Regelset-Übersicht.
+	 * @return View Regelset-Uebersicht.
 	 */
 	public View<RegelsetTableModel> getRegelsetTableView() {
 		return regelsetTableView;

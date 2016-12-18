@@ -13,7 +13,7 @@ import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade.PriorityAction;
 public class RegelsetSwapOperationExecutable implements Executable<int[]> {
 	/**
 	 * Priorisiert, je nach Argument, das Regelset hoch oder runter. Die
-	 * Änderungen werden mithilfe der RegelsetFacade in der Datenbank
+	 * Aenderungen werden mithilfe der RegelsetFacade in der Datenbank
 	 * gespeichert.
 	 */
 	public void execute(int[] arg) {

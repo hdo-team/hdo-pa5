@@ -3,7 +3,7 @@ package ch.ffhs.hdo.client.ui.hauptfenster;
 import ch.ffhs.hdo.client.ui.base.Model;
 
 /**
- * Model für das Hauptfenster.
+ * Model fuer das Hauptfenster.
  * 
  * @author Jonas Segessemann
  *

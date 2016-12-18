@@ -31,8 +31,8 @@ public class RegelsetViewStartExecutable implements Executable<Object> {
 			regelsetController.show();
 		}
 		if (args.getClass() == RegelsetTableModel.class) {
-			// neues Regelset(inkl. erster "leerer" Regel) erstellen. RegelsetTableModel wird benötigt um
-			// ViewUpdate nach dem Erstellen durchzuführen
+			// neues Regelset(inkl. erster "leerer" Regel) erstellen. RegelsetTableModel wird benoetigt um
+			// ViewUpdate nach dem Erstellen durchzufuehren
 			RegelsetModel model = null;
 			model = RegelsetModel.getNullModel();
 			model.getRuleModelList().add(RegelModel.getNullModel());

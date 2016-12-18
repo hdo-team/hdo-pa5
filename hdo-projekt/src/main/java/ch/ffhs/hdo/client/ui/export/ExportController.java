@@ -11,7 +11,7 @@ import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
 /**
- * Controller für den Konfigurations-Export.
+ * Controller fuer den Konfigurations-Export.
  * 
  * @author Adrian Perez
  */
@@ -23,9 +23,9 @@ public class ExportController extends Controller<ExportModel, ExportView> {
 	 * Erstellt das Objekt
 	 * 
 	 * @param model
-	 *            Export Model welches die Einstellungen aus der DB enhält.
+	 *            Export Model welches die Einstellungen aus der DB enhaelt.
 	 * @param folderModel
-	 *            Enhält Verzeichnisstruktur, welche gespeichert wird.
+	 *            Enhaelt Verzeichnisstruktur, welche gespeichert wird.
 	 */
 	public ExportController(ExportModel model, FolderTreeModel folderModel) {
 
@@ -42,7 +42,7 @@ public class ExportController extends Controller<ExportModel, ExportView> {
 	}
 
 	/**
-	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
 	 */
 	private void initializeViewHandler() {
 		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FolderChooserExecuter(getModel()));

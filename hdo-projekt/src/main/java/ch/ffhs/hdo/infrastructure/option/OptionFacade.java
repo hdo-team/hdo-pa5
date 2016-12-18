@@ -46,7 +46,7 @@ public class OptionFacade {
 		OptionDto dto = OptionConverter.convert(model);
 
 		try {
-			// Optionen werden geupdated nicht neu eingefügt, darum false
+			// Optionen werden geupdated nicht neu eingefuegt, darum false
 			dao.save(dto, false);
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim laden aller Optionen", e);

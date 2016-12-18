@@ -28,7 +28,7 @@ import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**
- * Konfigurationsfenster welches über das Menü Optionen im Haupfenster geöffnet
+ * Konfigurationsfenster welches ueber das Menue Optionen im Haupfenster geoeffnet
  * werden kann.
  * 
  * @author Jonas Segessemann
@@ -53,7 +53,7 @@ public class OptionView extends View<OptionModel> {
 	 * Konstruktor welcher das View Objekt erstellt.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 */
 	public OptionView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -203,7 +203,7 @@ public class OptionView extends View<OptionModel> {
 	}
 
 	/**
-	 * Öffnet die Verzeichnisauswahl, um einen Inbox Pfad auszuwählen.
+	 * Oeffnet die Verzeichnisauswahl, um einen Inbox Pfad auszuwaehlen.
 	 */
 	private class OpenDirectoryChooser extends AbstractAction {
 

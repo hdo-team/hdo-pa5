@@ -3,8 +3,8 @@ package ch.ffhs.hdo.client.ui.hauptfenster.executable;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewOperation;
 
 /**
- * Interface für die Zuweisung im ViewHandler zum Aktualisieren der Regelset
- * Übersicht.
+ * Interface fuer die Zuweisung im ViewHandler zum Aktualisieren der Regelset
+ * Uebersicht.
  * 
  * @author Jonas Segessemann
  *

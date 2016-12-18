@@ -12,12 +12,12 @@ import javax.swing.WindowConstants;
 import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
 
 /**
- * Stammklasse für die Views
+ * Stammklasse fuer die Views
  * 
  * @author Denis Bittante
  *
  * @param <M>
- *            Modeltyp, gleiches wie für die Controller
+ *            Modeltyp, gleiches wie fuer die Controller
  */
 public abstract class View<M extends Model> {
 
@@ -52,12 +52,12 @@ public abstract class View<M extends Model> {
 	}
 
 	/**
-	 * Setzt die Grösse des Fensters
+	 * Setzt die Groesse des Fensters
 	 * 
 	 * @param width
 	 *            -> Breite
 	 * @param height
-	 *            -> Höhe
+	 *            -> Hoehe
 	 */
 	public void setDimension(int width, int height) {
 		this.dimension = new Dimension(width, height);
@@ -75,7 +75,7 @@ public abstract class View<M extends Model> {
 	}
 
 	/**
-	 * Gibt den Fenstertitel zurück.
+	 * Gibt den Fenstertitel zurueck.
 	 * 
 	 * @return Fenstertitel
 	 */
@@ -84,10 +84,10 @@ public abstract class View<M extends Model> {
 	}
 
 	/**
-	 * Setzt die Grösse des Fensters
+	 * Setzt die Groesse des Fensters
 	 * 
 	 * @param dimension
-	 *            -> Höhe und Breite
+	 *            -> Hoehe und Breite
 	 */
 	public void setDimension(Dimension dimension) {
 		this.dimension = dimension;

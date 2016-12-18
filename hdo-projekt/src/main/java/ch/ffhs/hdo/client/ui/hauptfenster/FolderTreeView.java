@@ -13,8 +13,8 @@ import ch.ffhs.hdo.client.ui.hauptfenster.executable.FolderTreeUpdateOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**
- * Verzeichnis-Übersicht innerhalb des Hauptfensters. Wird beim Start der
- * Applikation geöffnet.
+ * Verzeichnis-Uebersicht innerhalb des Hauptfensters. Wird beim Start der
+ * Applikation geoeffnet.
  * 
  * @author Jonas Segessemann
  *
@@ -29,9 +29,9 @@ public class FolderTreeView extends View<FolderTreeModel> {
 	 * Konstruktor welcher das View Objekt erstellt.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 * @param folderModel
-	 *            Model welches die Daten für die Anzeige enthält.
+	 *            Model welches die Daten fuer die Anzeige enthaelt.
 	 */
 	public FolderTreeView(ResourceBundle resourceBundle, FolderTreeModel folderModel) {
 		super(resourceBundle);
@@ -88,7 +88,7 @@ public class FolderTreeView extends View<FolderTreeModel> {
 		});
 	}
 /**
- * Übergibt die Gesamte Verzeichnis Übersicht als Panel.
+ * Uebergibt die Gesamte Verzeichnis Uebersicht als Panel.
  * @return Verzeichnis Panel.
  */
 	public JPanel getPanel() {

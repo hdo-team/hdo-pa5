@@ -3,7 +3,7 @@ package ch.ffhs.hdo.domain.regel;
 import java.util.ResourceBundle;
 
 /**
- * Enumeration für den Regelkontext
+ * Enumeration fuer den Regelkontext
  * 
  * 
  * @author Daniel Crazzolara

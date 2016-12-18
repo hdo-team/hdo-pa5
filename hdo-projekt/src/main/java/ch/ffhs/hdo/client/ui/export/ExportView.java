@@ -28,7 +28,7 @@ import ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 
 /**
- * Exportfenster welches über das Menü Export im Hauptfenster geöffnet werden
+ * Exportfenster welches ueber das Menue Export im Hauptfenster geoeffnet werden
  * kann.
  * 
  * @author Jonas Segessemann
@@ -46,10 +46,10 @@ public class ExportView extends View<ExportModel> {
 	private JButton cancelButton;
 
 	/**
-	 * Lädt die Sprachdatei, und setzt den Titel des Fensters.
+	 * Laedt die Sprachdatei, und setzt den Titel des Fensters.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 */
 	public ExportView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -174,7 +174,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Öffnet die Verzeichnisauswahl, um einen Export-Pfad auszuwählen.
+	 * Oeffnet die Verzeichnisauswahl, um einen Export-Pfad auszuwaehlen.
 	 */
 	private class ChooseFolderPathAction extends AbstractAction {
 
@@ -185,7 +185,7 @@ public class ExportView extends View<ExportModel> {
 	}
 
 	/**
-	 * Überprüft ob ein gültiger Export-Pfad ausgwewählt wurde.
+	 * Ueberprueft ob ein gueltiger Export-Pfad ausgwewaehlt wurde.
 	 * 
 	 * @return null oder im Fehlerfall eine Meldung.
 	 */

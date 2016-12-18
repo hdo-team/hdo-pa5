@@ -8,7 +8,7 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 /**
  * 
  * Stammklasse um die Controller zu erstellen. Gibt den Ramen und Anforderung
- * für einen Controller an.
+ * fuer einen Controller an.
  * 
  * @author Denis Bittante
  * 
@@ -27,7 +27,7 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 	/**
 	 * 
 	 * @param model:
-	 *            Model für den Controller
+	 *            Model fuer den Controller
 	 */
 	public Controller(M model) {
 		this.resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
@@ -36,7 +36,7 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 	}
 
 	/**
-	 * Initialisiert die Handler üblicherweiese wird folgendes
+	 * Initialisiert die Handler ueblicherweiese wird folgendes
 	 * implementiert:<br>
 	 * <code>getView().setHandler(viewHandler);</code><br>
 	 * <code>getView().setResourceBundle(getResourceBundle());</code><br>

@@ -1,7 +1,7 @@
 package ch.ffhs.hdo.domain.regel;
 
 /**
- * Enumeration für die Regelattribute
+ * Enumeration fuer die Regelattribute
  * 
  * 
  * @author Daniel Crazzolara
@@ -32,7 +32,7 @@ public enum ContextAttributeEnum {
 	PDF_PAGECOUNT(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.INT);
 
 	/**
-	 * Liefert die Regelattribut-Enums in Abhänigkeit vom Regelkontext
+	 * Liefert die Regelattribut-Enums in Abhaenigkeit vom Regelkontext
 	 * 
 	 * @param context
 	 *            Regelkontext

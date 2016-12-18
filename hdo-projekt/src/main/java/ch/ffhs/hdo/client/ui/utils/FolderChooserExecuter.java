@@ -7,8 +7,8 @@ import javax.swing.JFileChooser;
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 
 /**
- * * Öffnet eine Verzeichnis-Auswahl, womit man eine Ordner im lokalen
- * Filesystem auswählen kann.
+ * Oeffnet eine Verzeichnis-Auswahl, womit man eine Ordner im lokalen
+ * Filesystem auswaehlen kann.
  * 
  * @author Jonas Segessemann
  *
@@ -21,14 +21,14 @@ public class FolderChooserExecuter implements Executable {
 	 * Konstruktor welcher das Objekt erstellt.
 	 * 
 	 * @param model
-	 *            Dateimodel, welches den default Pfad zum Ordner enthält.
+	 *            Dateimodel, welches den default Pfad zum Ordner enthaelt.
 	 */
 	public FolderChooserExecuter(IFileModel model) {
 		this.model = model;
 	}
 
 	/**
-	 * Gibt den aktuellen Pfad des Ordners zurück.
+	 * Gibt den aktuellen Pfad des Ordners zurueck.
 	 * 
 	 * @return aktueller Ordner Pfad.
 	 */
@@ -37,7 +37,7 @@ public class FolderChooserExecuter implements Executable {
 	}
 
 	/**
-	 * Öffnen die Verzeichnis-Auswahl.
+	 * Oeffnen die Verzeichnis-Auswahl.
 	 */
 	public void execute(Object arg) {
 

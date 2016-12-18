@@ -1,7 +1,7 @@
 package ch.ffhs.hdo.domain.regel;
 
 /**
- * Enumeration für den Datentyp
+ * Enumeration fuer den Datentyp
  * 
  * 
  * @author Daniel Crazzolara

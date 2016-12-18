@@ -15,7 +15,7 @@ import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.infrastructure.service.SortService;
 
 /**
- * Model für die Verzeichnisansicht im Hauptfenster.
+ * Model fuer die Verzeichnisansicht im Hauptfenster.
  * 
  * @author Jonas Segessemann
  *
@@ -104,7 +104,7 @@ public class FolderTreeModel extends Model {
 
 /**
  * Erstellt einen TreeCellRenderer um spezifische Anpassungen in der Ansicht
- * ermöglichen.
+ * ermoeglichen.
  * 
  * @author Jonas Segessemann
  *

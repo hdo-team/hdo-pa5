@@ -22,7 +22,7 @@ import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 /**
- * Importfenster welches über das Menü Import im Hauptfenster geöffnet werden
+ * Importfenster welches ueber das Menue Import im Hauptfenster geoeffnet werden
  * kann.
  * 
  * @author Adrian Perez Rodriguez
@@ -39,10 +39,10 @@ public class ImportView extends View<ImportModel> {
 	private JButton cancelButton;
 
 	/**
-	 * Lädt die Sprachdatei, und setzt den Titel des Fensters.
+	 * Laedt die Sprachdatei, und setzt den Titel des Fensters.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 */
 	public ImportView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -120,7 +120,7 @@ public class ImportView extends View<ImportModel> {
 	}
 	
 	/**
-	 * Importiert alle Konfigurationen vom ausgewählten Pfad im Fenster
+	 * Importiert alle Konfigurationen vom ausgewaehlten Pfad im Fenster
 	 */
 	private class ImportAction extends AbstractAction {
 
@@ -139,12 +139,12 @@ public class ImportView extends View<ImportModel> {
 					getHandler().performOperation(ImportSaveOperation.class);
 					/**
 					* ---- HIGH PRIORITY ----
-					* Wäre super, wenn das RegelsetTableModel dynamisch geupdatet wird, somit würde
+					* Waere super, wenn das RegelsetTableModel dynamisch geupdatet wird, somit wuerde
 					* ein Programm restart entfallen...
 					* 
 					* ---- LOW PRIORITY ----
-					* Natürlich wäre dies auch der Idealfall wenn der FolderTreeModel Export funktionieren würde,
-					* somit würden beide Tables geupdatet werden beim Import... 
+					* Natuerlich waere dies auch der Idealfall wenn der FolderTreeModel Export funktionieren wuerde,
+					* somit wuerden beide Tables geupdatet werden beim Import... 
 					*
 					* ---- NullPointerException -> brauche hier HILFE! ----
 					* // getModel().getRegelsetModel().setUpdateView(true);
@@ -160,7 +160,7 @@ public class ImportView extends View<ImportModel> {
 	}
 
 	/**
-	 * Öffnet die Verzeichnisauswahl (nur Dateien können ausgewählt werden), um eine Importdatei auszuwählen.
+	 * Oeffnet die Verzeichnisauswahl (nur Dateien koennen ausgewaehlt werden), um eine Importdatei auszuwaehlen.
 	 */
 	private class ChooseFilePathAction extends AbstractAction {
 
@@ -171,7 +171,7 @@ public class ImportView extends View<ImportModel> {
 	}
 	
 	/**
-	 * Überprüft ob eine gültige Importdatei ausgwewählt wurde.
+	 * Ueberprueft ob eine gueltige Importdatei ausgwewaehlt wurde.
 	 * 
 	 * @return null oder im Fehlerfall eine Meldung.
 	 */
@@ -185,7 +185,7 @@ public class ImportView extends View<ImportModel> {
 	}
 	
 	/**
-	 * Überprüft ob ein Inbox-Pfad in den Einstellungen ausgewählt wurde.
+	 * Ueberprueft ob ein Inbox-Pfad in den Einstellungen ausgewaehlt wurde.
 	 * 
 	 * @return null oder im Fehlerfall eine Meldung.
 	 */

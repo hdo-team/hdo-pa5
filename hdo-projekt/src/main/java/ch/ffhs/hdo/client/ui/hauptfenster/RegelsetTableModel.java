@@ -16,7 +16,7 @@ import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
  */
 public class RegelsetTableModel extends Model {
 	/**
-	 * Enum welcher alle Service-Stati enthält.
+	 * Enum welcher alle Service-Stati enthaelt.
 	 * 
 	 * @author Jonas Segessemann
 	 *

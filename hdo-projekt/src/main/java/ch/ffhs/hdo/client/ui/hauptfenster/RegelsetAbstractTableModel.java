@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
 /**
- * Abstraktes Table Model für Regelset Tabelle in der Hauptübersicht.
+ * Abstraktes Table Model fuer Regelset Tabelle in der Hauptuebersicht.
  * 
  * @author Jonas Segessemann
  *

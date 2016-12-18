@@ -4,7 +4,7 @@ import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
 /**
- * Model für das Konfigurations Fenster.
+ * Model fuer das Konfigurations Fenster.
  * 
  * @author Jonas Segessemann
  *

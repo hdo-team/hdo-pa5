@@ -19,7 +19,7 @@ public class DefaultClosingViewExecutable implements Executable {
 	 * soll.
 	 * 
 	 * @param controller
-	 *            der aktive {@link Controller} muss hier übergeben werden.
+	 *            der aktive {@link Controller} muss hier uebergeben werden.
 	 */
 	public DefaultClosingViewExecutable(Controller controller) {
 		ParamChecker.notNull(controller, "controller");

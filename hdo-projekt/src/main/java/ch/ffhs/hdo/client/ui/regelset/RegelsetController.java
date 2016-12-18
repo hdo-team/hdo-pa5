@@ -9,7 +9,7 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable;
 
 /**
- * Controller für die Regelsets
+ * Controller fuer die Regelsets
  * 
  * @author Adrian Perez Rodriguez
  */
@@ -19,11 +19,11 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 	private final ViewHandlerImpl viewHandler;
 
 	/**
-	 * Konstruktor welcher das Model dem erstellten View übergibt.
+	 * Konstruktor welcher das Model dem erstellten View uebergibt.
 	 * (Regelset bearbeiten)
 	 * 
 	 * @param model
-	 *            Regelset Model, das ein bestehendes Regelset enthält
+	 *            Regelset Model, das ein bestehendes Regelset enthaelt
 	 */
 	public RegelsetController(RegelsetModel model) {
 		super(model);
@@ -37,7 +37,7 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 	}
 
 	/**
-	 * Konstruktor welcher die Models dem erstellten View übergibt.
+	 * Konstruktor welcher die Models dem erstellten View uebergibt.
 	 * (Regelset neu erstellen)
 	 * 
 	 * @param model
@@ -66,7 +66,7 @@ public class RegelsetController extends Controller<RegelsetModel, RegelsetView> 
 	}
 
 	/**
-	 * Fügt die ausführbaren Optionen dem view Handler hinzu.
+	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
 	 */
 	private void setupViewHandler() {
 		this.viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));

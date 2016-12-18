@@ -81,7 +81,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	 * Konstruktor welcher das View Objekt erstellt.
 	 * 
 	 * @param resourceBundle
-	 *            Übersetzungen der aktuellen Sprache.
+	 *            Uebersetzungen der aktuellen Sprache.
 	 */
 	public RegelsetView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
@@ -152,7 +152,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	}
 
 	/**
-	 * Liefert (abhaengig vom Regelattribut) die Comparison-Enums für die 
+	 * Liefert (abhaengig vom Regelattribut) die Comparison-Enums fuer die 
 	 * Vergleichsart Combobox
 	 * 
 	 * @param attributeEnum
@@ -339,7 +339,7 @@ public class RegelsetView extends View<RegelsetModel> {
 							previousTabIndex = tabbedPane.getSelectedIndex();
 						} else {
 							// Regel-Plausibilisierung NOK -> Tab-Wechel verhindern (bzw. auf 
-							// vorherige Tab zurück wechseln)
+							// vorherige Tab zurueck wechseln)
 							tabChangePrevented = true;
 							tabbedPane.setSelectedIndex(previousTabIndex);
 						}
@@ -351,7 +351,7 @@ public class RegelsetView extends View<RegelsetModel> {
 	}
 
 	/**
-	 * Prüfung ob die Eingabewerte des Regelsets und der aktuellen Regel korrekt sind
+	 * Pruefung ob die Eingabewerte des Regelsets und der aktuellen Regel korrekt sind
 	 * 
 	 * @return <code>true</code> : es ist valid <br>
 	 *         <code>false</code> = nicht valid

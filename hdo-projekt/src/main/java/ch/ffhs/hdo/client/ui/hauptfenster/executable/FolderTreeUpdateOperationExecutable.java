@@ -6,7 +6,7 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 
 /**
- * Aktualisiert die Verzeichnisübersicht mit dem neuen Model.
+ * Aktualisiert die Verzeichnisuebersicht mit dem neuen Model.
  * 
  * @author Jonas Segessemann
  *

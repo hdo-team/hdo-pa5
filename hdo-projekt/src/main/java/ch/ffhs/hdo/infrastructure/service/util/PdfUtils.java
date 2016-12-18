@@ -27,7 +27,7 @@ public class PdfUtils {
 	static Logger LOGGER = LogManager.getLogger(PdfUtils.class);
 
 	/**
-	 * Liefert den Inhalte eines Pdfs als Unicode zurück.
+	 * Liefert den Inhalte eines Pdfs als Unicode zurueck.
 	 * 
 	 * @param file
 	 * @return Inhalt als Unicode
@@ -66,7 +66,7 @@ public class PdfUtils {
 	}
 
 	/**
-	 * Liefert die Metadaten eines PDFs zurück.
+	 * Liefert die Metadaten eines PDFs zurueck.
 	 * 
 	 * @param file
 	 * @return MashMap mit Key die {@link PdfMetaData} mit deren Objekten
