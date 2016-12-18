@@ -1,16 +1,16 @@
 package ch.ffhs.hdo.client.ui.base.viewhandler;
 
 /**
- * Ein ViewHandler ist ein Objekt, über welches die View mit dem Controller, der
+ * Ein ViewHandler ist ein Objekt, ueber welches die View mit dem Controller, der
  * die View erzeugt hat, interagieren kann.
  */
 public interface ViewHandler extends Destroyable {
 
 	/**
-	 * Führt die Operation aus.
+	 * Fuehrt die Operation aus.
 	 * 
 	 * @param operation
-	 *            Die auszuführende Operation
+	 *            Die auszufuehrende Operation
 	 * 
 	 * @throws UnsupportedOperationException
 	 *             Falls die Operation nicht erlaubt ist.
@@ -19,10 +19,10 @@ public interface ViewHandler extends Destroyable {
 	void performOperation(Class<? extends ViewOperation> operation);
 
 	/**
-	 * Führt die Operation aus und übergibt ihr das mitgegebene Argument.
+	 * Fuehrt die Operation aus und uebergibt ihr das mitgegebene Argument.
 	 * 
 	 * @param operation
-	 *            Die auszuführende Operation
+	 *            Die auszufuehrende Operation
 	 * @param arg
 	 *            Das Argument, welches an die Operation weitergereicht wird.
 	 * 

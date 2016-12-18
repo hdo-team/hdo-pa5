@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.13" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="false" dependencies="true" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="ch.ffhs.hdo.client.ui.regelset" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="184" x="2006" y="644"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="250" x="1673" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <interface id="3" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation" 
+    project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetDeleteOperation.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="63" width="178" x="1455" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="4" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperationExecutable" 
+    project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetSaveOperationExecutable.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="271" x="1816" y="873"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSaveOperation" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetSaveOperation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="63" width="178" x="1909" y="1673"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="6" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelAddExecutable" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelAddExecutable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="204" x="1841" y="1444"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperationExecutable" 
+    project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetDeleteOperationExecutable.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="229" x="703" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartExecutable" 
+    project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetViewStartExecutable.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="193" x="3263" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="9" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetSwapOperation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="63" width="178" x="267" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="10" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperationExecutable" 
+    project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetSwapOperationExecutable.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="225" x="972" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="11" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelDeleteOperation" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelDeleteOperation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="63" width="178" x="1237" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="12" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation" 
+    project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelsetViewStartOperation.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="63" width="186" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="13" language="java" name="ch.ffhs.hdo.client.ui.regelset.executable.RegelAddOperation" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/executable/RegelAddOperation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="63" width="178" x="485" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="14" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelModel" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="372" x="2108" y="2280"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetController" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="290" x="2464" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetView.SaveRulesetAction" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="2169" y="1444"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetView.RegelsetDocumentListener" 
+    project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="189" width="283" x="2683" y="1444"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelPanel.RegelDocumentListener" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="253" x="1713" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetView.CloseAction" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="3048" y="1444"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelPanel.ComboBoxActionListener" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="2230" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetModel" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="567" width="262" x="2148" y="1673"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelPanel" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="567" width="406" x="2817" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetView" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="531" width="402" x="2840" y="873"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelPanel.ModelChangeListener" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="240" x="2794" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="ch.ffhs.hdo.client.ui.regelset.RegelsetView.MyPropertyChangeListener" 
+    project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/regelset/RegelsetView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="240" x="2403" y="1444"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="27">    
+    <bendpoint x="2117" y="873"/>    
+    <bendpoint x="2096" y="1444"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="28">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="29">    
+    <bendpoint x="3272" y="644"/>    
+    <bendpoint x="3272" y="873"/>    
+    <bendpoint x="3272" y="1444"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="30">    
+    <bendpoint x="3314" y="644"/>    
+    <bendpoint x="3314" y="873"/>    
+    <bendpoint x="3314" y="1444"/>    
+    <bendpoint x="3314" y="1673"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="32">    
+    <bendpoint x="2996" y="1444"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="33">    
+    <bendpoint x="1785" y="873"/>    
+    <bendpoint x="1743" y="1444"/>    
+    <bendpoint x="1743" y="1673"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="34">    
+    <bendpoint x="2138" y="873"/>    
+    <bendpoint x="2138" y="1444"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <nesting id="35">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="19"/>  
+  </nesting>  
+  <nesting id="36">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="20"/>  
+  </nesting>  
+  <dependency id="37">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="38">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <nesting id="39">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="24"/>  
+  </nesting>  
+  <dependency id="40">    
+    <bendpoint x="1661" y="644"/>    
+    <bendpoint x="1661" y="873"/>    
+    <bendpoint x="1661" y="1444"/>    
+    <bendpoint x="1661" y="1673"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="41">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <nesting id="42">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="25"/>  
+  </nesting>  
+  <dependency id="43">    
+    <bendpoint x="2075" y="1444"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="44">    
+    <bendpoint x="3017" y="1444"/>    
+    <bendpoint x="3017" y="1673"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="45">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <nesting id="47">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="18"/>  
+  </nesting>  
+  <nesting id="48">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="16"/>  
+  </nesting>  
+  <nesting id="49">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="17"/>  
+  </nesting>  
+  <dependency id="50">    
+    <bendpoint x="1682" y="644"/>    
+    <bendpoint x="1743" y="873"/>    
+    <bendpoint x="1764" y="1444"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="51">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="52">    
+    <bendpoint x="3064" y="644"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="53">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="54">    
+    <bendpoint x="1764" y="873"/>    
+    <bendpoint x="1785" y="1444"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="55">    
+    <bendpoint x="2159" y="873"/>    
+    <bendpoint x="2117" y="1444"/>    
+    <bendpoint x="2117" y="1673"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="56">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="58">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="59">    
+    <bendpoint x="3251" y="644"/>    
+    <bendpoint x="3293" y="873"/>    
+    <bendpoint x="3293" y="1444"/>    
+    <bendpoint x="3293" y="1673"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="60">    
+    <bendpoint x="1722" y="873"/>    
+    <bendpoint x="1722" y="1444"/>    
+    <bendpoint x="1722" y="1673"/>    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

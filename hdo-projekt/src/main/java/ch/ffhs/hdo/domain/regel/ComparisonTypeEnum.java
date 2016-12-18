@@ -3,7 +3,7 @@ package ch.ffhs.hdo.domain.regel;
 import java.util.ResourceBundle;
 
 /**
- * Enum für Vergleichsart
+ * Enumeration fuer die Vergleichsart
  * 
  * @author Daniel Crazzolara
  */
@@ -16,6 +16,10 @@ public enum ComparisonTypeEnum {
 	
 	private String I18NValue; 
 	
+	/** 
+	 * Konstruktor zur Erstellung einer Vergleichsart-Enum
+	 * (ermittelt auch gleich die Auspraegung in der gewuenschten Sprache)
+	 */
 	ComparisonTypeEnum() {
 		
 		final ResourceBundle bundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
@@ -23,6 +27,12 @@ public enum ComparisonTypeEnum {
 		this.I18NValue = bundle.getString(ATTRIBUTE_COMBOBOXKEY + this.name().toLowerCase());
 	}
 	
+	/**
+	 * liefert die Auspraegung einer Enums
+	 * 
+	 * @return I18NValue
+	 *             Auspraegung in der gewuenschten Sprache
+	 */
 	@Override
 	public String toString() {
 		return this.I18NValue;

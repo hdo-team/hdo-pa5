@@ -12,8 +12,6 @@ import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
 public class RegelsetConverter {
 
-	// ADRIAN !! TEST SCHREIBEN
-
 	public static RegelsetModel convert(RegelsetDto regelsetDto) {
 
 		RegelsetModel regelsetModel = RegelsetModel.getNullModel();

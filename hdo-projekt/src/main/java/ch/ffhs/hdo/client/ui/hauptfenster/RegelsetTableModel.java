@@ -7,8 +7,20 @@ import javax.swing.event.TableModelListener;
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
+/**
+ * Das Model der angezeigten Regelset Tabelle und die Navigationsliste im
+ * Haputfenster.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class RegelsetTableModel extends Model {
-
+	/**
+	 * Enum welcher alle Service-Stati enthaelt.
+	 * 
+	 * @author Jonas Segessemann
+	 *
+	 */
 	public enum ServiceStatus {
 		DONE, PROCESSING, START, STOP;
 	}
@@ -21,6 +33,12 @@ public class RegelsetTableModel extends Model {
 
 	private boolean updateView = false;
 
+	/**
+	 * Erstellt ein Objekt mit dem Table Model.
+	 * 
+	 * @param rulsets
+	 *            ArrayList aus allen Regelsets.
+	 */
 	public RegelsetTableModel(ArrayList<RegelsetModel> rulsets) {
 		this.rulsets = rulsets;
 	}
@@ -61,11 +79,6 @@ public class RegelsetTableModel extends Model {
 
 	public ServiceStatus getServiceStatus() {
 		return serviceStatus;
-	}
-
-	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setServiceStatus(ServiceStatus serviceStatus) {

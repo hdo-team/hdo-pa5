@@ -24,7 +24,7 @@ import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperationExecutable;
 
 /**
- * Controller für das Hauptfenster
+ * Controller fuer das Hauptfenster
  * 
  * @author Jonas Segessemann
  */
@@ -32,6 +32,16 @@ public class MainController extends Controller<MainModel, MainView> {
 
 	private ViewHandlerImpl viewHandler;
 
+	/**
+	 * Controller Konstruktor welcher die Models dem erstellten View uebergibt.
+	 * 
+	 * @param model
+	 *            Model Main Model.
+	 * @param regelsetModel
+	 *            Model mit den Regelsets.
+	 * @param folderModel
+	 *            Model mit der Verzeichnisstruktur.
+	 */
 	public MainController(MainModel model, RegelsetTableModel regelsetModel, FolderTreeModel folderModel) {
 		super(model);
 		model.setRegelsetModel(regelsetModel);
@@ -45,6 +55,9 @@ public class MainController extends Controller<MainModel, MainView> {
 		initlizeHandler();
 	}
 
+	/**
+	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
+	 */
 	private void initlizeHandler() {
 		this.viewHandler.addOperation(OptionViewStartOperation.class, new OptionViewStartExecutable());
 		this.viewHandler.addOperation(RegelsetViewStartOperation.class, new RegelsetViewStartExecutable());
@@ -61,6 +74,9 @@ public class MainController extends Controller<MainModel, MainView> {
 				new FolderTreeUpdateOperationExecutable(this.getModel().getFolderModel()));
 	}
 
+	/**
+	 * Inizialisierung der erstellten View.
+	 */
 	@Override
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());

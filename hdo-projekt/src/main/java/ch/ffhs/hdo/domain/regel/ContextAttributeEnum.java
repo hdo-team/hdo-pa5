@@ -1,8 +1,7 @@
 package ch.ffhs.hdo.domain.regel;
 
 /**
- * Enum für Attribute
- * (abhängig vom Regel-Kontext und vom Daten-Typ)
+ * Enumeration fuer die Regelattribute
  * 
  * 
  * @author Daniel Crazzolara
@@ -32,6 +31,14 @@ public enum ContextAttributeEnum {
 	PDF_MODIFICATION_DATE(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.DATE),
 	PDF_PAGECOUNT(ContextTypeEnum.CONTEXT_PDF, DataTypeEnum.INT);
 
+	/**
+	 * Liefert die Regelattribut-Enums in Abhaenigkeit vom Regelkontext
+	 * 
+	 * @param context
+	 *            Regelkontext
+	 * @return attributEnum[]
+	 * 	          Array mit den Regelattribut-Enums
+	 */
 	public static ContextAttributeEnum[] values(ContextTypeEnum context) {
 
 		List<ContextAttributeEnum> attributeEnumsList = new ArrayList<ContextAttributeEnum>();
@@ -55,6 +62,14 @@ public enum ContextAttributeEnum {
 
 	private DataTypeEnum type;
 
+	/** 
+	 * Konstruktor zur Erstellung einer Regelattribut-Enum
+	 * 
+	 * @param context
+	 *            Regelkontext der zu dieser Attribut-Enumeration gehoert
+	 * @param type
+	 * 	          Datentyp der zu dieser Attribut-Enumeration gehoert
+	 */
 	private ContextAttributeEnum(ContextTypeEnum context, DataTypeEnum type) {
 		this.context = context;
 		this.type = type;
@@ -69,6 +84,12 @@ public enum ContextAttributeEnum {
 		return this.type;
 	}
 
+	/**
+	 * liefert die Auspraegung der Enumeration
+	 * 
+	 * @return I18NValue
+	 *             Auspraegung in der gewuenschten Sprache
+	 */
 	@Override
 	public String toString() {
 		final ResourceBundle bundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");

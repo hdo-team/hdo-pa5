@@ -8,7 +8,6 @@ import ch.ffhs.hdo.domain.regel.ContextTypeEnum;
 /**
  * RegelModel
  * 
- * 
  * @author Daniel Crazzolara
  */
 
@@ -22,8 +21,7 @@ public class RegelModel extends Model {
 	private String ruleName;
 
 	private RegelModel() {
-		// don't creat new Instance
-		// use public static RegelsetModel getNullModel() {
+			// neue Instanzen mit getNullModel() erstellen
 	}
 
 	public String getCompareValue() {
@@ -86,6 +84,12 @@ public class RegelModel extends Model {
 		firePropertyChange("ruleName", oldValue, ruleName);
 	}
 
+	/**
+	 * erstellt ein "leeres" Regel Model (null object)
+	 *
+	 * @return model
+	 *             Neues Regel Model
+	 */
 	public static RegelModel getNullModel() {
 		RegelModel model = new RegelModel();
 

@@ -14,6 +14,12 @@ import org.apache.logging.log4j.Logger;
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.infrastructure.service.SortService;
 
+/**
+ * Model fuer die Verzeichnisansicht im Hauptfenster.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class FolderTreeModel extends Model {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
 	private File inboxFolder;
@@ -22,6 +28,12 @@ public class FolderTreeModel extends Model {
 	private DefaultTreeModel treeModel;
 	private String HIDDEN_FOLDER = ".db";
 
+	/**
+	 * Erstellte das Model Objekt.
+	 * 
+	 * @param inboxPath
+	 *            Verzeichnis, welches als Root verwendet werden soll
+	 */
 	public FolderTreeModel(String inboxPath) {
 
 		if (inboxPath != null) {
@@ -65,26 +77,39 @@ public class FolderTreeModel extends Model {
 	}
 
 	public void setTreeNode(File inboxFolder) {
-		treeNode = addNodes(null, inboxFolder);
+		treeNode = addNodes(inboxFolder);
 	}
 
-	public DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) {
+	/**
+	 * Erstellt rektursiv einen Baum aus Verzeichnisse unter dem Inbox Pfad.
+	 * 
+	 * @param dir
+	 *            Verzeichnis als File.
+	 * @return Aktueller Baum mit neuem
+	 */
+	public DefaultMutableTreeNode addNodes(File dir) {
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode(dir);
-		
+
 		if (dir.listFiles() != null) {
 			for (File file : dir.listFiles()) {
 				if (file.isDirectory() && !file.getName().equals(HIDDEN_FOLDER)) {
-					node.add(addNodes(null, file));
+					node.add(addNodes(file));
 				}
 			}
 		}
 		return node;
 	}
-	
+
 }
 
+/**
+ * Erstellt einen TreeCellRenderer um spezifische Anpassungen in der Ansicht
+ * ermoeglichen.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 class FileTreeCellRenderer extends DefaultTreeCellRenderer {
-
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf,
 			int row, boolean hasFocus) {

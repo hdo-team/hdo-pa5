@@ -25,6 +25,13 @@ import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 import ch.ffhs.hdo.infrastructure.service.executable.ServiceStartOperation;
 
+/**
+ * Regelset-Uebersicht und Navigationsbar innerhalb des Hauptfensters. Wird beim
+ * Start der Applikation geoeffnet.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class RegelsetTableView extends View<RegelsetTableModel> {
 
 	private final String I18N = "hdo.main";
@@ -39,19 +46,31 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 	private JButton deleteButton;
 	private JButton stateButton;
 
+	/**
+	 * Konstruktor welcher das View Objekt erstellt.
+	 * 
+	 * @param resourceBundle
+	 *            Uebersetzungen der aktuellen Sprache.
+	 * @param model
+	 *            Model welches die Daten fuer die Anzeige enthaelt.
+	 */
 	public RegelsetTableView(ResourceBundle resourceBundle, RegelsetTableModel model) {
 		super(resourceBundle);
 		this.setModel(model);
 		initComponents();
 
 	}
-
+	/**
+	 * Initialisierung des Konfigurations-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 		configureBindings();
 	}
-
+	/**
+	 * Erstellt alle GUI Komponenten und fuegt die Listener hinzu.
+	 */
 	private void createComponents() {
 		jPanel = new JPanel();
 
@@ -105,7 +124,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 							new int[] { rulesetId, operation });
 					int selection = regelsetTable.getSelectedRow();
 					getModel().setUpdateView(true);
-					if (selection < regelsetTable.getRowCount()-1) {
+					if (selection < regelsetTable.getRowCount() - 1) {
 						regelsetTable.setRowSelectionInterval(0, selection + 1);
 					} else {
 						regelsetTable.setRowSelectionInterval(0, selection);
@@ -155,7 +174,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		});
 
 	}
-
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 		regelsetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		regelsetTable.setDragEnabled(true);
@@ -181,7 +202,9 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 														// statt regelsetTable
 		jPanel.add(toolbarPanel, BorderLayout.SOUTH);
 	}
-
+	/**
+	 * Konfiguriert die einzelnen Komponenten bei Statusaenderungen.
+	 */
 	@Override
 	public void configureBindings() {
 
@@ -219,7 +242,10 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		});
 
 	}
-
+/**
+ * Uebergibt die Gesamte Regelset Uebersicht als Panel.
+ * @return Regelset Panel.
+ */
 	public JPanel getPanel() {
 		return jPanel;
 	}

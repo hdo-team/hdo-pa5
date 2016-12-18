@@ -7,13 +7,21 @@ import ch.ffhs.hdo.client.ui.regelset.RegelsetController;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 
 /**
- * RegelsetViewStartExecutable
+ * Zeigt die Regelset View mit einem bestehenden oder neuen Regelset an
  * 
  * @author Daniel Crazzolara
  */
 
 public class RegelsetViewStartExecutable implements Executable<Object> {
 
+	/**
+	 * Es wird die Regelset View gestartet um je nach Argument ein bestehendes Regelset
+	 * zu bearbeiten bzw. ein neues zu erstellen.
+	 * 
+	 * @param args
+	 * 			  ist args ein RegelsetModel wird das entprechende Regelset bearbeitet
+	 *            ist args ein RegelsetTableModel wird ein neues Regelset erstellt
+	 */
 	public void execute(Object args) {
 		if (args.getClass() == RegelsetModel.class) {
 			// bestehendes Regelset bearbeiten
@@ -23,8 +31,8 @@ public class RegelsetViewStartExecutable implements Executable<Object> {
 			regelsetController.show();
 		}
 		if (args.getClass() == RegelsetTableModel.class) {
-			// neues Regelset(inkl. erster "leerer" Regel) erstellen. RegelsetTableModel wird benötigt um
-			// ViewUpdate nach dem Erstellen durchzuführen
+			// neues Regelset(inkl. erster "leerer" Regel) erstellen. RegelsetTableModel wird benoetigt um
+			// ViewUpdate nach dem Erstellen durchzufuehren
 			RegelsetModel model = null;
 			model = RegelsetModel.getNullModel();
 			model.getRuleModelList().add(RegelModel.getNullModel());

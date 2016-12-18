@@ -5,8 +5,10 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
 
 /**
+ * Model fuer das Konfigurations-Import Fenster.
  * 
  * @author Adrian Perez Rodriguez
+ * 
  */
 public class ImportModel extends Model implements IFileModel {
 
@@ -24,7 +26,7 @@ public class ImportModel extends Model implements IFileModel {
 		firePropertyChange("filePath", oldValue, filePath);
 	}
 	
-	public void setRegelsetModel(RegelsetTableModel regelsetModel){
+	public void setRegelsetTableModel(RegelsetTableModel regelsetModel){
 		this.regelsetModel=regelsetModel;
 	}
 	

@@ -17,13 +17,20 @@ import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperationExecutable;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseFilePathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
+import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
 /**
+ * Importfenster welches ueber das Menue Import im Hauptfenster geoeffnet werden
+ * kann.
  * 
  * @author Adrian Perez Rodriguez
+ *
  */
 public class ImportView extends View<ImportModel> {
 
@@ -35,6 +42,12 @@ public class ImportView extends View<ImportModel> {
 	private JButton loadButton;
 	private JButton cancelButton;
 
+	/**
+	 * Laedt die Sprachdatei, und setzt den Titel des Fensters.
+	 * 
+	 * @param resourceBundle
+	 *            Uebersetzungen der aktuellen Sprache.
+	 */
 	public ImportView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 		setTitle(getMessage(TITLE_KEY));
@@ -42,12 +55,18 @@ public class ImportView extends View<ImportModel> {
 		initComponents();
 	}
 
+	/**
+	 * Initialisierung des Import-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
 	@Override
 	public void configureBindings() {
 
@@ -63,6 +82,9 @@ public class ImportView extends View<ImportModel> {
 
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 
 		filePath = new JTextField();
@@ -77,6 +99,9 @@ public class ImportView extends View<ImportModel> {
 		
 	}
 
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 
 		FormBuilder builder = FormBuilder.create()
@@ -98,6 +123,9 @@ public class ImportView extends View<ImportModel> {
 		setDimension(430, 145);
 	}
 	
+	/**
+	 * Importiert alle Konfigurationen vom ausgewaehlten Pfad im Fenster
+	 */
 	private class ImportAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -113,19 +141,6 @@ public class ImportView extends View<ImportModel> {
 				
 				try {
 					getHandler().performOperation(ImportSaveOperation.class);
-					/**
-					* ---- HIGH PRIORITY ----
-					* Wäre super, wenn das RegelsetTableModel dynamisch geupdatet wird, somit würde
-					* ein Programm restart entfallen...
-					* 
-					* ---- LOW PRIORITY ----
-					* Natürlich wäre dies auch der Idealfall wenn der FolderTreeModel Export funktionieren würde,
-					* somit würden beide Tables geupdatet werden beim Import... 
-					*
-					* ---- NullPointerException -> brauche hier HILFE! ----
-					* // getModel().getRegelsetModel().setUpdateView(true);
-					* 
-					*/
 					JOptionPane.showMessageDialog(null, "Import erfolgreich!\n\nBitte Programm schliessen und erneut starten!");
 				} catch (Exception e1){
 					JOptionPane.showMessageDialog(null, "Import nicht erfolgreich!\n\nEs ist ein Fehler aufgetreten.");
@@ -135,6 +150,9 @@ public class ImportView extends View<ImportModel> {
 		}
 	}
 
+	/**
+	 * Oeffnet die Verzeichnisauswahl (nur Dateien koennen ausgewaehlt werden), um eine Importdatei auszuwaehlen.
+	 */
 	private class ChooseFilePathAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -143,6 +161,11 @@ public class ImportView extends View<ImportModel> {
 		}
 	}
 	
+	/**
+	 * Ueberprueft ob eine gueltige Importdatei ausgwewaehlt wurde.
+	 * 
+	 * @return null oder im Fehlerfall eine Meldung.
+	 */
 	private String checkFilePathValue() {
 		String errorString = null;
 
@@ -152,6 +175,11 @@ public class ImportView extends View<ImportModel> {
 		return errorString;
 	}
 	
+	/**
+	 * Ueberprueft ob ein Inbox-Pfad in den Einstellungen ausgewaehlt wurde.
+	 * 
+	 * @return null oder im Fehlerfall eine Meldung.
+	 */
 	private String checkInboxPathValue() {
 		String errorString = null;
 	
@@ -163,6 +191,9 @@ public class ImportView extends View<ImportModel> {
 		return errorString;
 	}
 	
+	/**
+	 * Schliesst das Import-Fenster.
+	 */
 	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {

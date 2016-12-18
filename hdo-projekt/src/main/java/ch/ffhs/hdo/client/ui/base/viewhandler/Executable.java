@@ -2,16 +2,16 @@ package ch.ffhs.hdo.client.ui.base.viewhandler;
 
 /**
  * 
- * Interface für die {@link Executable}
+ * Interface fuer die {@link Executable}
  * 
  * @author Denis Bittante
  *
- * @param <T> mögliche Parameter für die Ausführung einer Aktion.
+ * @param <T> moegliche Parameter fuer die Ausfuehrung einer Aktion.
  */
 public interface Executable<T> {
 	/**
-	 * Aktion Ausführen 
-	 * @param arg für mögliche Ausführung.
+	 * Aktion Ausfuehren 
+	 * @param arg fuer moegliche Ausfuehrung.
 	 */
     void execute(T arg);
 }

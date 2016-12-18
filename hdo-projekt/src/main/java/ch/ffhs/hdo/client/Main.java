@@ -10,30 +10,29 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 
+/**
+ * Main Klasse. Startet die Applikation
+ * 
+ * @author jonas
+ *
+ */
 public class Main {
 
 	private static Logger LOGGER = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) {
 
-		
-		//init StartExecutableMainView
-		
-		
+		// init StartExecutableMainView
+
 		RegelsetTableModel regelsetsTable = new RegelsetTableModel(new RegelsetFacade().getAllRegelsets());
 		FolderTreeModel folderModel = new FolderTreeModel(ApplicationSettings.getInstance().getInbox_path());
-		
-		
-
 
 		// Init Controller
-		MainController mainController = new MainController(new MainModel(),regelsetsTable,folderModel);
+		MainController mainController = new MainController(new MainModel(), regelsetsTable, folderModel);
 
 		// Start MainView
 		mainController.show();
 
-
 	}
-
 
 }

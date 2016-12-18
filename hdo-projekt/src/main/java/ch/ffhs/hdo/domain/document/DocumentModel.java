@@ -9,7 +9,7 @@ import ch.ffhs.hdo.infrastructure.service.util.PdfUtils;
 
 /**
  * DocumentModel ist die Representation aller Informationen die vom Service
- * geprüft werden
+ * geprueft werden
  * 
  * @author Denis Bittante
  *
@@ -47,7 +47,7 @@ public class DocumentModel {
 	}
 
 	/**
-	 * Gibt die Metadaten von eines Files zurück
+	 * Gibt die Metadaten von eines Files zurueck
 	 *
 	 * @return HashMap von Attributen und den Values
 	 */
@@ -55,7 +55,7 @@ public class DocumentModel {
 		return fileMetadata;
 	}
 	/**
-	 * Gibt die Metadaten von eines PDFs zurück
+	 * Gibt die Metadaten von eines PDFs zurueck
 	 *
 	 * @return HashMap von Attributen und den Values
 	 */

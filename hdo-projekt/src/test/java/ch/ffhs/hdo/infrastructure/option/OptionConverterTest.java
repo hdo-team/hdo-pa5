@@ -57,7 +57,7 @@ public class OptionConverterTest {
 	}
 
 	/**
-	 * Tested wenn ein gefülltes DTO convertiert wird, die richtigen Daten im
+	 * Tested wenn ein gefuelltes DTO convertiert wird, die richtigen Daten im
 	 * Model vorhanden sind.
 	 */
 	@Test

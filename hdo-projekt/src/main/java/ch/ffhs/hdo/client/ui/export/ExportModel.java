@@ -4,6 +4,12 @@ import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
 
+/**
+ * Model fuer das Konfigurations-Export Fenster.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class ExportModel extends Model implements IFileModel {
 
 	private String filePath;
@@ -20,11 +26,11 @@ public class ExportModel extends Model implements IFileModel {
 		firePropertyChange("filePath", oldValue, filePath);
 
 	}
-	
-	public void setFolderModel(FolderTreeModel folderModel){
-		this.folderModel=folderModel;
+
+	public void setFolderModel(FolderTreeModel folderModel) {
+		this.folderModel = folderModel;
 	}
-	
+
 	public FolderTreeModel getFolderModel() {
 		return folderModel;
 	}

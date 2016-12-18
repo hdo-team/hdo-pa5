@@ -3,7 +3,12 @@ package ch.ffhs.hdo.client.ui.einstellungen;
 import ch.ffhs.hdo.client.ui.base.Model;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
-
+/**
+ * Model fuer das Konfigurations Fenster.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class OptionModel extends Model implements IFileModel {
 
 	private String inboxPath;

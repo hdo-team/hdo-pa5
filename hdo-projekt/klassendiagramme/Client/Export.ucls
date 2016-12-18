@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.13" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="ch.ffhs.hdo.client.ui.export" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="174" x="613" y="176"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="ch.ffhs.hdo.client.ui.export.executable" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/executable" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="240" x="638" y="37"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="3" language="java" name="ch.ffhs.hdo.client.ui.export.executable.ExportSaveExecutable" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/executable/ExportSaveExecutable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="202" x="83" y="351"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ch.ffhs.hdo.client.ui.export.executable.ExportViewStartExecutable" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/executable/ExportViewStartExecutable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="180" x="254" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="ch.ffhs.hdo.client.ui.export.executable.ExportSaveOperation" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/executable/ExportSaveOperation.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="63" width="171" x="829" y="827"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation" 
+    project="hdo" file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/executable/ExportViewStartOperation.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="63" width="173" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="ch.ffhs.hdo.client.ui.export.ExportModel" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/ExportModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="210" x="64" y="827"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ch.ffhs.hdo.client.ui.export.ExportController" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/ExportController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="253" x="320" y="176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="ch.ffhs.hdo.client.ui.export.ExportView.ExportAllAction" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/ExportView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="125" y="688"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="ch.ffhs.hdo.client.ui.export.ExportView.ChooseFolderPathAction" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/ExportView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="593" y="688"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="ch.ffhs.hdo.client.ui.export.ExportView.CloseAction" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/ExportView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="194" x="359" y="688"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="ch.ffhs.hdo.client.ui.export.ExportView" project="hdo" 
+    file="/hdo/src/main/java/ch/ffhs/hdo/client/ui/export/ExportView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="325" x="325" y="351"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <nesting id="14">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <association id="15">    
+    <bendpoint x="73" y="688"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="16" name="model">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="18">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <nesting id="20">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="11"/>  
+  </nesting>  
+  <dependency id="21">    
+    <bendpoint x="31" y="176"/>    
+    <bendpoint x="31" y="351"/>    
+    <bendpoint x="31" y="688"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="22">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="23">    
+    <bendpoint x="94" y="688"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="24">    
+    <bendpoint x="817" y="176"/>    
+    <bendpoint x="817" y="351"/>    
+    <bendpoint x="817" y="688"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="27">    
+    <bendpoint x="859" y="351"/>    
+    <bendpoint x="859" y="688"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="28">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <nesting id="29">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <dependency id="30">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="31">    
+    <bendpoint x="52" y="351"/>    
+    <bendpoint x="52" y="688"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="32">    
+    <bendpoint x="796" y="351"/>    
+    <bendpoint x="838" y="688"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="33">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

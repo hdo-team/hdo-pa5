@@ -87,10 +87,10 @@ public class FileHandling {
 
 	/**
 	 * 
-	 * Verzeichnis löschen
+	 * Verzeichnis loeschen
 	 * 
 	 * @param folder
-	 *            zu löschende Verzeichnis
+	 *            zu loeschendes Verzeichnis
 	 */
 	public static void deleteFolder(File folder) {
 		File[] files = folder.listFiles();
@@ -109,10 +109,10 @@ public class FileHandling {
 	}
 
 	/**
-	 * File löschen
+	 * File loeschen
 	 * 
 	 * @param file
-	 *            zu löschende File
+	 *            zu loeschendes File
 	 */
 	public static void deleteFile(File file) {
 		LOGGER.debug("File :" + file.getAbsolutePath() + "was deleted");
@@ -120,7 +120,7 @@ public class FileHandling {
 	}
 
 	/**
-	 * Liefert die Metadaten einer Datei zurück.
+	 * Liefert die Metadaten einer Datei zurueck.
 	 * 
 	 * @param file
 	 *            das zu analysierende File
@@ -147,7 +147,7 @@ public class FileHandling {
 
 	/**
 	 * 
-	 * Gibt eine Collection von Files zurück die gefuden wurden
+	 * Gibt eine Collection von Files zurueck die gefuden wurden
 	 * 
 	 * @param inboxPath
 	 *            das zu durchsuchende Verzeichnis
@@ -175,7 +175,7 @@ public class FileHandling {
 	}
 
 	/**
-	 * Gibt alle Vezeichnisse aus einem Verzeichnis zurück
+	 * Gibt alle Vezeichnisse aus einem Verzeichnis zurueck
 	 * 
 	 * @param rootDir
 	 *            das zu durchsuchende Verzeichnis

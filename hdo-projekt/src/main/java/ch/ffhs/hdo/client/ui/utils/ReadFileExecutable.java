@@ -23,7 +23,6 @@ public class ReadFileExecutable implements Executable {
 		FileInputStream input = null;
 		try {
 			input = new FileInputStream(getModel().getFilePath());
-			System.out.println("Hall mein Freund ");
 
 		} catch (IOException ex) {
 			ex.printStackTrace();

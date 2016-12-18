@@ -20,6 +20,13 @@ import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
+/**
+ * Hauptfenster welches die Menueleiste und das den Rahmen der beinden Panels
+ * (Verzeichnisstruktur, Regelset-Uebersicht) enthaelt.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class MainView extends View<MainModel> {
 
 	private ResourceBundle resourceBundle;
@@ -28,7 +35,7 @@ public class MainView extends View<MainModel> {
 
 	private JMenuBar menuBar;
 	private JMenu file, options;
-	private JMenuItem fileResort, fileImport, fileExport, fileExit, optionsConfig;
+	private JMenuItem fileImport, fileExport, fileExit, optionsConfig;
 
 	private FolderTreeView folderTreeView;
 	private JScrollPane folderScrollPane;
@@ -39,6 +46,14 @@ public class MainView extends View<MainModel> {
 	private JSplitPane layoutsplitpane;
 	Dimension minimumSize;
 
+	/**
+	 * Konstruktor welcher das View Objekt erstellt.
+	 * 
+	 * @param resourceBundle
+	 *            Uebersetzungen der aktuellen Sprache.
+	 * @param model
+	 *            Model welches die Informationen das Main View enthalten.
+	 */
 	public MainView(ResourceBundle resourceBundle, MainModel model) {
 		super(resourceBundle);
 		this.setModel(model);
@@ -48,25 +63,30 @@ public class MainView extends View<MainModel> {
 
 	}
 
+	/**
+	 * Initialisierung des Konfigurations-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 		configureBindings();
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 		menuBar = new JMenuBar();
 		file = new JMenu(getMessage(I18N + ".menu.file"));
 		options = new JMenu(getMessage(I18N + ".menu.options"));
 
-		fileResort = new JMenuItem(getMessage(I18N + ".menuitem.resort"), KeyEvent.VK_T);
 		fileImport = new JMenuItem(getMessage(I18N + ".menuitem.import"), KeyEvent.VK_T);
 		fileExport = new JMenuItem(getMessage(I18N + ".menuitem.export"), KeyEvent.VK_T);
 
 		fileExport.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperation(ExportViewStartOperation.class);
+				getHandler().performOperationWithArgs(ExportViewStartOperation.class, getModel().getFolderModel());
 			}
 		});
 
@@ -87,28 +107,11 @@ public class MainView extends View<MainModel> {
 			}
 		});
 
-		// Listener für den Importeintrag im Menü
+		// Listener fuer den Importeintrag im Menue
 		fileImport.addActionListener(new AbstractAction() {
 
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperation(ImportViewStartOperation.class);
-			}
-		});
-
-		fileResort.addActionListener(new AbstractAction() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO: Zum Testen das Erste ELement mitgeben
-				// End-Version: null wenn neues Regelset erstellt werden soll
-				// effektives Model (muss ja nicht Index 0) sein!
-				//
-				if (getModel().getRegelsetModel().getRulsetList() != null) {
-					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
-							getModel().getRegelsetModel().getRulsetList().get(0));
-				} else {
-					// Kein Model => keine Argument)
-					getHandler().performOperation(RegelsetViewStartOperation.class);
-				}
+				getHandler().performOperationWithArgs(ImportViewStartOperation.class, getModel().getRegelsetModel());
 			}
 		});
 
@@ -128,11 +131,13 @@ public class MainView extends View<MainModel> {
 
 	}
 
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 		// Create Menubar Layout
 		menuBar.add(file);
 		menuBar.add(options);
-		file.add(fileResort);
 		file.add(fileImport);
 		file.add(fileExport);
 		file.add(fileExit);
@@ -151,14 +156,27 @@ public class MainView extends View<MainModel> {
 
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
 	public void configureBindings() {
 
 	}
 
+	/**
+	 * Gibt die View mit der Verzeichnisstruktur zurueck.
+	 * 
+	 * @return View Verzeichnisstruktur.
+	 */
 	public View<FolderTreeModel> getFolderTreeView() {
 		return folderTreeView;
 	}
 
+	/**
+	 * Gibt die View mit der Regelset-Uebersicht zurueck.
+	 * 
+	 * @return View Regelset-Uebersicht.
+	 */
 	public View<RegelsetTableModel> getRegelsetTableView() {
 		return regelsetTableView;
 	}
