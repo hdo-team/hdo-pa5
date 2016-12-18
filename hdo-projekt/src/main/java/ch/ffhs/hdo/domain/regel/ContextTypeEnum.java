@@ -3,7 +3,7 @@ package ch.ffhs.hdo.domain.regel;
 import java.util.ResourceBundle;
 
 /**
- * Enum für Regel-Kontext
+ * Enumeration für den Regelkontext
  * 
  * 
  * @author Daniel Crazzolara
@@ -20,6 +20,12 @@ public enum ContextTypeEnum {
 	ContextTypeEnum() {
 	}
 	
+	/**
+	 * liefert die Auspraegung eines Enums
+	 * 
+	 * @return I18NValue
+	 *             Auspraegung in der gewuenschten Sprache
+	 */
 	@Override
 	public String toString() {
 		final ResourceBundle bundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");

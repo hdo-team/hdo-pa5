@@ -377,6 +377,8 @@ public class RegelsetView extends View<RegelsetModel> {
 		// immer auch noch aktuelle Regel checken (kein short-circuit)
 		isValid = isValid & ((RegelPanel) tabbedPane.getComponentAt(tabbedPane.getSelectedIndex())).isPanelValid();
 
+		LOGGER.debug("isRulesetValid(): " + isValid);
+		
 		return isValid;
 	}
 

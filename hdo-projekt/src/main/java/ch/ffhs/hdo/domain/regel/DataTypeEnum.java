@@ -1,7 +1,7 @@
 package ch.ffhs.hdo.domain.regel;
 
 /**
- * Enum für Regel-Kontext
+ * Enumeration für den Datentyp
  * 
  * 
  * @author Daniel Crazzolara
@@ -20,10 +20,23 @@ public enum DataTypeEnum {
 
 	private ComparisonTypeEnum[] comparisontype;
 
+	/**
+	 * Konstruktor zur Erstellung einer Datentyp-Enum
+	 * 
+	 * @param compariosonTypeEnums
+	 *            Vergleichsoperationen die fuer diese Enum zugelassen sind
+	 * 
+	 */
 	private DataTypeEnum(ComparisonTypeEnum... comparisonTypeEnums) {
 		this.comparisontype = comparisonTypeEnums;
 	}
 
+	/** 
+	 * Liefert die Vergleichs-Enums die zu einen spezifischen Datatyp gehoeren
+	 * 
+	 * @return comparisontype
+	 * 	           Vergleichsart-Enums fuer den Datentyp dieser Enum
+	 */
 	public ComparisonTypeEnum[] getComparisontype() {
 		return comparisontype;
 	}

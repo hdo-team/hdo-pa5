@@ -295,7 +295,7 @@ public class RegelPanel extends JPanel {
 		}
 		ruleErrorLabel.setVisible(!isValid);
 
-		System.out.println("RegelPanel is Valid = " + isValid);
+		LOGGER.debug("RegelPanel is Valid = " + isValid);
 
 		return isValid;
 	}
