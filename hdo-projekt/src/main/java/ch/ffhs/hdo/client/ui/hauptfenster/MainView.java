@@ -35,7 +35,7 @@ public class MainView extends View<MainModel> {
 
 	private JMenuBar menuBar;
 	private JMenu file, options;
-	private JMenuItem fileResort, fileImport, fileExport, fileExit, optionsConfig;
+	private JMenuItem fileImport, fileExport, fileExit, optionsConfig;
 
 	private FolderTreeView folderTreeView;
 	private JScrollPane folderScrollPane;
@@ -80,7 +80,6 @@ public class MainView extends View<MainModel> {
 		file = new JMenu(getMessage(I18N + ".menu.file"));
 		options = new JMenu(getMessage(I18N + ".menu.options"));
 
-		fileResort = new JMenuItem(getMessage(I18N + ".menuitem.resort"), KeyEvent.VK_T);
 		fileImport = new JMenuItem(getMessage(I18N + ".menuitem.import"), KeyEvent.VK_T);
 		fileExport = new JMenuItem(getMessage(I18N + ".menuitem.export"), KeyEvent.VK_T);
 
@@ -116,23 +115,6 @@ public class MainView extends View<MainModel> {
 			}
 		});
 
-		fileResort.addActionListener(new AbstractAction() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO: Zum Testen das Erste ELement mitgeben
-				// End-Version: null wenn neues Regelset erstellt werden soll
-				// effektives Model (muss ja nicht Index 0) sein!
-				//
-				if (getModel().getRegelsetModel().getRulsetList() != null) {
-					getHandler().performOperationWithArgs(RegelsetViewStartOperation.class,
-							getModel().getRegelsetModel().getRulsetList().get(0));
-				} else {
-					// Kein Model => keine Argument)
-					getHandler().performOperation(RegelsetViewStartOperation.class);
-				}
-			}
-		});
-
 		minimumSize = new Dimension(200, 150);
 
 		// Create Folder Panel
@@ -156,7 +138,6 @@ public class MainView extends View<MainModel> {
 		// Create Menubar Layout
 		menuBar.add(file);
 		menuBar.add(options);
-		file.add(fileResort);
 		file.add(fileImport);
 		file.add(fileExport);
 		file.add(fileExit);
