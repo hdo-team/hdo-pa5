@@ -10,10 +10,12 @@ public class FolderTreeUpdateOperationExecutable implements Executable {
 	private FolderTreeModel model;
 
 	public FolderTreeUpdateOperationExecutable(FolderTreeModel model) {
-		this.model=model;
+		this.model = model;
 	}
 
 	public void execute(Object inboxPath) {
-		model.setInboxPath(new File((String) inboxPath));
+		if (inboxPath != null) {
+			model.setInboxPath(new File((String) inboxPath));
+		}
 	}
 }

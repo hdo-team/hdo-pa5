@@ -6,9 +6,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 public class JdbcHelper {
+	private static Logger LOGGER = LogManager.getLogger(InitDatabase.class);
 
 	protected Connection conn; // our connnection to the db - presist for life
 								// of program
@@ -25,9 +29,9 @@ public class JdbcHelper {
 					"sa", // username
 					""); // password
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 
 	}

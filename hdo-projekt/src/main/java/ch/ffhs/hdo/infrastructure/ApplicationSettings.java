@@ -59,12 +59,12 @@ public class ApplicationSettings {
 	public void saveInboxPath(String inboxPath) {
 		try {
 
-			config.setProperty(INBOXPATH, inboxPath);
-			config.save();
-
-			if (inboxPath != null && new File(inboxPath).exists()) {
+			final String old_inboxPath = config.getString(INBOXPATH);
+			if (inboxPath != null && new File(inboxPath).exists() && !inboxPath.equals(old_inboxPath)) {
 				new InitDatabase();
 			}
+			config.setProperty(INBOXPATH, inboxPath);
+			config.save();
 
 		} catch (ConfigurationException e) {
 			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);

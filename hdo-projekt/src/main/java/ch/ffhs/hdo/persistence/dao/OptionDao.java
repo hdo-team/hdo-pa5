@@ -12,13 +12,13 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public class OptionDao extends JdbcHelper {
 
-	private final String SELECTALL = "SELECT CONFIG.KEY, CONFIG.VALUE FROM CONFIG";
+	private final String SELECTALL = "SELECT * FROM PUBLIC.KONFIG";
 
-	private final String INSERT = "INSERT INTO CONFIG (KEY, VALUE, creationDate , changedate ) VALUES (?,?,CURTIME () ,CURTIME () )";
+	private final String INSERT = "INSERT INTO PUBLIC.KONFIG (KEY, VALUE, creationDate , changedate ) VALUES (?,?,CURTIME () ,CURTIME () )";
 
-	private final String UPDATE = "UPDATE CONFIG SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
+	private final String UPDATE = "UPDATE PUBLIC.KONFIG SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
 
-	private final String TIMESINCEALSTRUN = "SELECT  MAX(changedate) FROM CONFIG WHERE KEY = ?  AND VALUE = ?";
+	private final String TIMESINCEALSTRUN = "SELECT  MAX(changedate) FROM PUBLIC.KONFIG WHERE KEY = ?  AND VALUE = ?";
 
 	private static final String SUCCESSFULL = "SUCCESSFULL";
 

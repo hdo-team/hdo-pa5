@@ -13,7 +13,7 @@ public class OptionViewStartExecutable implements Executable<FolderTreeModel> {
 		OptionFacade facade = new OptionFacade();
 		OptionModel model = facade.getModel();
 		model.setFolderModel(folderModel);
-		OptionController optionController = new OptionController(model, folderModel);
+		OptionController optionController = new OptionController(model);
 
 		optionController.show();
 	}

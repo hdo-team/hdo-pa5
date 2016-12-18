@@ -21,7 +21,7 @@ public class ClientExample {
 	Connection conn; // our connnection to the db - presist for life of program
 
 	public ClientExample(String db_file_name_prefix) throws Exception {    
-        Class.forName("org.hsqldb.jdbcDriver");
+        Class.forName("org.hsqldb.JDBCDriver");
 
         // connect to the database.   This will load the db files and start the
         // database if it is not alread running.

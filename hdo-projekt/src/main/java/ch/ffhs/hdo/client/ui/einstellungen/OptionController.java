@@ -19,9 +19,8 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	private final ViewHandlerImpl viewHandler;
 
-	public OptionController(OptionModel model, FolderTreeModel folderModel) {
+	public OptionController(OptionModel model) {
 		super(model);
-		model.setFolderModel(folderModel);
 		setView(new OptionView(getResourceBundle()));
 		viewHandler = new ViewHandlerImpl();
 

@@ -108,8 +108,8 @@ public class OptionView extends View<OptionModel> {
 	@Override
 	public void configureBindings() {
 
-		//inboxPathTextField.setText(getModel().getInboxPath());
-		inboxPathTextField.setText(ApplicationSettings.getInstance().getInbox_path());
+		inboxPathTextField.setText(getModel().getInboxPath());
+		//inboxPathTextField.setText(ApplicationSettings.getInstance().getInbox_path());
 
 		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getIntervall() / 60);
 
@@ -127,6 +127,7 @@ public class OptionView extends View<OptionModel> {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == "inboxPath") {
 					inboxPathTextField.setText(getModel().getInboxPath());
+					
 				}
 
 			}
