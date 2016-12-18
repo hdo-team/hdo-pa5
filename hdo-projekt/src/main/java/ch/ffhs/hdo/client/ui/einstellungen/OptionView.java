@@ -27,6 +27,13 @@ import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionsSaveOperation;
 import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
+/**
+ * Konfigurationsfenster welches ueber das Menue Optionen im Haupfenster geoeffnet
+ * werden kann.
+ * 
+ * @author Jonas Segessemann
+ *
+ */
 public class OptionView extends View<OptionModel> {
 	private static Logger LOGGER = LogManager.getLogger(OptionView.class);
 
@@ -42,6 +49,12 @@ public class OptionView extends View<OptionModel> {
 	private JButton fileChooseButton;
 	private HashMap<String, Integer> comboBoxListe = new HashMap<String, Integer>();
 
+	/**
+	 * Konstruktor welcher das View Objekt erstellt.
+	 * 
+	 * @param resourceBundle
+	 *            Uebersetzungen der aktuellen Sprache.
+	 */
 	public OptionView(ResourceBundle resourceBundle) {
 		super(resourceBundle);
 		setTitle(getMessage(TITLE_KEY));
@@ -50,11 +63,17 @@ public class OptionView extends View<OptionModel> {
 
 	}
 
+	/**
+	 * Initialisierung des Konfigurations-Fensters.
+	 */
 	private void initComponents() {
 		createComponents();
 		layoutForm();
 	}
 
+	/**
+	 * Erstellt alle GUI Komponenten.
+	 */
 	private void createComponents() {
 
 		inboxPathTextField = new JTextField();
@@ -76,6 +95,9 @@ public class OptionView extends View<OptionModel> {
 		fileChooseButton.addActionListener(new OpenDirectoryChooser());
 	}
 
+	/**
+	 * Ordnet die erstellten GUI Komponenten.
+	 */
 	private void layoutForm() {
 
 		FormBuilder builder = FormBuilder.create()
@@ -105,11 +127,16 @@ public class OptionView extends View<OptionModel> {
 		setDimension(400, 400);
 	}
 
+	/**
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
+	 */
 	@Override
 	public void configureBindings() {
 
+
 		inboxPathTextField.setText(getModel().getInboxPath());
 		//inboxPathTextField.setText(ApplicationSettings.getInstance().getInbox_path());
+
 
 		String resourcebundlekey = COMBOBOXKEY + "." + (getModel().getIntervall() / 60);
 
@@ -150,6 +177,9 @@ public class OptionView extends View<OptionModel> {
 		});
 	}
 
+	/**
+	 * Speichert die Konfigurationen.
+	 */
 	private class SaveAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -163,6 +193,9 @@ public class OptionView extends View<OptionModel> {
 
 	}
 
+	/**
+	 * Schliesst das Konfigurations-Fenster.
+	 */
 	private class CloseAction extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {
@@ -173,6 +206,9 @@ public class OptionView extends View<OptionModel> {
 
 	}
 
+	/**
+	 * Oeffnet die Verzeichnisauswahl, um einen Inbox Pfad auszuwaehlen.
+	 */
 	private class OpenDirectoryChooser extends AbstractAction {
 
 		public void actionPerformed(ActionEvent e) {

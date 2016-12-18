@@ -11,7 +11,7 @@ import ch.ffhs.hdo.client.ui.utils.ChooseDirectoryPathViewOperation;
 import ch.ffhs.hdo.client.ui.utils.FolderChooserExecuter;
 
 /**
- * Controller für die Options
+ * Controller fuer die Options
  * 
  * @author Denis Bittante
  */
@@ -19,7 +19,18 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	private final ViewHandlerImpl viewHandler;
 
-	public OptionController(OptionModel model) {
+	/**
+	 * 
+	 * Controller Konstruktor welcher die Models dem erstellten View uebergibt.
+	 * 
+	 * @param model
+	 *            Option Model welches die Einstellungen aus der DB enhaelt.
+	 * @param folderModel
+	 *            Verzeichnisstruktur, bei welcher der auswaehlbare Inbox Pfad
+	 *            hinterlegt ist.
+	 */
+	public OptionController(OptionModel model, FolderTreeModel folderModel) {
+
 		super(model);
 		setView(new OptionView(getResourceBundle()));
 		viewHandler = new ViewHandlerImpl();
@@ -30,6 +41,9 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 
 	}
 
+	/**
+	 * Inizialisierung der erstellten View.
+	 */
 	@Override
 	public void initializeView() {
 		getView().setResourceBundle(getResourceBundle());
@@ -37,6 +51,9 @@ public class OptionController extends Controller<OptionModel, OptionView> {
 		getView().setHandler(viewHandler);
 	}
 
+	/**
+	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
+	 */
 	private void setupViewHandler() {
 		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 		viewHandler.addOperation(OptionsSaveOperation.class, new OptionsSaveExecutable(getModel()));
