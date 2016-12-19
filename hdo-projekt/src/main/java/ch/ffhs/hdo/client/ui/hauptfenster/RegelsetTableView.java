@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +23,7 @@ import com.jgoodies.forms.builder.FormBuilder;
 import ch.ffhs.hdo.client.ui.base.View;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.client.ui.regelset.RegelPanel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
@@ -162,8 +164,16 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		deleteButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
-				getModel().setUpdateView(true);
+				int confirmed = JOptionPane.showConfirmDialog(null,
+						getMessage(I18N + ".dialog.regelset.delete.confirm",
+								getModel().getRulsetList().get(regelsetTable.getSelectedRow()).getRulesetName()),
+						getMessage(I18N + ".dialog.regelset.delete.title"), JOptionPane.YES_NO_OPTION);
+
+				if (confirmed == JOptionPane.YES_OPTION) {
+					getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
+					getModel().setUpdateView(true);
+				}
+
 			}
 
 			private int getRegelsetId() {
