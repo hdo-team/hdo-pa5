@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,12 +31,11 @@ import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 public class FileHandling {
 	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 
-	
 	/**
 	 * Verschiebt eine Datei von filePath nach new Location
 	 *
 	 */
-	
+
 	public static void moveFile(String filePath, String newLocation) {
 		moveFile(filePath, newLocation, new File(filePath).getName());
 	}
@@ -149,6 +150,11 @@ public class FileHandling {
 			metadata.put(ContextAttributeEnum.FILE_NAME,
 					file.getName().substring(0, file.getName().length() - 1 - fileEnding.length()));
 			metadata.put(ContextAttributeEnum.FILE_SIZE, attr.size());
+
+			FileOwnerAttributeView ownerAttributeView = Files.getFileAttributeView(file.toPath(),
+					FileOwnerAttributeView.class);
+			UserPrincipal owner = ownerAttributeView.getOwner();
+			metadata.put(ContextAttributeEnum.FILE_OWNER, owner.getName());
 
 		} catch (IOException e) {
 			LOGGER.error("Metadaten einer Datei konnten nicht geleasen werden ", e);

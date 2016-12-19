@@ -100,7 +100,7 @@ public class SortService extends SwingWorker<String, String> {
 						for (Regelset regelset : regelsets) {
 							final boolean verfizieren = regelset.verfizieren(documentModel);
 							if (verfizieren) {
-								if (regelset.getRenamePattern().isEmpty()) {
+								if (regelset.getRenamePattern()==null || regelset.getRenamePattern().isEmpty()) {
 									FileHandling.moveFile(documentModel.getFile().getAbsolutePath(),
 											regelset.getPath());
 
