@@ -176,9 +176,13 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 				switch (getModel().getServiceStatus()) {
 				case START:
+					getModel().setServiceStatus(ServiceStatus.STOP);
+					getHandler().performOperationWithArgs(ServiceStartOperation.class, ServiceStatus.START);
 					break;
 
 				case STOP:
+					getModel().setServiceStatus(ServiceStatus.START);
+					getHandler().performOperationWithArgs(ServiceStartOperation.class, ServiceStatus.STOP);
 					break;
 				default:
 					break;
