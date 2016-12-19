@@ -29,8 +29,18 @@ import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 public class FileHandling {
 	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 
+	
 	/**
 	 * Verschiebt eine Datei von filePath nach new Location
+	 *
+	 */
+	
+	public static void moveFile(String filePath, String newLocation) {
+		moveFile(filePath, newLocation, new File(filePath).getName());
+	}
+
+	/**
+	 * Verschiebt eine Datei von filePath nach new Location mit neuem Namen
 	 *
 	 */
 	public static void moveFile(String filePath, String newLocation, String newName) {
@@ -136,7 +146,8 @@ public class FileHandling {
 			metadata.put(ContextAttributeEnum.FILE_CREATION_DATE, attr.creationTime());
 			final String fileEnding = getExtension(file)[1];
 			metadata.put(ContextAttributeEnum.FILE_EXTENSION, fileEnding);
-			metadata.put(ContextAttributeEnum.FILE_NAME, file.getName().substring(0, file.getName().length()-1-fileEnding.length()));
+			metadata.put(ContextAttributeEnum.FILE_NAME,
+					file.getName().substring(0, file.getName().length() - 1 - fileEnding.length()));
 			metadata.put(ContextAttributeEnum.FILE_SIZE, attr.size());
 
 		} catch (IOException e) {
