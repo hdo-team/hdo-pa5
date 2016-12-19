@@ -1,6 +1,7 @@
 package ch.ffhs.hdo.infrastructure.option;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +21,12 @@ public class OptionFacade {
 		try {
 			findAllOptions = dao.findAllOptions();
 
+			final Set<String> keySet = findAllOptions.keySet();
+
+			for (String string : keySet) {
+				System.out.println(string + ": " + findAllOptions.get(string));
+
+			}
 			OptionModel model = OptionConverter.convert(findAllOptions);
 			return model;
 

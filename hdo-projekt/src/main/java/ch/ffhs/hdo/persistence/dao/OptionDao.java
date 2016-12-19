@@ -12,11 +12,11 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 public class OptionDao extends JdbcHelper {
 
-	private final String SELECTALL = "SELECT CONFIG.KEY, CONFIG.VALUE FROM CONFIG";
+	private final String SELECTALL = "SELECT * FROM CONFIG";
 
 	private final String INSERT = "INSERT INTO CONFIG (KEY, VALUE, creationDate , changedate ) VALUES (?,?,CURTIME () ,CURTIME () )";
 
-	private final String UPDATE = "UPDATE CONFIG SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
+	private final String UPDATE = "UPDATE PUBLIC.CONFIG SET VALUE = ? , CHANGEDATE = CURTIME () WHERE KEY = ? ";
 
 	private final String TIMESINCEALSTRUN = "SELECT  MAX(changedate) FROM CONFIG WHERE KEY = ?  AND VALUE = ?";
 
@@ -43,19 +43,28 @@ public class OptionDao extends JdbcHelper {
 		PreparedStatement insertConfig = null;
 		if (newEntry) {
 			insertConfig = conn.prepareStatement(INSERT);
+			for (String key : keySet) {
+				String value = dto.get(key);
+
+				insertConfig.setString(1, key);
+				insertConfig.setString(2, value);
+
+				insertConfig.executeUpdate();
+				insertConfig.closeOnCompletion();
+			}
 
 		} else {
 			insertConfig = conn.prepareStatement(UPDATE);
-		}
+			for (String key : keySet) {
+				String value = dto.get(key);
 
-		for (String key : keySet) {
-			String value = dto.get(key);
+				insertConfig.setString(1, value);
+				insertConfig.setString(2, key);
 
-			insertConfig.setString(1, key);
-			insertConfig.setString(2, value);
+				insertConfig.executeUpdate();
+				insertConfig.closeOnCompletion();
+			}
 
-			insertConfig.executeUpdate();
-			insertConfig.closeOnCompletion();
 		}
 
 	}
@@ -73,7 +82,6 @@ public class OptionDao extends JdbcHelper {
 	}
 
 	public long timeLapsed() throws SQLException {
-
 
 		PreparedStatement lastRunPrepStatement = conn.prepareStatement(TIMESINCEALSTRUN);
 

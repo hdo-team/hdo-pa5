@@ -45,16 +45,12 @@ public class OptionConverterTest {
 	@Test
 	public void testDtoWithCorruptEntries() {
 
-		whenFilledWith("", "", "");
+		whenFilledWith("", "");
 		optionModelConverted = OptionConverter.convert(optionDtoOriginal);
 		thenModelIntervall(-1);
 		thenModelAutoModus(false);
-		thenModelPathEmtpy();
 	}
 
-	private void thenModelPathEmtpy() {
-		assertEquals("", optionModelConverted.getInboxPath());
-	}
 
 	/**
 	 * Tested wenn ein gefuelltes DTO convertiert wird, die richtigen Daten im
@@ -63,11 +59,10 @@ public class OptionConverterTest {
 	@Test
 	public void testFilledDtoOrginal() {
 
-		whenFilledWith(ACTUAL_PATH, "true", "3600");
+		whenFilledWith("true", "3600");
 		optionModelConverted = OptionConverter.convert(optionDtoOriginal);
 		thenModelIntervall(3600);
 		thenModelAutoModus(true);
-		thenPathFilled();
 	}
 
 	@Test
@@ -81,7 +76,7 @@ public class OptionConverterTest {
 	@Test
 	public void testModelWithCorruptInformation() {
 
-		whenFilledWith(null, true, -1);
+		whenFilledWith(true, -1);
 		optionDtoConverted = OptionConverter.convert(optionModelOrginal);
 		thenDtoIntervall("-1");
 		thenDtoAutoModus("true");
@@ -103,19 +98,13 @@ public class OptionConverterTest {
 
 	}
 
-	private void thenDtoPathFilled() {
-		assertEquals(ACTUAL_PATH, optionDtoConverted.get(INBOXPATH));
-
-	}
-
 	@Test
 	public void testFilledModelOrginal() {
 
-		whenFilledWith(ACTUAL_PATH, true, 3600);
+		whenFilledWith(true, 3600);
 		optionDtoConverted = OptionConverter.convert(optionModelOrginal);
 		thenDtoIntervall("3600");
 		thenDtoAutoModus("true");
-		thenDtoPathFilled();
 	}
 
 	private void thenModelAutoModus(Boolean b) {
@@ -139,22 +128,15 @@ public class OptionConverterTest {
 
 	}
 
-	private void thenPathFilled() {
-		assertEquals(ACTUAL_PATH, optionModelConverted.getInboxPath());
-
-	}
-
-	private void whenFilledWith(String actualPath, boolean automodus, int intervall) {
+	private void whenFilledWith(boolean automodus, int intervall) {
 		optionModelOrginal.setAutoModus(automodus);
 		optionModelOrginal.setIntervall(intervall);
-		optionModelOrginal.setInboxPath(actualPath);
 
 	}
 
-	private void whenFilledWith(String actualPath, String automodus, String intervall) {
+	private void whenFilledWith(String automodus, String intervall) {
 		optionDtoOriginal.put(AUTOMODUS, automodus);
 		optionDtoOriginal.put(INTERVALL, intervall);
-		optionDtoOriginal.put(INBOXPATH, actualPath);
 
 	}
 
