@@ -40,8 +40,9 @@ public class OptionsSaveExecutable implements Executable {
 
 		final String inbox_path_old = ApplicationSettings.getInstance().getInbox_path();
 		ApplicationSettings.getInstance().saveInboxPath(inboxPath);
-
-		if (inboxPath != null && !inbox_path_old.equals(inboxPath)) {
+		if (inbox_path_old == null && inboxPath != null) {
+			new InitDatabase().createDatabase();
+		} else if (inboxPath != null && inbox_path_old != null && !inbox_path_old.equals(inboxPath)) {
 			new InitDatabase().createDatabase();
 		}
 
