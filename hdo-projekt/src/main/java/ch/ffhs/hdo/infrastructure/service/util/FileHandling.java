@@ -136,7 +136,7 @@ public class FileHandling {
 			metadata.put(ContextAttributeEnum.FILE_CREATION_DATE, attr.creationTime());
 			final String fileEnding = getExtension(file)[1];
 			metadata.put(ContextAttributeEnum.FILE_EXTENSION, fileEnding);
-			metadata.put(ContextAttributeEnum.FILE_NAME, file.getName().substring(0, file.getName().length()-fileEnding.length()));
+			metadata.put(ContextAttributeEnum.FILE_NAME, file.getName().substring(0, file.getName().length()-1-fileEnding.length()));
 			metadata.put(ContextAttributeEnum.FILE_SIZE, attr.size());
 
 		} catch (IOException e) {

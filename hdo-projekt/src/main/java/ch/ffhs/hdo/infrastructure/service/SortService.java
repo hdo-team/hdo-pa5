@@ -10,10 +10,13 @@ import javax.swing.SwingWorker;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.appender.rewrite.MapRewritePolicy.Mode;
 
+import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.domain.regel.Regelset;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
@@ -38,7 +41,6 @@ public class SortService extends SwingWorker<String, String> {
 		return instance;
 	}
 
-
 	@Override
 	protected void process(List<String> chunks) {
 		super.process(chunks);
@@ -53,22 +55,26 @@ public class SortService extends SwingWorker<String, String> {
 	@Override
 	protected String doInBackground() throws Exception {
 
+		boolean firstRun = true;
+
 		RegelsetFacade regelsetFacade = new RegelsetFacade();
 		List<Regelset> regelsets = regelsetFacade.getRegelsets();
 
+		OptionModel option = new OptionFacade().getModel();
 		LOGGER.debug("Start doInBackground");
 		while (!isCancelled()) {
 			// while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP))
 			// {
 			OptionFacade facade = new OptionFacade();
-			if (facade.getTimeLapsed()) {
-				LOGGER.debug("run started");
 
+			if (facade.getTimeLapsed() || firstRun) {
+				LOGGER.debug("run started");
+				firstRun = false;
 				try {
 
 					// Load Rulesets with Rules
 
-					String inboxPath = facade.getModel().getInboxPath();
+					String inboxPath = ApplicationSettings.getInstance().getInbox_path();
 					Collection<File> fileList = FileHandling.getFileList(inboxPath, false);
 
 					ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
@@ -97,6 +103,10 @@ public class SortService extends SwingWorker<String, String> {
 					LOGGER.error("Beim File Sortierservice ist ein Fehler aufgetreten ", e);
 					facade.protocollSortServiceRun(false);
 
+				}
+
+				if (!option.isAutoModus()) {
+					return null;
 				}
 
 			} else {
