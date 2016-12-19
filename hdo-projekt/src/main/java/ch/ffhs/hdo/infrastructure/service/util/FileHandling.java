@@ -29,11 +29,21 @@ import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 public class FileHandling {
 	private static Logger LOGGER = LogManager.getLogger(FileHandling.class);
 
+	
 	/**
 	 * Verschiebt eine Datei von filePath nach new Location
 	 *
 	 */
+	
 	public static void moveFile(String filePath, String newLocation) {
+		moveFile(filePath, newLocation, new File(filePath).getName());
+	}
+
+	/**
+	 * Verschiebt eine Datei von filePath nach new Location mit neuem Namen
+	 *
+	 */
+	public static void moveFile(String filePath, String newLocation, String newName) {
 
 		try {
 			File moveto = new File(newLocation);
@@ -53,7 +63,7 @@ public class FileHandling {
 
 			File file = new File(filePath);
 
-			File dest = new File(newLocation + file.getName());
+			File dest = new File(newLocation + newName);
 			if (dest.exists()) {
 				LOGGER.warn("File " + dest.getAbsolutePath() + " Already Exists in Directory: "
 						+ moveto.getAbsolutePath().toString());
@@ -134,8 +144,10 @@ public class FileHandling {
 			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
 
 			metadata.put(ContextAttributeEnum.FILE_CREATION_DATE, attr.creationTime());
-			metadata.put(ContextAttributeEnum.FILE_EXTENSION, getExtension(file)[1]);
-			metadata.put(ContextAttributeEnum.FILE_NAME, file.getName());
+			final String fileEnding = getExtension(file)[1];
+			metadata.put(ContextAttributeEnum.FILE_EXTENSION, fileEnding);
+			metadata.put(ContextAttributeEnum.FILE_NAME,
+					file.getName().substring(0, file.getName().length() - 1 - fileEnding.length()));
 			metadata.put(ContextAttributeEnum.FILE_SIZE, attr.size());
 
 		} catch (IOException e) {

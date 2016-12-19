@@ -20,7 +20,6 @@ public class OptionConverter {
 		boolean automodus = Boolean.valueOf(charAutomodus);
 		optionModel.setAutoModus(automodus);
 
-		optionModel.setInboxPath(optionDto.get(INBOXPATH));
 
 		String charIntervall = optionDto.get(INTERVALL);
 		if (StringUtils.isNumeric(charIntervall)) {
@@ -35,7 +34,6 @@ public class OptionConverter {
 
 		OptionDto dto = new OptionDto();
 
-		dto.put(INBOXPATH, optionModelOrginal.getInboxPath());
 		dto.put(INTERVALL, String.valueOf(optionModelOrginal.getIntervall()));
 		dto.put(AUTOMODUS, optionModelOrginal.isAutoModus());
 		return dto;

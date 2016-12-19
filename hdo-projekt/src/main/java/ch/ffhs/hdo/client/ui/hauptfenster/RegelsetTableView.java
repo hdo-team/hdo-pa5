@@ -10,16 +10,20 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.jgoodies.forms.builder.FormBuilder;
 
 import ch.ffhs.hdo.client.ui.base.View;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.client.ui.hauptfenster.executable.RegelsetTableUpdateOperation;
+import ch.ffhs.hdo.client.ui.regelset.RegelPanel;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetDeleteOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetSwapOperation;
 import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
@@ -60,6 +64,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		initComponents();
 
 	}
+
 	/**
 	 * Initialisierung des Konfigurations-Fensters.
 	 */
@@ -68,6 +73,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		layoutForm();
 		configureBindings();
 	}
+
 	/**
 	 * Erstellt alle GUI Komponenten und fuegt die Listener hinzu.
 	 */
@@ -86,7 +92,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		newButton = new JButton(getMessage(I18N + ".button.newRegelset"));
 		editButton = new JButton(getMessage(I18N + ".button.editRegelset"));
 		deleteButton = new JButton(getMessage(I18N + ".button.deleteRegelset"));
-		stateButton = new JButton(getMessage(I18N + ".button.state.STOP"));
+		stateButton = new JButton(getMessage(I18N + ".button.state.START"));
 
 		prioUpButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,8 +164,16 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		deleteButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
-				getModel().setUpdateView(true);
+				int confirmed = JOptionPane.showConfirmDialog(null,
+						getMessage(I18N + ".dialog.regelset.delete.confirm",
+								getModel().getRulsetList().get(regelsetTable.getSelectedRow()).getRulesetName()),
+						getMessage(I18N + ".dialog.regelset.delete.title"), JOptionPane.YES_NO_OPTION);
+
+				if (confirmed == JOptionPane.YES_OPTION) {
+					getHandler().performOperationWithArgs(RegelsetDeleteOperation.class, getRegelsetId());
+					getModel().setUpdateView(true);
+				}
+
 			}
 
 			private int getRegelsetId() {
@@ -169,11 +183,27 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 		stateButton.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				getHandler().performOperationWithArgs(ServiceStartOperation.class, getModel());
+
+				switch (getModel().getServiceStatus()) {
+				case START:
+					getModel().setServiceStatus(ServiceStatus.STOP);
+					getHandler().performOperationWithArgs(ServiceStartOperation.class, ServiceStatus.START);
+					break;
+
+				case STOP:
+					getModel().setServiceStatus(ServiceStatus.START);
+					getHandler().performOperationWithArgs(ServiceStartOperation.class, ServiceStatus.STOP);
+					break;
+				default:
+					break;
+
+				}
+
 			}
 		});
 
 	}
+
 	/**
 	 * Ordnet die erstellten GUI Komponenten.
 	 */
@@ -202,6 +232,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 														// statt regelsetTable
 		jPanel.add(toolbarPanel, BorderLayout.SOUTH);
 	}
+
 	/**
 	 * Konfiguriert die einzelnen Komponenten bei Statusaenderungen.
 	 */
@@ -212,22 +243,14 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName() == "serviceStatus") {
-					stateButton.setText(getMessage("hdo.main.button.state." + evt.getNewValue().toString()));
-					if (evt.getNewValue().toString().equals("START")) {
-						newButton.setEnabled(false);
-						;
-						editButton.setEnabled(false);
-						prioUpButton.setEnabled(false);
-						prioDownButton.setEnabled(false);
-						deleteButton.setEnabled(false);
+					final ServiceStatus newValue = (ServiceStatus) evt.getNewValue();
+					if (newValue.equals(ServiceStatus.START)) {
+						stateButton.setText(getMessage("hdo.main.button.state.START"));
+						toggleButton(true);
 					}
-					if (evt.getNewValue().toString().equals("STOP")) {
-						newButton.setEnabled(true);
-						;
-						editButton.setEnabled(true);
-						prioUpButton.setEnabled(true);
-						prioDownButton.setEnabled(true);
-						deleteButton.setEnabled(true);
+					if (newValue.equals(ServiceStatus.STOP)) {
+						stateButton.setText(getMessage("hdo.main.button.state.STOP"));
+						toggleButton(false);
 					}
 
 				}
@@ -239,13 +262,23 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 				}
 
 			}
+
+			private void toggleButton(boolean b) {
+				newButton.setEnabled(b);
+				editButton.setEnabled(b);
+				prioUpButton.setEnabled(b);
+				prioDownButton.setEnabled(b);
+				deleteButton.setEnabled(b);
+			}
 		});
 
 	}
-/**
- * Uebergibt die Gesamte Regelset Uebersicht als Panel.
- * @return Regelset Panel.
- */
+
+	/**
+	 * Uebergibt die Gesamte Regelset Uebersicht als Panel.
+	 * 
+	 * @return Regelset Panel.
+	 */
 	public JPanel getPanel() {
 		return jPanel;
 	}

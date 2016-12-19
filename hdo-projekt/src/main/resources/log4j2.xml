@@ -43,7 +43,7 @@
 			level="DEBUG" additivity="false">
 			<AppenderRef ref="Routing" />
 		</Logger>
-		<Root level="ERROR">
+		<Root level="DEBUG">
 			<AppenderRef ref="Routing-Error" />
 		</Root>
 	</Loggers>

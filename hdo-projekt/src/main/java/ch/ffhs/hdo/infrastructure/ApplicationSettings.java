@@ -38,7 +38,7 @@ public class ApplicationSettings {
 			LOGGER.error("File konnte nicht erstellt werden", e);
 		} catch (ConfigurationException e) {
 
-			LOGGER.error("Configurationsfehler beim laden der Daten", e);
+			LOGGER.error("Konfigurationsfehler beim laden der Daten", e);
 		}
 
 	}
@@ -61,10 +61,6 @@ public class ApplicationSettings {
 
 			config.setProperty(INBOXPATH, inboxPath);
 			config.save();
-
-			if (inboxPath != null && new File(inboxPath).exists()) {
-				new InitDatabase();
-			}
 
 		} catch (ConfigurationException e) {
 			LOGGER.error("Fehler beim Speichern der Konfigdatei", e);

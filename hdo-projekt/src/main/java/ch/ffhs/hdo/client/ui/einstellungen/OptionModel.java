@@ -1,8 +1,10 @@
 package ch.ffhs.hdo.client.ui.einstellungen;
 
 import ch.ffhs.hdo.client.ui.base.Model;
+import ch.ffhs.hdo.client.ui.base.ParamChecker;
 import ch.ffhs.hdo.client.ui.hauptfenster.FolderTreeModel;
 import ch.ffhs.hdo.client.ui.utils.IFileModel;
+
 /**
  * Model fuer das Konfigurations Fenster.
  * 
@@ -21,7 +23,7 @@ public class OptionModel extends Model implements IFileModel {
 	}
 
 	public void setInboxPath(String inboxPath) {
-
+	//	ParamChecker.notEmpty(inboxPath, "inboxPath");
 		String oldValue = this.inboxPath;
 		this.inboxPath = inboxPath;
 		firePropertyChange("inboxPath", oldValue, inboxPath);
@@ -60,11 +62,11 @@ public class OptionModel extends Model implements IFileModel {
 	public void setFilePath(String newValue) {
 		setInboxPath(newValue);
 	}
-	
-	public void setFolderModel(FolderTreeModel folderModel){
-		this.folderModel=folderModel;
+
+	public void setFolderModel(FolderTreeModel folderModel) {
+		this.folderModel = folderModel;
 	}
-	
+
 	public FolderTreeModel getFolderModel() {
 		return folderModel;
 	}

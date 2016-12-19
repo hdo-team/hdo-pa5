@@ -11,9 +11,12 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.domain.regel.Regelset;
+import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 import ch.ffhs.hdo.infrastructure.regelset.RegelsetFacade;
 import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
@@ -28,16 +31,24 @@ public class SortService extends SwingWorker<String, String> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
 	private RegelsetTableModel mainModel;
 
+	public void setMainModel(RegelsetTableModel mainModel) {
+		this.mainModel = mainModel;
+	}
+
 	private static SortService instance;
 
-	public static SortService getInstance() {
+	public static SortService getInstance(RegelsetTableModel mainModel) {
 
 		if (instance == null) {
 			instance = new SortService();
 		}
+		if (instance.isCancelled() || instance.isDone()) {
+			instance = new SortService();
+		}
+
+		instance.setMainModel(mainModel);
 		return instance;
 	}
-
 
 	@Override
 	protected void process(List<String> chunks) {
@@ -48,27 +59,32 @@ public class SortService extends SwingWorker<String, String> {
 	@Override
 	protected void done() {
 		super.done();
+		this.mainModel.setServiceStatus(ServiceStatus.START);
 	}
 
 	@Override
 	protected String doInBackground() throws Exception {
 
+		LOGGER.error("Start SortService doInBackground()");
+		boolean firstRun = true;
+
 		RegelsetFacade regelsetFacade = new RegelsetFacade();
 		List<Regelset> regelsets = regelsetFacade.getRegelsets();
 
-		LOGGER.debug("Start doInBackground");
+		OptionModel option = new OptionFacade().getModel();
 		while (!isCancelled()) {
 			// while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP))
 			// {
 			OptionFacade facade = new OptionFacade();
-			if (facade.getTimeLapsed()) {
-				LOGGER.debug("run started");
 
+			if (facade.getTimeLapsed() || firstRun) {
+				LOGGER.debug("run started");
+				firstRun = false;
 				try {
 
 					// Load Rulesets with Rules
 
-					String inboxPath = facade.getModel().getInboxPath();
+					String inboxPath = ApplicationSettings.getInstance().getInbox_path();
 					Collection<File> fileList = FileHandling.getFileList(inboxPath, false);
 
 					ArrayList<DocumentModel> documentModels = new ArrayList<DocumentModel>();
@@ -84,8 +100,14 @@ public class SortService extends SwingWorker<String, String> {
 						for (Regelset regelset : regelsets) {
 							final boolean verfizieren = regelset.verfizieren(documentModel);
 							if (verfizieren) {
-								regelset.rename(documentModel);
-								FileHandling.moveFile(documentModel.getFile().getAbsolutePath(), regelset.getPath());
+								if (regelset.getRenamePattern().isEmpty()) {
+									FileHandling.moveFile(documentModel.getFile().getAbsolutePath(),
+											regelset.getPath());
+
+								} else {
+									FileHandling.moveFile(documentModel.getFile().getAbsolutePath(), regelset.getPath(),
+											regelset.rename(documentModel));
+								}
 								break;
 							}
 						}
@@ -97,6 +119,10 @@ public class SortService extends SwingWorker<String, String> {
 					LOGGER.error("Beim File Sortierservice ist ein Fehler aufgetreten ", e);
 					facade.protocollSortServiceRun(false);
 
+				}
+
+				if (!option.isAutoModus()) {
+					return null;
 				}
 
 			} else {

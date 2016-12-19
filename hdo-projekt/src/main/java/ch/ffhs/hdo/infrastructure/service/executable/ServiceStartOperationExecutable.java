@@ -5,34 +5,31 @@ import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.infrastructure.service.SortService;
 
-public class ServiceStartOperationExecutable implements Executable {
+public class ServiceStartOperationExecutable implements Executable<ServiceStatus> {
 
 	private SortService sortService;
-	private RegelsetTableModel model;
+	private RegelsetTableModel mainModel;
 
-	public ServiceStartOperationExecutable(RegelsetTableModel model) {
-		this.model = model;
-		this.sortService = SortService.getInstance();
+	public ServiceStartOperationExecutable(RegelsetTableModel mainModel) {
+
+		this.mainModel = mainModel;
 
 	}
 
-	public void execute(Object arg) {
+	public void execute(ServiceStatus arg) {
 
-		switch (model.getServiceStatus()) {
-		case START:
-			sortService.execute(); // first Start
-			model.setServiceStatus(ServiceStatus.STOP);
-
-			break;
-
+		switch (arg) {
 		case STOP:
-			sortService.cancel(true);
-			model.setServiceStatus(ServiceStatus.START);
+			SortService.getInstance(this.mainModel).cancel(true);
+			break;
+		case START:
+			SortService.getInstance(this.mainModel).execute(); // first
+																// Start
+			// SwingUtilities.invokeLater(sortService);
 
 			break;
 
 		default:
-			model.setServiceStatus(ServiceStatus.START);
 			sortService.cancel(true);
 
 			break;

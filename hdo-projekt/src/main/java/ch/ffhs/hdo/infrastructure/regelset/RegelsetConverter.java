@@ -47,7 +47,6 @@ public class RegelsetConverter {
 		regelsetModel.setPath(regelsetDto.getTargetDirectory());
 		regelsetModel.setRenamePattern(regelsetDto.getNewFilename());
 		regelsetModel.setFilenameCounter(regelsetDto.getFilenameCounter());
-		
 
 		final ArrayList<AbstractRegel> regelList = new ArrayList<AbstractRegel>();
 
