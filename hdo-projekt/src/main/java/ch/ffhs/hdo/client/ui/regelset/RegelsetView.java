@@ -208,7 +208,7 @@ public class RegelsetView extends View<RegelsetModel> {
 
 		FormBuilder builder = FormBuilder.create()
 				.columns(
-						"[20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu , pref], 5dlu, [20dlu, pref]")
+						"[50dlu , pref], 5dlu, [50dlu , pref], 5dlu, [50dlu , pref], 5dlu, [50dlu, pref]")
 				.rows("p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p, $lg, p");
 
 		builder.add(rulesetErrorLabel).rcw(1, 1, 7);
