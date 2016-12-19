@@ -3,6 +3,7 @@ package ch.ffhs.hdo.domain.regel;
 import java.nio.file.attribute.FileTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
@@ -28,7 +29,12 @@ public abstract class AbstractRegel {
 
 		switch (this.getComparisonType()) {
 		case COMPARISON_EQUAL:
-			return fileDate.equals(regelDate);
+			final int month = fileDate.get(Calendar.MONTH);
+			final int year = fileDate.get(Calendar.YEAR);
+			final int dayOfMonth = fileDate.get(Calendar.DAY_OF_MONTH);
+			GregorianCalendar g = new GregorianCalendar(year, month, dayOfMonth);
+			return g.equals(regelDate);
+			
 		case COMPARISON_GREATER_EQUAL:
 			return regelDate.before(fileDate);
 		case COMPARISON_LESS_EQUAL:
@@ -50,9 +56,9 @@ public abstract class AbstractRegel {
 	private GregorianCalendar convertToDate(Object date) {
 
 		GregorianCalendar gregcal = new GregorianCalendar();
-		if (date instanceof String) {
+		if (date instanceof String && date != null) {
 
-			SimpleDateFormat dateFormat = new SimpleDateFormat("DD-MM-YYYY");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			try {
 				final Date parse = dateFormat.parse(regelValue);
 				gregcal.setTime(parse);
@@ -62,7 +68,7 @@ public abstract class AbstractRegel {
 
 		}
 
-		if (fileValue instanceof FileTime) {
+		if (date instanceof FileTime) {
 
 			FileTime filetime = (FileTime) fileValue;
 			gregcal.setTimeInMillis(filetime.toMillis());

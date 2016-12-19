@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 
 import ch.ffhs.hdo.domain.document.DocumentModel;
 
