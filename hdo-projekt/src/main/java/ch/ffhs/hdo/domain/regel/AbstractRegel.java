@@ -107,7 +107,8 @@ public abstract class AbstractRegel {
 		case COMPARISON_REGEX:
 			Pattern p = Pattern.compile(regelValue.toString());
 			final Matcher matcher = p.matcher(valStr);
-			return matcher.matches();
+			final boolean matches = matcher.find();
+			return matches;
 		case COMPARISON_UNEQUAL:
 			return !valStr.equals(this.regelValue);
 		case EMPTY:
