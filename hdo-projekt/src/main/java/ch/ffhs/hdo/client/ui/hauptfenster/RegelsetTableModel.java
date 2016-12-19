@@ -22,7 +22,7 @@ public class RegelsetTableModel extends Model {
 	 *
 	 */
 	public enum ServiceStatus {
-		DONE, PROCESSING, START, STOP;
+		START, STOP;
 	}
 
 	private RegelsetAbstractTableModel abstractModel;

@@ -21,12 +21,6 @@ public class OptionFacade {
 		try {
 			findAllOptions = dao.findAllOptions();
 
-			final Set<String> keySet = findAllOptions.keySet();
-
-			for (String string : keySet) {
-				System.out.println(string + ": " + findAllOptions.get(string));
-
-			}
 			OptionModel model = OptionConverter.convert(findAllOptions);
 			return model;
 

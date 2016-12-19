@@ -10,10 +10,10 @@ import javax.swing.SwingWorker;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.appender.rewrite.MapRewritePolicy.Mode;
 
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel;
+import ch.ffhs.hdo.client.ui.hauptfenster.RegelsetTableModel.ServiceStatus;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 import ch.ffhs.hdo.domain.regel.Regelset;
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
@@ -31,13 +31,22 @@ public class SortService extends SwingWorker<String, String> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
 	private RegelsetTableModel mainModel;
 
+	public void setMainModel(RegelsetTableModel mainModel) {
+		this.mainModel = mainModel;
+	}
+
 	private static SortService instance;
 
-	public static SortService getInstance() {
+	public static SortService getInstance(RegelsetTableModel mainModel) {
 
 		if (instance == null) {
 			instance = new SortService();
 		}
+		if (instance.isCancelled() || instance.isDone()) {
+			instance = new SortService();
+		}
+
+		instance.setMainModel(mainModel);
 		return instance;
 	}
 
@@ -50,18 +59,19 @@ public class SortService extends SwingWorker<String, String> {
 	@Override
 	protected void done() {
 		super.done();
+		this.mainModel.setServiceStatus(ServiceStatus.START);
 	}
 
 	@Override
 	protected String doInBackground() throws Exception {
 
+		LOGGER.error("Start SortService doInBackground()");
 		boolean firstRun = true;
 
 		RegelsetFacade regelsetFacade = new RegelsetFacade();
 		List<Regelset> regelsets = regelsetFacade.getRegelsets();
 
 		OptionModel option = new OptionFacade().getModel();
-		LOGGER.debug("Start doInBackground");
 		while (!isCancelled()) {
 			// while (!mainModel.getServiceStatus().equals(ServiceStatus.STOP))
 			// {
