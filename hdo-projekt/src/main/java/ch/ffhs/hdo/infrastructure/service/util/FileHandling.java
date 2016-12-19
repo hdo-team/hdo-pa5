@@ -33,7 +33,7 @@ public class FileHandling {
 	 * Verschiebt eine Datei von filePath nach new Location
 	 *
 	 */
-	public static void moveFile(String filePath, String newLocation) {
+	public static void moveFile(String filePath, String newLocation, String newName) {
 
 		try {
 			File moveto = new File(newLocation);
@@ -53,7 +53,7 @@ public class FileHandling {
 
 			File file = new File(filePath);
 
-			File dest = new File(newLocation + file.getName());
+			File dest = new File(newLocation + newName);
 			if (dest.exists()) {
 				LOGGER.warn("File " + dest.getAbsolutePath() + " Already Exists in Directory: "
 						+ moveto.getAbsolutePath().toString());

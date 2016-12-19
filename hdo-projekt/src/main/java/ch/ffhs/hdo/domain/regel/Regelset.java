@@ -1,7 +1,13 @@
 package ch.ffhs.hdo.domain.regel;
 
 import java.io.File;
+import java.nio.file.attribute.FileTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 import ch.ffhs.hdo.domain.document.DocumentModel;
 
@@ -10,6 +16,7 @@ public class Regelset {
 	private List<AbstractRegel> regeln;
 	private String path;
 	private long filenameCounter;
+	private String renamePattern;
 
 	public long getFilenameCounter() {
 		return filenameCounter;
@@ -18,8 +25,6 @@ public class Regelset {
 	public void setFilenameCounter(long filenameCounter) {
 		this.filenameCounter = filenameCounter;
 	}
-
-	private String renamePattern;
 
 	public String getRenamePattern() {
 		return renamePattern;
@@ -52,17 +57,35 @@ public class Regelset {
 		return result;
 	}
 
-	public void rename(DocumentModel documentModel) {
-		// TODO: to implement
+	public String rename(DocumentModel documentModel) {
+
+		final Object fileowner = documentModel.getFileMetadata().get(ContextAttributeEnum.FILE_OWNER);
+		final Object creationDate = documentModel.getFileMetadata().get(ContextAttributeEnum.FILE_CREATION_DATE);
+		final Object filename = documentModel.getFileMetadata().get(ContextAttributeEnum.FILE_NAME);
+
+		final String replaceAll = renamePattern
+				.replaceAll("%FILE_CREATION_DATE%", creationDate == null ? "" : formatFileDate((FileTime) creationDate))
+				.replaceAll("%FILE_NAME%", filename == null ? "" : filename.toString())
+				.replaceAll("%FILE_OWNER%", fileowner == null ? "" : fileowner.toString());
+		return replaceAll;
+
+	}
+
+	private String formatFileDate(final FileTime creationDate) {
+
+		final String formatUTC = DateFormatUtils.formatUTC(new Date(creationDate.toMillis()),
+				DateFormatUtils.ISO_DATE_FORMAT.getPattern(), Locale.GERMAN);
+
+		return formatUTC;
 	}
 
 	public String getPath() {
-		
-		if (!this.path.endsWith("\\")){
-			return this.path +File.separator;
-			
+
+		if (!this.path.endsWith("\\")) {
+			return this.path + File.separator;
+
 		}
-		
+
 		return this.path;
 	}
 
