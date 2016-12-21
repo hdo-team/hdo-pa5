@@ -11,8 +11,8 @@
 		<Routing name="Routing">
 			<Routes pattern="$${sd:type}">
 				<Route>
-					<RollingFile name="Rolling-${sd:type}" fileName="${sys:user.home}\hdo\log\files-movement.log"
-						filePattern="${sys:user.home}\hdo\log\files-movement.$${date:yyyy-MM}-%i.log">
+					<RollingFile name="Rolling-${sd:type}" fileName="${sys:user.home}/hdo/log/files-movement.log"
+						filePattern="${sys:user.home}/hdo/log/files-movement.$${date:yyyy-MM}-%i.log">
 						<PatternLayout>
 							<pattern>%d{ISO8601} [%t] %p %c{3} - %m%n</pattern>
 						</PatternLayout>
@@ -25,8 +25,8 @@
 		<Routing name="Routing-Error">
 			<Routes pattern="$${sd:type}">
 				<Route>
-					<RollingFile name="Rolling-${sd:type}" fileName="${sys:user.home}\hdo\log\error.log"
-						filePattern="${sys:user.home}\hdo\log\error.$${date:yyyy-MM}-%i.log">
+					<RollingFile name="Rolling-${sd:type}" fileName="${sys:user.home}/hdo/log/error.log"
+						filePattern="${sys:user.home}/hdo/log/error.$${date:yyyy-MM}-%i.log">
 						<PatternLayout>
 							<pattern>%d{ISO8601} [%t] %p %c{3} - %m%n</pattern>
 						</PatternLayout>
