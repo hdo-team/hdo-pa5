@@ -10,6 +10,11 @@ import org.apache.commons.lang.time.DateFormatUtils;
 
 import ch.ffhs.hdo.domain.document.DocumentModel;
 
+/**
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class Regelset {
 
 	private List<AbstractRegel> regeln;

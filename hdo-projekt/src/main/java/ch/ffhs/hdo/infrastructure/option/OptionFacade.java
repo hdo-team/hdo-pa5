@@ -87,7 +87,6 @@ public class OptionFacade {
 
 		} catch (SQLException e) {
 			LOGGER.error("SQL Fehler beim Laden der Lapsed-Time: ", e);
-			e.printStackTrace();
 		}
 		return false;
 

@@ -91,7 +91,9 @@ public class SortService extends SwingWorker<String, String> {
 
 					for (File file : fileList) {
 						// Die Files die behandelt werden sind nur PDFs
-						if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
+						if (file.isFile()){
+						
+						//if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
 							documentModels.add(new DocumentModel(file));
 						}
 					}
