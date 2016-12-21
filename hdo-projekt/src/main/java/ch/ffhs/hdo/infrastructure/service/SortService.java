@@ -32,6 +32,10 @@ public class SortService extends SwingWorker<String, String> {
 	private static Logger LOGGER = LogManager.getLogger(SortService.class);
 	private RegelsetTableModel mainModel;
 
+	/**
+	 * Setter 
+	 * @param mainModel
+	 */
 	public void setMainModel(RegelsetTableModel mainModel) {
 		this.mainModel = mainModel;
 	}

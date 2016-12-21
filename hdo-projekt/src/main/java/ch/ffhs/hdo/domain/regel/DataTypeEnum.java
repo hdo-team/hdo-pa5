@@ -16,11 +16,11 @@ package ch.ffhs.hdo.domain.regel;
 
 public enum DataTypeEnum {
 	/**
-	 * Datum kann mittels : =, >=, <=,!= verglichen werden
+	 * Datum kann mittels : Gleich , Grössergleich, Kleinergleich, Ungleich  verglichen werden
 	 */
 	DATE(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL),
 	/**
-	 * Integer kann mittels : =, >=, <=,!= verglichen werden
+	 * Integer kann mittels :  Gleich , Grössergleich, Kleinergleich, Ungleich  verglichen werden
 	 * 
 	 */
 	INT(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_GREATER_EQUAL, ComparisonTypeEnum.COMPARISON_LESS_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL),
@@ -29,12 +29,12 @@ public enum DataTypeEnum {
 	 */
 	NULL,
 	/**
-	 * String kann mittels : =, != und Regex verglichen werden
+	 * String kann mittels : Gleich , Ungleich und Regex verglichen werden
 	 * 
 	 */
 	STRING(ComparisonTypeEnum.COMPARISON_EQUAL, ComparisonTypeEnum.COMPARISON_UNEQUAL, ComparisonTypeEnum.COMPARISON_REGEX),
 	/**
-	 * Ein Inhalt kann mittels : =, != und Regex verglichen werden
+	 * Ein Inhalt kann mittels : Gleich , Ungleich  und Regex verglichen werden
 	 * 
 	 */
 	CONTENT_STRING(ComparisonTypeEnum.COMPARISON_REGEX);
