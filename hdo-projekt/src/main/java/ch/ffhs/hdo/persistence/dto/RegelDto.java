@@ -3,7 +3,7 @@ package ch.ffhs.hdo.persistence.dto;
 import java.util.Date;
 
 /**
- * Dto fuer Regel
+ * Data Transfer Object fuer Regel
  * 
  * @author Denis Bittante
  *

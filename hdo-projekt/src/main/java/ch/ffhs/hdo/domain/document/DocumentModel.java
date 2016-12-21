@@ -44,7 +44,9 @@ public class DocumentModel {
 	 * @return boolean ob File eine PDF-Endung besitzt
 	 */
 	public boolean isPdf() {
-		return this.fileMetadata.get(ContextAttributeEnum.FILE_EXTENSION).toString().toLowerCase() == "pdf";
+		final Object object = this.fileMetadata.get(ContextAttributeEnum.FILE_EXTENSION);
+		final String lowerCase = object.toString().toLowerCase();
+		return lowerCase.equals("pdf");
 	}
 
 	/**

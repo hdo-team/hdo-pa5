@@ -42,7 +42,7 @@ public abstract class AbstractRegel {
 		switch (this.getComparisonType()) {
 		case COMPARISON_EQUAL:
 			GregorianCalendar g = getDate(fileDate);
-			return g.equals(getDate(fileDate));
+			return g.equals(getDate(regelDate));
 
 		case COMPARISON_GREATER_EQUAL:
 			return regelDate.before(fileDate);
@@ -67,8 +67,11 @@ public abstract class AbstractRegel {
 		final int month = fileDate.get(Calendar.MONTH);
 		final int year = fileDate.get(Calendar.YEAR);
 		final int dayOfMonth = fileDate.get(Calendar.DAY_OF_MONTH);
-		GregorianCalendar g = new GregorianCalendar(year, month, dayOfMonth);
-		return g;
+		GregorianCalendar g = new GregorianCalendar(year, month, dayOfMonth, 0, 0, 0);
+
+		final GregorianCalendar gregorianCalendar = new GregorianCalendar();
+		gregorianCalendar.setTime(g.getTime());
+		return gregorianCalendar;
 	}
 
 	private GregorianCalendar convertToDate(Object date) {

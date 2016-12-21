@@ -11,6 +11,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 
 /**
+ * Regelset 
  * 
  * @author Denis Bittante
  *
