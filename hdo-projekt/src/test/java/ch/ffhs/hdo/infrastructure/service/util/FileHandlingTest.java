@@ -15,6 +15,12 @@ import org.junit.Test;
 
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 
+/**
+ * Testet den FileHandler
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class FileHandlingTest {
 
 	final static String PATH = "C:" + File.separator + "temp" + File.separator;
@@ -23,6 +29,11 @@ public class FileHandlingTest {
 	final static String MOVED_FILE = MOVE_TO_PATH + "FileHandlingTest.txt";
 	final static String FILEPATH = PATH + "FileHandlingTest.txt";
 
+	/**
+	 * Init Testee
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void setUpBeforeClass() throws Exception {
 
@@ -34,12 +45,20 @@ public class FileHandlingTest {
 
 	}
 
+	/**
+	 * Abraeumen
+	 * 
+	 * @throws Exception
+	 */
 	@After
 	public void tearDownAfterTest() throws Exception {
 
 		FileHandling.deleteFolder(new File(MOVE_TO_PATH));
 	}
 
+	/**
+	 * Testet ob man ein File verschieben kann
+	 */
 	@Test
 	public void testMoveFile() {
 		File path = new File(MOVED_FILE);
@@ -48,6 +67,12 @@ public class FileHandlingTest {
 
 	}
 
+	/**
+	 * Testet mit mehreren Files ob diese neue Namen besitzen mit (n) ald
+	 * Postfix
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testSeveralFile() throws IOException {
 		int amout = 20;
@@ -68,6 +93,9 @@ public class FileHandlingTest {
 
 	}
 
+	/**
+	 * Testet Metadaten extraction
+	 */
 	@Test
 	public void testFileMetadaten() {
 
@@ -77,19 +105,23 @@ public class FileHandlingTest {
 		HashMap<ContextAttributeEnum, Object> fileMetadaten = FileHandling.getFileMetaData(file);
 
 		Assert.assertEquals(new Long(420100), (Long) fileMetadaten.get(ContextAttributeEnum.FILE_SIZE));
-		Assert.assertTrue(((FileTime) fileMetadaten.get(ContextAttributeEnum.FILE_CREATION_DATE)).toMillis() < new Date().getTime());
+		Assert.assertTrue(((FileTime) fileMetadaten.get(ContextAttributeEnum.FILE_CREATION_DATE))
+				.toMillis() < new Date().getTime());
 	}
 
+	/**
+	 * Testet ob die Methode alle Subfolders zurückgibt
+	 */
 	@Test
 	public void testRekursivFolders() {
 
 		final String rootDir = "C:\\temp\\";
 		final List<String> underRootFolders = FileHandling.getAllFolders(rootDir);
-		File f = new File(rootDir + File.separator + "TestDirectory"+File.separator);
+		File f = new File(rootDir + File.separator + "TestDirectory" + File.separator);
 		f.mkdir();
 		for (String string : underRootFolders) {
 
-			Assert.assertTrue(new File (string).isDirectory());
+			Assert.assertTrue(new File(string).isDirectory());
 			System.out.println(string);
 		}
 	}

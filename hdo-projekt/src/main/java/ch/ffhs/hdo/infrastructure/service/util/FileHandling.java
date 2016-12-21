@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 
 /**
- * Utility um Dateien zu bearbeiten.
+ * Utility um Files zu bearbeiten.
  * 
  * @author Denis Bittante
  *
@@ -33,6 +33,11 @@ public class FileHandling {
 
 	/**
 	 * Verschiebt eine Datei von filePath nach new Location
+	 * 
+	 * @param filePath
+	 *            aktueller Pfad
+	 * @param newLocation
+	 *            neuer Pfad
 	 *
 	 */
 
@@ -42,6 +47,13 @@ public class FileHandling {
 
 	/**
 	 * Verschiebt eine Datei von filePath nach new Location mit neuem Namen
+	 * 
+	 * @param filePath
+	 *            aktueller Pfad
+	 * @param newLocation
+	 *            neuer Pfad
+	 * @param newName
+	 *            neuer Name
 	 *
 	 */
 	public static void moveFile(String filePath, String newLocation, String newName) {
@@ -151,15 +163,20 @@ public class FileHandling {
 					file.getName().substring(0, file.getName().length() - 1 - fileEnding.length()));
 			metadata.put(ContextAttributeEnum.FILE_SIZE, attr.size());
 
-			FileOwnerAttributeView ownerAttributeView = Files.getFileAttributeView(file.toPath(),
-					FileOwnerAttributeView.class);
-			UserPrincipal owner = ownerAttributeView.getOwner();
-			metadata.put(ContextAttributeEnum.FILE_OWNER, owner.getName());
+			metadata.put(ContextAttributeEnum.FILE_OWNER, getFileOwnerName(file));
 
 		} catch (IOException e) {
 			LOGGER.error("Metadaten einer Datei konnten nicht geleasen werden ", e);
 		}
 		return metadata;
+	}
+
+	private static String getFileOwnerName(File file) throws IOException {
+		FileOwnerAttributeView ownerAttributeView = Files.getFileAttributeView(file.toPath(),
+				FileOwnerAttributeView.class);
+		UserPrincipal owner = ownerAttributeView.getOwner();
+		final String name = owner.getName();
+		return name;
 	}
 
 	/**

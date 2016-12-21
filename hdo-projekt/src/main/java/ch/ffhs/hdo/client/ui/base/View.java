@@ -30,6 +30,12 @@ public abstract class View<M extends Model> {
 
 	ViewHandler viewHandler;
 
+	/**
+	 * View init
+	 * 
+	 * @param resourceBundle
+	 *            Resourcebundle wird vom Controller übergeben
+	 */
 	public View(ResourceBundle resourceBundle) {
 
 		try {
@@ -149,9 +155,11 @@ public abstract class View<M extends Model> {
 	}
 
 	/**
-	 * Handler seten
+	 * Setter fuer Handler
 	 * 
-	 * @param model
+	 * @param viewHandler
+	 *            see {@link ViewHandler}
+	 * 
 	 */
 	public void setHandler(ViewHandler viewHandler) {
 		this.viewHandler = viewHandler;
@@ -159,6 +167,9 @@ public abstract class View<M extends Model> {
 
 	/**
 	 * Setter umd den LayoutManager anzupassen.
+	 * 
+	 * @param manager
+	 *            see {@link LayoutManager}
 	 * 
 	 */
 	public void setLayout(LayoutManager manager) {
@@ -190,7 +201,8 @@ public abstract class View<M extends Model> {
 	/**
 	 * Setzt den Titel der Frame
 	 * 
-	 * @param model
+	 * @param title
+	 * 
 	 */
 	public void setTitle(String title) {
 		this.title = title;

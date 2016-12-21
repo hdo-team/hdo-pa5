@@ -12,8 +12,8 @@ import ch.ffhs.hdo.client.ui.utils.IFileModel;
  */
 public class ImportModel extends Model implements IFileModel {
 
-	private  String filePath;
-	private  RegelsetTableModel regelsetModel;
+	private String filePath;
+	private RegelsetTableModel regelsetModel;
 
 	public String getFilePath() {
 		return filePath;
@@ -25,11 +25,23 @@ public class ImportModel extends Model implements IFileModel {
 		this.filePath = newValue;
 		firePropertyChange("filePath", oldValue, filePath);
 	}
-	
-	public void setRegelsetTableModel(RegelsetTableModel regelsetModel){
-		this.regelsetModel=regelsetModel;
+
+	/**
+	 * Setter RegelsetTablemodel
+	 * 
+	 * @param regelsetModel
+	 *            see {@link RegelsetTableModel}
+	 */
+	public void setRegelsetTableModel(RegelsetTableModel regelsetModel) {
+		this.regelsetModel = regelsetModel;
 	}
-	
+
+	/**
+	 * Getter RegelsetModel
+	 * 
+	 * @return see {@link RegelsetTableModel}
+	 */
+
 	public RegelsetTableModel getRegelsetModel() {
 		return regelsetModel;
 	}

@@ -20,6 +20,9 @@ public class ViewHandlerImpl implements ViewHandler {
 
 	private final Map<Class<? extends ViewOperation>, Executable[]> opMap;
 
+	/**
+	 * init ViewHandler
+	 */
 	public ViewHandlerImpl() {
 		opMap = new HashMap<Class<? extends ViewOperation>, Executable[]>();
 

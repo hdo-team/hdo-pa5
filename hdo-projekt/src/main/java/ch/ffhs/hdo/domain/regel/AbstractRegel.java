@@ -152,12 +152,18 @@ public abstract class AbstractRegel {
 
 	/**
 	 * Retourniert ContextAttribute
+	 * 
 	 * @return {@link ContextAttributeEnum}
 	 */
 	public ContextAttributeEnum getContextAttribute() {
 		return contextAttribute;
 	}
 
+	/**
+	 * Getter für DokumentModel
+	 * 
+	 * @return {@link DocumentModel}
+	 */
 	public DocumentModel getModel() {
 		return model;
 	}
@@ -189,22 +195,50 @@ public abstract class AbstractRegel {
 
 	}
 
+	/**
+	 * Setter CompareValueTo Vergleichwert aus dem File
+	 * 
+	 * @param compareToValue
+	 */
 	public void setCompareToValue(Object compareToValue) {
 		this.fileValue = compareToValue;
 	}
 
+	/**
+	 * Setter CompareValue Vergleichwert aus der Regel
+	 * 
+	 * @param compareValue
+	 * 
+	 */
 	public void setCompareValue(String compareValue) {
 		this.regelValue = compareValue;
 	}
 
+	/**
+	 * Vergleichesart siehe {@link ComparisonTypeEnum}
+	 * 
+	 * @param comparisonType
+	 */
 	public void setComparisonType(ComparisonTypeEnum comparisonType) {
 		this.comparisonType = comparisonType;
 	}
 
+	/**
+	 * Setter {@link ContextAttributeEnum}
+	 * 
+	 * @param contextAttribute
+	 *            see {@link ContextAttributeEnum}
+	 */
 	public void setContextAttribute(ContextAttributeEnum contextAttribute) {
 		this.contextAttribute = contextAttribute;
 	}
 
+	/**
+	 * Setter Model
+	 * 
+	 * @param model
+	 *            see {@link DocumentModel}
+	 */
 	public void setModel(DocumentModel model) {
 		this.model = model;
 	}

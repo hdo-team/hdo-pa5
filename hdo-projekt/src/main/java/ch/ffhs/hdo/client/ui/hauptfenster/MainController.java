@@ -56,6 +56,21 @@ public class MainController extends Controller<MainModel, MainView> {
 	}
 
 	/**
+	 * Inizialisierung der erstellten View.
+	 */
+	@Override
+	public void initializeView() {
+		getView().setResourceBundle(getResourceBundle());
+		getView().setModel(getModel());
+		getView().setHandler(viewHandler);
+
+		getView().getRegelsetTableView().setModel(getModel().getRegelsetModel());
+		getView().getFolderTreeView().setModel(getModel().getFolderModel());
+		getView().getRegelsetTableView().setHandler(viewHandler);
+		getView().getFolderTreeView().setHandler(viewHandler);
+	}
+
+	/**
 	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
 	 */
 	private void initlizeHandler() {
@@ -72,21 +87,6 @@ public class MainController extends Controller<MainModel, MainView> {
 				new RegelsetTableUpdateOperationExecutable(this.getModel().getRegelsetModel()));
 		this.viewHandler.addOperation(FolderTreeUpdateOperation.class,
 				new FolderTreeUpdateOperationExecutable(this.getModel().getFolderModel()));
-	}
-
-	/**
-	 * Inizialisierung der erstellten View.
-	 */
-	@Override
-	public void initializeView() {
-		getView().setResourceBundle(getResourceBundle());
-		getView().setModel(getModel());
-		getView().setHandler(viewHandler);
-
-		getView().getRegelsetTableView().setModel(getModel().getRegelsetModel());
-		getView().getFolderTreeView().setModel(getModel().getFolderModel());
-		getView().getRegelsetTableView().setHandler(viewHandler);
-		getView().getFolderTreeView().setHandler(viewHandler);
 	}
 
 }

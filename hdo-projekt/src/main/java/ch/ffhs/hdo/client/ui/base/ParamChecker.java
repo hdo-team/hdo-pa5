@@ -3,6 +3,12 @@ package ch.ffhs.hdo.client.ui.base;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Hilfsklasse um die Parameter auf ihre Korrektheit zu überprüfen.
+ * 
+ * @author Denis Bittante
+ *
+ */
 public final class ParamChecker {
 	private static final String DEFAULT_PARAM_NAME = "value";
 

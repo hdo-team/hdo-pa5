@@ -8,7 +8,7 @@ import ch.ffhs.hdo.client.ui.utils.IFileModel;
 /**
  * Model fuer das Konfigurations Fenster.
  * 
- * @author Jonas Segessemann
+ * @author Denis Bittante
  *
  */
 public class OptionModel extends Model implements IFileModel {
@@ -18,23 +18,46 @@ public class OptionModel extends Model implements IFileModel {
 	private int intervall = -1;
 	private FolderTreeModel folderModel;
 
+	/**
+	 * Getter Inbox Verzeichnis
+	 * 
+	 * @return Inbox Pfad
+	 */
 	public String getInboxPath() {
 		return inboxPath;
 	}
 
+	/**
+	 * Setter Inbox Verzeichnis
+	 * 
+	 * @param inboxPath
+	 */
 	public void setInboxPath(String inboxPath) {
-	//	ParamChecker.notEmpty(inboxPath, "inboxPath");
+		// ParamChecker.notEmpty(inboxPath, "inboxPath");
 		String oldValue = this.inboxPath;
 		this.inboxPath = inboxPath;
 		firePropertyChange("inboxPath", oldValue, inboxPath);
 
 	}
 
+	/**
+	 * Ob AutoModus angeschaltet ist. <br>
+	 * Wenn AutoModus angeschaltet ist dann kann bleibt der Service aktiv und
+	 * wartet die gesetzte zeit bis das Inbox Verzeichnis erneute verarbeitet
+	 * wird.
+	 * 
+	 * @return AutoModus
+	 */
 	public boolean isAutoModus() {
 
 		return autoModus;
 	}
 
+	/**
+	 * Setter AutoModus
+	 * 
+	 * @param autoModus
+	 */
 	public void setAutoModus(boolean autoModus) {
 
 		boolean oldValue = this.autoModus;
@@ -43,10 +66,21 @@ public class OptionModel extends Model implements IFileModel {
 
 	}
 
+	/**
+	 * Getter Intervall das der Service zu warten hat bis er erneut starten
+	 * kann.
+	 * 
+	 * @return Intervall in Sekunden
+	 */
 	public int getIntervall() {
 		return intervall;
 	}
 
+	/**
+	 * Setter Invervall in Sekunden
+	 * 
+	 * @param intervall
+	 */
 	public void setIntervall(int intervall) {
 
 		int oldValue = this.intervall;
@@ -63,10 +97,21 @@ public class OptionModel extends Model implements IFileModel {
 		setInboxPath(newValue);
 	}
 
+	/**
+	 * Setter FolderModel
+	 * 
+	 * @param folderModel
+	 *            see {@link FolderTreeModel}
+	 */
 	public void setFolderModel(FolderTreeModel folderModel) {
 		this.folderModel = folderModel;
 	}
 
+	/**
+	 * Getter FolderModel
+	 * 
+	 * @return see {@link FolderTreeModel}
+	 */
 	public FolderTreeModel getFolderModel() {
 		return folderModel;
 	}

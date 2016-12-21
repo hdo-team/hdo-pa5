@@ -21,17 +21,35 @@ public class DocumentModel {
 	private HashMap<ContextAttributeEnum, Object> fileMetadata;
 	private HashMap<ContextAttributeEnum, Object> pdfMetadata;
 
+	/**
+	 * Initialisiert ein Document Model, ist eine File kein pdf ist das
+	 * pdfMetadata leer
+	 * 
+	 * @param file
+	 */
 	public DocumentModel(File file) {
 
 		this.file = file;
 		this.fileMetadata = FileHandling.getFileMetaData(file);
-		this.pdfMetadata = PdfUtils.getDocumentInformation(file);
-		this.content = PdfUtils.readPDF(file);
+		if (isPdf()) {
+			this.pdfMetadata = PdfUtils.getDocumentInformation(file);
+			this.content = PdfUtils.readPDF(file);
+		}
 
 	}
 
 	/**
+	 * Gibt zurück ob eine Datei ein PDF ist.
+	 * 
+	 * @return boolean ob File eine PDF-Endung besitzt
+	 */
+	public boolean isPdf() {
+		return this.fileMetadata.get(ContextAttributeEnum.FILE_EXTENSION).toString().toLowerCase() == "pdf";
+	}
+
+	/**
 	 * Retourniert den Inhalt eines PDFs
+	 * 
 	 * @return Pdf Inhalt
 	 */
 	public String getContent() {
@@ -40,6 +58,7 @@ public class DocumentModel {
 
 	/**
 	 * Retourniert das File
+	 * 
 	 * @return Pdf als File
 	 */
 	public File getFile() {
@@ -54,6 +73,7 @@ public class DocumentModel {
 	public HashMap<ContextAttributeEnum, Object> getFileMetadata() {
 		return fileMetadata;
 	}
+
 	/**
 	 * Gibt die Metadaten von eines PDFs zurueck
 	 *

@@ -27,10 +27,20 @@ public class ExportModel extends Model implements IFileModel {
 
 	}
 
+	/**
+	 * Setter für FoldeModel
+	 * 
+	 * @param folderModel
+	 */
 	public void setFolderModel(FolderTreeModel folderModel) {
 		this.folderModel = folderModel;
 	}
 
+	/**
+	 * Getter für FoldeModel
+	 * 
+	 * @return see {@link FolderTreeModel}
+	 */
 	public FolderTreeModel getFolderModel() {
 		return folderModel;
 	}

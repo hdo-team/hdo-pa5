@@ -20,6 +20,12 @@ public class Main {
 
 	private static Logger LOGGER = LogManager.getLogger(Main.class);
 
+	/**
+	 * Programmstart {@link Main#main(String[])}
+	 * 
+	 * @param args
+	 *            Es werden keine Argumete vearbeitet
+	 */
 	public static void main(String[] args) {
 
 		// init StartExecutableMainView

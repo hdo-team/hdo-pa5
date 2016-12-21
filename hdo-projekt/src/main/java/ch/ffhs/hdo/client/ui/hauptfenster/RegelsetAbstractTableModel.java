@@ -14,11 +14,11 @@ import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
  */
 public class RegelsetAbstractTableModel extends AbstractTableModel {
 
-	private String[] columnNames;
-
 	private final int COLUMN_IDX_1 = 0;
+
 	private final int COLUMN_IDX_2 = 1;
 	private final int COLUMN_IDX_3 = 2;
+	private String[] columnNames;
 
 	private ArrayList<RegelsetModel> rulsets;
 
@@ -35,10 +35,6 @@ public class RegelsetAbstractTableModel extends AbstractTableModel {
 		this.rulsets = rulsets;
 	}
 
-	public int getRowCount() {
-		return rulsets.size();
-	}
-
 	public int getColumnCount() {
 		return columnNames.length;
 	}
@@ -48,8 +44,8 @@ public class RegelsetAbstractTableModel extends AbstractTableModel {
 		return columnNames[columnIndex];
 	}
 
-	public void setRulsets(ArrayList<RegelsetModel> rulsets) {
-		this.rulsets = rulsets;
+	public int getRowCount() {
+		return rulsets.size();
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -67,6 +63,16 @@ public class RegelsetAbstractTableModel extends AbstractTableModel {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Setter Regelset
+	 * 
+	 * @param rulsets
+	 *            see {@link RegelsetModel}
+	 */
+	public void setRulsets(ArrayList<RegelsetModel> rulsets) {
+		this.rulsets = rulsets;
 	}
 
 }

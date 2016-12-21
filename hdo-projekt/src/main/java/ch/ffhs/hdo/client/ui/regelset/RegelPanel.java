@@ -60,12 +60,12 @@ public class RegelPanel extends JPanel {
 	private DefaultComboBoxModel<ContextAttributeEnum> contentAttributeModel;
 
 	/**
-	 * Liefert (abhaengig vom Regelkontext) das Model fuer die RegelAttribut-Combobox
+	 * Liefert (abhaengig vom Regelkontext) das Model fuer die
+	 * RegelAttribut-Combobox
 	 * 
 	 * @param RegelModel
 	 *            RegelModel (inkl. Regelkontext)
-	 * @return attributeModel
-	 *		       Model fuer die Combobox
+	 * @return attributeModel Model fuer die Combobox
 	 */
 	private DefaultComboBoxModel<ContextAttributeEnum> getAttributeModel(RegelModel regelModel) {
 		DefaultComboBoxModel<ContextAttributeEnum> attributeModel = null;
@@ -83,22 +83,26 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Liefert (abhaengig vom Regelattribut) das Model fuer die Vergleichsart-Combobox
+	 * Liefert (abhaengig vom Regelattribut) das Model fuer die
+	 * Vergleichsart-Combobox
 	 * 
 	 * @param RegelModel
 	 *            RegelModel (inkl. Regelattribut)
-	 * @return comparisionModeModel
-	 *		       Model fuer die Combobox
+	 * @return comparisionModeModel Model fuer die Combobox
 	 */
 	private DefaultComboBoxModel<ComparisonTypeEnum> getComparisonModeModel(ContextAttributeEnum attributeEnum) {
 
-		DefaultComboBoxModel<ComparisonTypeEnum> comparisionModeModel = 
-					new DefaultComboBoxModel<ComparisonTypeEnum>(
-								rulePanelView.getComparisonModeList(attributeEnum));
+		DefaultComboBoxModel<ComparisonTypeEnum> comparisionModeModel = new DefaultComboBoxModel<ComparisonTypeEnum>(
+				rulePanelView.getComparisonModeList(attributeEnum));
 
 		return comparisionModeModel;
 	}
 
+	/**
+	 * Getter Model
+	 * 
+	 * @return see {@link RegelModel}
+	 */
 	public RegelModel getModel() {
 		return model;
 	}
@@ -107,7 +111,8 @@ public class RegelPanel extends JPanel {
 	 * Kontruktor welcher das Regel-Panel erstellt
 	 * 
 	 * @param regelsetView
-	 *            View auf dem das Regelset (inkl. dieses Panels) dargestellt wird
+	 *            View auf dem das Regelset (inkl. dieses Panels) dargestellt
+	 *            wird
 	 * @param ruleModel
 	 *            Regelmodel das zur Regel auf diesem Panel gehoert
 	 */
@@ -166,7 +171,7 @@ public class RegelPanel extends JPanel {
 		compareValueTextField.getDocument()
 				.addDocumentListener(new RegelDocumentListener(model, compareValueTextField));
 	}
-	
+
 	/**
 	 * Ordnet die erstellten GUI Komponenten.
 	 */
@@ -212,7 +217,8 @@ public class RegelPanel extends JPanel {
 			try {
 				compareDate = rulePanelView.simpleDateFormat.parse(model.getCompareValue());
 			} catch (ParseException e1) {
-				// "unmoeglicher" Fehler (User kann Datum nirgends "frei" eingeben)
+				// "unmoeglicher" Fehler (User kann Datum nirgends "frei"
+				// eingeben)
 				LOGGER.error("FATAL: Datum " + model.getCompareValue() + " konnte nicht konveriert werden.", e1);
 			}
 			((UtilDateModel) datePanel.getModel()).setValue(compareDate);
@@ -224,7 +230,8 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Erstellt kontextabhaengige Default-Models fuer die Regelattribute-Combobox
+	 * Erstellt kontextabhaengige Default-Models fuer die
+	 * Regelattribute-Combobox
 	 * 
 	 */
 	private void setComboboxModel() {
@@ -343,7 +350,7 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 *  DocumentListener fuer das JText-Feld Vergleichswert
+	 * DocumentListener fuer das JText-Feld Vergleichswert
 	 */
 	private class RegelDocumentListener implements DocumentListener {
 
@@ -378,8 +385,9 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Dieser ModelChangeListener ist ein PropertyChangeListener des Regel-Models und 
-	 * dient dazu die Models und Sichtbarkeiten der abhaengigen Komponenten anzupassen
+	 * Dieser ModelChangeListener ist ein PropertyChangeListener des
+	 * Regel-Models und dient dazu die Models und Sichtbarkeiten der abhaengigen
+	 * Komponenten anzupassen
 	 *
 	 */
 	private class ModelChangeListener implements PropertyChangeListener {
@@ -423,7 +431,7 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Sichtbarkeiten abhaengigkeit vom Regelattribut setzen 
+	 * Sichtbarkeiten abhaengigkeit vom Regelattribut setzen
 	 * 
 	 * @param attribut
 	 *            Regelattribut
@@ -442,7 +450,8 @@ public class RegelPanel extends JPanel {
 	}
 
 	/**
-	 * Sichtbarkeiten von Vergleichsart, Vergleichsdatum und Vergleichswert setzen 
+	 * Sichtbarkeiten von Vergleichsart, Vergleichsdatum und Vergleichswert
+	 * setzen
 	 * 
 	 * @param compMode
 	 *            Comobox und Label fuer Vergeleichsart sichtbar

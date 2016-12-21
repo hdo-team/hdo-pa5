@@ -42,21 +42,21 @@ public class ExportController extends Controller<ExportModel, ExportView> {
 	}
 
 	/**
-	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
-	 */
-	private void initializeViewHandler() {
-		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FolderChooserExecuter(getModel()));
-		viewHandler.addOperation(ExportSaveOperation.class, new ExportSaveExecutable(getModel()));
-		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
-	}
-
-	/**
 	 * Inizialisierung der erstellten View.
 	 */
 	public void initializeView() {
 		getView().setHandler(viewHandler);
 		getView().setResourceBundle(getResourceBundle());
 		getView().setModel(getModel());
+	}
+
+	/**
+	 * Fuegt die ausfuehrbaren Optionen dem view Handler hinzu.
+	 */
+	private void initializeViewHandler() {
+		viewHandler.addOperation(ChooseDirectoryPathViewOperation.class, new FolderChooserExecuter(getModel()));
+		viewHandler.addOperation(ExportSaveOperation.class, new ExportSaveExecutable(getModel()));
+		viewHandler.addOperation(CloseViewOperation.class, new DefaultClosingViewExecutable(this));
 	}
 
 }

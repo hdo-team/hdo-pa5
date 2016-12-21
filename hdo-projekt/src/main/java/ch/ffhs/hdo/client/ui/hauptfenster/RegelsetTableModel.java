@@ -16,13 +16,23 @@ import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
  */
 public class RegelsetTableModel extends Model {
 	/**
-	 * Enum welcher alle Service-Stati enthaelt.
+	 * Enum welcher alle Service-Stati enthaelt. Mögliche Status sind:<br>
+	 * 
+	 * {@link ServiceStatus#START} <br>
+	 * {@link ServiceStatusEnum#STOP}
 	 * 
 	 * @author Jonas Segessemann
-	 *
+	 * 
 	 */
 	public enum ServiceStatus {
-		START, STOP;
+		/**
+		 * Der Service ist gestoppt er kann gestartet werden
+		 */
+		START,
+		/**
+		 * Der Service ist gestartet und kann gestoppt werden.
+		 */
+		STOP;
 	}
 
 	private RegelsetAbstractTableModel abstractModel;
@@ -43,18 +53,40 @@ public class RegelsetTableModel extends Model {
 		this.rulsets = rulsets;
 	}
 
+	/**
+	 * Erstellt neues {@link RegelsetAbstractTableModel}
+	 * 
+	 * @param columnNames
+	 *            Namen der Spalten
+	 */
 	public void createAbstractTableModel(String[] columnNames) {
 		abstractModel = new RegelsetAbstractTableModel(rulsets, columnNames);
 	}
 
+	/**
+	 * Getter AbstrModel
+	 * 
+	 * @return see {@link RegelsetAbstractTableModel}
+	 */
 	public RegelsetAbstractTableModel getAbstractModel() {
 		return abstractModel;
 	}
 
+	/**
+	 * Getter RegelsetList
+	 * 
+	 * @return Liste von {@link RegelsetModel}
+	 */
 	public ArrayList<RegelsetModel> getRulsetList() {
 		return rulsets;
 	}
 
+	/**
+	 * Setter UpdateView
+	 * 
+	 * @param updateView
+	 *            Updated den Status der View
+	 */
 	public void setUpdateView(boolean updateView) {
 
 		boolean oldValue = this.updateView;
@@ -63,11 +95,22 @@ public class RegelsetTableModel extends Model {
 
 	}
 
+	/**
+	 * Getter UpdateView
+	 * 
+	 * @return {@link Boolean}
+	 */
 	public boolean getUpdateView() {
 
 		return updateView;
 	}
 
+	/**
+	 * Setter RulesetList
+	 * 
+	 * @param rulsets
+	 *            List von {@link RegelsetModel}
+	 */
 	public void setRulsetList(ArrayList<RegelsetModel> rulsets) {
 		ArrayList<RegelsetModel> oldValue = this.rulsets;
 		this.rulsets = rulsets;
@@ -77,10 +120,21 @@ public class RegelsetTableModel extends Model {
 
 	}
 
+	/**
+	 * Getter SerivceStatus
+	 * 
+	 * @return see {@link ServiceStatus}
+	 */
 	public ServiceStatus getServiceStatus() {
 		return serviceStatus;
 	}
 
+	/**
+	 * Setter ServiceStatus
+	 * 
+	 * @param serviceStatus
+	 *            see {@link ServiceStatus}
+	 */
 	public void setServiceStatus(ServiceStatus serviceStatus) {
 		ServiceStatus oldValue = this.serviceStatus;
 		this.serviceStatus = serviceStatus;

@@ -18,7 +18,6 @@ import ch.ffhs.hdo.client.ui.base.executable.CloseViewOperation;
 import ch.ffhs.hdo.client.ui.einstellungen.executable.OptionViewStartOperation;
 import ch.ffhs.hdo.client.ui.export.executable.ExportViewStartOperation;
 import ch.ffhs.hdo.client.ui.imports.executable.ImportViewStartOperation;
-import ch.ffhs.hdo.client.ui.regelset.executable.RegelsetViewStartOperation;
 
 /**
  * Hauptfenster welches die Menueleiste und das den Rahmen der beinden Panels

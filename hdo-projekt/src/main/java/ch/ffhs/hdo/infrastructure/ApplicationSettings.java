@@ -8,8 +8,13 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.ffhs.hdo.persistence.jdbc.InitDatabase;
-
+/**
+ * Applikationsweite Settings Settings werden in einem PropertyFile gespeichert
+ * das sich im User-Verzeichnis findet. Diese Klasse ist Singleton.
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class ApplicationSettings {
 
 	private static final File APP_CONFIG = new File(
@@ -43,6 +48,11 @@ public class ApplicationSettings {
 
 	}
 
+	/**
+	 * Gibt die Instanz vom ApplikationSettings zurück
+	 * 
+	 * @return see {@link ApplicationSettings}
+	 */
 	public static ApplicationSettings getInstance() {
 		if (instance == null) {
 			instance = new ApplicationSettings();
@@ -50,12 +60,22 @@ public class ApplicationSettings {
 		return instance;
 	}
 
+	/**
+	 * Getter für den Inbox-Pfad
+	 * 
+	 * @return Pfad zur Inbox
+	 */
 	public String getInbox_path() {
 
 		return config.getString(INBOXPATH);
 
 	}
 
+	/**
+	 * Speichert den InboxPfad in eine Konfigurationsdatei
+	 * 
+	 * @param inboxPath
+	 */
 	public void saveInboxPath(String inboxPath) {
 		try {
 

@@ -149,10 +149,20 @@ public enum ContextAttributeEnum {
 
 	}
 
+	/**
+	 * Getter den {@link ContextTypeEnum} zurück
+	 * 
+	 * @return {@link getContextTypeEnum}
+	 */
 	public ContextTypeEnum getContextTypeEnum() {
 		return this.context;
 	}
 
+	/**
+	 * Getter fuer den DatenTyp
+	 * 
+	 * @return {@link DataTypeEnum}
+	 */
 	public DataTypeEnum getDataType() {
 		return this.type;
 	}
