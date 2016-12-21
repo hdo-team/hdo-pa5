@@ -21,13 +21,8 @@ import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
  * @author Denis Bittante
  *
  */
+
 public class FileHandlingTest {
-
-	final static String PATH = "C:" + File.separator + "temp" + File.separator;
-
-	final static String MOVE_TO_PATH = PATH + "toMove" + File.separator;
-	final static String MOVED_FILE = MOVE_TO_PATH + "FileHandlingTest.txt";
-	final static String FILEPATH = PATH + "FileHandlingTest.txt";
 
 	/**
 	 * Init Testee
@@ -38,7 +33,7 @@ public class FileHandlingTest {
 	public void setUpBeforeClass() throws Exception {
 
 		// Use relative path for Unix systems
-		File f = new File(FILEPATH);
+		File f = new File(getFilePath());
 
 		f.getParentFile().mkdirs();
 		f.createNewFile();
@@ -53,7 +48,7 @@ public class FileHandlingTest {
 	@After
 	public void tearDownAfterTest() throws Exception {
 
-		FileHandling.deleteFolder(new File(MOVE_TO_PATH));
+		FileHandling.deleteFolder(new File(getMoveToPath()));
 	}
 
 	/**
@@ -61,8 +56,8 @@ public class FileHandlingTest {
 	 */
 	@Test
 	public void testMoveFile() {
-		File path = new File(MOVED_FILE);
-		FileHandling.moveFile(FILEPATH, MOVE_TO_PATH);
+		File path = new File(getMovedFile());
+		FileHandling.moveFile(getFilePath(), getMoveToPath());
 		Assert.assertTrue(path.exists());
 
 	}
@@ -78,13 +73,13 @@ public class FileHandlingTest {
 		int amout = 20;
 		for (int i = 0; i < amout; i++) {
 
-			File file = new File(FILEPATH);
+			File file = new File(getFilePath());
 			file.createNewFile();
 
-			FileHandling.moveFile(FILEPATH, MOVE_TO_PATH);
+			FileHandling.moveFile(getFilePath(), getMoveToPath());
 		}
 
-		File[] listFiles = new File(MOVE_TO_PATH).listFiles();
+		File[] listFiles = new File(getMoveToPath()).listFiles();
 		int i = 0;
 		for (File f : listFiles) {
 			i++;
@@ -114,8 +109,8 @@ public class FileHandlingTest {
 	 */
 	@Test
 	public void testRekursivFolders() {
+		final String rootDir = getPath();
 
-		final String rootDir = "C:\\temp\\";
 		final List<String> underRootFolders = FileHandling.getAllFolders(rootDir);
 		File f = new File(rootDir + File.separator + "TestDirectory" + File.separator);
 		f.mkdir();
@@ -126,4 +121,30 @@ public class FileHandlingTest {
 		}
 	}
 
+	private static String getPath() {
+		final String rootDir;
+		if (isWindows()) {
+			rootDir = "C:\\temp\\";
+		} else {
+			rootDir = "~";
+		}
+		return rootDir;
+	}
+
+	private static boolean isWindows() {
+		final String property = System.getProperty("os.name");
+		return property.toLowerCase().contains("windows");
+	}
+
+	private static String getMoveToPath() {
+		return getPath() + "toMove" + File.separator;
+	}
+
+	private String getMovedFile() {
+		return getMoveToPath() + "FileHandlingTest.txt";
+	}
+
+	private String getFilePath() {
+		return getPath() + "FileHandlingTest.txt";
+	}
 }
