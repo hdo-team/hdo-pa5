@@ -11,12 +11,22 @@ import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
+/**
+ * {@link JdbcHelper} damit nur vonhier aus die Verbindung zur Datenbank
+ * aufgestellt wird.
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class JdbcHelper {
 	private static Logger LOGGER = LogManager.getLogger(JdbcHelper.class);
 
 	protected Connection conn; // our connnection to the db - presist for life
 								// of program
 
+	/**
+	 * Initialiert connection zur Datenbank
+	 */
 	public JdbcHelper() {
 
 		String inbox_path = ApplicationSettings.getInstance().getInbox_path();
@@ -29,13 +39,19 @@ public class JdbcHelper {
 					"sa", // username
 					""); // password
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("Problem beim Verbindungsaufbau zur Datenbank", e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error("Driver not found: ", e);
 		}
 
 	}
 
+	/**
+	 * Terminiert die Verbindung zur Datenbank connection muss anschliessen neu
+	 * aufgebaut werden
+	 * 
+	 * @throws SQLException
+	 */
 	public void terminate() throws SQLException {
 		LOGGER.debug("Connection terminated");
 		Statement st = conn.createStatement();

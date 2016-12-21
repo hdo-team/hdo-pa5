@@ -9,8 +9,20 @@ import org.apache.commons.lang3.StringUtils;
 import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.persistence.dto.OptionDto;
 
+/**
+ * Converter für OptionModel zu Option Dto
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class OptionConverter {
-
+	/**
+	 * Convertiert {@link OptionDto} nach {@link OptionModel}
+	 * 
+	 * @param optionDto
+	 *            see {@link OptionDto}
+	 * @return see {@link OptionModel}
+	 */
 	public static OptionModel convert(OptionDto optionDto) {
 
 		OptionModel optionModel = new OptionModel();
@@ -19,7 +31,6 @@ public class OptionConverter {
 
 		boolean automodus = Boolean.valueOf(charAutomodus);
 		optionModel.setAutoModus(automodus);
-
 
 		String charIntervall = optionDto.get(INTERVALL);
 		if (StringUtils.isNumeric(charIntervall)) {
@@ -30,12 +41,19 @@ public class OptionConverter {
 		return optionModel;
 	}
 
-	public static OptionDto convert(OptionModel optionModelOrginal) {
+	/**
+	 * Convertiert {@link OptionModel} nach {@link OptionDto}
+	 * 
+	 * @param optionModel
+	 *            see {@link OptionModel}
+	 * @return see {@link OptionDto}
+	 */
+	public static OptionDto convert(OptionModel optionModel) {
 
 		OptionDto dto = new OptionDto();
 
-		dto.put(INTERVALL, String.valueOf(optionModelOrginal.getIntervall()));
-		dto.put(AUTOMODUS, optionModelOrginal.isAutoModus());
+		dto.put(INTERVALL, String.valueOf(optionModel.getIntervall()));
+		dto.put(AUTOMODUS, optionModel.isAutoModus());
 		return dto;
 
 	}

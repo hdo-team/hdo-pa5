@@ -9,6 +9,10 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import ch.ffhs.hdo.client.ui.imports.executable.ImportSaveExecutable;
 import ch.ffhs.hdo.domain.document.DocumentModel;
 
 /**
@@ -19,6 +23,7 @@ import ch.ffhs.hdo.domain.document.DocumentModel;
  *
  */
 public abstract class AbstractRegel {
+	private static Logger LOGGER = LogManager.getLogger(AbstractRegel.class);
 
 	private Object fileValue;
 	private String regelValue;
@@ -70,7 +75,7 @@ public abstract class AbstractRegel {
 				final Date parse = dateFormat.parse(regelValue);
 				gregcal.setTime(parse);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				LOGGER.error("Error beim Parsen:", e);
 			}
 
 		}

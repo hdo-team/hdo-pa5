@@ -10,9 +10,20 @@ import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.persistence.dao.OptionDao;
 import ch.ffhs.hdo.persistence.dto.OptionDto;
 
+/**
+ * Facade für Einstellungen/Optionen
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class OptionFacade {
 	private static Logger LOGGER = LogManager.getLogger(OptionFacade.class);
 
+	/**
+	 * Gibt Option Model aus der Datenbank zurueck
+	 * 
+	 * @return see {@link OptionModel}
+	 */
 	public OptionModel getModel() {
 
 		OptionDao dao = new OptionDao();

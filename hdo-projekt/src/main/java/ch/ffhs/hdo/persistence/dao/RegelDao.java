@@ -9,6 +9,12 @@ import java.util.List;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
+/**
+ * Data Acess Object für Regel
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelDao extends JdbcHelper {
 
 	private final String SELECTRULEBYRULESETID = "SELECT * FROM RULE WHERE rulesetId = ?";
@@ -16,12 +22,15 @@ public class RegelDao extends JdbcHelper {
 	private final String INSERT = "INSERT INTO RULE (RULESETID, CONTEXTTYPE ,CONTEXTATTRIBUTE,COMPARETYPE, COMPAREVALUE, CREATIONDATE, CHANGEDATE ) VALUES (?,?,?,?,?, CURTIME (), CURTIME ()) ";
 
 	private final String DELETERULEBYRULESETID = "DELETE FROM RULE WHERE rulesetId = ?";
-	
-	
-	public RegelDao() {
-		super();
-	}
 
+	/**
+	 * Alle Regel nach RegelsetId laden
+	 * 
+	 * @param id
+	 *            Regelset-Id
+	 * @return Liste mit {@link RegelDto}
+	 * @throws SQLException
+	 */
 	public List<RegelDto> findAllRegelByRegelsetId(Integer id) throws SQLException {
 
 		PreparedStatement selectAllRegel = conn.prepareStatement(SELECTRULEBYRULESETID);
@@ -49,6 +58,13 @@ public class RegelDao extends JdbcHelper {
 
 	}
 
+	/**
+	 * Loescht alle Regel mit bestimmter ReglsetId
+	 * 
+	 * @param regelsetId
+	 *            reglsetId
+	 * @throws SQLException
+	 */
 	public void deleteAllRegelnByRegelsetId(Integer regelsetId) throws SQLException {
 
 		final PreparedStatement deleteRegeln = conn.prepareStatement(DELETERULEBYRULESETID);
@@ -57,9 +73,16 @@ public class RegelDao extends JdbcHelper {
 
 		conn.commit();
 		conn.setAutoCommit(true);
-		
+
 	}
-	
+
+	/**
+	 * Speichert Regeln ab
+	 * 
+	 * @param regelDtos
+	 *            see {@link RegelDto}
+	 * @throws SQLException
+	 */
 	public void save(List<RegelDto> regelDtos) throws SQLException {
 
 		PreparedStatement insertRegelset = conn.prepareStatement(INSERT);

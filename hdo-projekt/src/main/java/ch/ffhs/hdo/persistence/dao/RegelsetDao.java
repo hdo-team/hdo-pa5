@@ -10,6 +10,12 @@ import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
+/**
+ * Data Acess Object für Regelsets
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelsetDao extends JdbcHelper {
 
 	private final String SELECTRULESETS = "SELECT RULESET.* FROM RULESET ORDER BY RULESET.priority ASC";
@@ -20,18 +26,19 @@ public class RegelsetDao extends JdbcHelper {
 	private final String SUM = "SELECT SUM(priority) FROM RULESET WHERE id IN (?, ?)";
 	private final String SWAP = "UPDATE RULESET SET priority = ? - priority WHERE id IN (?, ?)";
 
-	private final String INSERT = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter,  active, creationDate, changedate) VALUES (?,?,?,?,?, CURTIME () ,CURTIME () )";
-
 	private final String INSERT_RULESET = "INSERT INTO RULESET (targetDirectory, rulesetName, newFilename, filenameCounter,  active, creationDate, changedate) VALUES (?,?,?,?,?, CURTIME () ,CURTIME () )";
-	private final String INSERT_RULE = "INSERT INTO RULE (rulesetId, contextType, contextAttribute, compareType, compareValue, creationDate, changedate) VALUES (?,?,?,?,?, CURTIME () ,CURTIME () )";
 
 	private final String UPDATE_RULESET = "UPDATE RULESET SET targetDirectory = ?, rulesetName = ?, newFilename = ?, filenameCounter = ?, priority = ?, active = ?, changedate = CURTIME() where id = ?";
 
 	private final String DELETE_RULE = "DELETE FROM RULE where rulesetId = ?";
 	private final String DELETE_RULESET = "DELETE FROM RULESET where id = ?";
 
-
-
+	/**
+	 * Liefert alle Regelsets zuruerck
+	 * 
+	 * @return Liste mit {@link RegelsetDto}
+	 * @throws SQLException
+	 */
 	public List<RegelsetDto> findAllRegelsets() throws SQLException {
 
 		PreparedStatement selectAllRegelsets = conn.prepareStatement(SELECTRULESETS);
@@ -61,13 +68,22 @@ public class RegelsetDao extends JdbcHelper {
 		return regelsetlist;
 	}
 
+	/**
+	 * Speichert ein Regelset
+	 * 
+	 * @param regelsetDto
+	 *            Regelset als Dto
+	 * @param newEntry
+	 *            wenn true wird ein neuer Datensatz erstellt
+	 * @return Die neue id eines erstellten Regelsets
+	 * @throws SQLException
+	 */
 	public Integer save(RegelsetDto regelsetDto, boolean newEntry) throws SQLException {
 		PreparedStatement insertRegelset = null;
 		Integer newRulesetId = null;
 		Integer maxPriority = null;
 
 		if (newEntry) {
-			
 
 			insertRegelset = conn.prepareStatement(INSERT_RULESET);
 			insertRegelset.setString(1, regelsetDto.getTargetDirectory());
@@ -107,6 +123,13 @@ public class RegelsetDao extends JdbcHelper {
 		updateRegelset.executeUpdate();
 	}
 
+	/**
+	 * Aendert die Prio eines Regelsets nach Unten
+	 * 
+	 * @param id
+	 *            Regelset-id
+	 * @throws SQLException
+	 */
 	public void changePrioDown(int id) throws SQLException {
 
 		final PreparedStatement ruleset = conn.prepareStatement(FIND_HIGHER_PRIO);
@@ -146,6 +169,13 @@ public class RegelsetDao extends JdbcHelper {
 		}
 	}
 
+	/**
+	 * Aendert die Prio eines Regelsets nach Oben
+	 * 
+	 * @param id
+	 *            ReglsetId
+	 * @throws SQLException
+	 */
 	public void changePrioUp(int id) throws SQLException {
 
 		final PreparedStatement ruleset = conn.prepareStatement(FIND_SMALLER_PRIO);
@@ -163,6 +193,12 @@ public class RegelsetDao extends JdbcHelper {
 		}
 	}
 
+	/**
+	 * Loescht ein Regelset
+	 * 
+	 * @param regelsetId
+	 * @throws SQLException
+	 */
 	public void deleteRegelset(int regelsetId) throws SQLException {
 
 		try {

@@ -10,6 +10,12 @@ import ch.ffhs.hdo.persistence.dto.OptionDto;
 import ch.ffhs.hdo.persistence.dto.OptionDto.OptionValues;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
+/**
+ * Data Access Object für Optionen
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class OptionDao extends JdbcHelper {
 
 	private final String SELECTALL = "SELECT * FROM CONFIG";
@@ -22,6 +28,12 @@ public class OptionDao extends JdbcHelper {
 
 	private static final String SUCCESSFULL = "SUCCESSFULL";
 
+	/**
+	 * Alle Optionen laden
+	 * 
+	 * @return see {@link OptionDto}
+	 * @throws SQLException
+	 */
 	public OptionDto findAllOptions() throws SQLException {
 
 		OptionDto dto = new OptionDto();
@@ -37,6 +49,13 @@ public class OptionDao extends JdbcHelper {
 
 	}
 
+	/**
+	 * Einstellungen speichern
+	 * 
+	 * @param dto
+	 * @param newEntry
+	 * @throws SQLException
+	 */
 	public void save(OptionDto dto, boolean newEntry) throws SQLException {
 
 		Set<String> keySet = dto.keySet();
@@ -69,6 +88,12 @@ public class OptionDao extends JdbcHelper {
 
 	}
 
+	/**
+	 * Sort-Durchgang protokollieren
+	 * 
+	 * @param succcessfull
+	 * @throws SQLException
+	 */
 	public void protocollSortServiceRun(boolean succcessfull) throws SQLException {
 
 		OptionDto dto = new OptionDto();
@@ -81,6 +106,12 @@ public class OptionDao extends JdbcHelper {
 		save(dto, true);
 	}
 
+	/**
+	 * Zeitspanne in Sekunden seit letzten Sortdurchgang
+	 * 
+	 * @return Zeitspanne in Sekunden
+	 * @throws SQLException
+	 */
 	public long timeLapsed() throws SQLException {
 
 		PreparedStatement lastRunPrepStatement = conn.prepareStatement(TIMESINCEALSTRUN);

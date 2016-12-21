@@ -2,6 +2,10 @@ package ch.ffhs.hdo.client.ui.export.executable;
 
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import ch.ffhs.hdo.client.ui.base.Controller;
 import ch.ffhs.hdo.client.ui.base.viewhandler.Executable;
 import ch.ffhs.hdo.client.ui.export.ExportModel;
 import ch.ffhs.hdo.persistence.dao.ExportDao;
@@ -13,6 +17,7 @@ import ch.ffhs.hdo.persistence.dao.ExportDao;
  *
  */
 public class ExportSaveExecutable implements Executable {
+	private static Logger LOGGER = LogManager.getLogger(ExportSaveExecutable.class);
 
 	private ExportModel model;
 
@@ -37,7 +42,7 @@ public class ExportSaveExecutable implements Executable {
 			dao.backup(model);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("Fehler beim Exportieren ",e);
 		}
 
 	}

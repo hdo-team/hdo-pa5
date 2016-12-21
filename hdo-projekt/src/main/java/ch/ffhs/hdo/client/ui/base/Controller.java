@@ -3,6 +3,10 @@ package ch.ffhs.hdo.client.ui.base;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import ch.ffhs.hdo.infrastructure.option.OptionFacade;
 import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
 
 /**
@@ -19,6 +23,7 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
  *            ist die zu benutzende {@link View}
  */
 public abstract class Controller<M extends Model, V extends View<M>> {
+	private static Logger LOGGER = LogManager.getLogger(Controller.class);
 
 	M model;
 	ResourceBundle resourceBundle;
@@ -104,7 +109,7 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 			jdbcHelper.terminate();
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			LOGGER.error("Fehler beim Terminieren des Controllers", e);
 		}
 	}
 

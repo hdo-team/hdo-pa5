@@ -15,9 +15,118 @@ import ch.ffhs.hdo.persistence.dao.RegelsetDao;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
+/**
+ * Facade fuer Regelsets
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelsetFacade {
+	/**
+	 * Hilfsenum für um Regelsets zu priorisieren
+	 * 
+	 * Kann : <br>
+	 * {@link PriorityAction#UP}<br>
+	 * {@link PriorityAction#DOWN}
+	 * 
+	 * @author Denis Bittante
+	 *
+	 */
+	public enum PriorityAction {
+		/**
+		 * Nach Unten priorisieren
+		 */
+		DOWN,
+		/**
+		 * Nach Oben priorisieren
+		 */
+		UP;
+
+	}
+
 	private static Logger LOGGER = LogManager.getLogger(RegelsetFacade.class);
 
+	/**
+	 * Loescht Regelset
+	 * 
+	 * @param id
+	 */
+	public void deleteRegelset(int id) {
+
+		RegelsetDao dao = new RegelsetDao();
+		try {
+			dao.deleteRegelset(id);
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim löschen eines Regelsets", e);
+		}
+
+	}
+
+	/**
+	 * Liefert alle Regelsets
+	 * 
+	 * @return see {@link RegelModel}
+	 */
+	public ArrayList<RegelsetModel> getAllRegelsets() {
+
+		RegelsetDao daoRegelset = new RegelsetDao();
+		RegelDao daoRegel = new RegelDao();
+		ArrayList<RegelsetModel> regelsets = new ArrayList<RegelsetModel>();
+		List<RegelsetDto> findAllRegelsets;
+
+		try {
+			findAllRegelsets = daoRegelset.findAllRegelsets();
+
+			for (RegelsetDto regelsetDto : findAllRegelsets) {
+				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
+
+				regelsets.add(RegelsetConverter.convert(regelsetDto));
+			}
+
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
+		}
+		return regelsets;
+
+	}
+
+	/**
+	 * liefert Reglsets für den SortService zurueck
+	 * 
+	 * @return see {@link Regelset}
+	 */
+	public List<Regelset> getRegelsets() {
+
+		RegelsetDao daoRegelset = new RegelsetDao();
+		RegelDao daoRegel = new RegelDao();
+		ArrayList<Regelset> regelsets = new ArrayList<Regelset>();
+		List<RegelsetDto> findAllRegelsets;
+
+		try {
+			findAllRegelsets = daoRegelset.findAllRegelsets();
+
+			for (RegelsetDto regelsetDto : findAllRegelsets) {
+				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
+
+				final Regelset convertToRegelset = RegelsetConverter.convertToRegelset(regelsetDto);
+				if (convertToRegelset != null) {
+					regelsets.add(convertToRegelset);
+				}
+			}
+
+		} catch (SQLException e) {
+			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
+		}
+		return regelsets;
+
+	}
+
+	/**
+	 * speichert Regelsets
+	 * 
+	 * @param model
+	 *            see {@link RegelsetModel}
+	 */
 	public void save(RegelsetModel model) {
 
 		RegelsetDao regelsetDao = new RegelsetDao();
@@ -56,34 +165,14 @@ public class RegelsetFacade {
 
 	}
 
-	public ArrayList<RegelsetModel> getAllRegelsets() {
-
-		RegelsetDao daoRegelset = new RegelsetDao();
-		RegelDao daoRegel = new RegelDao();
-		ArrayList<RegelsetModel> regelsets = new ArrayList<RegelsetModel>();
-		List<RegelsetDto> findAllRegelsets;
-
-		try {
-			findAllRegelsets = daoRegelset.findAllRegelsets();
-
-			for (RegelsetDto regelsetDto : findAllRegelsets) {
-				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
-
-				regelsets.add(RegelsetConverter.convert(regelsetDto));
-			}
-
-		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
-		}
-		return regelsets;
-
-	}
-
-	public enum PriorityAction {
-		UP, DOWN;
-
-	}
-
+	/**
+	 * Tauscht Priortäten nach oben oder nach unten
+	 * 
+	 * @param id
+	 *            Reglsetid
+	 * @param action
+	 *            see {@link PriorityAction}
+	 */
 	public void swapPriority(int id, PriorityAction action) {
 
 		RegelsetDao dao = new RegelsetDao();
@@ -103,43 +192,6 @@ public class RegelsetFacade {
 		} catch (SQLException e) {
 			throw new IllegalArgumentException();
 		}
-	}
-
-	public void deleteRegelset(int id) {
-
-		RegelsetDao dao = new RegelsetDao();
-		try {
-			dao.deleteRegelset(id);
-		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim löschen eines Regelsets", e);
-		}
-
-	}
-
-	public List<Regelset> getRegelsets() {
-
-		RegelsetDao daoRegelset = new RegelsetDao();
-		RegelDao daoRegel = new RegelDao();
-		ArrayList<Regelset> regelsets = new ArrayList<Regelset>();
-		List<RegelsetDto> findAllRegelsets;
-
-		try {
-			findAllRegelsets = daoRegelset.findAllRegelsets();
-
-			for (RegelsetDto regelsetDto : findAllRegelsets) {
-				regelsetDto.setRegeln(daoRegel.findAllRegelByRegelsetId(regelsetDto.getId()));
-
-				final Regelset convertToRegelset = RegelsetConverter.convertToRegelset(regelsetDto);
-				if (convertToRegelset != null) {
-					regelsets.add(convertToRegelset);
-				}
-			}
-
-		} catch (SQLException e) {
-			LOGGER.error("SQL Fehler beim Laden aller Regelsets", e);
-		}
-		return regelsets;
-
 	}
 
 }
