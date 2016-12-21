@@ -9,6 +9,12 @@ import org.junit.Test;
 import ch.ffhs.hdo.client.ui.regelset.RegelsetModel;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
+/**
+ * RegelsetConverter --><b>nicht fertiggestellt</b>
+ * 
+ * @author Adrian Perez
+ *
+ */
 @Ignore
 public class RegelsetConverterTest {
 
@@ -93,17 +99,17 @@ public class RegelsetConverterTest {
 		assertEquals(rulesetName, regelsetDtoConverted.getRulesetName());
 
 	}
-	
+
 	private void thenDtoTargetDirectory(String targetDirectory) {
 		assertEquals(targetDirectory, regelsetDtoConverted.getTargetDirectory());
 
 	}
-	
+
 	private void thenDtoNewFilename(String newFilename) {
 		assertEquals(newFilename, regelsetDtoConverted.getNewFilename());
 
 	}
-	
+
 	private void thenDtoFilenameCounter(String filenameCounter) {
 		assertEquals(filenameCounter, regelsetDtoConverted.getFilenameCounter());
 
@@ -113,7 +119,6 @@ public class RegelsetConverterTest {
 		assertEquals(b, regelsetDtoConverted.isActive());
 
 	}
-
 
 	@Test
 	public void testFilledModelOrginal() {
@@ -147,29 +152,29 @@ public class RegelsetConverterTest {
 		assertEquals(rulesetName, regelsetModelConverted.getRulesetName());
 
 	}
-	
+
 	private void thenModelTargetDirectory(String targetDirectory) {
 		assertEquals(targetDirectory, regelsetModelConverted.getTargetDirectory());
 
 	}
-	
+
 	private void thenModelNewFilename(String newFilename) {
 		assertEquals(newFilename, regelsetModelConverted.getNewFilename());
 
 	}
-	
+
 	private void thenModelFilenameCounter(Long filenameCounter) {
 		assertEquals(filenameCounter, regelsetModelConverted.getFilenameCounter());
 
 	}
-	
+
 	private void thenModelIsActive(boolean ruleActiv) {
 		assertEquals(ruleActiv, regelsetModelConverted.isRuleActiv());
 
 	}
 
-	private void whenFilledWithModel(String rulesetName, String targetDirectory, String newFilename, long filenameCounter,
-			boolean ruleActiv) {
+	private void whenFilledWithModel(String rulesetName, String targetDirectory, String newFilename,
+			long filenameCounter, boolean ruleActiv) {
 		regelsetModelOriginal.setRulesetName(rulesetName);
 		regelsetModelOriginal.setTargetDirectory(targetDirectory);
 		regelsetModelOriginal.setNewFilename(newFilename);

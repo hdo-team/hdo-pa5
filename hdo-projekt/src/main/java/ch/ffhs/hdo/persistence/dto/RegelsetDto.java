@@ -3,6 +3,12 @@ package ch.ffhs.hdo.persistence.dto;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Data Tranfer Object fuer Reglsets
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelsetDto {
 
 	private static final long serialVersionUID = 6814842222879287290L;

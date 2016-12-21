@@ -2,6 +2,12 @@ package ch.ffhs.hdo.persistence.dto;
 
 import java.util.HashMap;
 
+/**
+ * Data Transfer Object fuer die Option
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class OptionDto extends HashMap<String, String> {
 
 	/**
@@ -9,8 +15,31 @@ public class OptionDto extends HashMap<String, String> {
 	 */
 	private static final long serialVersionUID = -1434028776535025109L;
 
+	/**
+	 * Eigenschaften die in der Datenbank persistiert werden
+	 * 
+	 * @author Denis Bittante
+	 *
+	 */
 	public enum OptionValues {
-		AUTOMODUS("auto_modus"), INBOXPATH("inbox_path"), INTERVALL("intervall"), LAST_SORTRUN("lastsortRun");
+		/**
+		 * Automodus Datenbank index <code>auto_modus</code>
+		 */
+		AUTOMODUS("auto_modus"),
+		/**
+		 * 
+		 * Wird nicht mehr genutzt
+		 */
+		INBOXPATH("inbox_path"),
+		/**
+		 * Intervall in Sekunden
+		 */
+		INTERVALL("intervall"),
+		/**
+		 * Letzter Run als Value kann <code>SUCCESS</code> oder
+		 * <code>ERROR</code> stehen
+		 */
+		LAST_SORTRUN("lastsortRun");
 
 		private String keyName;
 
@@ -18,6 +47,11 @@ public class OptionDto extends HashMap<String, String> {
 			this.keyName = keyName;
 		}
 
+		/**
+		 * Liefert die Namen für die Datenbank der jeweiligen Option zurück
+		 * 
+		 * @return Key
+		 */
 		public String getKeyName() {
 			return keyName;
 		}

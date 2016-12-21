@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +22,8 @@ import ch.ffhs.hdo.infrastructure.service.util.FileHandling;
 
 /**
  * 
+ * Service die die Regel anwendet und Dateien verschieben lässt.
+ * 
  * @author Denis Bittante
  *
  */
@@ -37,6 +38,13 @@ public class SortService extends SwingWorker<String, String> {
 
 	private static SortService instance;
 
+	/**
+	 * Liefert die aktuelle Instanz zuruerck (Singleton)
+	 * 
+	 * @param mainModel
+	 *            see {@link RegelsetTableModel}
+	 * @return see {@link SortService}
+	 */
 	public static SortService getInstance(RegelsetTableModel mainModel) {
 
 		if (instance == null) {
@@ -91,9 +99,10 @@ public class SortService extends SwingWorker<String, String> {
 
 					for (File file : fileList) {
 						// Die Files die behandelt werden sind nur PDFs
-						if (file.isFile()){
-						
-						//if (FilenameUtils.isExtension(file.getName(), new String[] { "pdf", "PDF", "Pdf" })) {
+						if (file.isFile()) {
+
+							// if (FilenameUtils.isExtension(file.getName(), new
+							// String[] { "pdf", "PDF", "Pdf" })) {
 							documentModels.add(new DocumentModel(file));
 						}
 					}
@@ -102,7 +111,7 @@ public class SortService extends SwingWorker<String, String> {
 						for (Regelset regelset : regelsets) {
 							final boolean verfizieren = regelset.verfizieren(documentModel);
 							if (verfizieren) {
-								if (regelset.getRenamePattern()==null || regelset.getRenamePattern().isEmpty()) {
+								if (regelset.getRenamePattern() == null || regelset.getRenamePattern().isEmpty()) {
 									FileHandling.moveFile(documentModel.getFile().getAbsolutePath(),
 											regelset.getPath());
 

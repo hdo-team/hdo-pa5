@@ -11,6 +11,12 @@ import org.junit.Test;
 
 import ch.ffhs.hdo.domain.regel.ContextAttributeEnum;
 
+/**
+ * Test PDF Auslese-Mechanismus
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class PdfUtilsTest {
 	@Test
 	public void testReadPdf() {
@@ -22,7 +28,8 @@ public class PdfUtilsTest {
 
 		Assert.assertTrue(readPDF.length() > 100);
 	}
-	@Test 
+
+	@Test
 	public void testReadMetadata() {
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource("TestLesenDokument.pdf");

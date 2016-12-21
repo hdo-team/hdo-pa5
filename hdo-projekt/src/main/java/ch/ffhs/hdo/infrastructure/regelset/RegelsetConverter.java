@@ -10,6 +10,12 @@ import ch.ffhs.hdo.domain.regel.Regelset;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 import ch.ffhs.hdo.persistence.dto.RegelsetDto;
 
+/**
+ * Converter von RegelsetDto nach RegelModel
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelsetConverter {
 
 	public static RegelsetModel convert(RegelsetDto regelsetDto) {
@@ -39,27 +45,25 @@ public class RegelsetConverter {
 
 	public static Regelset convertToRegelset(RegelsetDto regelsetDto) {
 
-		
-		if (regelsetDto.isActive()){
-		 
-		Regelset regelsetModel = new Regelset();
+		if (regelsetDto.isActive()) {
 
-		regelsetModel.setPath(regelsetDto.getTargetDirectory());
-		regelsetModel.setRenamePattern(regelsetDto.getNewFilename());
-		regelsetModel.setFilenameCounter(regelsetDto.getFilenameCounter());
+			Regelset regelsetModel = new Regelset();
 
-		final ArrayList<AbstractRegel> regelList = new ArrayList<AbstractRegel>();
+			regelsetModel.setPath(regelsetDto.getTargetDirectory());
+			regelsetModel.setRenamePattern(regelsetDto.getNewFilename());
+			regelsetModel.setFilenameCounter(regelsetDto.getFilenameCounter());
 
+			final ArrayList<AbstractRegel> regelList = new ArrayList<AbstractRegel>();
 
-		final List<RegelDto> regeln = regelsetDto.getRegeln();
-		for (RegelDto regeldto : regeln) {
+			final List<RegelDto> regeln = regelsetDto.getRegeln();
+			for (RegelDto regeldto : regeln) {
 
-			final AbstractRegel regel = RegelConverter.convert(regeldto);
-			regelList.add(regel);
-		}
-		regelsetModel.setRegeln(regelList);
+				final AbstractRegel regel = RegelConverter.convert(regeldto);
+				regelList.add(regel);
+			}
+			regelsetModel.setRegeln(regelList);
 
-		return regelsetModel;
+			return regelsetModel;
 		}
 		return null;
 

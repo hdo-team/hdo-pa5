@@ -9,6 +9,12 @@ import ch.ffhs.hdo.client.ui.einstellungen.OptionModel;
 import ch.ffhs.hdo.persistence.dto.OptionDto;
 import static ch.ffhs.hdo.persistence.dto.OptionDto.OptionValues.*;
 
+/**
+ * Tests OptionConver
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class OptionConverterTest {
 
 	private final static String ACTUAL_PATH = "C:/temp";
@@ -50,7 +56,6 @@ public class OptionConverterTest {
 		thenModelIntervall(-1);
 		thenModelAutoModus(false);
 	}
-
 
 	/**
 	 * Tested wenn ein gefuelltes DTO convertiert wird, die richtigen Daten im
