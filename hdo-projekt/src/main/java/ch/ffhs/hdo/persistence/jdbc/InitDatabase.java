@@ -3,8 +3,21 @@ package ch.ffhs.hdo.persistence.jdbc;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class InitDatabase extends JdbcHelper {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+/**
+ * Initalisiert das Datenbankschema
+ * 
+ * @author Denis Bittante
+ *
+ */
+public class InitDatabase extends JdbcHelper {
+	private static Logger LOGGER = LogManager.getLogger(InitDatabase.class);
+
+	/**
+	 * Legt das Schema an und füllt Initialdaten ab.
+	 */
 	public void createDatabase() {
 
 		try {
@@ -40,8 +53,7 @@ public class InitDatabase extends JdbcHelper {
 
 	}
 
-	public synchronized void update(String expression) throws SQLException {
-		System.out.println(expression);
+	private synchronized void update(String expression) throws SQLException {
 		Statement st = null;
 
 		st = conn.createStatement(); // statements
@@ -49,7 +61,8 @@ public class InitDatabase extends JdbcHelper {
 		int i = st.executeUpdate(expression); // run the query
 
 		if (i == -1) {
-			System.out.println("db error : " + expression);
+
+			LOGGER.error("db error : " + expression);
 		}
 
 		st.close();

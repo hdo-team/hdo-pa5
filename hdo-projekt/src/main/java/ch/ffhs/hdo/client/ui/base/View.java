@@ -21,14 +21,14 @@ import ch.ffhs.hdo.client.ui.base.viewhandler.ViewHandler;
  */
 public abstract class View<M extends Model> {
 
+	Dimension dimension;
+	JFrame frame = new JFrame();
+
+	M model;
 	ResourceBundle resourceBundle;
 	String title;
 
-	JFrame frame = new JFrame();
-	M model;
 	ViewHandler viewHandler;
-
-	Dimension dimension;
 
 	public View(ResourceBundle resourceBundle) {
 
@@ -52,26 +52,68 @@ public abstract class View<M extends Model> {
 	}
 
 	/**
-	 * Setzt die Groesse des Fensters
-	 * 
-	 * @param width
-	 *            -> Breite
-	 * @param height
-	 *            -> Hoehe
+	 * Konfiguriert die einzelnen Komponenten und erstellt die Listener.
 	 */
-	public void setDimension(int width, int height) {
-		this.dimension = new Dimension(width, height);
+	public abstract void configureBindings();
 
+	/**
+	 * View verwerfen
+	 * 
+	 */
+	public void dispose() {
+		frame.setVisible(false);
+		frame.dispose();
 	}
 
 	/**
-	 * Setzt die ResourceBundles, diese sind anhand des Locals geladen worden.
+	 * Getter um die View-Frame zu erhalten
 	 * 
-	 * @param resourceBundle
-	 *            {@link ResourceBundle}
+	 * @return {@link JFrame}
 	 */
-	public void setResourceBundle(ResourceBundle resourceBundle) {
-		this.resourceBundle = resourceBundle;
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * Getter für den ViewHandler
+	 * 
+	 * @return {@link ViewHandler}
+	 */
+	public ViewHandler getHandler() {
+		return viewHandler;
+	}
+
+	/**
+	 * Hilfsmethode für um einen Text aus der RessourceBundle zu erhalten.
+	 * 
+	 * @param key
+	 *            Key welcher gesucht werden soll
+	 * @return den String aus dem Resoucebundle
+	 */
+	public String getMessage(String key) {
+		return resourceBundle.getString(key);
+	}
+
+	/**
+	 * Hilfsmethode für um einen Text aus der RessourceBundle zu erhalten.
+	 * 
+	 * @param key
+	 *            Key welcher gesucht werden soll
+	 * @param replacement
+	 *            einen Teil des String der ersetzt werden soll.
+	 * @return den String mit dem ersetzten Teilstring
+	 */
+	public String getMessage(String key, String replacement) {
+		return (resourceBundle.getString(key)).replaceAll("%s", replacement);
+	}
+
+	/**
+	 * Getter für das Model
+	 * 
+	 * @return Implementation von {@link Model}
+	 */
+	public M getModel() {
+		return model;
 	}
 
 	/**
@@ -93,22 +135,70 @@ public abstract class View<M extends Model> {
 		this.dimension = dimension;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	/**
+	 * Setzt die Groesse des Fensters
+	 * 
+	 * @param width
+	 *            -> Breite
+	 * @param height
+	 *            -> Hoehe
+	 */
+	public void setDimension(int width, int height) {
+		this.dimension = new Dimension(width, height);
+
 	}
 
+	/**
+	 * Handler seten
+	 * 
+	 * @param model
+	 */
+	public void setHandler(ViewHandler viewHandler) {
+		this.viewHandler = viewHandler;
+	}
+
+	/**
+	 * Setter umd den LayoutManager anzupassen.
+	 * 
+	 */
+	public void setLayout(LayoutManager manager) {
+
+		this.frame.setLayout(manager);
+	}
+
+	/**
+	 * Setter für das Model
+	 * 
+	 * @param model
+	 */
 	public void setModel(M model) {
 		this.model = model;
 		configureBindings();
 
 	}
 
-	public abstract void configureBindings();
-
-	public JFrame getFrame() {
-		return frame;
+	/**
+	 * Setzt die ResourceBundles, diese sind anhand des Locals geladen worden.
+	 * 
+	 * @param resourceBundle
+	 *            {@link ResourceBundle}
+	 */
+	public void setResourceBundle(ResourceBundle resourceBundle) {
+		this.resourceBundle = resourceBundle;
 	}
 
+	/**
+	 * Setzt den Titel der Frame
+	 * 
+	 * @param model
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Zeigt die View an
+	 */
 	public void show() {
 		frame.setTitle(getTitle());
 		frame.setSize(dimension);
@@ -120,36 +210,6 @@ public abstract class View<M extends Model> {
 		// das Feature wieder ab
 		frame.setAlwaysOnTop(false);
 
-	}
-
-	public void setLayout(LayoutManager manager) {
-
-		this.frame.setLayout(manager);
-	}
-
-	public String getMessage(String key) {
-		return resourceBundle.getString(key);
-	}
-
-	public String getMessage(String key, String replacement) {
-		return (resourceBundle.getString(key)).replaceAll("%s", replacement);
-	}
-
-	public void dispose() {
-		frame.setVisible(false);
-		frame.dispose();
-	}
-
-	public void setHandler(ViewHandler viewHandler) {
-		this.viewHandler = viewHandler;
-	}
-
-	public ViewHandler getHandler() {
-		return viewHandler;
-	}
-
-	public M getModel() {
-		return model;
 	}
 
 }

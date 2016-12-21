@@ -228,8 +228,7 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		toolbarPanel = builder.build();
 
 		jPanel.add(regelsetTable.getTableHeader(), BorderLayout.NORTH);
-		jPanel.add(regelsetTable, BorderLayout.CENTER); // TODO tableScrollPane
-														// statt regelsetTable
+		jPanel.add(regelsetTable, BorderLayout.CENTER);
 		jPanel.add(toolbarPanel, BorderLayout.SOUTH);
 	}
 
@@ -283,6 +282,10 @@ public class RegelsetTableView extends View<RegelsetTableModel> {
 		return jPanel;
 	}
 
+	/***
+	 * Gib die selektierte Zeile des Regelset zurueck
+	 * @return die Zeile die selektiert wurde
+	 */
 	public int getSelectedRow() {
 		if (regelsetTable.getSelectedRow() > -1) {
 			return regelsetTable.getSelectedRow();

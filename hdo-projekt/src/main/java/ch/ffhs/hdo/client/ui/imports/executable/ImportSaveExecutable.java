@@ -56,7 +56,6 @@ public class ImportSaveExecutable implements Executable<ImportModel> {
 			* mitgeben, damit dort dann dementsprechend der Dialog angezeigt wird.
 			* 
 			*/
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

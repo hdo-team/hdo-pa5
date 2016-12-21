@@ -11,6 +11,13 @@ import java.util.regex.Pattern;
 
 import ch.ffhs.hdo.domain.document.DocumentModel;
 
+/**
+ * Abstrakte implementation von Regeln zusammensetzung und dynamische vergleiche
+ * wurden hier implementiert.
+ * 
+ * @author Denis Bittante
+ *
+ */
 public abstract class AbstractRegel {
 
 	private Object fileValue;
@@ -34,7 +41,7 @@ public abstract class AbstractRegel {
 			final int dayOfMonth = fileDate.get(Calendar.DAY_OF_MONTH);
 			GregorianCalendar g = new GregorianCalendar(year, month, dayOfMonth);
 			return g.equals(regelDate);
-			
+
 		case COMPARISON_GREATER_EQUAL:
 			return regelDate.before(fileDate);
 		case COMPARISON_LESS_EQUAL:
@@ -125,14 +132,28 @@ public abstract class AbstractRegel {
 		return false;
 	}
 
+	/**
+	 * Retourniert vergleichswert
+	 * 
+	 * @return CompareValue
+	 */
 	public String getCompareValue() {
 		return regelValue;
 	}
 
+	/**
+	 * Retourniert ComparisonMode
+	 * 
+	 * @return {@link ComparisonTypeEnum}
+	 */
 	public ComparisonTypeEnum getComparisonType() {
 		return comparisonType;
 	}
 
+	/**
+	 * Retourniert ContextAttribute
+	 * @return {@link ContextAttributeEnum}
+	 */
 	public ContextAttributeEnum getContextAttribute() {
 		return contextAttribute;
 	}

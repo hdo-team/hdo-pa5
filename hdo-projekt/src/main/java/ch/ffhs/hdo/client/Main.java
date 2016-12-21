@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		// init StartExecutableMainView
-
+		LOGGER.debug("Start Main");
 		RegelsetTableModel regelsetsTable = new RegelsetTableModel(new RegelsetFacade().getAllRegelsets());
 		FolderTreeModel folderModel = new FolderTreeModel(ApplicationSettings.getInstance().getInbox_path());
 

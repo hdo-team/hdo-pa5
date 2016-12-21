@@ -20,19 +20,47 @@ import ch.ffhs.hdo.persistence.jdbc.JdbcHelper;
  */
 public abstract class Controller<M extends Model, V extends View<M>> {
 
-	ResourceBundle resourceBundle;
 	M model;
+	ResourceBundle resourceBundle;
 	V view;
 
 	/**
 	 * 
-	 * @param model:
+	 * @param model
 	 *            Model fuer den Controller
 	 */
 	public Controller(M model) {
 		this.resourceBundle = ResourceBundle.getBundle("ch/ffhs/hdo/client/ui/resourceBundle");
 		this.model = model;
 
+	}
+
+	/**
+	 * Getter des Models
+	 * 
+	 * @return Implementierung des {@link Model}
+	 */
+	public M getModel() {
+		return model;
+	}
+
+	/**
+	 * Retouriniert das {@link ResourceBundle}
+	 * 
+	 * @return {@link ResourceBundle}
+	 */
+	public ResourceBundle getResourceBundle() {
+		return this.resourceBundle;
+
+	}
+
+	/**
+	 * Getter fuer {@link View}
+	 * 
+	 * @return {@link View}
+	 */
+	public V getView() {
+		return view;
 	}
 
 	/**
@@ -45,28 +73,27 @@ public abstract class Controller<M extends Model, V extends View<M>> {
 	 */
 	public abstract void initializeView();
 
-	public ResourceBundle getResourceBundle() {
-		return this.resourceBundle;
-
+	/**
+	 * Setter fuer View
+	 * 
+	 * @param view
+	 *            {@link View}
+	 */
+	public void setView(V view) {
+		this.view = view;
 	}
 
-	public M getModel() {
-		return model;
-	}
-
+	/**
+	 * Zeigt die View an
+	 */
 	public void show() {
 
 		this.view.show();
 	}
 
-	public V getView() {
-		return view;
-	}
-
-	public void setView(V view) {
-		this.view = view;
-	}
-
+	/**
+	 * Stoppt die View und trennt Verbindung zur Datenbank
+	 */
 	public void terminate() {
 
 		getView().dispose();

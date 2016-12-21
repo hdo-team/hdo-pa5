@@ -148,7 +148,6 @@ public class ExportView extends View<ExportModel> {
 					enc.writeObject(getModel().getFolderModel().getTreeModel());
 					
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 			
 				enc.close();

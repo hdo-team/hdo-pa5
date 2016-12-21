@@ -1,8 +1,10 @@
 package ch.ffhs.hdo.client.ui.base.viewhandler;
 
 /**
- * Ein ViewHandler ist ein Objekt, ueber welches die View mit dem Controller, der
- * die View erzeugt hat, interagieren kann.
+ * Ein ViewHandler ist ein Objekt, ueber welches die View mit dem Controller,
+ * der die View erzeugt hat, interagieren kann.
+ * 
+ * @author Denis Bittante
  */
 public interface ViewHandler extends Destroyable {
 

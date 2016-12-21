@@ -37,7 +37,6 @@ public class ExportSaveExecutable implements Executable {
 			dao.backup(model);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

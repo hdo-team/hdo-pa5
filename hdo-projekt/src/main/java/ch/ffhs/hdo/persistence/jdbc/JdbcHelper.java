@@ -6,9 +6,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.ffhs.hdo.infrastructure.ApplicationSettings;
 
 public class JdbcHelper {
+	private static Logger LOGGER = LogManager.getLogger(JdbcHelper.class);
 
 	protected Connection conn; // our connnection to the db - presist for life
 								// of program
@@ -33,7 +37,7 @@ public class JdbcHelper {
 	}
 
 	public void terminate() throws SQLException {
-
+		LOGGER.debug("Connection terminated");
 		Statement st = conn.createStatement();
 
 		// db writes out to files and performs clean shuts down

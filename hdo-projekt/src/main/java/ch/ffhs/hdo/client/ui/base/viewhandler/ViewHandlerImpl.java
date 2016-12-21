@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.ffhs.hdo.client.ui.base.ParamChecker;
+
 /**
  * Implementation fuer {@link ViewHandler}
  * 
@@ -24,11 +25,23 @@ public class ViewHandlerImpl implements ViewHandler {
 
 	}
 
+	/**
+	 * Fügt eine Operation ein die aufgerufen werden kann.
+	 * 
+	 * @param viewOperation
+	 *            Operation class als Identifier
+	 * @param executables
+	 *            Eine Implementation des Interface {@link Executable}, für die
+	 *            Methode <code>execute()</code> aus
+	 */
 	public void addOperation(Class<? extends ViewOperation> viewOperation, Executable... executables) {
 		opMap.put(viewOperation, executables);
 
 	}
 
+	/**
+	 * Führ die Operation aus die mit der ViewOperation registiert wurde
+	 */
 	public void performOperation(Class<? extends ViewOperation> operation) {
 		ParamChecker.notNull(operation, "operation");
 		checkPreconditions(operation);
@@ -36,6 +49,9 @@ public class ViewHandlerImpl implements ViewHandler {
 		executeOperation(operation, null);
 	}
 
+	/**
+	 * Fuert die Operation aus mit Parameter aus
+	 */
 	public void performOperationWithArgs(Class<? extends ViewOperation> operation, Object arg) {
 		checkPreconditions(operation);
 		executeOperation(operation, arg);
