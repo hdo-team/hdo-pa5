@@ -1,5 +1,7 @@
 package ch.ffhs.hdo.domain.regel;
 
+import java.util.HashMap;
+
 /**
  * Regel um Pdf zu ueberpruefen
  * 
@@ -12,9 +14,14 @@ public class PdfContextRegel extends AbstractRegel {
 
 		final ContextAttributeEnum contextAttribute = getContextAttribute();
 
-		setCompareToValue(getModel().getPdfMetadata().get(contextAttribute));
+		final HashMap<ContextAttributeEnum, Object> pdfMetadata = getModel().getPdfMetadata();
+		if (pdfMetadata != null) {
+			setCompareToValue(pdfMetadata.get(contextAttribute));
 
-		return mainCompare();
+			return mainCompare();
+		} else {
+			return false;
+		}
 
 	}
 

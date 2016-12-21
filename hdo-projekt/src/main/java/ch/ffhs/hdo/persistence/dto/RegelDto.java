@@ -2,6 +2,12 @@ package ch.ffhs.hdo.persistence.dto;
 
 import java.util.Date;
 
+/**
+ * Dto fuer Regel
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelDto {
 
 	private Integer id;

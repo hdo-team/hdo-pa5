@@ -10,6 +10,12 @@ import ch.ffhs.hdo.domain.regel.FileContextRegel;
 import ch.ffhs.hdo.domain.regel.PdfContextRegel;
 import ch.ffhs.hdo.persistence.dto.RegelDto;
 
+/**
+ * Converter fuer Regel von RegelDto nach RegelModel
+ * 
+ * @author Denis Bittante
+ *
+ */
 public class RegelConverter {
 
 	public static RegelModel convert(RegelDto dto, Integer id) {
